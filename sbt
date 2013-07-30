@@ -11,7 +11,7 @@ else
   CURR_DIR=`dirname $0`
   if [ `uname -s` = Linux ] ; then
     # use JAVA_HOME from Travis if there is one
-    if [ ! ${TRAVIS?} ] ; then
+    if [ -z "$TRAVIS" ] ; then
       export JAVA_HOME=/usr/lib/jvm/java-7-sun
     fi
   else
