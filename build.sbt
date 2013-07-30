@@ -39,6 +39,7 @@ nogen in ThisBuild  := { System.setProperty("org.nlogo.noGenerator", "true") }
 
 libraryDependencies in ThisBuild ++= Seq(
   "asm" % "asm-all" % "3.3.1",
+  "org.scala-lang" % "scala-parser-combinators" % scalaVersion.value,
   "org.jmock" % "jmock" % "2.5.1" % "test",
   "org.jmock" % "jmock-legacy" % "2.5.1" % "test",
   "org.jmock" % "jmock-junit4" % "2.5.1" % "test",
