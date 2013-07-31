@@ -18,8 +18,10 @@ val nogen = taskKey[Unit]("disable bytecode generator")
 
 scalaVersion in ThisBuild := "2.11.0-M4"
 
+// -Xfatal-warnings temporarily omitted here; should be reinstated before
+// merging Scala 2.11 upgrade - ST 7/30/13
 scalacOptions in ThisBuild ++=
-  "-deprecation -unchecked -feature -Xcheckinit -encoding us-ascii -target:jvm-1.7 -Xlint -Xfatal-warnings"
+  "-deprecation -unchecked -feature -Xcheckinit -encoding us-ascii -target:jvm-1.7 -Xlint"
   .split(" ").toSeq
 
 javacOptions in ThisBuild ++=
