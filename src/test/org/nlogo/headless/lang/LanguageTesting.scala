@@ -147,16 +147,8 @@ trait LanguageTesting extends Assertions {
       fail("no CompilerException occurred")
     }
     catch {
-<<<<<<< HEAD
-      case ex: CompilerException =>
-        assertResult(errorMessage)(ex.getMessage)
-||||||| merged common ancestors
-      case ex: CompilerException =>
-        expectResult(errorMessage)(ex.getMessage)
-=======
       case ex: api.CompilerException =>
-        expectResult(errorMessage)(ex.getMessage)
->>>>>>> origin/sbt-0.13
+        assertResult(errorMessage)(ex.getMessage)
     }
   }
 }
