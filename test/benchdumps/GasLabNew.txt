@@ -3632,7 +3632,7 @@ procedure CALCULATE-PRESSURE:[]{OTPL}:
          L4
           RETURN
 [2]_asm_procedurecalculatepressure_setobservervariable_5 "set zero-pressure-count length filter [? = 0] pressure-history" Object => void
-      _length Object => double
+      _length LogoList => double
         _filter
           _reportertask
             _asm_procedurecalculatepressure_equal_6 "? = 0" Object,double => boolean
@@ -3690,62 +3690,54 @@ procedure CALCULATE-PRESSURE:[]{OTPL}:
                 INVOKEVIRTUAL org/nlogo/agent/Observer.getVariable (I)Ljava/lang/Object;
                L1
                 ARETURN
-          TRYCATCHBLOCK L0 L1 L2 org/nlogo/api/AgentException
+          TRYCATCHBLOCK L0 L1 L1 java/lang/ClassCastException
+          TRYCATCHBLOCK L2 L3 L4 org/nlogo/api/AgentException
           ALOAD 0
           GETFIELD org/nlogo/prim/_asm_procedurecalculatepressure_setobservervariable_5.keptinstr3 : Lorg/nlogo/prim/etc/_filter;
           ALOAD 1
           INVOKEVIRTUAL org/nlogo/prim/etc/_filter.report (Lorg/nlogo/nvm/Context;)Ljava/lang/Object;
-         L3
+         L5
           ASTORE 2
-          ALOAD 2
-          INSTANCEOF org/nlogo/api/LogoList
-          IFEQ L4
+         L0
           ALOAD 2
           CHECKCAST org/nlogo/api/LogoList
-          INVOKEVIRTUAL org/nlogo/api/LogoList.size ()I
-          I2D
-          GOTO L5
-         L4
-          ALOAD 2
-          INSTANCEOF java/lang/String
-          IFEQ L6
-          ALOAD 2
-          CHECKCAST java/lang/String
-          INVOKEVIRTUAL java/lang/String.length ()I
-          I2D
-          GOTO L5
-         L6
+          GOTO L6
+         L1
+          POP
           NEW org/nlogo/nvm/ArgumentTypeException
           DUP
           ALOAD 1
           ALOAD 0
-          ICONST_0
-          INVOKESTATIC org/nlogo/api/Syntax.ListType ()I
-          INVOKESTATIC org/nlogo/api/Syntax.StringType ()I
-          IOR
+          BIPUSH 0
+          LDC 8
           ALOAD 2
           INVOKESPECIAL org/nlogo/nvm/ArgumentTypeException.<init> (Lorg/nlogo/nvm/Context;Lorg/nlogo/nvm/Instruction;IILjava/lang/Object;)V
           ATHROW
-         L5
+         L6
+          ASTORE 2
+          ALOAD 2
+          INVOKEVIRTUAL org/nlogo/api/LogoList.size ()I
+          I2D
+         L7
           DSTORE 2
           NEW java/lang/Double
           DUP
           DLOAD 2
           INVOKESPECIAL java/lang/Double.<init> (D)V
           ASTORE 2
-         L0
+         L2
           ALOAD 0
           GETFIELD org/nlogo/prim/_asm_procedurecalculatepressure_setobservervariable_5.world : Lorg/nlogo/agent/World;
           INVOKEVIRTUAL org/nlogo/agent/World.observer ()Lorg/nlogo/agent/Observer;
           BIPUSH 10
           ALOAD 2
           INVOKEVIRTUAL org/nlogo/agent/Observer.setVariable (ILjava/lang/Object;)V
-         L1
+         L3
           ALOAD 1
           ICONST_3
           PUTFIELD org/nlogo/nvm/Context.ip : I
-          GOTO L7
-         L2
+          GOTO L8
+         L4
           ASTORE 3
           NEW org/nlogo/nvm/EngineException
           DUP
@@ -3755,7 +3747,7 @@ procedure CALCULATE-PRESSURE:[]{OTPL}:
           INVOKEVIRTUAL org/nlogo/api/AgentException.getMessage ()Ljava/lang/String;
           INVOKESPECIAL org/nlogo/nvm/EngineException.<init> (Lorg/nlogo/nvm/Context;Lorg/nlogo/nvm/Instruction;Ljava/lang/String;)V
           ATHROW
-         L7
+         L8
           RETURN
 [3]_asm_procedurecalculatepressure_ask_8 "ask particles" AgentSet => void
       _breed:PARTICLES => AgentSet
@@ -8440,32 +8432,28 @@ procedure COLLIDE-WITH:[OTHER-PARTICLE MASS2 SPEED2 HEADING2 THETA V1T V1L V2T V
           I2D
           DCMPL
           IFLE L18
-          ICONST_0
+          DCONST_0
           GOTO L19
          L18
-          SIPUSH 180
-         L19
-          I2D
-          GOTO L20
+          LDC 180.0
+          GOTO L19
          L17
           DLOAD 4
           ICONST_0
           I2D
           DCMPL
-          IFNE L21
+          IFNE L20
           DLOAD 2
           ICONST_0
           I2D
           DCMPL
-          IFLE L22
-          BIPUSH 90
-          GOTO L23
-         L22
-          SIPUSH 270
-         L23
-          I2D
-          GOTO L20
+          IFLE L21
+          LDC 90.0
+          GOTO L19
          L21
+          LDC 270.0
+          GOTO L19
+         L20
           DLOAD 2
           DLOAD 4
           INVOKESTATIC java/lang/StrictMath.atan2 (DD)D
@@ -8476,13 +8464,13 @@ procedure COLLIDE-WITH:[OTHER-PARTICLE MASS2 SPEED2 HEADING2 THETA V1T V1L V2T V
           SIPUSH 360
           I2D
           DREM
-         L20
+         L19
           DSTORE 4
           DSTORE 2
           DLOAD 2
           DLOAD 4
           DSUB
-         L24
+         L22
           DSTORE 2
           NEW java/lang/Double
           DUP
@@ -8499,7 +8487,7 @@ procedure COLLIDE-WITH:[OTHER-PARTICLE MASS2 SPEED2 HEADING2 THETA V1T V1L V2T V
           ALOAD 1
           BIPUSH 15
           PUTFIELD org/nlogo/nvm/Context.ip : I
-          GOTO L25
+          GOTO L23
          L8
           ASTORE 3
           NEW org/nlogo/nvm/EngineException
@@ -8510,7 +8498,7 @@ procedure COLLIDE-WITH:[OTHER-PARTICLE MASS2 SPEED2 HEADING2 THETA V1T V1L V2T V
           INVOKEVIRTUAL org/nlogo/api/AgentException.getMessage ()Ljava/lang/String;
           INVOKESPECIAL org/nlogo/nvm/EngineException.<init> (Lorg/nlogo/nvm/Context;Lorg/nlogo/nvm/Instruction;Ljava/lang/String;)V
           ATHROW
-         L25
+         L23
           RETURN
 [15]_asm_procedurecollidewith_ask_17 "ask other-particle" Object => void
       _procedurevariable:OTHER-PARTICLE => Object
@@ -9406,32 +9394,28 @@ procedure COLLIDE-WITH:[OTHER-PARTICLE MASS2 SPEED2 HEADING2 THETA V1T V1L V2T V
           I2D
           DCMPL
           IFLE L18
-          ICONST_0
+          DCONST_0
           GOTO L19
          L18
-          SIPUSH 180
-         L19
-          I2D
-          GOTO L20
+          LDC 180.0
+          GOTO L19
          L17
           DLOAD 4
           ICONST_0
           I2D
           DCMPL
-          IFNE L21
+          IFNE L20
           DLOAD 2
           ICONST_0
           I2D
           DCMPL
-          IFLE L22
-          BIPUSH 90
-          GOTO L23
-         L22
-          SIPUSH 270
-         L23
-          I2D
-          GOTO L20
+          IFLE L21
+          LDC 90.0
+          GOTO L19
          L21
+          LDC 270.0
+          GOTO L19
+         L20
           DLOAD 2
           DLOAD 4
           INVOKESTATIC java/lang/StrictMath.atan2 (DD)D
@@ -9442,13 +9426,13 @@ procedure COLLIDE-WITH:[OTHER-PARTICLE MASS2 SPEED2 HEADING2 THETA V1T V1L V2T V
           SIPUSH 360
           I2D
           DREM
-         L20
+         L19
           DSTORE 4
           DSTORE 2
           DLOAD 2
           DLOAD 4
           DSUB
-         L24
+         L22
           DSTORE 2
           NEW java/lang/Double
           DUP
@@ -9465,7 +9449,7 @@ procedure COLLIDE-WITH:[OTHER-PARTICLE MASS2 SPEED2 HEADING2 THETA V1T V1L V2T V
           ALOAD 1
           BIPUSH 24
           PUTFIELD org/nlogo/nvm/Context.ip : I
-          GOTO L25
+          GOTO L23
          L8
           ASTORE 3
           NEW org/nlogo/nvm/EngineException
@@ -9476,7 +9460,7 @@ procedure COLLIDE-WITH:[OTHER-PARTICLE MASS2 SPEED2 HEADING2 THETA V1T V1L V2T V
           INVOKEVIRTUAL org/nlogo/api/AgentException.getMessage ()Ljava/lang/String;
           INVOKESPECIAL org/nlogo/nvm/EngineException.<init> (Lorg/nlogo/nvm/Context;Lorg/nlogo/nvm/Instruction;Ljava/lang/String;)V
           ATHROW
-         L25
+         L23
           RETURN
 [24]_asm_procedurecollidewith_done_26 "" => void
          L0
