@@ -139,6 +139,9 @@ Arithmetic18
 Arithmetic19
   3 + 1 => 4
 
+UnaryMinus1
+  (- 5) => -5
+
 Exponentiation1
   9 ^ 2 => 81
 

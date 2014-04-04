@@ -9,7 +9,7 @@ import org.nlogo.{ core, api },
   api.{ LogoList, Nobody }
 import Syntax.compatible
 import org.nlogo.nvm.{ Command, Reporter, Procedure, Referenceable }
-import org.nlogo.prim.{ _minus, _reference, _unaryminus, _taskvariable, _reportertask, _commandtask }
+import org.nlogo.prim.{ _reference, _taskvariable, _reportertask, _commandtask }
 import org.nlogo.parse.LiteralParser
 
 /**
@@ -179,8 +179,8 @@ class ExpressionParser(procedure: Procedure) {
   private def resolveTypes(app: Application) {
     val syntax = app.syntax
     var actual1 = 0
-    // first look at left arg, if any
-    if(syntax.isInfix) {
+    // first look at left arg, if any (minimumOption check handles unary minus case)
+    if(syntax.isInfix && (app.args.size > 1 || !syntax.minimumOption.isDefined)) {
       val tpe = syntax.left
       // this shouldn't really be possible here...
       cAssert(app.args.size >= 1, missingInput(app, false), app)
@@ -334,20 +334,16 @@ class ExpressionParser(procedure: Procedure) {
               (r, new ReporterApp(r, token.start, token.end, token.filename))
             case TokenType.Reporter =>
               val r = token.value.asInstanceOf[Reporter]
-              // the "|| wantReporterTask" is needed or the concise syntax wouldn't work for infix
-              // reporters, e.g. "map + ..."
-              if(!r.syntax.isInfix || wantReporterTask)
+              // _minus can be unary (negation) but only if it's in
+              // variadic position (first thing after an open paren)
+              val leftInputIsOptional =
+                r.syntax.left != Syntax.VoidType && r.syntax.minimumOption.isDefined
+              // the wantReporterTask check is needed or the concise syntax wouldn't work
+              // for infix reporters, e.g. "map + ..."
+              if (wantReporterTask || !r.syntax.isInfix || leftInputIsOptional)
                 (r, new ReporterApp(r, token.start, token.end, token.filename))
-              else {
-                // this is a bit of a hack, but it's not terrible.  _minus is allowed to be unary
-                // (negation) but only if it's missing a left argument and is in a possibly variadic
-                // context (the first thing in a set of parens, basically).
-                if(!r.isInstanceOf[_minus] || !variadic)
-                  throw new MissingPrefixException(token)
-                val r2 = new _unaryminus
-                r2.token(token)
-                (r2, new ReporterApp(r2, token.start, token.end, token.filename))
-              }
+              else
+                throw new MissingPrefixException(token)
             case _ =>
               sys.error("unexpected token type: " + token.tpe)
           }

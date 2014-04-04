@@ -24,6 +24,7 @@ object MiddleEnd extends MiddleEndInterface {
       collection.mutable.Map[nvm.Procedure, collection.mutable.Map[api.Let, Int]]()
     for(procdef <- allDefs) {
       procdef.accept(new ReferenceVisitor)  // handle ReferenceType
+      procdef.accept(new MinusVisitor)  // convert _minus => _unaryminus
       // SimpleOfVisitor performs an optimization, but also sets up for SetVisitor - ST 2/21/08
       procdef.accept(new SimpleOfVisitor)  // convert _of(_*variable) => _*variableof
       procdef.accept(new TaskVisitor)  // handle _taskvariable
