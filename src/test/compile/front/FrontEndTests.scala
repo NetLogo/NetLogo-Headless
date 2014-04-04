@@ -170,7 +170,7 @@ class FrontEndTests extends FunSuite {
   }
   test("testParseDiffuse") {
     runTest("diffuse pcolor 1",
-      "_diffuse[_reference:Patch,2[], _constdouble:1.0[]]")
+      "_diffuse[_patchvariable:2[], _constdouble:1.0[]]")
   }
   /// tests using testStartAndEnd
   test("testStartAndEndPositions0") {

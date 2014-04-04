@@ -24,9 +24,6 @@ package org.nlogo.nvm
 // the original.  For example _hatch replaces itself with _hatchfast if the optional command block
 // is omitted.  _fd turns into _fd followed by _fdinternal.  And so on.
 //
-// - Any command that takes a Reference argument is custom assembled.  (This wouldn't be necessary
-// if the compiler were a little smarter.)
-//
 // HOW CUSTOM ASSEMBLY WORKS
 //
 // At assembly time, the command's CustomAssembled.assemble() with an object implementing the

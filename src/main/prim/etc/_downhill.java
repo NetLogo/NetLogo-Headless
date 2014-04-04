@@ -9,20 +9,22 @@ import org.nlogo.agent.Turtle;
 import org.nlogo.api.AgentException;
 import org.nlogo.nvm.Command;
 import org.nlogo.nvm.Context;
+import org.nlogo.nvm.Referencer;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public final strictfp class _downhill
-    extends Command {
+    extends Command implements Referencer {
 
+  private int _vn;
   @Override
-  public String toString() {
-    if (world != null && reference != null) {
-      return super.toString() + ":" + world.patchesOwnNameAt(reference.vn());
-    } else {
-      return super.toString();
-    }
+  public int vn() {
+    return _vn;
+  }
+  @Override
+  public void vn_$eq(int vn) {
+    _vn = vn;
   }
 
   @Override
@@ -38,7 +40,7 @@ public final strictfp class _downhill
     List<Patch> winners = new ArrayList<Patch>();
     for (AgentIterator it = patch.getNeighbors().iterator(); it.hasNext();) {
       Patch tester = (Patch) it.next();
-      Object value = tester.getPatchVariable(reference.vn());
+      Object value = tester.getPatchVariable(_vn);
       if (!(value instanceof Double)) {
         continue;
       }
@@ -54,8 +56,8 @@ public final strictfp class _downhill
       }
     }
     if (!winners.isEmpty() &&
-        (!(patch.getPatchVariable(reference.vn()) instanceof Double) ||
-            winningValue < ((Double) patch.getPatchVariable(reference.vn())).doubleValue())) {
+        (!(patch.getPatchVariable(_vn) instanceof Double) ||
+            winningValue < ((Double) patch.getPatchVariable(_vn)).doubleValue())) {
       Patch winner = winners.get(context.job.random.nextInt(winners.size()));
       turtle.face(winner, true);
       try {

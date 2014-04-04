@@ -4,7 +4,7 @@ package org.nlogo.prim
 
 import org.nlogo.core.AgentKind
 import org.nlogo.api.AgentException
-import org.nlogo.nvm.{ Reporter, Context, EngineException, Reference, Referenceable }
+import org.nlogo.nvm.{ Reporter, Context, EngineException, Referenceable }
 import org.nlogo.agent.Patch
 
 class _patchvariable(_vn: Int) extends Reporter with Referenceable {
@@ -12,9 +12,6 @@ class _patchvariable(_vn: Int) extends Reporter with Referenceable {
   override def toString =
     super.toString + ":" +
       Option(world).map(_.patchesOwnNameAt(vn)).getOrElse(vn.toString)
-
-  def makeReference =
-    new Reference(AgentKind.Patch, vn, this)
 
   // MethodRipper won't let us call a public method from report_1()
   // so we must keep vn and _vn separate - ST 9/22/12

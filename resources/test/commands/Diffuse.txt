@@ -1,3 +1,7 @@
+DiffuseBadSyntax
+  O> diffuse 0 0 => COMPILER ERROR DIFFUSE expected this input to be a variable, but got a number instead
+  O> diffuse color 0 => COMPILER ERROR Expected a patch variable here.
+
 DiffuseTorus
   O> random-seed 43443
   O> foreach sort patches [ ask ? [ set pcolor random-float 140 ] ]
@@ -71,4 +75,3 @@ DiffuseConservation2
   O> set glob1 sum [pcolor] of patches
   O> diffuse pcolor 0.5
   abs( glob1 - sum [pcolor] of patches ) < 0.000000001 => true
-

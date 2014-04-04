@@ -73,9 +73,6 @@ public abstract strictfp class Instruction
   public String agentClassString = "OTPL";
   public int agentBits = 0;
 
-  // for primitives which use ReferenceType
-  public Reference reference = null;
-
   /// store frequently used stuff where it's fast to get at
 
   public void init(Workspace workspace) {

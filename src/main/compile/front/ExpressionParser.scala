@@ -8,8 +8,8 @@ import org.nlogo.{ core, api },
   core.{ Syntax, Token, TokenType },
   api.{ LogoList, Nobody }
 import Syntax.compatible
-import org.nlogo.nvm.{ Command, Reporter, Procedure, Referenceable }
-import org.nlogo.prim.{ _reference, _taskvariable, _reportertask, _commandtask }
+import org.nlogo.nvm.{ Command, Reporter, Procedure }
+import org.nlogo.prim.{ _taskvariable, _reportertask, _commandtask }
 import org.nlogo.parse.LiteralParser
 
 /**
@@ -222,8 +222,8 @@ class ExpressionParser(procedure: Procedure) {
    * resolves the type of an expression. We call this "resolution" instead of "checking" because
    * sometimes the expression needs further parsing or processing depending on its context and
    * expected type. For example, delayed blocks need to be parsed here based on what they're
-   * expected to be, and reference types need some processing as well. The caller should replace the
-   * expr it passed in with the one returned, as it may be different.
+   * expected to be. The caller should replace the expr it passed in with the one returned, as
+   * it may be different.
    */
   private def resolveType(goalType: Int, originalArg: Expression, instruction: String): Expression = {
     // now that we know the type, finish parsing any blocks
@@ -234,14 +234,6 @@ class ExpressionParser(procedure: Procedure) {
     cAssert(compatible(goalType, arg.reportedType),
             instruction + " expected this input to be " + core.TypeNames.aName(goalType) + ", but got " +
             core.TypeNames.aName(arg.reportedType) + " instead", arg)
-    if(goalType == Syntax.ReferenceType) {
-      // we can be sure this cast will work, because otherwise the assert above would've failed (no
-      // Expression other than a ReporterApp can have type ReferenceType, which it must or we
-      // wouldn't be here). there has to be a better way to do this, though...
-      val rApp = arg.asInstanceOf[ReporterApp]
-      cAssert(rApp.reporter.isInstanceOf[Referenceable], ExpectedReferencable, arg)
-      rApp.reporter = new _reference(rApp.reporter.asInstanceOf[Referenceable].makeReference)
-    }
     arg
   }
 
@@ -587,7 +579,6 @@ class ExpressionParser(procedure: Procedure) {
   private val ExpectedCommand = "Expected command."
   private val ExpectedCloseBracket = "Expected closing bracket."
   private val ExpectedCloseParen = "Expected a closing parenthesis here."
-  private val ExpectedReferencable = "Expected a patch variable here."
   private val ExpectedReporter = "Expected reporter."
   private val InvalidVariadicContext = "To use a non-default number of inputs, you need to put parentheses around this."
   private val MissingCloseBracket = "No closing bracket for this open bracket."

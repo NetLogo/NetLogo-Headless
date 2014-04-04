@@ -2,6 +2,7 @@
 
 package org.nlogo.nvm
 
-trait Referenceable {
+trait Referencer {
   def vn: Int
+  def vn_=(vn: Int): Unit
 }
