@@ -15,6 +15,11 @@ public strictfp class InRadiusOrCone {
     this.world = world;
   }
 
+  public List<Agent> inRadiusSimple(Agent agent, AgentSet sourceSet,
+                                    double radius, boolean wrap) {
+    return InRadiusSimple.apply(world, agent, sourceSet, radius, wrap);
+  }
+
   public List<Agent> inRadius(Agent agent, AgentSet sourceSet,
                               double radius, boolean wrap) {
     int worldWidth = world.worldWidth();

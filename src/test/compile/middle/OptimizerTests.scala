@@ -118,6 +118,22 @@ class OptimizerTests extends FunSuite {
     assertResult("_oneofwith[_patches[], [_equal[_patchvariable:2[], _constdouble:15.0[]]]]")(
       compileReporter("one-of patches with [pcolor = red]"))
   }
+  test("inRadius1") {
+    assertResult("_inradiusboundingbox[_turtles[], _constdouble:9001.0[]]")(
+      compileReporter("turtles in-radius 9001"))
+  }
+  test("inRadius2") {
+    assertResult("_inradiusboundingbox[_patches[], _constdouble:42.0[]]")(
+      compileReporter("patches in-radius 42"))
+  }
+  test("inRadius3") {
+    assertResult("_inradiusboundingbox[_breed:FROGS[], _constdouble:17.0[]]")(
+      compileReporter("frogs in-radius 17"))
+  }
+  test("inRadius4") {
+    assertResult("_inradius[_with[_turtles[], [_equal[_turtlevariabledouble:0[], _constdouble:1.0[]]]], _constdouble:4.0[]]")(
+      compileReporter("turtles with [WHO = 1] in-radius 4"))
+  }
   test("anyWith1") {
     assertResult("_not[_anywith[_patches[], [_constboolean:true[]]]]")(
       compileReporter("count patches with [true] = 0"))

@@ -29,7 +29,7 @@ object Optimizer extends DefaultAstVisitor {
   private val commandMungers =
     List[CommandMunger](Fd1, FdLessThan1, HatchFast, SproutFast, CrtFast, CroFast)
   private val reporterMungers =
-    List[ReporterMunger](PatchAt, With, OneOfWith, Nsum, Nsum4,
+    List[ReporterMunger](PatchAt, With, OneOfWith, InRadiusBoundingBox, Nsum, Nsum4,
          CountWith, OtherWith, WithOther, AnyOther, AnyOtherWith, CountOther, CountOtherWith,
          AnyWith1, AnyWith2, AnyWith3, AnyWith4, AnyWith5,
          PatchVariableDouble, TurtleVariableDouble, RandomConst)
@@ -280,6 +280,19 @@ object Optimizer extends DefaultAstVisitor {
       root.replace(classOf[_oneofwith])
       root.graftArg(arg0.matchArg(0))
       root.graftArg(arg0.matchArg(1))
+    }
+  }
+  // _inradius(x: breed|turtles|patches, y) => _inradiusboundingbox(x, y)
+  private object InRadiusBoundingBox extends RewritingReporterMunger {
+    import org.nlogo.prim.etc.{ _breed, _inradius, _inradiusboundingbox, _turtles }
+    val clazz = classOf[_inradius]
+    def munge(root: Match) {
+      val arg0 = root.matchArg(0, classOf[_turtles], classOf[_patches], classOf[_breed])
+      val arg1 = root.matchArg(1)
+      root.strip()
+      root.replace(classOf[_inradiusboundingbox])
+      root.graftArg(arg0)
+      root.graftArg(arg1)
     }
   }
   private object Nsum extends RewritingReporterMunger {

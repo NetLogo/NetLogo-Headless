@@ -13896,14 +13896,87 @@ reporter procedure OVERLAPPING?:[]{-T--}:
 [0]_asm_procedureoverlapping_report_0 "report any? other particles in-radius ((size + largest-particle-size) / 2)
                               with [distance myself < (size + [size] of myself) / 2" Object => void
       _anyotherwith AgentSet,Reporter => boolean
-        _inradius AgentSet,double => AgentSet
-          _breed:PARTICLES => AgentSet
-          _div double,double => double
+        _inradiusboundingbox
+          _asm_procedureoverlapping_breed_1 "particles" => AgentSet
+               L0
+                ALOAD 0
+                GETFIELD org/nlogo/prim/_asm_procedureoverlapping_breed_1.world : Lorg/nlogo/agent/World;
+                LDC "PARTICLES"
+                INVOKEVIRTUAL org/nlogo/agent/World.getBreed (Ljava/lang/String;)Lorg/nlogo/agent/AgentSet;
+               L1
+                ARETURN
+          _asm_procedureoverlapping_div_2 "size + largest-particle-size) / 2" double,double => double
             _plus double,double => double
               _turtlevariabledouble:SIZE => double
               _observervariable:LARGEST-PARTICLE-SIZE => Object
             _constdouble:2.0 => double
-        _asm_procedureoverlapping_lessthan_1 "distance myself < (size + [size] of myself) / 2" double,double => boolean
+                TRYCATCHBLOCK L0 L1 L1 java/lang/ClassCastException
+               L2
+                ALOAD 1
+                GETFIELD org/nlogo/nvm/Context.agent : Lorg/nlogo/agent/Agent;
+                CHECKCAST org/nlogo/agent/Turtle
+                BIPUSH 10
+                INVOKEVIRTUAL org/nlogo/agent/Turtle.getTurtleVariableDouble (I)D
+               L3
+                ALOAD 0
+                GETFIELD org/nlogo/prim/_asm_procedureoverlapping_div_2.world : Lorg/nlogo/agent/World;
+                INVOKEVIRTUAL org/nlogo/agent/World.observer ()Lorg/nlogo/agent/Observer;
+                ICONST_1
+                INVOKEVIRTUAL org/nlogo/agent/Observer.getVariable (I)Ljava/lang/Object;
+               L4
+                ASTORE 2
+               L0
+                ALOAD 2
+                CHECKCAST java/lang/Double
+                INVOKEVIRTUAL java/lang/Double.doubleValue ()D
+                GOTO L5
+               L1
+                POP
+                NEW org/nlogo/nvm/ArgumentTypeException
+                DUP
+                ALOAD 1
+                ALOAD 0
+                BIPUSH 1
+                LDC 1
+                ALOAD 2
+                INVOKESPECIAL org/nlogo/nvm/ArgumentTypeException.<init> (Lorg/nlogo/nvm/Context;Lorg/nlogo/nvm/Instruction;IILjava/lang/Object;)V
+                ATHROW
+               L5
+                DSTORE 4
+                DSTORE 2
+                DLOAD 2
+                DLOAD 4
+                DADD
+               L6
+                LDC 2.0
+               L7
+                DSTORE 4
+                DSTORE 2
+                DLOAD 4
+                DCONST_0
+                DCMPL
+                IFNE L8
+                NEW org/nlogo/nvm/EngineException
+                DUP
+                ALOAD 1
+                ALOAD 0
+                INVOKESTATIC org/nlogo/api/I18N.errorsJ ()Lorg/nlogo/api/I18NJava;
+                LDC "org.nlogo.prim.etc.$common.divByZero"
+                INVOKEINTERFACE org/nlogo/api/I18NJava.get (Ljava/lang/String;)Ljava/lang/String;
+                INVOKESPECIAL org/nlogo/nvm/EngineException.<init> (Lorg/nlogo/nvm/Context;Lorg/nlogo/nvm/Instruction;Ljava/lang/String;)V
+                ATHROW
+               L8
+                DLOAD 2
+                DLOAD 4
+                DDIV
+               L9
+                DSTORE 2
+                NEW java/lang/Double
+                DUP
+                DLOAD 2
+                INVOKESPECIAL java/lang/Double.<init> (D)V
+                ARETURN
+        _asm_procedureoverlapping_lessthan_3 "distance myself < (size + [size] of myself) / 2" double,double => boolean
           _distance Agent => double
             _myself => Agent
           _div double,double => double
@@ -13973,7 +14046,7 @@ reporter procedure OVERLAPPING?:[]{-T--}:
               ATHROW
              L10
               ALOAD 0
-              GETFIELD org/nlogo/prim/_asm_procedureoverlapping_lessthan_1.world : Lorg/nlogo/agent/World;
+              GETFIELD org/nlogo/prim/_asm_procedureoverlapping_lessthan_3.world : Lorg/nlogo/agent/World;
               INVOKEVIRTUAL org/nlogo/agent/World.protractor ()Lorg/nlogo/agent/Protractor;
               ALOAD 1
               GETFIELD org/nlogo/nvm/Context.agent : Lorg/nlogo/agent/Agent;
@@ -14116,128 +14189,30 @@ reporter procedure OVERLAPPING?:[]{-T--}:
              L26
               ARETURN
           TRYCATCHBLOCK L0 L1 L1 java/lang/ClassCastException
-         L2
           ALOAD 0
-          GETFIELD org/nlogo/prim/_asm_procedureoverlapping_report_0.world : Lorg/nlogo/agent/World;
-          LDC "PARTICLES"
-          INVOKEVIRTUAL org/nlogo/agent/World.getBreed (Ljava/lang/String;)Lorg/nlogo/agent/AgentSet;
-         L3
+          GETFIELD org/nlogo/prim/_asm_procedureoverlapping_report_0.keptinstr3 : Lorg/nlogo/prim/etc/_inradiusboundingbox;
           ALOAD 1
-          GETFIELD org/nlogo/nvm/Context.agent : Lorg/nlogo/agent/Agent;
-          CHECKCAST org/nlogo/agent/Turtle
-          BIPUSH 10
-          INVOKEVIRTUAL org/nlogo/agent/Turtle.getTurtleVariableDouble (I)D
-         L4
-          ALOAD 0
-          GETFIELD org/nlogo/prim/_asm_procedureoverlapping_report_0.world : Lorg/nlogo/agent/World;
-          INVOKEVIRTUAL org/nlogo/agent/World.observer ()Lorg/nlogo/agent/Observer;
-          ICONST_1
-          INVOKEVIRTUAL org/nlogo/agent/Observer.getVariable (I)Ljava/lang/Object;
-         L5
+          INVOKEVIRTUAL org/nlogo/prim/etc/_inradiusboundingbox.report (Lorg/nlogo/nvm/Context;)Ljava/lang/Object;
+         L2
           ASTORE 2
          L0
           ALOAD 2
-          CHECKCAST java/lang/Double
-          INVOKEVIRTUAL java/lang/Double.doubleValue ()D
-          GOTO L6
+          CHECKCAST org/nlogo/agent/AgentSet
+          GOTO L3
          L1
           POP
           NEW org/nlogo/nvm/ArgumentTypeException
           DUP
           ALOAD 1
           ALOAD 0
-          BIPUSH 1
-          LDC 1
+          BIPUSH 0
+          LDC 112
           ALOAD 2
           INVOKESPECIAL org/nlogo/nvm/ArgumentTypeException.<init> (Lorg/nlogo/nvm/Context;Lorg/nlogo/nvm/Instruction;IILjava/lang/Object;)V
           ATHROW
-         L6
-          DSTORE 4
-          DSTORE 2
-          DLOAD 2
-          DLOAD 4
-          DADD
-         L7
-          LDC 2.0
-         L8
-          DSTORE 4
-          DSTORE 2
-          DLOAD 4
-          DCONST_0
-          DCMPL
-          IFNE L9
-          NEW org/nlogo/nvm/EngineException
-          DUP
-          ALOAD 1
+         L3
           ALOAD 0
-          INVOKESTATIC org/nlogo/api/I18N.errorsJ ()Lorg/nlogo/api/I18NJava;
-          LDC "org.nlogo.prim.etc.$common.divByZero"
-          INVOKEINTERFACE org/nlogo/api/I18NJava.get (Ljava/lang/String;)Ljava/lang/String;
-          INVOKESPECIAL org/nlogo/nvm/EngineException.<init> (Lorg/nlogo/nvm/Context;Lorg/nlogo/nvm/Instruction;Ljava/lang/String;)V
-          ATHROW
-         L9
-          DLOAD 2
-          DLOAD 4
-          DDIV
-         L10
-          DSTORE 3
-          ASTORE 2
-          ALOAD 2
-          INVOKEVIRTUAL org/nlogo/agent/AgentSet.kind ()Lorg/nlogo/core/AgentKind;
-          INVOKESTATIC org/nlogo/core/AgentKindJ.Link ()Lorg/nlogo/core/AgentKind$Link$;
-          IF_ACMPNE L11
-          NEW org/nlogo/nvm/EngineException
-          DUP
-          ALOAD 1
-          ALOAD 0
-          INVOKESTATIC org/nlogo/api/I18N.errorsJ ()Lorg/nlogo/api/I18NJava;
-          LDC "org.nlogo.prim.etc.$common.expectedTurtleOrPatchButGotLink"
-          INVOKEINTERFACE org/nlogo/api/I18NJava.get (Ljava/lang/String;)Ljava/lang/String;
-          INVOKESPECIAL org/nlogo/nvm/EngineException.<init> (Lorg/nlogo/nvm/Context;Lorg/nlogo/nvm/Instruction;Ljava/lang/String;)V
-          ATHROW
-         L11
-          DLOAD 3
-          DCONST_0
-          DCMPG
-          IFGE L12
-          NEW org/nlogo/nvm/EngineException
-          DUP
-          ALOAD 1
-          ALOAD 0
-          INVOKESTATIC org/nlogo/api/I18N.errorsJ ()Lorg/nlogo/api/I18NJava;
-          LDC "org.nlogo.prim.etc.$common.noNegativeRadius"
-          ICONST_1
-          ANEWARRAY java/lang/Object
-          DUP
-          ICONST_0
-          LDC "IN-RADIUS"
-          AASTORE
-          INVOKEINTERFACE org/nlogo/api/I18NJava.getN (Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
-          INVOKESPECIAL org/nlogo/nvm/EngineException.<init> (Lorg/nlogo/nvm/Context;Lorg/nlogo/nvm/Instruction;Ljava/lang/String;)V
-          ATHROW
-         L12
-          ALOAD 0
-          GETFIELD org/nlogo/prim/_asm_procedureoverlapping_report_0.world : Lorg/nlogo/agent/World;
-          GETFIELD org/nlogo/agent/World.inRadiusOrCone : Lorg/nlogo/agent/InRadiusOrCone;
-          ALOAD 1
-          GETFIELD org/nlogo/nvm/Context.agent : Lorg/nlogo/agent/Agent;
-          ALOAD 2
-          DLOAD 3
-          ICONST_1
-          INVOKEVIRTUAL org/nlogo/agent/InRadiusOrCone.inRadius (Lorg/nlogo/agent/Agent;Lorg/nlogo/agent/AgentSet;DZ)Ljava/util/List;
-          ASTORE 5
-          ALOAD 2
-          INVOKEVIRTUAL org/nlogo/agent/AgentSet.kind ()Lorg/nlogo/core/AgentKind;
-          ALOAD 5
-          ALOAD 5
-          INVOKEINTERFACE java/util/List.size ()I
-          ANEWARRAY org/nlogo/agent/Agent
-          INVOKEINTERFACE java/util/List.toArray ([Ljava/lang/Object;)[Ljava/lang/Object;
-          CHECKCAST [Lorg/nlogo/agent/Agent;
-          INVOKESTATIC org/nlogo/agent/AgentSet.fromArray (Lorg/nlogo/core/AgentKind;[Lorg/nlogo/agent/Agent;)Lorg/nlogo/agent/AgentSet;
-         L13
-          ALOAD 0
-          GETFIELD org/nlogo/prim/_asm_procedureoverlapping_report_0.keptinstr10 : Lorg/nlogo/prim/_asm_procedureoverlapping_lessthan_1;
+          GETFIELD org/nlogo/prim/_asm_procedureoverlapping_report_0.keptinstr4 : Lorg/nlogo/prim/_asm_procedureoverlapping_lessthan_3;
           ASTORE 3
           ASTORE 2
           NEW org/nlogo/nvm/Context
@@ -14253,17 +14228,17 @@ reporter procedure OVERLAPPING?:[]{-T--}:
           ALOAD 2
           INVOKEVIRTUAL org/nlogo/agent/AgentSet.iterator ()Lorg/nlogo/agent/AgentIterator;
           ASTORE 5
-         L14
+         L4
           ALOAD 5
           INVOKEINTERFACE org/nlogo/agent/AgentIterator.hasNext ()Z
-          IFEQ L15
+          IFEQ L5
           ALOAD 5
           INVOKEINTERFACE org/nlogo/agent/AgentIterator.next ()Lorg/nlogo/agent/Agent;
           ASTORE 6
           ALOAD 6
           ALOAD 1
           GETFIELD org/nlogo/nvm/Context.agent : Lorg/nlogo/agent/Agent;
-          IF_ACMPEQ L14
+          IF_ACMPEQ L4
           ALOAD 4
           ALOAD 6
           ALOAD 3
@@ -14271,20 +14246,20 @@ reporter procedure OVERLAPPING?:[]{-T--}:
           ASTORE 7
           ALOAD 7
           INSTANCEOF java/lang/Boolean
-          IFEQ L16
+          IFEQ L6
           ALOAD 7
           CHECKCAST java/lang/Boolean
           ASTORE 8
           ALOAD 8
           INVOKEVIRTUAL java/lang/Boolean.booleanValue ()Z
-          IFEQ L17
+          IFEQ L7
           ICONST_1
-          GOTO L18
-         L17
+          GOTO L8
+         L7
           GETSTATIC scala/runtime/BoxedUnit.UNIT : Lscala/runtime/BoxedUnit;
           ASTORE 9
-          GOTO L14
-         L16
+          GOTO L4
+         L6
           NEW org/nlogo/nvm/EngineException
           DUP
           ALOAD 1
@@ -14315,15 +14290,15 @@ reporter procedure OVERLAPPING?:[]{-T--}:
           INVOKEVIRTUAL org/nlogo/api/I18N$BundleKind.getN (Ljava/lang/String;Lscala/collection/Seq;)Ljava/lang/String;
           INVOKESPECIAL org/nlogo/nvm/EngineException.<init> (Lorg/nlogo/nvm/Context;Lorg/nlogo/nvm/Instruction;Ljava/lang/String;)V
           ATHROW
-         L15
+         L5
           ICONST_0
-         L18
-          IFEQ L19
+         L8
+          IFEQ L9
           GETSTATIC java/lang/Boolean.TRUE : Ljava/lang/Boolean;
-          GOTO L20
-         L19
+          GOTO L10
+         L9
           GETSTATIC java/lang/Boolean.FALSE : Ljava/lang/Boolean;
-         L20
+         L10
           ASTORE 2
           ALOAD 1
           GETFIELD org/nlogo/nvm/Context.job : Lorg/nlogo/nvm/Job;
@@ -14339,15 +14314,15 @@ reporter procedure OVERLAPPING?:[]{-T--}:
           GETFIELD org/nlogo/nvm/Context.activation : Lorg/nlogo/nvm/Activation;
           INVOKEVIRTUAL org/nlogo/nvm/Activation.procedure ()Lorg/nlogo/nvm/Procedure;
           INVOKEVIRTUAL org/nlogo/nvm/Procedure.isTask ()Z
-          IFEQ L21
+          IFEQ L11
           GETSTATIC org/nlogo/nvm/NonLocalExit$.MODULE$ : Lorg/nlogo/nvm/NonLocalExit$;
           ATHROW
-         L21
+         L11
           ALOAD 1
           GETFIELD org/nlogo/nvm/Context.activation : Lorg/nlogo/nvm/Activation;
           INVOKEVIRTUAL org/nlogo/nvm/Activation.procedure ()Lorg/nlogo/nvm/Procedure;
           INVOKEVIRTUAL org/nlogo/nvm/Procedure.isReporter ()Z
-          IFNE L22
+          IFNE L12
           NEW org/nlogo/nvm/EngineException
           DUP
           ALOAD 1
@@ -14363,10 +14338,10 @@ reporter procedure OVERLAPPING?:[]{-T--}:
           INVOKEINTERFACE org/nlogo/api/I18NJava.getN (Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
           INVOKESPECIAL org/nlogo/nvm/EngineException.<init> (Lorg/nlogo/nvm/Context;Lorg/nlogo/nvm/Instruction;Ljava/lang/String;)V
           ATHROW
-         L22
+         L12
           ALOAD 1
           INVOKEVIRTUAL org/nlogo/nvm/Context.atTopActivation ()Z
-          IFNE L23
+          IFNE L13
           NEW org/nlogo/nvm/EngineException
           DUP
           ALOAD 1
@@ -14382,9 +14357,9 @@ reporter procedure OVERLAPPING?:[]{-T--}:
           INVOKEINTERFACE org/nlogo/api/I18NJava.getN (Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
           INVOKESPECIAL org/nlogo/nvm/EngineException.<init> (Lorg/nlogo/nvm/Context;Lorg/nlogo/nvm/Instruction;Ljava/lang/String;)V
           ATHROW
-         L23
+         L13
           RETURN
-[1]_asm_procedureoverlapping_returnreport_2 "" => void
+[1]_asm_procedureoverlapping_returnreport_4 "" => void
          L0
           NEW org/nlogo/nvm/EngineException
           DUP
