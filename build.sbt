@@ -129,7 +129,7 @@ bintrayPublishSettings
 
 PublishVersioned.settings
 
-bintray.Keys.repository in bintray.Keys.bintray := "NetLogoHeadless"
+bintray.Keys.repository in bintray.Keys.bintray := "NetLogoHeadlessMaven"
 
 bintray.Keys.bintrayOrganization in bintray.Keys.bintray := Some("netlogo")
 
