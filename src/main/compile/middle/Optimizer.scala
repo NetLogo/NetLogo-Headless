@@ -284,7 +284,6 @@ object Optimizer extends DefaultAstVisitor {
   }
   // _inradius(x: breed|turtles|patches, y) => _inradiusboundingbox(x, y)
   private object InRadiusBoundingBox extends RewritingReporterMunger {
-    import org.nlogo.prim.etc.{ _breed, _inradius, _inradiusboundingbox, _turtles }
     val clazz = classOf[_inradius]
     def munge(root: Match) {
       val arg0 = root.matchArg(0, classOf[_turtles], classOf[_patches], classOf[_breed])

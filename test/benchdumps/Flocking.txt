@@ -833,9 +833,9 @@ procedure FIND-FLOCKMATES:[]{-T--}:
           TRYCATCHBLOCK L0 L1 L1 java/lang/ClassCastException
           TRYCATCHBLOCK L2 L3 L4 org/nlogo/api/AgentException
           ALOAD 0
-          GETFIELD org/nlogo/prim/_asm_procedurefindflockmates_setturtlevariable_0.keptinstr3 : Lorg/nlogo/prim/etc/_inradiusboundingbox;
+          GETFIELD org/nlogo/prim/_asm_procedurefindflockmates_setturtlevariable_0.keptinstr3 : Lorg/nlogo/prim/_inradiusboundingbox;
           ALOAD 1
-          INVOKEVIRTUAL org/nlogo/prim/etc/_inradiusboundingbox.report (Lorg/nlogo/nvm/Context;)Ljava/lang/Object;
+          INVOKEVIRTUAL org/nlogo/prim/_inradiusboundingbox.report (Lorg/nlogo/nvm/Context;)Ljava/lang/Object;
          L5
           ASTORE 2
          L0

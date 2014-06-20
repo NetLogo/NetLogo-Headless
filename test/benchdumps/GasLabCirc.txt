@@ -14190,9 +14190,9 @@ reporter procedure OVERLAPPING?:[]{-T--}:
               ARETURN
           TRYCATCHBLOCK L0 L1 L1 java/lang/ClassCastException
           ALOAD 0
-          GETFIELD org/nlogo/prim/_asm_procedureoverlapping_report_0.keptinstr3 : Lorg/nlogo/prim/etc/_inradiusboundingbox;
+          GETFIELD org/nlogo/prim/_asm_procedureoverlapping_report_0.keptinstr3 : Lorg/nlogo/prim/_inradiusboundingbox;
           ALOAD 1
-          INVOKEVIRTUAL org/nlogo/prim/etc/_inradiusboundingbox.report (Lorg/nlogo/nvm/Context;)Ljava/lang/Object;
+          INVOKEVIRTUAL org/nlogo/prim/_inradiusboundingbox.report (Lorg/nlogo/nvm/Context;)Ljava/lang/Object;
          L2
           ASTORE 2
          L0

@@ -249,7 +249,7 @@ R in-cone etc._incone
 R in-link-from etc._inlinkfrom
 R in-link-neighbor? etc._inlinkneighbor
 R in-link-neighbors etc._inlinkneighbors
-R in-radius etc._inradius
+R in-radius _inradius
 R int etc._int
 R is-agent? etc._isagent
 R is-agentset? etc._isagentset
@@ -392,7 +392,7 @@ R towards etc._towards
 R towardsxy etc._towardsxy
 R turtle etc._turtle
 R turtle-set etc._turtleset
-R turtles etc._turtles
+R turtles _turtles
 R turtles-at etc._turtlesat
 R turtles-here etc._turtleshere
 R turtles-on etc._turtleson
