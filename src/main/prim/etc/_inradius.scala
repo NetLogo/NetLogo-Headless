@@ -13,23 +13,35 @@ import
     agent.{ Agent, AgentSet },
     api.I18N,
     core.AgentKind,
-    nvm.{ Context, EngineException, Reporter }
+    nvm.{ Context, EngineException, Instruction, Reporter }
+
+// These classes are purposely written to delegate, rather than inherit, for the sake of performance --JAB (6/20/14)
 
 @strictfp
-final class _inradius extends InRadiusReporter {
-  override protected lazy val findAgentsInRadius = world.inRadiusOrCone.inRadiusSimple _
+final class _inradius extends Reporter {
+
+  private lazy val reportFunc = InRadiusOps.report(world.inRadiusOrCone.inRadiusSimple, this) _
+
+  override def syntax                   = InRadiusOps.syntax
+  override def report(context: Context) = reportFunc(context)
+
 }
 
 @strictfp
-final class _inradiusboundingbox extends InRadiusReporter {
-  override protected lazy val findAgentsInRadius = world.inRadiusOrCone.inRadius _
+final class _inradiusboundingbox extends Reporter {
+
+  private lazy val reportFunc = InRadiusOps.report(world.inRadiusOrCone.inRadius, this) _
+
+  override def syntax                   = InRadiusOps.syntax
+  override def report(context: Context) = reportFunc(context)
+
 }
 
-sealed trait InRadiusReporter extends Reporter {
+private object InRadiusOps {
 
-  protected def findAgentsInRadius: (Agent, AgentSet, Double, Boolean) => JList[Agent]
+  type InRadiusFinder = (Agent, AgentSet, Double, Boolean) => JList[Agent]
 
-  override def syntax = {
+  val syntax = {
     import org.nlogo.core.Syntax, Syntax._
     Syntax.reporterSyntax(
       agentClassString = "-TP-",
@@ -40,16 +52,16 @@ sealed trait InRadiusReporter extends Reporter {
     )
   }
 
-  override def report(context: Context): AnyRef = {
+  def report(findAgentsInRadius: InRadiusFinder, instr: Instruction)(context: Context): AnyRef = {
 
-    val sourceSet = argEvalAgentSet(context, 0)
-    val radius    = argEvalDoubleValue(context, 1)
+    val sourceSet = instr.argEvalAgentSet(context, 0)
+    val radius    = instr.argEvalDoubleValue(context, 1)
 
     if (sourceSet.kind == AgentKind.Link)
-      throw new EngineException(context, this, I18N.errorsJ.get("org.nlogo.prim.etc.$common.expectedTurtleOrPatchButGotLink"))
+      throw new EngineException(context, instr, I18N.errorsJ.get("org.nlogo.prim.etc.$common.expectedTurtleOrPatchButGotLink"))
 
     if (radius < 0)
-      throw new EngineException(context, this, I18N.errorsJ.getN("org.nlogo.prim.etc.$common.noNegativeRadius", displayName))
+      throw new EngineException(context, instr, I18N.errorsJ.getN("org.nlogo.prim.etc.$common.noNegativeRadius", instr.displayName))
 
     val result = findAgentsInRadius(context.agent, sourceSet, radius, true)
     AgentSet.fromArray(sourceSet.kind, result.toArray(new Array[Agent](result.size)))
