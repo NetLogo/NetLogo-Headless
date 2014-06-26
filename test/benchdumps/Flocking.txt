@@ -813,96 +813,47 @@ procedure FLOCK:[]{-T--}:
 procedure FIND-FLOCKMATES:[]{-T--}:
 [0]_asm_procedurefindflockmates_setturtlevariable_0 "set flockmates other turtles in-radius vision" Object => void
       _other AgentSet => AgentSet
-        _inradius AgentSet,double => AgentSet
-          _turtles => AgentSet
-          _observervariable:VISION => Object
+        _inradiusboundingbox
+          _asm_procedurefindflockmates_turtles_1 "turtles" => AgentSet
+               L0
+                ALOAD 0
+                GETFIELD org/nlogo/prim/_asm_procedurefindflockmates_turtles_1.world : Lorg/nlogo/agent/World;
+                INVOKEVIRTUAL org/nlogo/agent/World.turtles ()Lorg/nlogo/agent/AgentSet;
+               L1
+                ARETURN
+          _asm_procedurefindflockmates_observervariable_2 "vision" => Object
+               L0
+                ALOAD 0
+                GETFIELD org/nlogo/prim/_asm_procedurefindflockmates_observervariable_2.world : Lorg/nlogo/agent/World;
+                INVOKEVIRTUAL org/nlogo/agent/World.observer ()Lorg/nlogo/agent/Observer;
+                ICONST_4
+                INVOKEVIRTUAL org/nlogo/agent/Observer.getVariable (I)Ljava/lang/Object;
+               L1
+                ARETURN
           TRYCATCHBLOCK L0 L1 L1 java/lang/ClassCastException
           TRYCATCHBLOCK L2 L3 L4 org/nlogo/api/AgentException
+          ALOAD 0
+          GETFIELD org/nlogo/prim/_asm_procedurefindflockmates_setturtlevariable_0.keptinstr3 : Lorg/nlogo/prim/_inradiusboundingbox;
+          ALOAD 1
+          INVOKEVIRTUAL org/nlogo/prim/_inradiusboundingbox.report (Lorg/nlogo/nvm/Context;)Ljava/lang/Object;
          L5
-          ALOAD 0
-          GETFIELD org/nlogo/prim/_asm_procedurefindflockmates_setturtlevariable_0.world : Lorg/nlogo/agent/World;
-          INVOKEVIRTUAL org/nlogo/agent/World.turtles ()Lorg/nlogo/agent/AgentSet;
-         L6
-          ALOAD 0
-          GETFIELD org/nlogo/prim/_asm_procedurefindflockmates_setturtlevariable_0.world : Lorg/nlogo/agent/World;
-          INVOKEVIRTUAL org/nlogo/agent/World.observer ()Lorg/nlogo/agent/Observer;
-          ICONST_4
-          INVOKEVIRTUAL org/nlogo/agent/Observer.getVariable (I)Ljava/lang/Object;
-         L7
           ASTORE 2
          L0
           ALOAD 2
-          CHECKCAST java/lang/Double
-          INVOKEVIRTUAL java/lang/Double.doubleValue ()D
-          GOTO L8
+          CHECKCAST org/nlogo/agent/AgentSet
+          GOTO L6
          L1
           POP
           NEW org/nlogo/nvm/ArgumentTypeException
           DUP
           ALOAD 1
           ALOAD 0
-          BIPUSH 1
-          LDC 1
+          BIPUSH 0
+          LDC 112
           ALOAD 2
           INVOKESPECIAL org/nlogo/nvm/ArgumentTypeException.<init> (Lorg/nlogo/nvm/Context;Lorg/nlogo/nvm/Instruction;IILjava/lang/Object;)V
           ATHROW
-         L8
-          DSTORE 3
-          ASTORE 2
-          ALOAD 2
-          INVOKEVIRTUAL org/nlogo/agent/AgentSet.kind ()Lorg/nlogo/core/AgentKind;
-          INVOKESTATIC org/nlogo/core/AgentKindJ.Link ()Lorg/nlogo/core/AgentKind$Link$;
-          IF_ACMPNE L9
-          NEW org/nlogo/nvm/EngineException
-          DUP
-          ALOAD 1
-          ALOAD 0
-          INVOKESTATIC org/nlogo/api/I18N.errorsJ ()Lorg/nlogo/api/I18NJava;
-          LDC "org.nlogo.prim.etc.$common.expectedTurtleOrPatchButGotLink"
-          INVOKEINTERFACE org/nlogo/api/I18NJava.get (Ljava/lang/String;)Ljava/lang/String;
-          INVOKESPECIAL org/nlogo/nvm/EngineException.<init> (Lorg/nlogo/nvm/Context;Lorg/nlogo/nvm/Instruction;Ljava/lang/String;)V
-          ATHROW
-         L9
-          DLOAD 3
-          DCONST_0
-          DCMPG
-          IFGE L10
-          NEW org/nlogo/nvm/EngineException
-          DUP
-          ALOAD 1
-          ALOAD 0
-          INVOKESTATIC org/nlogo/api/I18N.errorsJ ()Lorg/nlogo/api/I18NJava;
-          LDC "org.nlogo.prim.etc.$common.noNegativeRadius"
-          ICONST_1
-          ANEWARRAY java/lang/Object
-          DUP
-          ICONST_0
-          LDC "IN-RADIUS"
-          AASTORE
-          INVOKEINTERFACE org/nlogo/api/I18NJava.getN (Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
-          INVOKESPECIAL org/nlogo/nvm/EngineException.<init> (Lorg/nlogo/nvm/Context;Lorg/nlogo/nvm/Instruction;Ljava/lang/String;)V
-          ATHROW
-         L10
-          ALOAD 0
-          GETFIELD org/nlogo/prim/_asm_procedurefindflockmates_setturtlevariable_0.world : Lorg/nlogo/agent/World;
-          GETFIELD org/nlogo/agent/World.inRadiusOrCone : Lorg/nlogo/agent/InRadiusOrCone;
-          ALOAD 1
-          GETFIELD org/nlogo/nvm/Context.agent : Lorg/nlogo/agent/Agent;
-          ALOAD 2
-          DLOAD 3
-          ICONST_1
-          INVOKEVIRTUAL org/nlogo/agent/InRadiusOrCone.inRadius (Lorg/nlogo/agent/Agent;Lorg/nlogo/agent/AgentSet;DZ)Ljava/util/List;
-          ASTORE 5
-          ALOAD 2
-          INVOKEVIRTUAL org/nlogo/agent/AgentSet.kind ()Lorg/nlogo/core/AgentKind;
-          ALOAD 5
-          ALOAD 5
-          INVOKEINTERFACE java/util/List.size ()I
-          ANEWARRAY org/nlogo/agent/Agent
-          INVOKEINTERFACE java/util/List.toArray ([Ljava/lang/Object;)[Ljava/lang/Object;
-          CHECKCAST [Lorg/nlogo/agent/Agent;
-          INVOKESTATIC org/nlogo/agent/AgentSet.fromArray (Lorg/nlogo/core/AgentKind;[Lorg/nlogo/agent/Agent;)Lorg/nlogo/agent/AgentSet;
-         L11
+         L6
           ASTORE 2
           NEW org/nlogo/agent/AgentSetBuilder
           DUP
@@ -915,25 +866,25 @@ procedure FIND-FLOCKMATES:[]{-T--}:
           ALOAD 2
           INVOKEVIRTUAL org/nlogo/agent/AgentSet.iterator ()Lorg/nlogo/agent/AgentIterator;
           ASTORE 4
-         L12
+         L7
           ALOAD 4
           INVOKEINTERFACE org/nlogo/agent/AgentIterator.hasNext ()Z
-          IFEQ L13
+          IFEQ L8
           ALOAD 4
           INVOKEINTERFACE org/nlogo/agent/AgentIterator.next ()Lorg/nlogo/agent/Agent;
           ASTORE 5
           ALOAD 1
           GETFIELD org/nlogo/nvm/Context.agent : Lorg/nlogo/agent/Agent;
           ALOAD 5
-          IF_ACMPEQ L12
+          IF_ACMPEQ L7
           ALOAD 3
           ALOAD 5
           INVOKEVIRTUAL org/nlogo/agent/AgentSetBuilder.add (Lorg/nlogo/agent/Agent;)V
-          GOTO L12
-         L13
+          GOTO L7
+         L8
           ALOAD 3
           INVOKEVIRTUAL org/nlogo/agent/AgentSetBuilder.build ()Lorg/nlogo/agent/AgentSet;
-         L14
+         L9
           ASTORE 2
          L2
           ALOAD 1
@@ -945,7 +896,7 @@ procedure FIND-FLOCKMATES:[]{-T--}:
           ALOAD 1
           ICONST_1
           PUTFIELD org/nlogo/nvm/Context.ip : I
-          GOTO L15
+          GOTO L10
          L4
           ASTORE 3
           NEW org/nlogo/nvm/EngineException
@@ -956,9 +907,9 @@ procedure FIND-FLOCKMATES:[]{-T--}:
           INVOKEVIRTUAL org/nlogo/api/AgentException.getMessage ()Ljava/lang/String;
           INVOKESPECIAL org/nlogo/nvm/EngineException.<init> (Lorg/nlogo/nvm/Context;Lorg/nlogo/nvm/Instruction;Ljava/lang/String;)V
           ATHROW
-         L15
+         L10
           RETURN
-[1]_asm_procedurefindflockmates_return_1 "" => void
+[1]_asm_procedurefindflockmates_return_3 "" => void
          L0
           ALOAD 1
           INVOKEVIRTUAL org/nlogo/nvm/Context.returnFromProcedure ()V

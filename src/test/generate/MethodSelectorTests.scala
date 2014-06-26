@@ -141,7 +141,7 @@ class MethodSelectorTests extends FunSuite {
   // in the args array)
   test("with 1") {
     val root = new _with
-    root.args = Array(instantiate[Reporter]("_turtles"), new _constboolean(true))
+    root.args = Array(new _turtles, new _constboolean(true))
     assertResult("(AgentSet,0)")(dump(evaluate(root, false)))
     assertResult("AgentSet,Reporter => AgentSet")(
       dump(select(root, classOf[AgentSet], false).get))

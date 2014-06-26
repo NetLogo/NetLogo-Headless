@@ -37,7 +37,7 @@ object BreedIdentifierHandler {
     turtle(Spec("HATCH-*"          , Command , false, "_hatch"                )),
     turtle(Spec("SPROUT-*"         , Command , false, "_sprout"               )),
     // turtle breeds
-    turtle(Spec("*"                , Reporter, false, "etc._breed"                )),
+    turtle(Spec("*"                , Reporter, false, "_breed"                    )),
     turtle(Spec("*-AT"             , Reporter, false, "etc._breedat"              )),
     turtle(Spec("*-HERE"           , Reporter, false, "etc._breedhere"            )),
     turtle(Spec("*-ON"             , Reporter, false, "etc._breedon"              )),

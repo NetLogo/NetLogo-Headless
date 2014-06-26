@@ -1,8 +1,8 @@
 // (C) Uri Wilensky. https://github.com/NetLogo/NetLogo
 
-package org.nlogo.prim.etc
+package org.nlogo.prim
 
-import org.nlogo.core.{ Syntax }
+import org.nlogo.core.Syntax
 import org.nlogo.agent.AgentSet
 import org.nlogo.nvm.{ Context, Reporter }
 
