@@ -110,10 +110,35 @@ class WidgetTest extends FunSuite {
                     |NIL
                     |1""".stripMargin.split("\n").toList
     assert(ButtonReader.validate(button))
-    assert(Button("go",202,101,271,134,"go",true) == ButtonReader.parse(button))
+    assert(Button(Some("go"),202,101,271,134,"go",true) == ButtonReader.parse(button))
     assert(ButtonReader.validate(ButtonReader.format(ButtonReader.parse(button)).split("\n").toList))
-    assert(Button("go",202,101,271,134,"go",true) ==
+    assert(Button(Some("go"),202,101,271,134,"go",true) ==
       ButtonReader.parse(ButtonReader.format(ButtonReader.parse(button)).split("\n").toList))
+  }
+
+  test("button nil display") {
+    val button = """|BUTTON
+                    |202
+                    |101
+                    |271
+                    |134
+                    |NIL
+                    |go
+                    |T
+                    |1
+                    |T
+                    |OBSERVER
+                    |NIL
+                    |NIL
+                    |NIL
+                    |NIL
+                    |1""".stripMargin.split("\n").toList
+    assert(ButtonReader.validate(button))
+    assert(Button(None,202,101,271,134,"go",true) == ButtonReader.parse(button))
+    assert(ButtonReader.validate(ButtonReader.format(ButtonReader.parse(button)).split("\n").toList))
+    assert(Button(None,202,101,271,134,"go",true) ==
+      ButtonReader.parse(ButtonReader.format(ButtonReader.parse(button)).split("\n").toList))
+    assert("go" == ButtonReader.parse(button).display)
   }
   test("slider") {
      val slider = """|SLIDER
@@ -187,10 +212,28 @@ class WidgetTest extends FunSuite {
                      |1
                      |11""".stripMargin.split("\n").toList
     assert(MonitorReader.validate(monitor))
-    assert(Monitor("sheep", 74, 214, 152, 259, "count sheep", 3, 11) == MonitorReader.parse(monitor))
+    assert(Monitor(Some("sheep"), 74, 214, 152, 259, "count sheep", 3, 11) == MonitorReader.parse(monitor))
     assert(MonitorReader.validate(MonitorReader.format(MonitorReader.parse(monitor)).split("\n").toList))
-    assert(Monitor("sheep", 74, 214, 152, 259, "count sheep", 3, 11) ==
+    assert(Monitor(Some("sheep"), 74, 214, 152, 259, "count sheep", 3, 11) ==
       MonitorReader.parse(MonitorReader.format(MonitorReader.parse(monitor)).split("\n").toList))
+  }
+  test("monitor nil display") {
+    val monitor = """|MONITOR
+                     |74
+                     |214
+                     |152
+                     |259
+                     |NIL
+                     |count sheep
+                     |3
+                     |1
+                     |11""".stripMargin.split("\n").toList
+    assert(MonitorReader.validate(monitor))
+    assert(Monitor(None, 74, 214, 152, 259, "count sheep", 3, 11) == MonitorReader.parse(monitor))
+    assert(MonitorReader.validate(MonitorReader.format(MonitorReader.parse(monitor)).split("\n").toList))
+    assert(Monitor(None, 74, 214, 152, 259, "count sheep", 3, 11) ==
+      MonitorReader.parse(MonitorReader.format(MonitorReader.parse(monitor)).split("\n").toList))
+    assert("count sheep" == MonitorReader.parse(monitor).display)
   }
 
   test("switch") {
