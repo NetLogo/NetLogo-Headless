@@ -66,6 +66,15 @@ case class ReservedLine(output: String = "RESERVED") extends WidgetLine[Unit] {
   def format(x: Unit): String = output
   def valid(v: String): Boolean = true
 }
+case class OptionLine[T](noneLine: String, someLineReader: WidgetLine[T]) extends WidgetLine[Option[T]] {
+  def parse(line: String): Option[T] = if(noneLine == line) None else Some(someLineReader.parse(line))
+  def format(x: Option[T]): String =
+    x match {
+      case None => noneLine
+      case Some(t) => someLineReader.format(t)
+    }
+  def valid(v: String): Boolean = (noneLine == v) || someLineReader.valid(v)
+}
 
 trait WidgetReader {
   type T <: Widget
@@ -149,7 +158,7 @@ object ButtonReader extends BaseWidgetReader {
                         IntLine(),  // top
                         IntLine(),  // right
                         IntLine(),  // bottom
-                        StringLine(),   // display
+                        OptionLine[String]("NIL", StringLine()),   // rawDisplay
                         StringLine(),   // code to execute
                         TNilBooleanLine(),  // forever?
                         ReservedLine(),
@@ -161,12 +170,12 @@ object ButtonReader extends BaseWidgetReader {
                         ReservedLine(),
                         BooleanLine(Some(true))  // go time
                       )
-  def asList(button: Button) = List((), button.left, button.top, button.right, button.bottom, button.display,
+  def asList(button: Button) = List((), button.left, button.top, button.right, button.bottom, button.rawDisplay,
                                     button.source, button.forever, (), (), button.buttonType, (), button.actionKey, (), (), true)
   def asWidget(vals: List[Any]): Button = {
-    val List(_, left: Int, top: Int, right: Int, bottom: Int, display: String,
+    val List(_, left: Int, top: Int, right: Int, bottom: Int, rawDisplay: Option[String] @unchecked,
       source: String, forever: Boolean, _, _, buttonType: String, _, actionKey: String, _, _, _) = vals
-    Button(display, left, top, right, bottom, source, forever, buttonType, actionKey)
+    Button(rawDisplay, left, top, right, bottom, source, forever, buttonType, actionKey)
   }
 }
 
@@ -371,17 +380,18 @@ object MonitorReader extends BaseWidgetReader {
                         IntLine(),  // top
                         IntLine(),  // right
                         IntLine(),  // bottom
-                        StringLine(),   // display
+                        OptionLine[String]("NIL", StringLine()),   // rawDisplay
                         StringLine(),   // source
                         IntLine(),   // precision
                         ReservedLine(),
                         IntLine()    // font size
                       )
-  def asList(monitor: Monitor) = List((), monitor.left, monitor.top, monitor.right, monitor.bottom, monitor.display,
+  def asList(monitor: Monitor) = List((), monitor.left, monitor.top, monitor.right, monitor.bottom, monitor.rawDisplay,
     monitor.source, monitor.precision, (), monitor.fontSize)
   def asWidget(vals: List[Any]): Monitor = {
-    val List(_, left: Int, top: Int, right: Int, bottom: Int, display: String, source: String, precision: Int, _, fontSize: Int) = vals
-    Monitor(display, left, top, right, bottom, source, precision, fontSize)
+    val List(_, left: Int, top: Int, right: Int, bottom: Int, rawDisplay: Option[String] @unchecked,
+      source: String, precision: Int, _, fontSize: Int) = vals
+    Monitor(rawDisplay, left, top, right, bottom, source, precision, fontSize)
   }
 }
 
