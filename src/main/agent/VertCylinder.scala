@@ -2,8 +2,7 @@
 
 package org.nlogo.agent
 
-import org.nlogo.{ core, api },
-  core.AgentKind, api.AgentException
+import org.nlogo.api.{ AgentException, I18N }
 
 // imagine a cylinder standing on end.
 
@@ -19,7 +18,7 @@ extends Topology(_world, xWraps = true, yWraps = false) {
     val max = world.maxPycor + 0.5
     val min = world.minPycor - 0.5
     if (y >= max || y < min)
-      throw new AgentException("Cannot move turtle beyond the world's edge.")
+      throw new AgentException(I18N.errors.get("org.nlogo.agent.Topology.cantMoveTurtleBeyondWorldEdge"))
     y
   }
 

@@ -15,7 +15,7 @@ extends Topology(_world, xWraps = false, yWraps = false) {
     if (x >= max || x < min)
       throw new AgentException(
         I18N.errors.get(
-          "org.nlogo.agent.Box.cantMoveTurtleBeyondWorldEdge"))
+          "org.nlogo.agent.Topology.cantMoveTurtleBeyondWorldEdge"))
     x
   }
 
@@ -26,7 +26,7 @@ extends Topology(_world, xWraps = false, yWraps = false) {
     if (y >= max || y < min)
       throw new AgentException(
         I18N.errors.get(
-          "org.nlogo.agent.Box.cantMoveTurtleBeyondWorldEdge"))
+          "org.nlogo.agent.Topology.cantMoveTurtleBeyondWorldEdge"))
     y
   }
 
