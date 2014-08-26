@@ -64,3 +64,46 @@ Tie3
   O> ask turtle 0 [ rt 180 ]
   [heading] of turtle 0 => 180
   [heading] of turtle 1 => 180
+
+Tie4
+  O> cro 2 [ fd 1 ]
+  O> ask turtle 1 [ create-link-to turtle 0 [ tie ] ]
+  O> ask turtle 1 [ rt 90 ]
+
+  [xcor] of turtle 1 => 0
+  [ycor] of turtle 1 => -1
+  [heading] of turtle 1 => 270
+
+  [xcor] of turtle 0 => 2
+  [ycor] of turtle 0 => -1
+  [heading] of turtle 0 => 90
+
+  O> ask turtle 1 [ rt 90 ]
+
+  [xcor] of turtle 1 => 0
+  [ycor] of turtle 1 => -1
+  [heading] of turtle 1 => 0
+
+  [xcor] of turtle 0 => 0
+  [ycor] of turtle 0 => -3
+  [heading] of turtle 0 => 180
+
+  O> ask turtle 1 [ rt 90 ]
+
+  [xcor] of turtle 1 => 0
+  [ycor] of turtle 1 => -1
+  [heading] of turtle 1 => 90
+
+  [xcor] of turtle 0 => -2
+  [ycor] of turtle 0 => -1
+  [heading] of turtle 0 => 270
+
+  O> ask turtle 1 [ rt 90 ]
+
+  [xcor] of turtle 1 => 0
+  [ycor] of turtle 1 => -1
+  [heading] of turtle 1 => 180
+
+  [xcor] of turtle 0 => 0
+  [ycor] of turtle 0 => 1
+  [heading] of turtle 0 => 0
