@@ -35,4 +35,6 @@ class _linkneighbors(breedName: String) extends Reporter {
         context.agent.asInstanceOf[Turtle], breed))
   }
 
+  def getBreedName = breedName
+
 }

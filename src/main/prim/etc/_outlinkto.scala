@@ -7,7 +7,7 @@ import org.nlogo.api.Nobody
 import org.nlogo.nvm.{ Reporter, Context, EngineException }
 import org.nlogo.agent.{ Turtle, LinkManager }
 
-class _outlinkto(breedName: String) extends Reporter {
+class _outlinkto(val breedName: String) extends Reporter {
 
   def this() = this(null)
 

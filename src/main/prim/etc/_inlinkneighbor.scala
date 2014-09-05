@@ -6,7 +6,7 @@ import org.nlogo.core.Syntax
 import org.nlogo.nvm.{ Reporter, Context, EngineException }
 import org.nlogo.agent.{ Turtle, LinkManager }
 
-class _inlinkneighbor(breedName: String) extends Reporter {
+class _inlinkneighbor(val breedName: String) extends Reporter {
 
   def this() = this(null)
 

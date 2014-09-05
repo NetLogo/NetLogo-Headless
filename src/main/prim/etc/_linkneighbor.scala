@@ -36,4 +36,6 @@ class _linkneighbor(breedName: String) extends Reporter {
       world.linkManager.findLinkFrom(target, parent, breed, true) != null
   }
 
+  def getBreedName = breedName
+
 }
