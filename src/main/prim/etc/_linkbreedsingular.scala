@@ -27,4 +27,6 @@ class _linkbreedsingular(breedName: String) extends Reporter {
       link
   }
 
+  def getBreedName = breedName
+
 }
