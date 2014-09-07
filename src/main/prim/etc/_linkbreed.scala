@@ -16,4 +16,5 @@ class _linkbreed(breedName: String) extends Reporter {
     report_1(context)
   def report_1(context: Context): AgentSet =
     world.getLinkBreed(breedName)
+  def getBreedName = breedName
 }
