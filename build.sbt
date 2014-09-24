@@ -1,6 +1,6 @@
 val root = project in file (".") configs(FastMediumSlow.configs: _*)
 
-scalaVersion := "2.10.4"
+scalaVersion := "2.11.2"
 
 mainClass in Compile := Some("org.nlogo.headless.Main")
 
@@ -38,7 +38,8 @@ javacOptions ++=
   .split(" ").toSeq
 
 libraryDependencies ++= Seq(
-  "asm" % "asm-all" % "3.3.1"
+  "asm" % "asm-all" % "3.3.1",
+  "org.scala-lang.modules" %% "scala-parser-combinators" % "1.0.2"
 )
 
 libraryDependencies ++= Seq(
