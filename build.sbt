@@ -38,7 +38,7 @@ javacOptions ++=
   .split(" ").toSeq
 
 libraryDependencies ++= Seq(
-  "asm" % "asm-all" % "3.3.1",
+  "org.ow2.asm" % "asm-all" % "5.0.3",
   "org.scala-lang.modules" %% "scala-parser-combinators" % "1.0.2"
 )
 

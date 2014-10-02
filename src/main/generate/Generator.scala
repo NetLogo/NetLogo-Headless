@@ -54,7 +54,7 @@ class Generator(source: String, procedure: Procedure, profilingEnabled: Boolean)
     // a method, so that we can measure the length of the bytecode of the generated method, to see
     // if we're getting close to the 64 K limit.  ~Forrest (8/24/2006)
     val debugEndOfMethodLabel = new Label
-    val cw = new ClassWriter(ClassWriter.COMPUTE_MAXS)
+    val cw = new ClassWriter(ClassWriter.COMPUTE_MAXS | ClassWriter.COMPUTE_FRAMES)
     var nlgen: GeneratorAdapter = null
     val superClassFullName = original match {
       case _: Command => "org/nlogo/generate/GeneratedCommand"
@@ -71,7 +71,7 @@ class Generator(source: String, procedure: Procedure, profilingEnabled: Boolean)
     }
     val fullClassName = "org/nlogo/prim/" + className
     def generate(): A = {
-      cw.visit(V1_5, ACC_PUBLIC + ACC_SUPER, fullClassName, null, superClassFullName, null)
+      cw.visit(V1_8, ACC_PUBLIC + ACC_SUPER, fullClassName, null, superClassFullName, null)
       cw.visitSource("", null)
       generateConstructor()
       val methodName = original match {
@@ -103,7 +103,7 @@ class Generator(source: String, procedure: Procedure, profilingEnabled: Boolean)
       val constructor = cw.visitMethod(ACC_PUBLIC, "<init>", "()V", null, null)
       constructor.visitCode()
       constructor.visitVarInsn(ALOAD, 0)
-      constructor.visitMethodInsn(INVOKESPECIAL, superClassFullName, "<init>", "()V")
+      constructor.visitMethodInsn(INVOKESPECIAL, superClassFullName, "<init>", "()V", false)
       constructor.visitInsn(RETURN)
       constructor.visitMaxs(0, 0)
       constructor.visitEnd()
@@ -200,12 +200,12 @@ class Generator(source: String, procedure: Procedure, profilingEnabled: Boolean)
       instr match {
         case _: Reporter =>
           nlgen.visitMethodInsn(INVOKEVIRTUAL, Type.getInternalName(instr.getClass),
-            "report", "(Lorg/nlogo/nvm/Context;)Ljava/lang/Object;")
+            "report", "(Lorg/nlogo/nvm/Context;)Ljava/lang/Object;", false)
           nlgen.markLineNumber(parentInstrUID)
           nlgen.generateConversion(classOf[Object], retTypeWanted, parentInstr, argIndex)
         case _: Command =>
           nlgen.visitMethodInsn(INVOKEVIRTUAL, Type.getInternalName(instr.getClass),
-            "perform", "(Lorg/nlogo/nvm/Context;)V")
+            "perform", "(Lorg/nlogo/nvm/Context;)V", false)
       }
       // now, we want to recursively try to generate all args[] of instr
       instr.args = instr.args.map(recurse(_))
@@ -223,7 +223,7 @@ class Generator(source: String, procedure: Procedure, profilingEnabled: Boolean)
       // first invoke super.init()
       mv.visitVarInsn(ALOAD, 0)
       mv.visitVarInsn(ALOAD, 1)
-      mv.visitMethodInsn(INVOKESPECIAL, superClassFullName, "init", "(Lorg/nlogo/nvm/Workspace;)V")
+      mv.visitMethodInsn(INVOKESPECIAL, superClassFullName, "init", "(Lorg/nlogo/nvm/Workspace;)V", false)
       // push the original instruction onto the stack...
       val fieldName = Generator.KEPT_INSTRUCTION_PREFIX + "1"
       val descriptor = keptThingsTypes.get(fieldName).getDescriptor
@@ -232,7 +232,7 @@ class Generator(source: String, procedure: Procedure, profilingEnabled: Boolean)
       // and call its init() method
       // String cName = Type.getInternalName(original.getClass())
       mv.visitVarInsn(ALOAD, 1)
-      mv.visitMethodInsn(INVOKEVIRTUAL, "org/nlogo/nvm/Instruction", "init", "(Lorg/nlogo/nvm/Workspace;)V")
+      mv.visitMethodInsn(INVOKEVIRTUAL, "org/nlogo/nvm/Instruction", "init", "(Lorg/nlogo/nvm/Workspace;)V", false)
       mv.visitInsn(RETURN)
       mv.visitMaxs(0, 0)
       mv.visitEnd()
@@ -372,17 +372,17 @@ class Generator(source: String, procedure: Procedure, profilingEnabled: Boolean)
       mv.visitLabel(l0)
       mv.visitVarInsn(ALOAD, 0)
       mv.visitMethodInsn(INVOKESTATIC, "java/lang/Class", "forName",
-        "(Ljava/lang/String;)Ljava/lang/Class;")
+        "(Ljava/lang/String;)Ljava/lang/Class;", false)
       mv.visitLabel(l1)
       mv.visitInsn(ARETURN)
       mv.visitLabel(l2)
       mv.visitVarInsn(ASTORE, 1)
       mv.visitTypeInsn(NEW, "java/lang/NoClassDefFoundError")
       mv.visitInsn(DUP)
-      mv.visitMethodInsn(INVOKESPECIAL, "java/lang/NoClassDefFoundError", "<init>", "()V")
+      mv.visitMethodInsn(INVOKESPECIAL, "java/lang/NoClassDefFoundError", "<init>", "()V", false)
       mv.visitVarInsn(ALOAD, 1)
       mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/NoClassDefFoundError", "initCause",
-        "(Ljava/lang/Throwable;)Ljava/lang/Throwable;")
+        "(Ljava/lang/Throwable;)Ljava/lang/Throwable;", false)
       mv.visitInsn(ATHROW)
       mv.visitMaxs(2, 2)
       mv.visitEnd()
