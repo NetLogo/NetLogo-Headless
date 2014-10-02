@@ -48,7 +48,8 @@ libraryDependencies ++= Seq(
   "org.jmock" % "jmock-junit4" % "2.5.1" % "test",
   "org.scalacheck" %% "scalacheck" % "1.11.3" % "test",
   "org.scalatest" %% "scalatest" % "2.1.3" % "test",
-  "org.reflections" % "reflections" % "0.9.9-RC1" % "test"
+  "org.reflections" % "reflections" % "0.9.9-RC1" % "test",
+  "org.slf4j" % "slf4j-nop" % "1.7.5"             % "test"
 )
 
 scalaSource in Compile := baseDirectory.value / "src" / "main"
