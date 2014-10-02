@@ -47,17 +47,8 @@ libraryDependencies ++= Seq(
   "org.jmock" % "jmock-legacy" % "2.5.1" % "test",
   "org.jmock" % "jmock-junit4" % "2.5.1" % "test",
   "org.scalacheck" %% "scalacheck" % "1.11.3" % "test",
-  "org.scalatest" %% "scalatest" % "2.1.3" % "test"
-)
-
-// reflections depends on some extra jars but for some reason we need to
-// explicitly list the transitive dependencies
-libraryDependencies ++= Seq(
-  "org.reflections" % "reflections" % "0.9.9-RC1" % "test",
-  "com.google.code.findbugs" % "jsr305" % "2.0.1" % "test",
-  "com.google.guava" % "guava" % "12.0"           % "test",
-  "org.javassist" % "javassist" % "3.16.1-GA"     % "test",
-  "org.slf4j" % "slf4j-nop" % "1.7.5"             % "test"
+  "org.scalatest" %% "scalatest" % "2.1.3" % "test",
+  "org.reflections" % "reflections" % "0.9.9-RC1" % "test"
 )
 
 scalaSource in Compile := baseDirectory.value / "src" / "main"
