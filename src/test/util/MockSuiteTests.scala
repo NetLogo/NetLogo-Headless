@@ -54,7 +54,8 @@ class MockSuiteTests extends MockSuite{
     }
     val errorMessage = """|java.lang.AssertionError: unexpected invocation: x.a("not an int")
                           |expectations:
-                          |  expected once, never invoked: x.a(<int>); returns a default value
+                          |  expected once, never invoked: x.a(<int>)
+                          |      parameter 0 did not match: <int>, because was "not an int"
                           |what happened before this: nothing!""".stripMargin
     assert(e.toString === errorMessage)
   }
@@ -66,12 +67,13 @@ class MockSuiteTests extends MockSuite{
     }
     val e = intercept[AssertionError] {
       when {
-        x.a("not an char")
+        x.a("not a char")
       }
     }
-    val errorMessage = """|java.lang.AssertionError: unexpected invocation: x.a("not an char")
+    val errorMessage = """|java.lang.AssertionError: unexpected invocation: x.a("not a char")
                           |expectations:
-                          |  expected once, never invoked: x.a(<char>); returns a default value
+                          |  expected once, never invoked: x.a(<char>)
+                          |      parameter 0 did not match: <char>, because was "not a char"
                           |what happened before this: nothing!""".stripMargin
     assert(e.toString === errorMessage)
   }
@@ -102,7 +104,8 @@ class MockSuiteTests extends MockSuite{
     val expected =
       """|unexpected invocation: x.i(<20>)
          |expectations:
-         |  expected once, already invoked 1 time: x.i(<10>); returns a default value
+         |  expected once, already invoked 1 time: x.i(<10>)
+         |      parameter 0 did not match: <10>, because was <20>
          |what happened before this:
          |  x.i(<10>)""".stripMargin
     assertResult(expected)(e.getMessage.trim)
@@ -133,8 +136,10 @@ class MockSuiteTests extends MockSuite{
     val expected =
       """|unexpected invocation: x.i(<20>)
          |expectations:
-         |  expected once, never invoked: x.i(<10>); in sequence s; returns a default value
-         |  expected once, never invoked: x.i(<20>); in sequence s; returns a default value
+         |  expected once, never invoked: x.i(<10>); in sequence s
+         |      parameter 0 did not match: <10>, because was <20>
+         |  expected once, never invoked: x.i(<20>); in sequence s
+         |      parameter 0 matched: <20>
          |what happened before this: nothing!""".stripMargin
     assertResult(expected)(e.getMessage.trim)
   }

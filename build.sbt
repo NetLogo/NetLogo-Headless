@@ -42,13 +42,17 @@ libraryDependencies ++= Seq(
   "org.scala-lang.modules" %% "scala-parser-combinators" % "1.0.2"
 )
 
+// JMock isn't declaring its dependency upon Hamcrest in 2.6.0, but hopefully
+// it will fix this in future versions, and then we can get rid of the Hamcrest
+// dependency --JAB (10/2/14)
 libraryDependencies ++= Seq(
-  "org.jmock" % "jmock" % "2.5.1" % "test",
-  "org.jmock" % "jmock-legacy" % "2.5.1" % "test",
-  "org.jmock" % "jmock-junit4" % "2.5.1" % "test",
-  "org.scalacheck" %% "scalacheck" % "1.11.3" % "test",
-  "org.scalatest" %% "scalatest" % "2.1.3" % "test",
-  "org.reflections" % "reflections" % "0.9.9-RC1" % "test",
+  "org.jmock" % "jmock" % "2.6.0" % "test",
+  "org.jmock" % "jmock-legacy" % "2.6.0" % "test",
+  "org.jmock" % "jmock-junit4" % "2.6.0" % "test",
+  "org.hamcrest" % "hamcrest-core" % "1.3" % "test",
+  "org.scalacheck" %% "scalacheck" % "1.11.6" % "test",
+  "org.scalatest" %% "scalatest" % "2.2.1" % "test",
+  "org.reflections" % "reflections" % "0.9.9" % "test",
   "org.slf4j" % "slf4j-nop" % "1.7.5"             % "test"
 )
 

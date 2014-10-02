@@ -3,13 +3,17 @@
 package org.nlogo.util
 
 import org.scalatest.FunSuite
-import org.jmock.{Expectations, Mockery, Sequence}
-import org.jmock.integration.junit4.JUnit4Mockery
 import scala.util.DynamicVariable
 import org.hamcrest.{Description, BaseMatcher, Matcher}
-import org.jmock.api.Action
 import reflect.ClassTag
-import org.jmock.lib.legacy.ClassImposteriser
+
+import
+  org.jmock.{ api, Expectations, integration, lib, Mockery, Sequence },
+    api.Action,
+    integration.junit4.JUnit4Mockery,
+    lib.{ concurrent, legacy },
+      concurrent.Synchroniser,
+      legacy.ClassImposteriser
 
 /**
   This is a little internal DSL to make JMock easier to use from Scala.
@@ -64,7 +68,11 @@ trait MockSuite extends FunSuite {
   // this is the main test method provided by this trait.
   def mockTest(name: String)(f: => Unit) {
     test(name) {
-      _context.withValue(new JUnit4Mockery(){setImposteriser(ClassImposteriser.INSTANCE)}) {
+      val mockery = new JUnit4Mockery() {
+        setThreadingPolicy(new Synchroniser())
+        setImposteriser(ClassImposteriser.INSTANCE)
+      }
+      _context.withValue(mockery) {
         _expectations.withValue(new Expectations()) {
           f
         }
