@@ -65,7 +65,7 @@ abstract class InputBoxType[T](val name:String)
 case object Num extends InputBoxType[Double]("Number")
 case object Str extends InputBoxType[String]("String")
 case object StrReporter extends InputBoxType[String]("String (reporter)")
-case object StrCommand extends InputBoxType[String]("String (command)")
+case object StrCommand extends InputBoxType[String]("String (commands)")
 case object Col extends InputBoxType[Int]("Color")
 case class InputBox[T](left: Int = 0, top: Int = 0, right: Int = 0, bottom: Int = 0, varName: String,
              value: T, multiline: Boolean = false, boxtype: InputBoxType[T])
