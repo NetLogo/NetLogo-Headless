@@ -8,28 +8,21 @@ package org.nlogo.parse
 // (I'm not very happy with the code for this stage, but as long as it's
 // well encapsulated, maybe it's good enough. - ST 12/7/12)
 
-import org.nlogo.core.Token,
-  Fail._
+import
+  org.nlogo.core.Token,
+    Fail._
+
+import
+  StructureDeclarations.{ Breed, Declaration, Extensions, Identifier, Includes, Procedure, Variables }
 
 object StructureChecker {
 
-  import StructureDeclarations._
-
   def rejectDuplicateDeclarations(declarations: Seq[Declaration]) {
-    for {
-      Procedure(_, _, inputs, _) <- declarations
-      input <- inputs
-    } {
-      notTaskVariable(input)
-      cAssert(
-        inputs.count(_.name == input.name) == 1,
-        "There is already a local variable called " + input.name + " here", input.token)
-    }
-    // O(n^2) -- maybe we should fold instead
+
+    // O(n^2) -- maybe we should fold instead --ST
     def checkPair(decl1: Declaration, decl2: Declaration): Option[(String, Token)] =
       (decl1, decl2) match {
-        case (v1: Variables, v2: Variables)
-            if v1.kind == v2.kind =>
+        case (v1: Variables, v2: Variables) if v1.kind == v2.kind =>
           Some((v1.kind.name, v2.kind.token))
         case (_: Extensions, e: Extensions) =>
           Some(("EXTENSIONS", e.token))
@@ -38,78 +31,94 @@ object StructureChecker {
         case _ =>
           None
       }
+
+    for {
+      Procedure(_, _, inputs, _) <- declarations
+      input                      <- inputs
+    } {
+      checkNotTaskVariable(input)
+      cAssert(
+        inputs.count(_.name == input.name) == 1,
+        duplicateVariableIdentifier(input), input.token)
+    }
+
     for{
       (decl1, decl2) <- allPairs(declarations)
-      (kind, token) <- checkPair(decl1, decl2)
-    } exception("Redeclaration of " + kind, token)
+      (kind, token)  <- checkPair(decl1, decl2)
+    } exception(redeclarationOf(kind), token)
+
   }
 
   def rejectDuplicateNames(declarations: Seq[Declaration], usedNames: Map[String, String]) {
-    type Used = (String, String)
-    case class Occurrence(declaration: Declaration, identifier: Identifier, isGlobal: Boolean = true)
-    val (linkBreedNames, turtleBreedNames) = {
-      val (linkBreeds, turtleBreeds) =
-        declarations
-          .collect{case breed: Breed => breed}
-          .partition(_.isLinkBreed)
-      (linkBreeds.map(_.plural.name).map(_ + "-OWN"),
-        turtleBreeds.map(_.plural.name).map(_ + "-OWN"))
-    }
-    val occurrences: Seq[Occurrence] =
-      declarations.flatMap{
-        case decl @ Breed(plural, singular, _, _) =>
-          if (singular.token ne plural.token)
-            Seq(Occurrence(decl, plural), Occurrence(decl, singular))
-          else
-            Seq(Occurrence(decl, plural))
-        case decl @ Variables(_, names) =>
-          names.map(Occurrence(decl, _))
-        case decl @ Procedure(name, _, inputs, _) =>
-          Occurrence(decl, name) +: inputs.map(Occurrence(decl, _, isGlobal = false))
-        case _ =>
-          Seq()
-      }
-    def displayName(decl: Declaration) =
-      decl match {
-        case _: Breed =>
-          "breed"
-        case Variables(kind, _) =>
-          kind.name + " variable"
-        case _: Procedure =>
-          "procedure"
-        case _ =>
-          throw new IllegalArgumentException(decl.toString)
-      }
-    def check(used: Used, occ: Occurrence) {
-      def isBreedVariableException =
-        if (!used._2.endsWith(" variable"))
-          false
-        else
-          (used._2.stripSuffix(" variable"), occ.declaration) match {
-            case (name1, Variables(kind2, _))
-                if (name1 != kind2.name &&
-                  turtleBreedNames.contains(name1) == turtleBreedNames.contains(kind2.name) &&
-                  Set(name1, kind2.name).intersect(Set("TURTLES", "LINKS")).isEmpty) =>
-              true
-            case _ =>
-              false
-          }
+
+    def checkForInconsistentIDs(usageIdentifier: String, usageTypeName: String, occ: Occurrence, takenNames: Seq[String]) {
+      val identifierNamesAreDifferent = usageIdentifier != occ.identifier.name
       cAssert(
-        used._1 != occ.identifier.name || isBreedVariableException,
-        "There is already a " +  used._2 + " called " + occ.identifier.name,
+        identifierNamesAreDifferent || invalidBreedVariableDeclaration(usageIdentifier, usageTypeName, occ, takenNames),
+        duplicateOf(usageTypeName, occ.identifier.name),
         occ.identifier.token)
     }
-    // O(n^2) -- maybe we should fold instead
-    for((o1, o2) <- allPairs(occurrences))
-      if (o1.isGlobal)
-        check((o1.identifier.name, displayName(o1.declaration)), o2)
-    for(used <- usedNames; o <- occurrences)
-      check(used, o)
-    for(Occurrence(_, ident, _) <- occurrences)
-      notTaskVariable(ident)
+
+    // `linkBreedNames` goes unused.  Is this a bug? --JAB (10/16/14)
+    val (linkBreedNames, turtleBreedNames) = linkAndTurtleBreedNames(declarations)
+    val occurrences                        = occurrencesFromDeclarations(declarations)
+
+    for {
+      firstUsage  <- occurrences.iterator
+      secondUsage <- occurrences
+    } {
+
+      if (firstUsage.isGlobal && (secondUsage ne firstUsage))
+        checkForInconsistentIDs(firstUsage.identifier.name, firstUsage.typeOfDeclaration, secondUsage, turtleBreedNames)
+
+      checkNotTaskVariable(firstUsage.identifier)
+
+      for ((identifier, typeName) <- usedNames) {
+        checkForInconsistentIDs(identifier, typeName, firstUsage, turtleBreedNames)
+      }
+
+    }
+
   }
 
-  def allPairs[T <: AnyRef](xs: Seq[T]): Iterator[(T, T)] =
+  private def occurrencesFromDeclarations(declarations: Seq[Declaration]): Seq[Occurrence] = {
+    declarations.flatMap {
+      case decl@Variables(kind, names) =>
+        names.map(Occurrence(decl, _, s"${kind.name} variable"))
+      case decl@Procedure(name, _, inputs, _) =>
+        Occurrence(decl, name, "procedure") +: inputs.map(Occurrence(decl, _, "", isGlobal = false))
+      case _ =>
+        Seq()
+    }
+  }
+
+  private def linkAndTurtleBreedNames(declarations: Seq[Declaration]): (Seq[String], Seq[String]) = {
+    val (linkBreeds, turtleBreeds) = declarations
+      .collect { case breed: Breed => (breed, s"${breed.plural.name}-OWN") }
+      .partition(_._1.isLinkBreed)
+    (linkBreeds.map(_._2), turtleBreeds.map(_._2))
+  }
+
+  private def invalidBreedVariableDeclaration(usageIdentifier: String, usageTypeName: String, occ: Occurrence, turtleBreedNames: Seq[String]): Boolean = {
+
+    def sameBreediness(names: String*) = names.forall(turtleBreedNames.contains)
+    def isReserved(names: String*)     = names.exists(Set("TURTLES", "LINKS"))
+
+    val isVariable = usageTypeName.endsWith("variable")
+    val ownerName  = usageTypeName.stripSuffix(" variable")
+
+    isVariable && {
+      occ.declaration match {
+        case Variables(Identifier(breedName, _), _)  =>
+          ownerName != breedName && sameBreediness(ownerName, breedName) && !isReserved(ownerName, breedName)
+        case _ =>
+          false
+      }
+    }
+
+  }
+
+  private def allPairs[T <: AnyRef](xs: Seq[T]): Iterator[(T, T)] =
     for {
       x1 <- xs.iterator
       x2 <- xs
@@ -117,10 +126,21 @@ object StructureChecker {
     }
     yield (x1, x2)
 
-  def notTaskVariable(ident: Identifier) {
+  private def checkNotTaskVariable(ident: Identifier) {
     cAssert(!ident.name.startsWith("?"),
       "Names beginning with ? are reserved for use as task inputs",
       ident.token)
   }
+
+  private def redeclarationOf(kind: String) =
+    s"Redeclaration of $kind"
+
+  private def duplicateOf(typeName: String, origName: String) =
+    s"There is already a $typeName called $origName"
+
+  private def duplicateVariableIdentifier(ident: Identifier) =
+    s"There is already a local variable called ${ident.name} here"
+
+  private case class Occurrence(declaration: Declaration, identifier: Identifier, typeOfDeclaration: String, isGlobal: Boolean = true)
 
 }

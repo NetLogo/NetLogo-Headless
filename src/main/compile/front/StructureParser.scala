@@ -23,7 +23,7 @@ import org.nlogo.{ core, api, nvm, parse },
   parse._,
   core.Token,
   nvm.StructureResults,
-  nvm.FrontEndInterface.{ ProceduresMap, NoProcedures },
+  nvm.FrontEndInterface.ProceduresMap,
   Fail._
 
 object StructureParser {
@@ -31,10 +31,10 @@ object StructureParser {
   /// main entry point.  handles gritty extensions stuff and includes stuff.
 
   def parseAll(
-      tokenizer: core.TokenizerInterface,
-      source: String, displayName: Option[String], program: api.Program, subprogram: Boolean,
-      oldProcedures: ProceduresMap, extensionManager: api.ExtensionManager): StructureResults = {
-    if(!subprogram)
+                tokenizer: core.TokenizerInterface,
+                source: String, displayName: Option[String], program: api.Program, subprogram: Boolean,
+                oldProcedures: ProceduresMap, extensionManager: api.ExtensionManager): StructureResults = {
+    if (!subprogram)
       extensionManager.startFullCompilation()
     val sources = Seq((source, ""))
     val oldResults = StructureResults(program, oldProcedures)
@@ -47,12 +47,12 @@ object StructureParser {
         .parse(subprogram)
     }
     val firstResults =
-      sources.foldLeft(oldResults){
+      sources.foldLeft(oldResults) {
         case (results, (source, filename)) =>
           parseOne(source, filename, results)
       }
     val results =
-      Iterator.iterate(firstResults){results =>
+      Iterator.iterate(firstResults) { results =>
         assert(!subprogram)
         val path = extensionManager.resolvePath(results.includes.head.value.asInstanceOf[String])
         cAssert(path.endsWith(".nls"),
@@ -62,8 +62,8 @@ object StructureParser {
           parseOne(api.FileIO.file2String(path), path, results)
         newResults.copy(includes = newResults.includes.filterNot(_ == results.includes.head))
       }.dropWhile(_.includes.nonEmpty).next
-    if(!subprogram) {
-      for(token <- results.extensions)
+    if (!subprogram) {
+      for (token <- results.extensions)
         extensionManager.importExtension(
           token.text.toLowerCase, new api.ErrorSource(token))
       extensionManager.finishFullCompilation()
@@ -73,15 +73,27 @@ object StructureParser {
 
   val alwaysUsedNames =
     FrontEnd.tokenMapper.allCommandNames.map(_ -> "primitive command") ++
-    FrontEnd.tokenMapper.allReporterNames.map(_ -> "primitive reporter")
+      FrontEnd.tokenMapper.allReporterNames.map(_ -> "primitive reporter")
 
-  def usedNames(program: api.Program, procedures: ProceduresMap): Map[String, String] =
+  def usedNames(program: api.Program, procedures: ProceduresMap, declarations: Seq[StructureDeclarations.Declaration] = Seq()): Map[String, String] = {
     program.usedNames ++
-    procedures.keys.map(_ -> "procedure") ++
-    StructureParser.alwaysUsedNames
+      breedPrimitives(declarations) ++
+      procedures.keys.map(_ -> "procedure") ++
+      StructureParser.alwaysUsedNames
+  }
 
+  private def breedPrimitives(declarations: Seq[StructureDeclarations.Declaration]): Map[String, String] = {
+    import org.nlogo.parse.BreedIdentifierHandler._
+    import org.nlogo.parse.StructureDeclarations.Breed
+
+    declarations.flatMap {
+      case breed: Breed =>
+        val pairs = Seq(breedCommands _ -> "breed command", breedReporters _ -> "breed reporter", breedHomonymProcedures _ -> "breed")
+        pairs flatMap { case (f, label) => f(breed).map(_ -> label) }
+      case _ => Seq()
+    }.toMap
+  }
 }
-
 /// for each source file. knits stages together. throws CompilerException
 
 class StructureParser(
@@ -95,7 +107,7 @@ class StructureParser(
         StructureChecker.rejectDuplicateDeclarations(declarations)
         StructureChecker.rejectDuplicateNames(declarations,
           StructureParser.usedNames(
-            oldResults.program, oldResults.procedures))
+            oldResults.program, oldResults.procedures, declarations))
         StructureConverter.convert(declarations, displayName,
           if (subprogram)
             StructureResults.empty.copy(program = oldResults.program)
