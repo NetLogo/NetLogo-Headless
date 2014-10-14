@@ -53,7 +53,7 @@ libraryDependencies ++= Seq(
   "org.scalacheck" %% "scalacheck" % "1.11.6" % "test",
   "org.scalatest" %% "scalatest" % "2.2.1" % "test",
   "org.reflections" % "reflections" % "0.9.9" % "test",
-  "org.slf4j" % "slf4j-nop" % "1.7.5"             % "test"
+  "org.slf4j" % "slf4j-nop" % "1.7.7" % "test"
 )
 
 scalaSource in Compile := baseDirectory.value / "src" / "main"
