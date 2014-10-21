@@ -2,98 +2,143 @@
 
 package org.nlogo.parse
 
+import
+  scala.util.matching.Regex
+
 import org.nlogo.{ core, api },
   core.{ Token, TokenType },
     TokenType.{ Command, Reporter },
   api.{ Breed, Program }
 
+import StructureDeclarations.{ Breed => DeclBreed }
+
 object BreedIdentifierHandler {
+
+  private type SpecMatcher = PartialFunction[BreedPrimSpec, BreedPrimSpec]
+
+  private val BreedPatternString = "<BREEDS?>"
+
+  private val handlers = List(
+
+    // turtle creation
+    TurtlePrimitive("CREATE-ORDERED-<BREEDS>" , Command , "_createorderedturtles" ),
+    TurtlePrimitive("CREATE-<BREEDS>"         , Command ,  "_createturtles"       ),
+    TurtlePrimitive("HATCH-<BREEDS>"          , Command ,  "_hatch"               ),
+    TurtlePrimitive("SPROUT-<BREEDS>"         , Command ,  "_sprout"              ),
+
+    // turtle breeds
+    TurtlePrimitive("<BREEDS>"      , Reporter,  "_breed"             ),
+    TurtlePrimitive("<BREEDS>-AT"   , Reporter,  "etc._breedat"       ),
+    TurtlePrimitive("<BREEDS>-HERE" , Reporter,  "etc._breedhere"     ),
+    TurtlePrimitive("<BREEDS>-ON"   , Reporter,  "etc._breedon"       ),
+    TurtlePrimitive("<BREED>"       , Reporter,  "etc._breedsingular" ),
+    TurtlePrimitive("IS-<BREED>?"   , Reporter,  "etc._isbreed"       ),
+
+    // link breeds
+    DirectedLinkPrimitive   ( "CREATE-<BREEDS>-FROM"  , Command ,  "etc._createlinksfrom"   ),
+    DirectedLinkPrimitive   ( "CREATE-<BREED>-FROM"   , Command ,  "etc._createlinkfrom"    ),
+    DirectedLinkPrimitive   ( "CREATE-<BREEDS>-TO"    , Command ,  "etc._createlinksto"     ),
+    UndirectedLinkPrimitive ( "CREATE-<BREEDS>-WITH"  , Command ,  "etc._createlinkswith"   ),
+    DirectedLinkPrimitive   ( "CREATE-<BREED>-TO"     , Command ,  "etc._createlinkto"      ),
+    UndirectedLinkPrimitive ( "CREATE-<BREED>-WITH"   , Command ,  "etc._createlinkwith"    ),
+    DirectedLinkPrimitive   ( "IN-<BREED>-FROM"       , Reporter,  "etc._inlinkfrom"        ),
+    DirectedLinkPrimitive   ( "IN-<BREED>-NEIGHBOR?"  , Reporter,  "etc._inlinkneighbor"    ),
+    DirectedLinkPrimitive   ( "IN-<BREED>-NEIGHBORS"  , Reporter,  "etc._inlinkneighbors"   ),
+    UndirectedLinkPrimitive ( "IS-<BREED>?"           , Reporter,  "etc._isbreed"           ),
+    DirectedLinkPrimitive   ( "IS-<BREED>?"           , Reporter,  "etc._isbreed"           ),
+    DirectedLinkPrimitive   ( "<BREEDS>"              , Reporter,  "etc._linkbreed"         ),
+    UndirectedLinkPrimitive ( "<BREEDS>"              , Reporter,  "etc._linkbreed"         ),
+    DirectedLinkPrimitive   ( "<BREED>"               , Reporter,  "etc._linkbreedsingular" ),
+    UndirectedLinkPrimitive ( "<BREED>"               , Reporter,  "etc._linkbreedsingular" ),
+    UndirectedLinkPrimitive ( "<BREED>-NEIGHBOR?"     , Reporter,  "etc._linkneighbor"      ),
+    UndirectedLinkPrimitive ( "<BREED>-NEIGHBORS"     , Reporter,  "etc._linkneighbors"     ),
+    UndirectedLinkPrimitive ( "<BREED>-WITH"          , Reporter,  "etc._linkwith"          ),
+    DirectedLinkPrimitive   ( "MY-IN-<BREEDS>"        , Reporter,  "etc._myinlinks"         ),
+    UndirectedLinkPrimitive ( "MY-<BREEDS>"           , Reporter,  "etc._mylinks"           ),
+    DirectedLinkPrimitive   ( "MY-OUT-<BREEDS>"       , Reporter,  "etc._myoutlinks"        ),
+    DirectedLinkPrimitive   ( "OUT-<BREED>-NEIGHBOR?" , Reporter,  "etc._outlinkneighbor"   ),
+    DirectedLinkPrimitive   ( "OUT-<BREED>-NEIGHBORS" , Reporter,  "etc._outlinkneighbors"  ),
+    DirectedLinkPrimitive   ( "OUT-<BREED>-TO"        , Reporter,  "etc._outlinkto"         )
+
+  )
 
   // example input:  Token("hatch-frogs", TokenType.Ident, "HATCH-FROGS")
   // example result: Some(("_hatch", "FROGS", TokenType.Command))
   def process(token: Token, program: Program): Option[(String, String, TokenType)] =
-    handlers.toStream.flatMap(_.process(token, program))
-      .headOption
+    handlers.toStream.flatMap(_.process(token, program)).headOption
 
-  case class Spec(
-    patternString: String,
-    tokenType: TokenType,
-    singular: Boolean,
-    primClass: String)
+  def breedCommands(breed: DeclBreed): Seq[String] =
+    handlers.collect(breedPrimitivesMatching(breed, Command) andThen refineName(breed))
 
-  def turtle(spec: Spec) =
-    new Helper(spec, _.breeds, _ => true)
+  def breedReporters(breed: DeclBreed): Seq[String] =
+    handlers.collect(breedPrimitivesMatching(breed, Reporter) andThen refineName(breed))
 
-  def directedLink(spec: Spec) =
-    new Helper(spec, _.linkBreeds, _.isDirected)
+  def breedHomonymProcedures(breed: DeclBreed): Seq[String] =
+    handlers.collect(primitivesNamedLike(breed) andThen refineName(breed)).distinct
 
-  def undirectedLink(spec: Spec) =
-    new Helper(spec, _.linkBreeds, !_.isDirected)
+  private def breedPrimitivesMatching(breed: DeclBreed, tokenType: TokenType): SpecMatcher =
+    breedPrimsMatching(tokenType, breed, !matchesBreedName(_))
 
-  val handlers = List(
-    // turtle creation
-    turtle(Spec("CREATE-ORDERED-*" , Command , false, "_createorderedturtles" )),
-    turtle(Spec("CREATE-*"         , Command , false, "_createturtles"        )),
-    turtle(Spec("HATCH-*"          , Command , false, "_hatch"                )),
-    turtle(Spec("SPROUT-*"         , Command , false, "_sprout"               )),
-    // turtle breeds
-    turtle(Spec("*"                , Reporter, false, "_breed"                    )),
-    turtle(Spec("*-AT"             , Reporter, false, "etc._breedat"              )),
-    turtle(Spec("*-HERE"           , Reporter, false, "etc._breedhere"            )),
-    turtle(Spec("*-ON"             , Reporter, false, "etc._breedon"              )),
-    turtle(Spec("*"                , Reporter, true , "etc._breedsingular"        )),
-    turtle(Spec("IS-*?"            , Reporter, true , "etc._isbreed"              )),
-    // link breeds
-    directedLink   ( Spec("CREATE-*-FROM"   , Command , true , "etc._createlinkfrom"    )),
-    directedLink   ( Spec("CREATE-*-FROM"   , Command , false, "etc._createlinksfrom"   )),
-    directedLink   ( Spec("CREATE-*-TO"     , Command , false, "etc._createlinksto"     )),
-    undirectedLink ( Spec("CREATE-*-WITH"   , Command , false, "etc._createlinkswith"   )),
-    directedLink   ( Spec("CREATE-*-TO"     , Command , true , "etc._createlinkto"      )),
-    undirectedLink ( Spec("CREATE-*-WITH"   , Command , true , "etc._createlinkwith"    )),
-    directedLink   ( Spec("IN-*-FROM"       , Reporter, true , "etc._inlinkfrom"        )),
-    directedLink   ( Spec("IN-*-NEIGHBOR?"  , Reporter, true , "etc._inlinkneighbor"    )),
-    directedLink   ( Spec("IN-*-NEIGHBORS"  , Reporter, true , "etc._inlinkneighbors"   )),
-    directedLink   ( Spec("IS-*?"           , Reporter, true , "etc._isbreed"           )),
-    undirectedLink ( Spec("IS-*?"           , Reporter, true , "etc._isbreed"           )),
-    directedLink   ( Spec("*"               , Reporter, false, "etc._linkbreed"         )),
-    undirectedLink ( Spec("*"               , Reporter, false, "etc._linkbreed"         )),
-    directedLink   ( Spec("*"               , Reporter, true , "etc._linkbreedsingular" )),
-    undirectedLink ( Spec("*"               , Reporter, true , "etc._linkbreedsingular" )),
-    undirectedLink ( Spec("*-NEIGHBOR?"     , Reporter, true , "etc._linkneighbor"      )),
-    undirectedLink ( Spec("*-NEIGHBORS"     , Reporter, true , "etc._linkneighbors"     )),
-    undirectedLink ( Spec("*-WITH"          , Reporter, true , "etc._linkwith"          )),
-    directedLink   ( Spec("MY-IN-*"         , Reporter, false, "etc._myinlinks"         )),
-    undirectedLink ( Spec("MY-*"            , Reporter, false, "etc._mylinks"           )),
-    directedLink   ( Spec("MY-OUT-*"        , Reporter, false, "etc._myoutlinks"        )),
-    directedLink   ( Spec("OUT-*-NEIGHBOR?" , Reporter, true , "etc._outlinkneighbor"   )),
-    directedLink   ( Spec("OUT-*-NEIGHBORS" , Reporter, true , "etc._outlinkneighbors"  )),
-    directedLink   ( Spec("OUT-*-TO"        , Reporter, true , "etc._outlinkto"         ))
-  )
+  private def primitivesNamedLike(breed: DeclBreed): SpecMatcher =
+    breedPrimsMatching(Reporter, breed, matchesBreedName)
 
-  import java.util.regex.Pattern
+  private def matchesBreedName(patternString: String): Boolean =
+    patternString.matches(s"\\A$BreedPatternString\\Z")
 
-  class Helper(spec: Spec, breeds: Program => collection.Map[String, Breed],
-    isValidBreed: Breed => Boolean) {
-    val pattern = Pattern.compile("\\A" +
-      spec.patternString.replaceAll("\\?", "\\\\?")
-      .replaceAll("\\*", "(.+)") + "\\Z")
-    def process(tok: Token, program: Program): Option[(String, String, TokenType)] = {
-      val matcher = pattern.matcher(tok.value.asInstanceOf[String])
-      if(!matcher.matches())
-        None
-      else {
-        val name = matcher.group(1)
-        val breed =
-          breeds(program).values
-            .find{breed => name ==
-              (if (spec.singular) breed.singular else breed.name)}
-            .getOrElse(return None)
-        if (!isValidBreed(breed))
-          None
-        else
-          Some((spec.primClass, breed.name, spec.tokenType))
-      }
+  private def breedPrimsMatching(tokenType: TokenType, breed: DeclBreed, matches: (String) => Boolean): SpecMatcher =
+    if (breed.isLinkBreed && breed.isDirected)
+      { case directedLink@DirectedLinkPrimitive(pattern, `tokenType`, _) if matches(pattern) => directedLink }
+    else if (breed.isLinkBreed)
+      { case undirectedLink@UndirectedLinkPrimitive(pattern, `tokenType`, _) if matches(pattern) => undirectedLink }
+    else
+      { case turtle@TurtlePrimitive(pattern, `tokenType`, _) if matches(pattern) => turtle }
+
+  private def refineName(breed: DeclBreed)(helper: BreedPrimSpec): String =
+    helper.patternString.
+      replaceAll("<BREED>", breed.singular.name).
+      replaceAll("<BREEDS>", breed.plural.name)
+
+  trait BreedPrimSpec {
+
+    private val PatternMatcher: Regex = {
+      val refinedPattern = patternString.replaceAll("\\?", "\\\\?").replaceAll(BreedPatternString, "(.+)")
+      s"\\A$refinedPattern\\Z".r
     }
+
+    def patternString:              String
+    def tokenType:                  TokenType
+    def primClass:                  String
+    def breeds(program: Program):   Map[String, Breed]
+    def isValidBreed(breed: Breed): Boolean
+
+    def process(tok: Token, program: Program): Option[(String, String, TokenType)] =
+      tok.value.asInstanceOf[String] match {
+        case PatternMatcher(name) =>
+          breeds(program).values.collectFirst {
+            case breed if name == matchingName(breed) && isValidBreed(breed) => (primClass, breed.name, tokenType)
+          }
+        case _ =>
+          None
+      }
+
+    private def matchingName(breed: Breed): String =
+      if (patternString.contains("<BREED>")) breed.singular else breed.name
+
+  }
+
+  private[parse] case class TurtlePrimitive(patternString: String, tokenType: TokenType, primClass: String) extends BreedPrimSpec {
+    override def breeds(program: Program):   Map[String, Breed] = program.breeds
+    override def isValidBreed(breed: Breed): Boolean            = true
+  }
+
+  private[parse] case class DirectedLinkPrimitive(patternString: String, tokenType: TokenType, primClass: String) extends BreedPrimSpec {
+    override def breeds(program: Program):   Map[String, Breed] = program.linkBreeds
+    override def isValidBreed(breed: Breed): Boolean            = breed.isDirected
+  }
+
+  private[parse] case class UndirectedLinkPrimitive(patternString: String, tokenType: TokenType, primClass: String) extends BreedPrimSpec {
+    override def breeds(program: Program):   Map[String, Breed] = program.linkBreeds
+    override def isValidBreed(breed: Breed): Boolean            = !breed.isDirected
   }
 
 }

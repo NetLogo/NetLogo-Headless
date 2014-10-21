@@ -61,12 +61,16 @@ class TestDuplicateNames extends FixtureSuite with SlowTest {
     "There is already a turtle variable called COLOR")
   testBadName("pcolor",
     "There is already a patch variable called PCOLOR")
+  testBadName("kittens-at",
+    "There is already a breed reporter called KITTENS-AT",
+    "breed [kittens kitten]")
+  testBadName("sprout-kittens",
+    "There is already a breed command called SPROUT-KITTENS",
+    "breed [kittens kitten]"
+  )
 
   // at least we get errors on these, but the messages aren't great
   // https://github.com/NetLogo/NetLogo/issues/352
-  testBadName("kittens-at",
-    "There is already a _breedat:KITTENS called KITTENS-AT",
-    "breed [kittens kitten]")
   testBadName("array:set",
     "There is already a _extern:+0 called ARRAY:SET",
     "extensions [array]")
