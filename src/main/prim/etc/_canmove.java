@@ -9,15 +9,7 @@ import org.nlogo.nvm.Reporter;
 
 public final strictfp class _canmove
     extends Reporter {
-  @Override
-  public Syntax syntax() {
-    return SyntaxJ.reporterSyntax
-        (new int[]{Syntax.NumberType()},
-            Syntax.BooleanType(),
-            "-T--");
-  }
-
-  @Override
+    @Override
   public Object report(final Context context) {
     double distance = argEvalDoubleValue(context, 0);
     org.nlogo.agent.Turtle turtle = (org.nlogo.agent.Turtle) context.agent;

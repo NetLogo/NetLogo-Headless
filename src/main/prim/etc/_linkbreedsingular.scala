@@ -9,11 +9,6 @@ import org.nlogo.nvm.{ Reporter, Context }
 
 class _linkbreedsingular(breedName: String) extends Reporter {
 
-  override def syntax =
-    Syntax.reporterSyntax(
-      right = List(Syntax.NumberType, Syntax.NumberType),
-      ret = Syntax.LinkType | Syntax.NobodyType)
-
   override def toString =
     super.toString + ":" + breedName
 

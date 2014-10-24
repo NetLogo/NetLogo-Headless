@@ -10,9 +10,9 @@ import org.nlogo.nvm.Command;
 
 public final strictfp class _die
     extends Command {
-  @Override
-  public Syntax syntax() {
-    return SyntaxJ.commandSyntax("-T-L", true);
+
+  public _die() {
+    switches = true;
   }
 
   @Override

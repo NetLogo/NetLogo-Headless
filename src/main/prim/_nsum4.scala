@@ -9,12 +9,6 @@ import org.nlogo.nvm.{ Context, EngineException, Reporter }
 
 class _nsum4(vn: Int) extends Reporter {
 
-  override def syntax =
-    Syntax.reporterSyntax(
-      right = List(Syntax.ReferenceType),
-      ret = Syntax.NumberType,
-      agentClassString = "-TP-")
-
   override def toString =
     super.toString + ":" +
       Option(world).map(_.patchesOwnNameAt(vn)).getOrElse(vn.toString)

@@ -15,18 +15,6 @@ import java.util.List;
 
 public final strictfp class _withmax
     extends Reporter {
-  @Override
-  public Syntax syntax() {
-    return SyntaxJ.reporterSyntax
-        (Syntax.AgentsetType(),
-            new int[]{Syntax.NumberBlockType()},
-            Syntax.AgentsetType(),
-            org.nlogo.core.Syntax.NormalPrecedence() + 2,
-            false, // left associative
-            "OTPL",
-            "?"    // takes reporter block of unknown agent type
-        );
-  }
 
   @Override
   public Object report(final Context context) {

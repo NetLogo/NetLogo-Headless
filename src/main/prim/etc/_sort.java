@@ -19,12 +19,6 @@ import java.util.Iterator;
 public final strictfp class _sort
     extends Reporter
     implements Pure {
-  @Override
-  public Syntax syntax() {
-    return SyntaxJ.reporterSyntax
-        (new int[]{Syntax.ListType() | Syntax.AgentsetType()},
-            Syntax.ListType());
-  }
 
   @Override
   public Object report(final Context context) {

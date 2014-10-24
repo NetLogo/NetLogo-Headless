@@ -18,11 +18,4 @@ public final strictfp class _shadeof
     return color1 == color2 ? Boolean.TRUE : Boolean.FALSE;
   }
 
-  @Override
-  public Syntax syntax() {
-    int[] right = {Syntax.NumberType(),
-        Syntax.NumberType()};
-    int ret = Syntax.BooleanType();
-    return SyntaxJ.reporterSyntax(right, ret);
-  }
 }

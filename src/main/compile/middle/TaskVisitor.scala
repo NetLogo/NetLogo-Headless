@@ -3,11 +3,11 @@
 package org.nlogo.compile
 package middle
 
-import org.nlogo.{ api, nvm, prim },
+import org.nlogo.{ core, api, nvm, prim },
   Fail._
 
 // This replaces _taskvariable with _letvariable everywhere.  And we need
-//   to know which api.Let object to connect each occurrence to.
+//   to know which Let object to connect each occurrence to.
 // There are two cases, command tasks and reporter tasks:
 // - In the command task case, LambdaLifter already made the task body into
 //   its own procedure, so we never see _commandtask, so we look up the
@@ -23,7 +23,7 @@ class TaskVisitor extends DefaultAstVisitor {
     super.visitProcedureDefinition(procdef)
   }
   override def visitReporterApp(expr: ReporterApp) {
-    expr.reporter match {
+    expr.nvmReporter match {
       case l: prim._reportertask =>
         val old = task
         task = Some(l)
@@ -34,13 +34,17 @@ class TaskVisitor extends DefaultAstVisitor {
           case None =>
             cAssert(procedure.get.isTask,
                     api.I18N.errors.get("compiler.TaskVisitor.notDefined"), expr)
-            val formal: api.Let = procedure.get.getTaskFormal(lv.varNumber, lv.token)
-            expr.reporter = new prim._letvariable(formal)
-            expr.reporter.token = lv.token
+            val formal: core.Let = procedure.get.getTaskFormal(lv.varNumber)
+            val plv = new prim._letvariable
+            expr.nvmReporter = plv
+            plv.let = formal
+            expr.nvmReporter.token = lv.token
           case Some(l: prim._reportertask) =>
-            val formal: api.Let = l.getFormal(lv.varNumber)
-            expr.reporter = new prim._letvariable(formal)
-            expr.reporter.token = lv.token
+            val formal: core.Let = l.getFormal(lv.varNumber)
+            val plv = new prim._letvariable
+            expr.nvmReporter = plv
+            plv.let = formal
+            expr.nvmReporter.token = lv.token
         }
       case _ =>
         super.visitReporterApp(expr)

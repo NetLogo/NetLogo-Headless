@@ -7,9 +7,6 @@ import org.nlogo.api.CommandRunnable
 import org.nlogo.nvm.{ Command, Context, EngineException }
 
 class _exportinterface extends Command {
-  override def syntax =
-    Syntax.commandSyntax(
-      right = List(Syntax.StringType))
   override def perform(context: Context) {
     val path =
       workspace.fileManager.attachPrefix(

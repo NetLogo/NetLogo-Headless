@@ -10,12 +10,7 @@ import org.nlogo.agent.Observer
 
 class _askconcurrent extends Command with CustomAssembled {
 
-  override def syntax =
-    Syntax.commandSyntax(
-      right = List(Syntax.AgentsetType, Syntax.CommandBlockType),
-      agentClassString = "OTPL",
-      blockAgentClassString = "?",
-      switches = true)
+  switches = true
 
   override def toString =
     super.toString + ":+" + offset

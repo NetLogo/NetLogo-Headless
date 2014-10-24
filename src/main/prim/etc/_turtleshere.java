@@ -12,11 +12,6 @@ import org.nlogo.nvm.Reporter;
 
 public final strictfp class _turtleshere
     extends Reporter {
-  @Override
-  public Syntax syntax() {
-    return SyntaxJ.reporterSyntax
-        (Syntax.TurtlesetType(), "-TP-");
-  }
 
   @Override
   public Object report(final Context context) {

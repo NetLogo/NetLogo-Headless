@@ -44,9 +44,9 @@ private class Assembler {
   }
   def assembleStatements(stmts: Statements): collection.mutable.ArrayBuffer[Command] = {
     stmts.stmts.foreach(stmt =>
-      stmt.command match {
+      stmt.nvmCommand match {
         case ca: CustomAssembled => ca.assemble(new Assistant(stmt))
-        case _ => code += stmt.command
+        case _ => code += stmt.nvmCommand
       })
     code
   }
@@ -57,9 +57,9 @@ private class Assembler {
     private var gotoMark = -1
     private var storedGoto: Option[_goto] = None
     def add(cmd: Command) {
-      if (cmd eq stmt.command)
+      if (cmd eq stmt.nvmCommand)
         if (branchMark == -1) branchMark = code.size
-        else stmt.command.offset = branchMark - code.size
+        else stmt.nvmCommand.offset = branchMark - code.size
       code += cmd
     }
     def goTo() {
@@ -86,14 +86,14 @@ private class Assembler {
       assembleStatements(stmt.args(pos).asInstanceOf[CommandBlock].statements)
     }
     def argCount = stmt.args.size
-    def arg(i: Int) = stmt.args(i).asInstanceOf[ReporterApp].reporter
+    def arg(i: Int) = stmt.args(i).asInstanceOf[ReporterApp].nvmReporter
     def removeArg(i: Int) {
-      stmt.command.args =
-        (stmt.command.args.take(i) ++ stmt.command.args.drop(i + 1)).toArray
+      stmt.nvmCommand.args =
+        (stmt.nvmCommand.args.take(i) ++ stmt.nvmCommand.args.drop(i + 1)).toArray
     }
     def resume() {
       if (branchMark == -1) branchMark = code.size
-      else stmt.command.offset = offset
+      else stmt.nvmCommand.offset = offset
     }
     def offset =
       if (branchMark == -1) throw new IllegalStateException

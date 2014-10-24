@@ -8,11 +8,6 @@ import org.nlogo.nvm.{ EngineException, Context, Reporter }
 
 class _reduce extends Reporter {
 
-  override def syntax =
-    Syntax.reporterSyntax(
-      right = List(Syntax.ReporterTaskType, Syntax.ListType),
-      ret = Syntax.WildcardType)
-
   override def report(context: Context): AnyRef = {
     val task = argEvalReporterTask(context, 0)
     if(task.formals.size > 2)

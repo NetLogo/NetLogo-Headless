@@ -13,11 +13,9 @@ import org.nlogo.nvm.EngineException;
 
 public final strictfp class _follow
     extends Command {
-  @Override
-  public Syntax syntax() {
-    return SyntaxJ.commandSyntax
-        (new int[]{Syntax.TurtleType()},
-            "O---", true);
+
+  public _follow() {
+    switches = true;
   }
 
   @Override

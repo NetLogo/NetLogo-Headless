@@ -10,11 +10,7 @@ class _setturtlevariable(_vn: Int) extends Command {
 
   def this(original: _turtlevariable) = this(original.vn)
 
-  override def syntax =
-    Syntax.commandSyntax(
-      right = List(Syntax.WildcardType),
-      agentClassString = "-T--",
-      switches = true)
+  switches = true
 
   override def toString =
     super.toString + ":" +

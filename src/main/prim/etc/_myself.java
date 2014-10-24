@@ -13,11 +13,6 @@ import org.nlogo.nvm.Reporter;
 
 public final strictfp class _myself
     extends Reporter {
-  @Override
-  public Syntax syntax() {
-    return SyntaxJ.reporterSyntax
-        (Syntax.AgentType(), "-TPL");
-  }
 
   @Override
   public Object report(final Context context) {

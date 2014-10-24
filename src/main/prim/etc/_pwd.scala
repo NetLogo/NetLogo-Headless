@@ -7,9 +7,6 @@ import org.nlogo.api.OutputDestination
 import org.nlogo.nvm.{ Command, Context }
 
 class _pwd extends Command {
-  override def syntax =
-    Syntax.commandSyntax(
-      agentClassString = "O---")
   override def perform(context: Context) {
     val path =
       Option(workspace.getModelPath)

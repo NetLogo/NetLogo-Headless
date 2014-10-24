@@ -4,8 +4,8 @@ package org.nlogo.compile
 package front
 
 import org.scalatest.FunSuite
-import org.nlogo.api.{ CompilerException, DummyExtensionManager, Program }
-import org.nlogo.nvm
+import org.nlogo.{ core, api, nvm },
+  api.{ CompilerException, DummyExtensionManager, Program }
 
 // This is where ExpressionParser gets most of its testing.  (It's a lot easier to test it as part
 // of the overall front end than it would be to test in strict isolation.)
@@ -16,8 +16,8 @@ class FrontEndTests extends FunSuite {
   val POSTAMBLE = "\nend"
 
   /// helpers
-  def compile(source: String): Seq[Statements] =
-    FrontEnd.frontEnd(PREAMBLE + source + POSTAMBLE) match {
+  def compile(source: String, preamble: String = PREAMBLE): Seq[Statements] =
+    FrontEnd.frontEnd(preamble + source + POSTAMBLE) match {
       case (procs, _) =>
         procs.map(_.statements)
     }
@@ -60,8 +60,8 @@ class FrontEndTests extends FunSuite {
     }
   }
 
-  def runTest(input: String, result: String) {
-    assertResult(result)(compile(input).mkString)
+  def runTest(input: String, result: String, preamble: String = PREAMBLE) {
+    assertResult(result)(compile(input, preamble).mkString)
   }
   def runFailure(input: String, message: String, start: Int, end: Int) {
     doFailure(input, message, start, end)
@@ -75,15 +75,15 @@ class FrontEndTests extends FunSuite {
 
   /// now, the actual tests
   test("DoParseSimpleCommand") {
-    runTest("__ignore round 0.5", "_ignore[_round[_constdouble:0.5[]]]")
+    runTest("__ignore round 0.5", "_ignore[_round[_const:0.5[]]]")
   }
   test("DoParseCommandWithInfix") {
-    runTest("__ignore 5 + 2", "_ignore[_plus[_constdouble:5.0[], _constdouble:2.0[]]]")
+    runTest("__ignore 5 + 2", "_ignore[_plus[_const:5[], _const:2[]]]")
   }
   test("DoParseTwoCommands") {
     runTest("__ignore round 0.5 fd 5",
-      "_ignore[_round[_constdouble:0.5[]]] " +
-      "_fd[_constdouble:5.0[]]")
+      "_ignore[_round[_const:0.5[]]] " +
+      "_fd[_const:5[]]")
   }
   test("DoParseBadCommand1") {
     runFailure("__ignore 1 2 3", "Expected command.", 11, 12)
@@ -102,57 +102,69 @@ class FrontEndTests extends FunSuite {
     // fine. - ST 1/22/09
     runFailure("crt 10 [ [", "No closing bracket for this open bracket.", 7, 8)
   }
+  test("missing name after let") {
+    // here the error is at TokenType.Eof - ST 9/29/14
+    runFailure("let", "Expected variable name here",
+      core.Token.Eof.start - PREAMBLE.size,
+      core.Token.Eof.end - PREAMBLE.size)
+  }
+  // https://github.com/NetLogo/NetLogo/issues/348
+  test("let of task variable") {
+    runFailure("foreach [1] [ let ? 0 ]",
+      "Names beginning with ? are reserved for use as task inputs",
+      18, 19)
+  }
   test("DoParseMap") {
     runTest("__ignore map [round ?] [1.2 1.7 3.2]",
-      "_ignore[_map[_reportertask[_round[_taskvariable:1[]]], _constlist:[1.2 1.7 3.2][]]]")
+      "_ignore[_map[_reportertask[_round[_taskvariable:1[]]], _const:[1.2 1.7 3.2][]]]")
   }
   test("DoParseMapShortSyntax") {
     runTest("__ignore map round [1.2 1.7 3.2]",
-      "_ignore[_map[_reportertask[_round[_taskvariable:1[]]], _constlist:[1.2 1.7 3.2][]]]")
+      "_ignore[_map[_reportertask[_round[_taskvariable:1[]]], _const:[1.2 1.7 3.2][]]]")
   }
   test("DoParseForeach") {
     runTest("foreach [1 2 3] [__ignore ?]",
-      "_foreach[_constlist:[1 2 3][], _commandtask[[_ignore[_taskvariable:1[]]]]]")
+      "_foreach[_const:[1 2 3][], _commandtask[[_ignore[_taskvariable:1[]]]]]")
   }
   test("DoParseParenthesizedCommand") {
-    runTest("(__ignore 5)", "_ignore[_constdouble:5.0[]]")
+    runTest("(__ignore 5)", "_ignore[_const:5[]]")
   }
   test("DoParseParenthesizedCommandAsFromEvaluator") {
     runTest("__observercode (__ignore 5) __done",
-      "_observercode[] _ignore[_constdouble:5.0[]] _done[]")
+      "_observercode[] _ignore[_const:5[]] _done[]")
   }
   test("ParseExpressionWithInfix") {
     runTest("__ignore 5 + 2",
-      "_ignore[_plus[_constdouble:5.0[], _constdouble:2.0[]]]")
+      "_ignore[_plus[_const:5[], _const:2[]]]")
   }
   test("ParseExpressionWithInfix2") {
     runTest("__ignore 5 + 2 * 7",
-      "_ignore[_plus[_constdouble:5.0[], _mult[_constdouble:2.0[], _constdouble:7.0[]]]]")
+      "_ignore[_plus[_const:5[], _mult[_const:2[], _const:7[]]]]")
   }
   test("ParseExpressionWithInfix3") {
     runTest("__ignore 5 + 2 * 7 - 2",
-      "_ignore[_minus[_plus[_constdouble:5.0[], _mult[_constdouble:2.0[], _constdouble:7.0[]]], _constdouble:2.0[]]]")
+      "_ignore[_minus[_plus[_const:5[], _mult[_const:2[], _const:7[]]], _const:2[]]]")
   }
   test("ParseExpressionWithInfixAndPrefix") {
     runTest("__ignore round 5.2 + log 64 2 * log 64 2 - random 2",
-      "_ignore[_minus[_plus[_round[_constdouble:5.2[]], _mult[_log[_constdouble:64.0[], _constdouble:2.0[]], _log[_constdouble:64.0[], _constdouble:2.0[]]]], _random[_constdouble:2.0[]]]]")
+      "_ignore[_minus[_plus[_round[_const:5.2[]], _mult[_log[_const:64[], _const:2[]], _log[_const:64[], _const:2[]]]], _random[_const:2[]]]]")
   }
   test("ParseConstantInteger") {
-    runTest("__ignore 5", "_ignore[_constdouble:5.0[]]")
+    runTest("__ignore 5", "_ignore[_const:5[]]")
   }
   test("ParseConstantList") {
-    runTest("__ignore [5]", "_ignore[_constlist:[5][]]")
+    runTest("__ignore [5]", "_ignore[_const:[5][]]")
   }
   test("ParseConstantListWithSublists") {
-    runTest("__ignore [[1] [2]]", "_ignore[_constlist:[[1] [2]][]]")
+    runTest("__ignore [[1] [2]]", "_ignore[_const:[[1] [2]][]]")
   }
   test("ParseConstantListInsideTask1") {
     runTest("__ignore n-values 10 [[]]",
-      "_ignore[_nvalues[_constdouble:10.0[], _reportertask[_constlist:[][]]]]")
+      "_ignore[_nvalues[_const:10[], _reportertask[_const:[][]]]]")
   }
   test("ParseConstantListInsideTask2") {
     runTest("__ignore n-values 10 [[5]]",
-      "_ignore[_nvalues[_constdouble:10.0[], _reportertask[_constlist:[5][]]]]")
+      "_ignore[_nvalues[_const:10[], _reportertask[_const:[5][]]]]")
   }
   test("ParseCommandTask1") {
     runTest("__ignore task [print ?]",
@@ -160,18 +172,33 @@ class FrontEndTests extends FunSuite {
   }
   test("ParseCommandTask2") {
     runTest("__ignore task [print 5]",
-      "_ignore[_task[_commandtask[[_print[_constdouble:5.0[]]]]]]")
+      "_ignore[_task[_commandtask[[_print[_const:5[]]]]]]")
   }
   test("ParseCommandTask3") {
     // it would be nice if this resulted in a CompilerException instead
     // of failing at runtime - ST 2/6/11
     runTest("__ignore runresult task [__ignore 5]",
-      "_ignore[_runresult[_task[_commandtask[[_ignore[_constdouble:5.0[]]]]]]]")
+      "_ignore[_runresult[_task[_commandtask[[_ignore[_const:5[]]]]]]]")
   }
   test("ParseDiffuse") {
     runTest("diffuse pcolor 1",
-      "_diffuse[_reference:Patch,2[], _constdouble:1.0[]]")
+      "_diffuse[_patchvariable:2[], _const:1[]]")
   }
+
+  // in SetBreed2, we are checking that since no singular form of `fish`
+  // is provided and it defaults to `turtle`, that the primitive `turtle`
+  // isn't mistaken for a singular form and parsed as `_breedsingular` - ST 4/12/14
+  test("SetBreed1") {
+    runTest("__ignore turtle 0",
+      "_ignore[_turtle[_const:0[]]]",
+      "breed [fish a-fish] " + PREAMBLE)
+  }
+  test("SetBreed2") {
+    runTest("__ignore turtle 0",
+      "_ignore[_turtle[_const:0[]]]",
+      "breed [fish] " + PREAMBLE)
+  }
+
   /// tests using testStartAndEnd
   test("StartAndEndPositions0") {
     testStartAndEnd("ca",

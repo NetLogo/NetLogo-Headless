@@ -9,9 +9,6 @@ import org.nlogo.nvm.{ Context, Reporter }
 // outcome of the model.
 
 class _randomstate extends Reporter {
-  override def syntax =
-    Syntax.reporterSyntax(
-      ret = Syntax.StringType)
   override def report(context: Context): String =
     world.mainRNG.save
 }

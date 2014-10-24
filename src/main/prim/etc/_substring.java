@@ -31,10 +31,4 @@ public final strictfp class _substring
     return string.substring(start, stop);
   }
 
-  @Override
-  public Syntax syntax() {
-    int[] right = {Syntax.StringType(), Syntax.NumberType(), Syntax.NumberType()};
-    int ret = Syntax.StringType();
-    return SyntaxJ.reporterSyntax(right, ret);
-  }
 }

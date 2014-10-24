@@ -7,9 +7,6 @@ import org.nlogo.api.{ Dump, LogoList }
 import org.nlogo.nvm.{ Reporter, Pure, Context }
 
 class _constlist(value: LogoList) extends Reporter with Pure {
-  override def syntax =
-    Syntax.reporterSyntax(
-      ret = Syntax.ListType)
   override def toString =
     super.toString + ":" + Dump.logoObject(value)
   override def report(context: Context): LogoList =

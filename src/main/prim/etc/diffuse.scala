@@ -17,11 +17,7 @@ class _diffuse4 extends DiffuseCommand {
 
 abstract class DiffuseCommand extends nvm.Command {
 
-  override def syntax =
-    Syntax.commandSyntax(
-      right = List(Syntax.ReferenceType, Syntax.NumberType),
-      agentClassString = "O---",
-      switches = true)
+  switches = true
 
   override def toString =
     super.toString +

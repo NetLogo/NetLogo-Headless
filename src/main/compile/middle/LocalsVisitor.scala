@@ -3,7 +3,8 @@
 package org.nlogo.compile
 package middle
 
-import org.nlogo.api.{ I18N, Let }
+import org.nlogo.core.Let
+import org.nlogo.api.I18N
 import org.nlogo.nvm.Procedure
 import org.nlogo.prim._
 import Fail._
@@ -33,7 +34,7 @@ extends DefaultAstVisitor {
   }
 
   override def visitStatement(stmt: Statement) {
-    stmt.command match {
+    stmt.nvmCommand match {
       case _: _ask | _: _askconcurrent =>
         askNestingLevel += 1
         super.visitStatement(stmt)
@@ -44,8 +45,8 @@ extends DefaultAstVisitor {
         // to a local. This can be useful for testing. - ST 11/3/10, 2/6/11
         val exempt = l.token.text.equalsIgnoreCase("__LET")
         if(!procedure.isTask && askNestingLevel == 0 && !exempt) {
-          stmt.command = new _setprocedurevariable(new _procedurevariable(procedure.args.size, l.let.name))
-          stmt.command.token = stmt.command.token
+          stmt.nvmCommand = new _setprocedurevariable(new _procedurevariable(procedure.args.size, l.let.name))
+          stmt.nvmCommand.token = stmt.nvmCommand.token
           stmt.removeArgument(0)
           alteredLets(procedure).put(l.let, procedure.args.size)
           procedure.localsCount += 1
@@ -57,7 +58,7 @@ extends DefaultAstVisitor {
       case r: _repeat =>
         if(!procedure.isTask && askNestingLevel == 0) {
           vn = procedure.args.size
-          stmt.command = new _repeatlocal(vn)
+          stmt.nvmCommand = new _repeatlocal(vn)
           procedure.localsCount += 1
           // actual name here doesn't really matter, I don't think - ST 11/10/05
           procedure.args :+= "_repeatlocal:" + vn
@@ -65,8 +66,8 @@ extends DefaultAstVisitor {
         super.visitStatement(stmt)
       case ri: _repeatinternal =>
         if(askNestingLevel == 0) {
-          stmt.command = new _repeatlocalinternal(vn, // vn from the _repeat we just saw
-                                                  ri.offset)
+          stmt.nvmCommand = new _repeatlocalinternal(vn, // vn from the _repeat we just saw
+                                                     ri.offset)
         }
         super.visitStatement(stmt)
       case _ => super.visitStatement(stmt)
@@ -74,16 +75,16 @@ extends DefaultAstVisitor {
   }
 
   override def visitReporterApp(expr: ReporterApp) {
-    expr.reporter match {
+    expr.nvmReporter match {
       case l: _letvariable =>
         cAssert(currentLet == null || (currentLet.let ne l.let),
                 I18N.errors.getN("compiler.LocalsVisitor.notDefined", l.token.text.toUpperCase),
                 l.token)
         // it would be nice if the next line were easier to read - ST 2/6/11
         for(index <- alteredLets(procedure).get(l.let).orElse(Option(procedure.parent).flatMap(parent => alteredLets(parent).get(l.let)))) {
-          val oldToken = expr.reporter.token
-          expr.reporter = new _procedurevariable(index.intValue, l.let.name)
-          expr.reporter.token = oldToken
+          val oldToken = expr.nvmReporter.token
+          expr.nvmReporter = new _procedurevariable(index.intValue, l.let.name)
+          expr.nvmReporter.token = oldToken
         }
       case _ =>
     }

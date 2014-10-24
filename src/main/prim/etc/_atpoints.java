@@ -143,11 +143,4 @@ public final strictfp class _atpoints
     return result;
   }
 
-  @Override
-  public Syntax syntax() {
-    int left = Syntax.TurtlesetType() | Syntax.PatchsetType();
-    int[] right = {Syntax.ListType()};
-    int ret = Syntax.AgentsetType();
-    return SyntaxJ.reporterSyntax(left, right, ret, org.nlogo.core.Syntax.NormalPrecedence() + 2);
-  }
 }

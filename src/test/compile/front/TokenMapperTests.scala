@@ -15,12 +15,12 @@ class TokenMapperTests extends FunSuite {
   def isCommand(s: String) = getCommand(s).isDefined
   def isReporter(s: String) = getReporter(s).isDefined
 
-  test("OneCommand1") { assertResult("_fd")(getCommand("FD").get.toString) }
-  test("OneCommand2") { assertResult("_fd")(getCommand("fd").get.toString) }
+  test("OneCommand1") { assertResult("_fd")(getCommand("FD").get.getClass.getSimpleName) }
+  test("OneCommand2") { assertResult("_fd")(getCommand("fd").get.getClass.getSimpleName) }
   test("BadCommand") { assertResult(false)(isCommand("gkhgjkh")) }
 
-  test("OneReporter1") { assertResult("_timer")(getReporter("TIMER").get.toString) }
-  test("OneReporter2") { assertResult("_timer")(getReporter("timer").get.toString) }
+  test("OneReporter1") { assertResult("_timer")(getReporter("TIMER").get.getClass.getSimpleName) }
+  test("OneReporter2") { assertResult("_timer")(getReporter("timer").get.getClass.getSimpleName) }
   test("BadReporter") { assertResult(false)(isReporter("gkhgjkh")) }
 
   test("reporter1") { assert(isReporter("random")) }

@@ -11,12 +11,6 @@ class _linkwith(val breedName: String) extends Reporter {
 
   def this() = this(null)
 
-  override def syntax =
-    Syntax.reporterSyntax(
-      right = List(Syntax.AgentType),
-      ret = Syntax.LinkType,
-      agentClassString = "-T--")
-
   override def toString =
     super.toString + ":" + breedName
 

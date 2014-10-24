@@ -2,25 +2,22 @@
 
 package org.nlogo.prim
 
-// Not currently employed by the compiler, but may be useful in some scenarios, such as for users of
-// the controlling API.  (See TestArgumentInjection for a sample use.)
-
 import org.nlogo.core.Syntax
+import org.nlogo.api.{ Dump, LogoList, Nobody }
 import org.nlogo.nvm.{ Reporter, Pure, Context }
 
-class _const(value: AnyRef) extends Reporter with Pure {
+class _const(_value: AnyRef) extends Reporter with Pure {
 
-  override def syntax =
-    Syntax.reporterSyntax(
-      ret = Syntax.WildcardType)
+  def value = _value
 
+  // readable = true so we can distinguish e.g. the number 2 from the string "2"
   override def toString =
-    s"${super.toString}:$value"
+    s"${super.toString}:${Dump.logoObject(value, readable = true, exporting = false)}"
 
   override def report(context: Context): AnyRef =
     report_1(context)
 
   def report_1(context: Context): AnyRef =
-    value
+    _value
 
 }

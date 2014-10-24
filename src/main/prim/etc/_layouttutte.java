@@ -15,12 +15,9 @@ import org.nlogo.nvm.EngineException;
 
 public final strictfp class _layouttutte
     extends Command {
-  @Override
-  public Syntax syntax() {
-    return SyntaxJ.commandSyntax
-        (new int[]{Syntax.TurtlesetType(), Syntax.LinksetType(),
-            Syntax.NumberType()},
-            true);
+
+  public _layouttutte() {
+    switches = true;
   }
 
   @Override

@@ -9,12 +9,6 @@ import org.nlogo.nvm.{ Context, EngineException, Reporter }
 
 class _sorton extends Reporter {
 
-  override def syntax =
-    Syntax.reporterSyntax(
-      right = List(Syntax.ReporterBlockType, Syntax.AgentsetType),
-      ret = Syntax.ListType,
-      blockAgentClassString = "?")
-
   override def report(context: Context): LogoList = {
     val reporterBlock = args(0)
     val agents = argEvalAgentSet(context, 1)

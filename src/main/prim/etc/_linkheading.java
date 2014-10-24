@@ -9,11 +9,6 @@ import org.nlogo.nvm.Context;
 import org.nlogo.nvm.Reporter;
 
 public final strictfp class _linkheading extends Reporter {
-  @Override
-  public Syntax syntax() {
-    return SyntaxJ.reporterSyntax
-        (Syntax.NumberType(), "---L");
-  }
 
   @Override
   public Object report(Context context) {

@@ -11,12 +11,9 @@ import org.nlogo.nvm.EngineException;
 
 public final strictfp class _resizeworld
     extends Command {
-  @Override
-  public Syntax syntax() {
-    return SyntaxJ.commandSyntax(
-        new int[]{Syntax.NumberType(), Syntax.NumberType(),
-            Syntax.NumberType(), Syntax.NumberType()},
-        "O---", true);
+
+  public _resizeworld() {
+    switches = true;
   }
 
   @Override

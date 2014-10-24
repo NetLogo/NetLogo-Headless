@@ -64,10 +64,14 @@ package middle
 //
 // Whew!  Got all that?
 
-import org.nlogo.core.Syntax
-import org.nlogo.nvm.{ Instruction, Procedure }
+import org.nlogo.core, core.Syntax
+import org.nlogo.nvm, nvm.{ Instruction, Procedure }
 import org.nlogo.prim.{ _call, _callreport, _task }
 import Fail._
+
+// As a result of the recent compiler refactorings, there is now some
+// gross stuff below where the code sometimes uses the core package stuff,
+// sometimes the nvm package stuff. Could probably be improved. - ST 9/29/14
 
 class AgentTypeChecker(defs: Seq[ProcedureDefinition]) {
 
@@ -93,10 +97,10 @@ class AgentTypeChecker(defs: Seq[ProcedureDefinition]) {
     // visitStatement and visitReporterApp are clones of each other
 
     override def visitStatement(stmt: Statement) {
-      val c = stmt.command
-      agentClassString = typeCheck(currentProcedure, c, agentClassString)
-      if(c.syntax.blockAgentClassString != null)
-        chooseVisitorAndContinue(c.syntax.blockAgentClassString, stmt.args)
+      val c = stmt.nvmCommand
+      agentClassString = typeCheck(currentProcedure, stmt.coreCommand, c, agentClassString)
+      if(stmt.coreCommand.syntax.blockAgentClassString != null)
+        chooseVisitorAndContinue(stmt.coreCommand.syntax.blockAgentClassString, stmt.args)
       else
         super.visitStatement(stmt)
       c.agentClassString = agentClassString
@@ -104,12 +108,12 @@ class AgentTypeChecker(defs: Seq[ProcedureDefinition]) {
 
     // visitStatement and visitReporterApp are clones of each other
     override def visitReporterApp(app: ReporterApp) {
-      val r = app.reporter
-      agentClassString = typeCheck(currentProcedure, r, agentClassString)
+      val r = app.nvmReporter
+      agentClassString = typeCheck(currentProcedure, app.coreReporter, r, agentClassString)
       if(r.isInstanceOf[_task])
         app.args.head.accept(new AgentTypeCheckerVisitor(currentProcedure, "OTPL"))
-      else if(r.syntax.blockAgentClassString != null)
-        chooseVisitorAndContinue(r.syntax.blockAgentClassString, app.args)
+      else if(app.coreReporter.syntax.blockAgentClassString != null)
+        chooseVisitorAndContinue(app.coreReporter.syntax.blockAgentClassString, app.args)
       else
         super.visitReporterApp(app)
       r.agentClassString = agentClassString
@@ -131,7 +135,7 @@ class AgentTypeChecker(defs: Seq[ProcedureDefinition]) {
     }
 
     def getReportedAgentType(app: ReporterApp): String = {
-      app.reporter.syntax.ret match {
+      app.coreReporter.syntax.ret match {
         case Syntax.TurtleType | Syntax.TurtlesetType => "-T--"
         case Syntax.PatchType  | Syntax.PatchsetType  => "--P-"
         case Syntax.LinkType   | Syntax.LinksetType   => "---L"
@@ -148,10 +152,10 @@ class AgentTypeChecker(defs: Seq[ProcedureDefinition]) {
       }
     }
 
-    def typeCheck(currentProcedure: Procedure, instruction: Instruction, agentClassString: String): String = {
+    def typeCheck(currentProcedure: Procedure, coreInstruction: core.Instruction, nvmInstruction: nvm.Instruction, agentClassString: String): String = {
       // Check if dealing with a procedure or a primitive
       val calledProcedure: Option[Procedure] =
-        instruction match {
+        nvmInstruction match {
           case c: _call => Some(c.procedure)
           case cr: _callreport => Some(cr.procedure)
           case _ => None
@@ -163,14 +167,14 @@ class AgentTypeChecker(defs: Seq[ProcedureDefinition]) {
       else {
         val instructionUsableBy =
           if(calledProcedure.isDefined) calledProcedure.get.agentClassString
-          else instruction.syntax.agentClassString
+          else coreInstruction.syntax.agentClassString
         val result = combineRestrictions(agentClassString, instructionUsableBy)
         if(result == "----") {
-          val name = instruction.tokenLimitingType.text.toUpperCase
+          val name = nvmInstruction.tokenLimitingType.text.toUpperCase
           exception(
             "You can't use " + name + " in " + agentClassStringToEnglish(agentClassString, true) +
               " context, because " + name + " is " + agentClassStringToEnglish(instructionUsableBy, false) +
-              "-only.", instruction.tokenLimitingType)
+              "-only.", nvmInstruction.tokenLimitingType)
         }
         result
       }

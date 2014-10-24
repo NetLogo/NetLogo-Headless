@@ -8,11 +8,7 @@ import org.nlogo.nvm.{ Command, Context }
 
 class _crtfast(breedName: String) extends Command {
 
-  override def syntax =
-    Syntax.commandSyntax(
-      right = List(Syntax.NumberType),
-      agentClassString = "O---",
-      switches = true)
+  switches = true
 
   override def toString =
     super.toString + ":" + breedName

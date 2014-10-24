@@ -16,12 +16,6 @@ import java.util.Iterator;
 public final strictfp class _removeduplicates
     extends Reporter
     implements org.nlogo.nvm.Pure {
-  @Override
-  public Syntax syntax() {
-    int[] right = {Syntax.ListType()};
-    int ret = Syntax.ListType();
-    return SyntaxJ.reporterSyntax(right, ret);
-  }
 
   @Override
   public Object report(Context context) {

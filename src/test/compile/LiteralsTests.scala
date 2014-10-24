@@ -5,9 +5,9 @@ package org.nlogo.compile
 import org.scalatest.FunSuite
 
 class LiteralsTests extends FunSuite {
+  class C
   test("makeLiteralReporter not picky about type") {
-    case object Obj
-    assertResult("_const:Obj")(
-      Literals.makeLiteralReporter(Obj).toString)
+    assertResult("_const:<C>")(
+      Literals.makeLiteralReporter(new C).toString)
   }
 }

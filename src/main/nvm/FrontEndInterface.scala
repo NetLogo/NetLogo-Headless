@@ -22,5 +22,4 @@ trait FrontEndInterface {
   @throws(classOf[java.io.IOException])
   def readFromFile(currFile: org.nlogo.api.File, world: World, extensionManager: ExtensionManager): AnyRef
   def isReporter(s: String, program: Program, procedures: ProceduresMap, extensionManager: ExtensionManager): Boolean
-  def makeLiteralReporter(value: AnyRef): Reporter
 }

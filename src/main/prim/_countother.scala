@@ -8,12 +8,6 @@ import org.nlogo.nvm.{ Reporter, Context }
 
 class _countother extends Reporter {
 
-  override def syntax =
-    Syntax.reporterSyntax(
-      right = List(Syntax.AgentsetType),
-      ret = Syntax.NumberType,
-      agentClassString = "-TPL")
-
   override def report(context: Context): java.lang.Double =
     Double.box(report_1(context, argEvalAgentSet(context, 0)))
 

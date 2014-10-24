@@ -2,6 +2,6 @@
 
 package org.nlogo.nvm
 
-import org.nlogo.api.Let
+import org.nlogo.core.Let
 
 class LetBinding(val let: Let, var value: AnyRef)

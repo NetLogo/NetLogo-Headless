@@ -17,11 +17,7 @@ class _downhill4 extends HillCommand(sign = -1) {
 
 abstract class HillCommand(sign: Int) extends nvm.Command {
 
-  override def syntax =
-    Syntax.commandSyntax(
-      right = List(Syntax.ReferenceType),
-      agentClassString = "-T--",
-      switches = true)
+  switches = true
 
   override def toString =
     super.toString +

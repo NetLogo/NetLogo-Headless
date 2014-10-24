@@ -7,9 +7,7 @@ import org.nlogo.nvm.{ Command, Context }
 
 class _foreverbuttonend extends Command {
 
-  override def syntax =
-    Syntax.commandSyntax(
-      switches = true)
+  switches = true
 
   override def perform(context: Context) {
     context.job.buttonTurnIsOver = true

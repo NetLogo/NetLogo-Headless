@@ -22,15 +22,6 @@ import java.util.Set;
 public final strictfp class _linkset
     extends Reporter {
   @Override
-  public Syntax syntax() {
-    int[] right = {Syntax.RepeatableType() | Syntax.LinkType()
-        | Syntax.LinksetType() | Syntax.NobodyType()
-        | Syntax.ListType()};
-    int ret = Syntax.LinksetType();
-    return SyntaxJ.reporterSyntax(right, ret, 1, 0);
-  }
-
-  @Override
   public Object report(final Context context) {
     LinkedHashSet<Link> resultSet = new LinkedHashSet<Link>();
     for (int i = 0; i < args.length; i++) {

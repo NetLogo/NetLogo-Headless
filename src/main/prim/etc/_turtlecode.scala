@@ -6,9 +6,6 @@ import org.nlogo.core.Syntax
 import org.nlogo.nvm.{ Command, Context, CustomAssembled, AssemblerAssistant }
 
 class _turtlecode extends Command with CustomAssembled {
-  override def syntax =
-    Syntax.commandSyntax(
-      agentClassString = "-T--")
   override def perform(context: Context) {
     throw new UnsupportedOperationException
   }

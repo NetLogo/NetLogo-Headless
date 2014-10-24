@@ -32,10 +32,4 @@ public final strictfp class _sublist
     return list.logoSublist(start, stop);
   }
 
-  @Override
-  public Syntax syntax() {
-    return SyntaxJ.reporterSyntax
-        (new int[]{Syntax.ListType(), Syntax.NumberType(), Syntax.NumberType()},
-            Syntax.ListType());
-  }
 }

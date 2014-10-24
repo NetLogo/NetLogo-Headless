@@ -8,13 +8,6 @@ import org.nlogo.nvm.{ Reporter, Pure, Context }
 @annotation.strictfp
 class _pow extends Reporter with Pure {
 
-  override def syntax =
-    Syntax.reporterSyntax(
-      left = Syntax.NumberType,
-      right = List(Syntax.NumberType),
-      ret = Syntax.NumberType,
-      precedence = Syntax.NormalPrecedence - 1)
-
   override def report(context: Context): java.lang.Double =
     Double.box(
       report_1(context,

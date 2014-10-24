@@ -7,9 +7,6 @@ import org.nlogo.api.I18N
 import org.nlogo.nvm.{ Command, Context, EngineException }
 
 class _inspect extends Command {
-  override def syntax =
-    Syntax.commandSyntax(
-      right = List(Syntax.AgentType))
   override def perform(context: Context) {
     val agent = argEvalAgent(context, 0)
     if (agent.id == -1)
