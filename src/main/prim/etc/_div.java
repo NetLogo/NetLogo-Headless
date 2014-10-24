@@ -12,14 +12,6 @@ import org.nlogo.nvm.Reporter;
 
 public final strictfp class _div extends Reporter implements Pure {
   @Override
-  public Syntax syntax() {
-    int left = Syntax.NumberType();
-    int[] right = {Syntax.NumberType()};
-    return SyntaxJ.reporterSyntax(left, right, Syntax.NumberType(),
-        org.nlogo.core.Syntax.NormalPrecedence() - 2);
-  }
-
-  @Override
   public Object report(Context context) {
     return report_1(context,
         argEvalDoubleValue(context, 0),

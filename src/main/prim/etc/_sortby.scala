@@ -13,12 +13,6 @@ class _sortby extends Reporter {
   private val Java7SoPicky =
     "Comparison method violates its general contract!"
 
-  override def syntax =
-    Syntax.reporterSyntax(
-      right = List(Syntax.ReporterTaskType, Syntax.ListType | Syntax.AgentsetType),
-      ret = Syntax.ListType,
-      blockAgentClassString = "?")
-
   override def report(context: Context): LogoList = {
     val task = argEvalReporterTask(context, 0)
     if(task.formals.size > 2)

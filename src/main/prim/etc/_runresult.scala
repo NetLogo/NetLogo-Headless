@@ -8,14 +8,6 @@ import org.nlogo.nvm.{ Activation, ArgumentTypeException, Context, EngineExcepti
 
 class _runresult extends Reporter {
 
-  override def syntax =
-    Syntax.reporterSyntax(
-      right = List(
-        Syntax.StringType | Syntax.ReporterTaskType,
-        Syntax.RepeatableType | Syntax.WildcardType),
-      ret = Syntax.WildcardType,
-      defaultOption = Some(1))
-
   override def report(context: Context): AnyRef =
     args(0).report(context) match {
       case s: String =>

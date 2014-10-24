@@ -45,8 +45,7 @@ case class Syntax private(
   minimumOption: Option[Int], // minimum number of args might be different than the default
   isRightAssociative: Boolean, // only relevant if infix
   agentClassString: String,
-  blockAgentClassString: String,
-  switches: Boolean)
+  blockAgentClassString: String)
 {
 
   import Syntax._
@@ -66,6 +65,12 @@ case class Syntax private(
    */
   def isInfix =
     left != VoidType
+
+  /**
+   * determines whether an instruction allows a variable number of args.
+   */
+  def isVariadic: Boolean =
+    right.exists(compatible(_, Syntax.RepeatableType))
 
   def dfault =
     defaultOption.getOrElse(right.size)
@@ -117,8 +122,6 @@ case class Syntax private(
     buf.append(minimum)
     if (isRightAssociative)
       buf.append(" [RIGHT ASSOCIATIVE]")
-    if (switches)
-      buf.append(" *")
     buf.toString
   }
 
@@ -134,8 +137,7 @@ object Syntax {
     defaultOption: Option[Int] = None,
     minimumOption: Option[Int] = None, // minimum number of args might be different than the default
     agentClassString: String = "OTPL",
-    blockAgentClassString: String = null,
-    switches: Boolean = false
+    blockAgentClassString: String = null
   ) = new Syntax(
     precedence = CommandPrecedence,
     left = Syntax.VoidType,
@@ -145,8 +147,7 @@ object Syntax {
     minimumOption = minimumOption,
     isRightAssociative = false,
     agentClassString = agentClassString,
-    blockAgentClassString = blockAgentClassString,
-    switches = switches
+    blockAgentClassString = blockAgentClassString
   )
 
   def reporterSyntax(
@@ -168,8 +169,7 @@ object Syntax {
     minimumOption = minimumOption,
     isRightAssociative = isRightAssociative,
     agentClassString = agentClassString,
-    blockAgentClassString = blockAgentClassString,
-    switches = false
+    blockAgentClassString = blockAgentClassString
   )
 
   /** <i>Unsupported. Do not use.</i> */

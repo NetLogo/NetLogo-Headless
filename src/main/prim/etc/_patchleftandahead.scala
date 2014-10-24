@@ -10,12 +10,6 @@ import org.nlogo.nvm.{ Context, Reporter }
 @annotation.strictfp
 class _patchleftandahead extends Reporter {
 
-  override def syntax =
-    Syntax.reporterSyntax(
-      right = List(Syntax.NumberType, Syntax.NumberType),
-      ret = Syntax.PatchType,
-      agentClassString = "-T--")
-
   override def report(context: Context): AnyRef =
     try
       context.agent.asInstanceOf[Turtle]

@@ -58,9 +58,6 @@ trait FrontEndExtras { this: nvm.FrontEndInterface =>
     result
   }
 
-  def makeLiteralReporter(value: AnyRef): nvm.Reporter =
-    Literals.makeLiteralReporter(value)
-
   // used by CommandLine
   def isReporter(s: String, program: api.Program, procedures: ProceduresMap, extensionManager: api.ExtensionManager) =
     try {
@@ -70,21 +67,27 @@ trait FrontEndExtras { this: nvm.FrontEndInterface =>
         None, nvm.StructureResults(program, procedures))
       val results = sp.parse(subprogram = true)
       val namer =
-        new Namer(program, procedures ++ results.procedures, extensionManager, Vector())
+        new Namer(program, procedures ++ results.procedures, extensionManager)
       val proc = results.procedures.values.head
       val tokens = namer.process(results.tokens(proc).iterator, proc)
       tokens.toStream
         .drop(1)  // skip _report
-        .map(_.tpe)
-        .dropWhile(_ == core.TokenType.OpenParen)
+        .dropWhile(_.tpe == core.TokenType.OpenParen)
         .headOption
-        .exists(reporterTokenTypes)
+        .exists(isReporterToken)
     }
     catch { case _: api.CompilerException => false }
 
-  private val reporterTokenTypes: Set[core.TokenType] = {
+  private def isReporterToken(token: core.Token): Boolean = {
     import core.TokenType._
-    Set(OpenBracket, Literal, Ident, Reporter)
+    token.tpe match {
+      case OpenBracket | Literal | Ident =>
+        true
+      case Reporter =>
+        !token.value.isInstanceOf[core.prim._letvariable]
+      case _ =>
+        false
+    }
   }
 
 }

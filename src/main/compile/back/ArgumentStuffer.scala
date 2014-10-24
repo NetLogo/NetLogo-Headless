@@ -11,17 +11,17 @@ import org.nlogo.nvm
  */
 private class ArgumentStuffer extends DefaultAstVisitor {
   override def visitStatement(stmt: Statement) {
-    stmt.command.args = gatherArgs(stmt.args)
+    stmt.nvmCommand.args = gatherArgs(stmt.args)
     super.visitStatement(stmt)
   }
   override def visitReporterApp(app: ReporterApp) {
-    app.reporter.args = gatherArgs(app.args)
+    app.nvmReporter.args = gatherArgs(app.args)
     super.visitReporterApp(app)
   }
   private def gatherArgs(expressions: Seq[Expression]): Array[nvm.Reporter] =
     expressions.flatMap{
-      case app: ReporterApp => Some(app.reporter)
-      case block: ReporterBlock => Some(block.app.reporter)
+      case app: ReporterApp => Some(app.nvmReporter)
+      case block: ReporterBlock => Some(block.app.nvmReporter)
       case _ => None
     }.toArray
 }

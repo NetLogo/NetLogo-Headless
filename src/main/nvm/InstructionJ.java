@@ -8,6 +8,7 @@ package org.nlogo.nvm;
 // HotSpot would cope and there'd be no performance impact. - ST 4/6/14
 
 import org.nlogo.agent.World;
+import org.nlogo.core.Reference;
 import org.nlogo.core.TokenHolder;
 
 public abstract class InstructionJ {

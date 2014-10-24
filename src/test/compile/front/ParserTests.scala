@@ -34,7 +34,7 @@ class ParserTests extends FunSuite {
   }
   test("SameLocalVariableTwice1") {
     bad("to a1 locals [b b] end",
-      "Nothing named LOCALS has been defined")
+      "Nothing named LOCALS has been defined.")
   }
   test("SameLocalVariableTwice2") {
     bad("to a2 [b b] end",
@@ -46,11 +46,11 @@ class ParserTests extends FunSuite {
   }
   test("SameLocalVariableTwice4") {
     bad("to a4 locals [b] let b 5 end",
-      "Nothing named LOCALS has been defined")
+      "Nothing named LOCALS has been defined.")
   }
   test("SameLocalVariableTwice5") {
     bad("to a5 [b] locals [b] end",
-      "Nothing named LOCALS has been defined")
+      "Nothing named LOCALS has been defined.")
   }
   test("SameLocalVariableTwice6") {
     bad("to a6 [b] let b 5 end",

@@ -9,11 +9,9 @@ import org.nlogo.nvm.EngineException;
 
 public final strictfp class _importpcolorsrgb
     extends org.nlogo.nvm.Command {
-  @Override
-  public Syntax syntax() {
-    return SyntaxJ.commandSyntax
-        (new int[]{Syntax.StringType()},
-            "O---", true);
+
+  public _importpcolorsrgb() {
+    switches = true;
   }
 
   @Override

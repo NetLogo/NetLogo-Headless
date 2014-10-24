@@ -11,14 +11,7 @@ import org.nlogo.nvm.EngineException;
 import org.nlogo.nvm.Reporter;
 
 public final strictfp class _distance extends Reporter {
-  @Override
-  public Syntax syntax() {
-    return SyntaxJ.reporterSyntax
-        (new int[]{Syntax.TurtleType() | Syntax.PatchType()},
-            Syntax.NumberType(), "-TP-");
-  }
-
-  @Override
+    @Override
   public Object report(Context context) {
     return report_1(context, argEvalAgent(context, 0));
   }

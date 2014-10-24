@@ -8,11 +8,6 @@ import org.nlogo.nvm.{ ArgumentTypeException, Context, EngineException, Reporter
 
 class _filter extends Reporter {
 
-  override def syntax =
-    Syntax.reporterSyntax(
-      right = List(Syntax.ReporterTaskType, Syntax.ListType),
-      ret = Syntax.ListType)
-
   def report(context: Context): LogoList = {
     val task = argEvalReporterTask(context, 0)
     val list = argEvalList(context, 1)

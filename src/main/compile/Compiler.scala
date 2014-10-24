@@ -40,4 +40,7 @@ object Compiler extends nvm.CompilerInterface {
     backEnd.backEnd(allDefs, structureResults.program, source, extensionManager.profilingEnabled, flags)
   }
 
+  def makeLiteralReporter(value: AnyRef): nvm.Reporter =
+    Literals.makeLiteralReporter(value)
+
 }

@@ -12,11 +12,6 @@ import org.nlogo.nvm.Reporter;
 
 public final strictfp class _otherend
     extends Reporter {
-  @Override
-  public Syntax syntax() {
-    return SyntaxJ.reporterSyntax
-        (Syntax.AgentType(), "-T-L");
-  }
 
   @Override
   public Object report(final org.nlogo.nvm.Context context) {

@@ -8,11 +8,6 @@ import org.nlogo.nvm.{ Reporter, Pure, Context }
 
 class _sum extends Reporter with Pure {
 
-  override def syntax =
-    Syntax.reporterSyntax(
-      right = List(Syntax.ListType),
-      ret = Syntax.NumberType)
-
   override def report(context: Context): java.lang.Double =
     Double.box(report_1(context, argEvalList(context, 0)))
 

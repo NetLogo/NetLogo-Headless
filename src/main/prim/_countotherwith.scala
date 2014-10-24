@@ -9,13 +9,6 @@ import org.nlogo.nvm.{ Reporter, Context, EngineException }
 
 class _countotherwith extends Reporter {
 
-  override def syntax =
-    Syntax.reporterSyntax(
-      right = List(Syntax.AgentsetType, Syntax.BooleanBlockType),
-      ret = Syntax.NumberType,
-      agentClassString = "-TPL",
-      blockAgentClassString = "?")
-
   override def report(context: Context): java.lang.Double =
     Double.box(
       report_1(context, argEvalAgentSet(context, 0), args(1)))

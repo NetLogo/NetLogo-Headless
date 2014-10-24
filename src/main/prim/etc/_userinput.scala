@@ -8,11 +8,6 @@ import org.nlogo.nvm.{ Context, EngineException, HaltException, Reporter }
 
 class _userinput extends Reporter {
 
-  override def syntax =
-    Syntax.reporterSyntax(
-      right = List(Syntax.WildcardType),
-      ret = Syntax.StringType)
-
   override def report(context: Context): String = {
     val message = Dump.logoObject(args(0).report(context))
     workspace.updateUI(context)

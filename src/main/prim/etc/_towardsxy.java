@@ -9,13 +9,6 @@ import org.nlogo.nvm.EngineException;
 import org.nlogo.nvm.Reporter;
 
 public final strictfp class _towardsxy extends Reporter {
-  @Override
-  public Syntax syntax() {
-    int[] right = {Syntax.NumberType(),
-        Syntax.NumberType()};
-    int ret = Syntax.NumberType();
-    return SyntaxJ.reporterSyntax(right, ret, "-TP-");
-  }
 
   @Override
   public Object report(Context context) {

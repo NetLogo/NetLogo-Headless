@@ -14,12 +14,6 @@ import java.util.List;
 
 public final strictfp class _maxoneof
     extends Reporter {
-  @Override
-  public Syntax syntax() {
-    int[] right = {Syntax.AgentsetType(), Syntax.NumberBlockType()};
-    int ret = Syntax.AgentType();
-    return SyntaxJ.reporterSyntax(right, ret, "OTPL", "?");
-  }
 
   @Override
   public Object report(final org.nlogo.nvm.Context context) {

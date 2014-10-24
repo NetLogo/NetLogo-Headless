@@ -8,8 +8,7 @@ package org.nlogo.compile.front
 // are added to tokens.txt.) - ST 12/5/09
 
 import org.scalatest.FunSuite
-import org.nlogo.nvm.Instruction
-import org.nlogo.api.Femto
+import org.nlogo.core.Instruction
 
 class TestAllSyntaxes extends FunSuite {
   def shorten(name: String) =
@@ -254,8 +253,8 @@ class TestAllSyntaxes extends FunSuite {
                      |_worldwidth ,number,OTPL,null,10,0,0
                      |_wrapcolor number,number,OTPL,null,10,1,1
                      |_xor TRUE/FALSE,TRUE/FALSE,TRUE/FALSE,OTPL,null,4,1,1""".stripMargin.replaceAll("\r\n", "\n")
-  val COMMANDS = """|_ask agent or agentset/command block,OTPL,?,0,2,2 *
-                    |_askconcurrent agentset/command block,OTPL,?,0,2,2 *
+  val COMMANDS = """|_ask agent or agentset/command block,OTPL,?,0,2,2
+                    |_askconcurrent agentset/command block,OTPL,?,0,2,2
                     |_autoplotoff ,OTPL,null,0,0,0
                     |_autoploton ,OTPL,null,0,0,0
                     |_beep ,OTPL,null,0,0,0
@@ -263,34 +262,34 @@ class TestAllSyntaxes extends FunSuite {
                     |_bk number,-T--,null,0,1,1
                     |_carefully command block/command block,OTPL,null,0,2,2
                     |_changetopology TRUE/FALSE/TRUE/FALSE,OTPL,null,0,2,2
-                    |_clearall ,O---,null,0,0,0 *
+                    |_clearall ,O---,null,0,0,0
                     |_clearallplots ,OTPL,null,0,0,0
-                    |_cleardrawing ,O---,null,0,0,0 *
-                    |_clearglobals ,O---,null,0,0,0 *
-                    |_clearlinks ,O---,null,0,0,0 *
+                    |_cleardrawing ,O---,null,0,0,0
+                    |_clearglobals ,O---,null,0,0,0
+                    |_clearlinks ,O---,null,0,0,0
                     |_clearoutput ,OTPL,null,0,0,0
-                    |_clearpatches ,O---,null,0,0,0 *
+                    |_clearpatches ,O---,null,0,0,0
                     |_clearplot ,OTPL,null,0,0,0
-                    |_clearticks ,O---,null,0,0,0 *
-                    |_clearturtles ,O---,null,0,0,0 *
-                    |_createlinkfrom turtle/command block (optional),-T--,---L,0,2,2 *
-                    |_createlinksfrom turtle agentset/command block (optional),-T--,---L,0,2,2 *
-                    |_createlinksto turtle agentset/command block (optional),-T--,---L,0,2,2 *
-                    |_createlinkswith turtle agentset/command block (optional),-T--,---L,0,2,2 *
-                    |_createlinkto turtle/command block (optional),-T--,---L,0,2,2 *
-                    |_createlinkwith turtle/command block (optional),-T--,---L,0,2,2 *
-                    |_createorderedturtles number/command block (optional),O---,-T--,0,2,2 *
+                    |_clearticks ,O---,null,0,0,0
+                    |_clearturtles ,O---,null,0,0,0
+                    |_createlinkfrom turtle/command block (optional),-T--,---L,0,2,2
+                    |_createlinksfrom turtle agentset/command block (optional),-T--,---L,0,2,2
+                    |_createlinksto turtle agentset/command block (optional),-T--,---L,0,2,2
+                    |_createlinkswith turtle agentset/command block (optional),-T--,---L,0,2,2
+                    |_createlinkto turtle/command block (optional),-T--,---L,0,2,2
+                    |_createlinkwith turtle/command block (optional),-T--,---L,0,2,2
+                    |_createorderedturtles number/command block (optional),O---,-T--,0,2,2
                     |_createtemporaryplotpen string,OTPL,null,0,1,1
-                    |_createturtles number/command block (optional),O---,-T--,0,2,2 *
-                    |_die ,-T-L,null,0,0,0 *
-                    |_diffuse variable/number,O---,null,0,2,2 *
-                    |_diffuse4 variable/number,O---,null,0,2,2 *
-                    |_display ,OTPL,null,0,0,0 *
+                    |_createturtles number/command block (optional),O---,-T--,0,2,2
+                    |_die ,-T-L,null,0,0,0
+                    |_diffuse variable/number,O---,null,0,2,2
+                    |_diffuse4 variable/number,O---,null,0,2,2
+                    |_display ,OTPL,null,0,0,0
                     |_done ,OTPL,null,0,0,0
-                    |_downhill variable,-T--,null,0,1,1 *
-                    |_downhill4 variable,-T--,null,0,1,1 *
+                    |_downhill variable,-T--,null,0,1,1
+                    |_downhill4 variable,-T--,null,0,1,1
                     |_error anything,OTPL,null,0,1,1
-                    |_every number/command block,OTPL,null,0,2,2 *
+                    |_every number/command block,OTPL,null,0,2,2
                     |_experimentstepend ,O---,null,0,0,0
                     |_exportdrawing string,OTPL,null,0,1,1
                     |_exportinterface string,OTPL,null,0,1,1
@@ -299,8 +298,8 @@ class TestAllSyntaxes extends FunSuite {
                     |_exportplots string,OTPL,null,0,1,1
                     |_exportview string,OTPL,null,0,1,1
                     |_exportworld string,OTPL,null,0,1,1
-                    |_face turtle or patch,-T--,null,0,1,1 *
-                    |_facexy number/number,-T--,null,0,2,2 *
+                    |_face turtle or patch,-T--,null,0,1,1
+                    |_facexy number/number,-T--,null,0,2,2
                     |_fd number,-T--,null,0,1,1
                     |_fileclose ,OTPL,null,0,0,0
                     |_filecloseall ,OTPL,null,0,0,0
@@ -311,35 +310,35 @@ class TestAllSyntaxes extends FunSuite {
                     |_fileshow anything,OTPL,null,0,1,1
                     |_filetype anything,OTPL,null,0,1,1
                     |_filewrite number or TRUE/FALSE or string or list or NOBODY,OTPL,null,0,1,1
-                    |_follow turtle,O---,null,0,1,1 *
-                    |_followme ,-T--,null,0,0,0 *
+                    |_follow turtle,O---,null,0,1,1
+                    |_followme ,-T--,null,0,0,0
                     |_foreach list/command task,OTPL,null,0,2,2
-                    |_foreverbuttonend ,OTPL,null,0,0,0 *
-                    |_hatch number/command block (optional),-T--,-T--,0,2,2 *
-                    |_hidelink ,---L,null,0,0,0 *
-                    |_hideturtle ,-T--,null,0,0,0 *
+                    |_foreverbuttonend ,OTPL,null,0,0,0
+                    |_hatch number/command block (optional),-T--,-T--,0,2,2
+                    |_hidelink ,---L,null,0,0,0
+                    |_hideturtle ,-T--,null,0,0,0
                     |_histogram list,OTPL,null,0,1,1
-                    |_home ,-T--,null,0,0,0 *
+                    |_home ,-T--,null,0,0,0
                     |_if TRUE/FALSE/command block,OTPL,null,0,2,2
                     |_ifelse TRUE/FALSE/command block/command block,OTPL,null,0,3,3
                     |_ignore anything,OTPL,null,0,1,1
-                    |_importdrawing string,O---,null,0,1,1 *
-                    |_importpatchcolors string,O---,null,0,1,1 *
-                    |_importpcolorsrgb string,O---,null,0,1,1 *
-                    |_importworld string,O---,null,0,1,1 *
+                    |_importdrawing string,O---,null,0,1,1
+                    |_importpatchcolors string,O---,null,0,1,1
+                    |_importpcolorsrgb string,O---,null,0,1,1
+                    |_importworld string,O---,null,0,1,1
                     |_inspect agent,OTPL,null,0,1,1
-                    |_jump number,-T--,null,0,1,1 *
-                    |_layoutcircle list or turtle agentset/number,OTPL,null,0,2,2 *
-                    |_layoutradial turtle agentset/link agentset/turtle,OTPL,null,0,3,3 *
-                    |_layoutspring turtle agentset/link agentset/number/number/number,OTPL,null,0,5,5 *
-                    |_layouttutte turtle agentset/link agentset/number,OTPL,null,0,3,3 *
-                    |_left number,-T--,null,0,1,1 *
+                    |_jump number,-T--,null,0,1,1
+                    |_layoutcircle list or turtle agentset/number,OTPL,null,0,2,2
+                    |_layoutradial turtle agentset/link agentset/turtle,OTPL,null,0,3,3
+                    |_layoutspring turtle agentset/link agentset/number/number/number,OTPL,null,0,5,5
+                    |_layouttutte turtle agentset/link agentset/number,OTPL,null,0,3,3
+                    |_left number,-T--,null,0,1,1
                     |_let anything/anything,OTPL,null,0,2,2
                     |_linkcode ,---L,null,0,0,0
                     |_loop command block,OTPL,null,0,1,1
                     |_makepreview ,O---,null,0,0,0
                     |_mkdir string,OTPL,null,0,1,1
-                    |_moveto turtle or patch,-T--,null,0,1,1 *
+                    |_moveto turtle or patch,-T--,null,0,1,1
                     |_nodisplay ,OTPL,null,0,0,0
                     |_observercode ,O---,null,0,0,0
                     |_outputprint anything,OTPL,null,0,1,1
@@ -347,9 +346,9 @@ class TestAllSyntaxes extends FunSuite {
                     |_outputtype anything,OTPL,null,0,1,1
                     |_outputwrite anything,OTPL,null,0,1,1
                     |_patchcode ,--P-,null,0,0,0
-                    |_pendown ,-T--,null,0,0,0 *
-                    |_penerase ,-T--,null,0,0,0 *
-                    |_penup ,-T--,null,0,0,0 *
+                    |_pendown ,-T--,null,0,0,0
+                    |_penerase ,-T--,null,0,0,0
+                    |_penup ,-T--,null,0,0,0
                     |_plot number,OTPL,null,0,1,1
                     |_plotpendown ,OTPL,null,0,0,0
                     |_plotpenhide ,OTPL,null,0,0,0
@@ -360,16 +359,16 @@ class TestAllSyntaxes extends FunSuite {
                     |_print anything,OTPL,null,0,1,1
                     |_pwd ,O---,null,0,0,0
                     |_randomseed number,OTPL,null,0,1,1
-                    |_reloadextensions ,OTPL,null,0,0,0 *
+                    |_reloadextensions ,OTPL,null,0,0,0
                     |_repeat number/command block,OTPL,null,0,2,2
                     |_report anything,OTPL,null,0,1,1
-                    |_resetperspective ,OTPL,null,0,0,0 *
-                    |_resetticks ,O---,null,0,0,0 *
+                    |_resetperspective ,OTPL,null,0,0,0
+                    |_resetticks ,O---,null,0,0,0
                     |_resettimer ,OTPL,null,0,0,0
-                    |_resizeworld number/number/number/number,O---,null,0,4,4 *
-                    |_ride turtle,O---,null,0,1,1 *
-                    |_rideme ,-T--,null,0,0,0 *
-                    |_right number,-T--,null,0,1,1 *
+                    |_resizeworld number/number/number/number,O---,null,0,4,4
+                    |_ride turtle,O---,null,0,1,1
+                    |_rideme ,-T--,null,0,0,0
+                    |_right number,-T--,null,0,1,1
                     |_run string or command task/anything,OTPL,null,0,1,1
                     |_set anything/anything,OTPL,null,0,2,2
                     |_setcurdir string,OTPL,null,0,1,1
@@ -377,38 +376,38 @@ class TestAllSyntaxes extends FunSuite {
                     |_setcurrentplotpen string,OTPL,null,0,1,1
                     |_setdefaultshape turtle agentset or link agentset/string,O---,null,0,2,2
                     |_sethistogramnumbars number,OTPL,null,0,1,1
-                    |_setlinethickness number,-T--,null,0,1,1 *
-                    |_setpatchsize number,O---,null,0,1,1 *
+                    |_setlinethickness number,-T--,null,0,1,1
+                    |_setpatchsize number,O---,null,0,1,1
                     |_setplotpencolor number,OTPL,null,0,1,1
                     |_setplotpeninterval number,OTPL,null,0,1,1
                     |_setplotpenmode number,OTPL,null,0,1,1
                     |_setplotxrange number/number,OTPL,null,0,2,2
                     |_setplotyrange number/number,OTPL,null,0,2,2
                     |_setupplots ,OTPL,null,0,0,0
-                    |_setxy number/number,-T--,null,0,2,2 *
+                    |_setxy number/number,-T--,null,0,2,2
                     |_show anything,OTPL,null,0,1,1
-                    |_showlink ,---L,null,0,0,0 *
-                    |_showturtle ,-T--,null,0,0,0 *
-                    |_sprout number/command block (optional),--P-,-T--,0,2,2 *
-                    |_stamp ,-T-L,null,0,0,0 *
-                    |_stamperase ,-T-L,null,0,0,0 *
+                    |_showlink ,---L,null,0,0,0
+                    |_showturtle ,-T--,null,0,0,0
+                    |_sprout number/command block (optional),--P-,-T--,0,2,2
+                    |_stamp ,-T-L,null,0,0,0
+                    |_stamperase ,-T-L,null,0,0,0
                     |_stderr anything,OTPL,null,0,1,1
                     |_stdout anything,OTPL,null,0,1,1
                     |_stop ,OTPL,null,0,0,0
                     |_thunkdidfinish ,OTPL,null,0,0,0
-                    |_tick ,O---,null,0,0,0 *
-                    |_tickadvance number,O---,null,0,1,1 *
-                    |_tie ,---L,null,0,0,0 *
+                    |_tick ,O---,null,0,0,0
+                    |_tickadvance number,O---,null,0,1,1
+                    |_tie ,---L,null,0,0,0
                     |_turtlecode ,-T--,null,0,0,0
                     |_type anything,OTPL,null,0,1,1
-                    |_untie ,---L,null,0,0,0 *
+                    |_untie ,---L,null,0,0,0
                     |_updateplots ,OTPL,null,0,0,0
-                    |_uphill variable,-T--,null,0,1,1 *
-                    |_uphill4 variable,-T--,null,0,1,1 *
+                    |_uphill variable,-T--,null,0,1,1
+                    |_uphill4 variable,-T--,null,0,1,1
                     |_usermessage anything,OTPL,null,0,1,1
                     |_wait number,OTPL,null,0,1,1
-                    |_watch agent,O---,null,0,1,1 *
-                    |_watchme ,-TPL,null,0,0,0 *
+                    |_watch agent,O---,null,0,1,1
+                    |_watchme ,-TPL,null,0,0,0
                     |_while TRUE/FALSE block/command block,OTPL,null,0,2,2
                     |_withlocalrandomness command block,OTPL,null,0,1,1
                     |_withoutinterruption command block,OTPL,null,0,1,1

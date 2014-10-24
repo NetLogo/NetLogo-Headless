@@ -8,13 +8,6 @@ import org.nlogo.nvm.{ Context, Reporter, Pure }
 
 class _sentence extends Reporter with Pure {
 
-  override def syntax =
-    Syntax.reporterSyntax(
-      right = List(Syntax.RepeatableType | Syntax.WildcardType),
-      ret = Syntax.ListType,
-      defaultOption = Some(2),
-      minimumOption = Some(0))
-
   // for fear of https://issues.scala-lang.org/browse/SI-7725
   // we must never do (Vector ++ Vector) - ST 8/7/13
   override def report(context: Context): LogoList =

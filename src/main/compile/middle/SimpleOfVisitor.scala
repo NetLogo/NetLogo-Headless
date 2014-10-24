@@ -14,14 +14,14 @@ import org.nlogo.{ prim, nvm }
 // so why not keep it? - ST 2/8/09
 class SimpleOfVisitor extends DefaultAstVisitor {
   override def visitReporterApp(app: ReporterApp) {
-    if(app.reporter.isInstanceOf[prim._of])
+    if(app.nvmReporter.isInstanceOf[prim._of])
       process(app)
     super.visitReporterApp(app)
   }
   private def process(app: ReporterApp) {
-    for(r <- convert(app.args(0).asInstanceOf[ReporterBlock].app.reporter)) {
-      r.token = app.reporter.token
-      app.reporter = r
+    for(r <- convert(app.args(0).asInstanceOf[ReporterBlock].app.nvmReporter)) {
+      r.token = app.nvmReporter.token
+      app.nvmReporter = r
       app.removeArgument(0)
     }
   }

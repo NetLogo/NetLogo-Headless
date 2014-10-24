@@ -10,12 +10,6 @@ import org.nlogo.nvm.Reporter;
 
 public final strictfp class _extractrgb
     extends Reporter {
-  @Override
-  public Syntax syntax() {
-    int[] right = {Syntax.NumberType()};
-    int ret = Syntax.ListType();
-    return SyntaxJ.reporterSyntax(right, ret);
-  }
 
   @Override
   public Object report(final org.nlogo.nvm.Context context) {

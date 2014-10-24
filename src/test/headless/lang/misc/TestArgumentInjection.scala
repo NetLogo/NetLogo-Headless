@@ -33,7 +33,7 @@ class TestArgumentInjection extends FixtureSuite {
 
   def substituteArgs(instr: nvm.Instruction, args: AnyRef*) {
     for(i <- args.indices) {
-      instr.args(i) = instr.workspace.parser.makeLiteralReporter(args(i))
+      instr.args(i) = instr.workspace.compiler.makeLiteralReporter(args(i))
       instr.args(i).init(instr.workspace)
     }
   }

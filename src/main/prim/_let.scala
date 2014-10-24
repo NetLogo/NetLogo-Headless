@@ -2,8 +2,7 @@
 
 package org.nlogo.prim
 
-import org.nlogo.core.Syntax
-import org.nlogo.api.Let
+import org.nlogo.core.{ Syntax, Let }
 import org.nlogo.nvm.{ Command, Context }
 
 // This isn't rejiggered yet because of the extra, unevaluated argument. (I say "yet" because this
@@ -11,9 +10,7 @@ import org.nlogo.nvm.{ Command, Context }
 
 class _let extends Command {
   var let: Let = null
-  override def syntax =
-    Syntax.commandSyntax(
-      List(Syntax.WildcardType, Syntax.WildcardType))
+
   override def perform(context: Context) {
     context.let(let, args(1).report(context))
     context.ip = next

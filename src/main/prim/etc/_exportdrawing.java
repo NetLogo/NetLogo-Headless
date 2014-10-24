@@ -30,9 +30,4 @@ public final strictfp class _exportdrawing
     context.ip = next;
   }
 
-  @Override
-  public Syntax syntax() {
-    int[] right = {Syntax.StringType()};
-    return SyntaxJ.commandSyntax(right);
-  }
 }

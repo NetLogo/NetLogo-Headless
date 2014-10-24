@@ -9,13 +9,6 @@ import org.nlogo.nvm.{ Activation, ArgumentTypeException, Command, CommandTask, 
 
 class _run extends Command {
 
-  override def syntax =
-    Syntax.commandSyntax(
-      right = List(
-        Syntax.StringType | Syntax.CommandTaskType,
-        Syntax.RepeatableType | Syntax.WildcardType),
-      defaultOption = Some(1))
-
   override def perform(context: Context) {
     args(0).report(context) match {
       case s: String =>

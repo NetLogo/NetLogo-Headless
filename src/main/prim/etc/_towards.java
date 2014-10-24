@@ -11,11 +11,6 @@ import org.nlogo.nvm.EngineException;
 import org.nlogo.nvm.Reporter;
 
 public final strictfp class _towards extends Reporter {
-  @Override
-  public Syntax syntax() {
-    int[] right = {Syntax.TurtleType() | Syntax.PatchType()};
-    return SyntaxJ.reporterSyntax(right, Syntax.NumberType(), "-TP-");
-  }
 
   @Override
   public Object report(Context context) {

@@ -22,14 +22,6 @@ import java.util.Set;
 
 public final strictfp class _turtleset
     extends Reporter {
-  @Override
-  public Syntax syntax() {
-    int[] right = {Syntax.RepeatableType() | Syntax.TurtleType()
-        | Syntax.TurtlesetType() | Syntax.NobodyType()
-        | Syntax.ListType()};
-    int ret = Syntax.TurtlesetType();
-    return SyntaxJ.reporterSyntax(right, ret, 1, 0);
-  }
 
   @Override
   public Object report(final Context context) {

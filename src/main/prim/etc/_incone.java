@@ -17,14 +17,6 @@ import java.util.List;
 
 public final strictfp class _incone
     extends Reporter {
-  @Override
-  public Syntax syntax() {
-    return SyntaxJ.reporterSyntax
-        (Syntax.TurtlesetType() | Syntax.PatchsetType(),          // left
-            new int[]{Syntax.NumberType(), Syntax.NumberType()}, // right
-            Syntax.TurtlesetType() | Syntax.PatchsetType(),          // return
-            org.nlogo.core.Syntax.NormalPrecedence() + 2, false, "-T--", null);
-  }
 
   @Override
   public Object report(final Context context) {

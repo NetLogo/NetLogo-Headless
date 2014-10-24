@@ -22,7 +22,6 @@ final class _inradius extends Reporter {
 
   private lazy val reportFunc = InRadiusOps.report(world.inRadiusOrCone.inRadiusSimple, this) _
 
-  override def syntax                   = InRadiusOps.syntax
   override def report(context: Context) = reportFunc(context)
 
 }
@@ -32,7 +31,6 @@ final class _inradiusboundingbox extends Reporter {
 
   private lazy val reportFunc = InRadiusOps.report(world.inRadiusOrCone.inRadius, this) _
 
-  override def syntax                   = InRadiusOps.syntax
   override def report(context: Context) = reportFunc(context)
 
 }

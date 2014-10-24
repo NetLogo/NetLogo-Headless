@@ -11,11 +11,9 @@ import org.nlogo.nvm.EngineException;
 
 public final strictfp class _watch
     extends Command {
-  @Override
-  public Syntax syntax() {
-    return SyntaxJ.commandSyntax
-        (new int[]{Syntax.AgentType()},
-            "O---", true);
+
+  public _watch() {
+    switches = true;
   }
 
   @Override

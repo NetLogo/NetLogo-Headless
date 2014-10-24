@@ -9,11 +9,6 @@ import org.nlogo.nvm.{ Reporter, Context }
 
 class _patchnw extends Reporter {
 
-  override def syntax =
-    Syntax.reporterSyntax(
-      ret = Syntax.PatchType,
-      agentClassString = "-TP-")
-
   override def report(context: Context): AnyRef =
     report_1(context)
 

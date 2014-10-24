@@ -16,13 +16,6 @@ import org.nlogo.nvm.Reporter;
 public final strictfp class _all
     extends Reporter {
   @Override
-  public Syntax syntax() {
-    return SyntaxJ.reporterSyntax
-        (new int[]{Syntax.AgentsetType(), Syntax.BooleanBlockType()},
-            Syntax.BooleanType(), "OTPL", "?");
-  }
-
-  @Override
   public Object report(final Context context) {
     return report_1
         (context, argEvalAgentSet(context, 0), args[1])

@@ -7,12 +7,6 @@ import org.nlogo.nvm.{ Context, Reporter }
 
 class _distancexy extends Reporter {
 
-  override def syntax =
-    Syntax.reporterSyntax(
-      right = List(Syntax.NumberType, Syntax.NumberType),
-      ret = Syntax.NumberType,
-      agentClassString = "-TP-")
-
   override def report(context: Context): java.lang.Double =
     Double.box(
       report_1(context,

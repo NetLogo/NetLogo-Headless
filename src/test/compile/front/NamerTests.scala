@@ -19,11 +19,8 @@ class NamerTests extends FunSuite {
       .parse(false)
     assertResult(1)(results.procedures.size)
     val procedure = results.procedures.values.iterator.next()
-    val lets =
-      new parse.LetScoper(results.tokens(procedure))
-        .scan(results.program.usedNames)
     new Namer(results.program, results.procedures,
-        new DummyExtensionManager, lets)
+        new DummyExtensionManager)
       .process(results.tokens(procedure).iterator, procedure)
       .takeWhile(_.tpe != TokenType.Eof)
   }
@@ -32,16 +29,8 @@ class NamerTests extends FunSuite {
     assertResult("")(compile("").mkString)
   }
   test("interface global") {
-    assertResult("Token(x,Reporter,_observervariable:0)")(
+    assertResult("Token(x,Reporter,_observervariable(0))")(
       compile("print x").drop(1).mkString)
-  }
-  test("let") {
-    val expected =
-      "Token(let,Command,_let)" +
-      "Token(y,Reporter,_letvariable(Y))" +
-      "Token(5,Literal,5.0)"
-    assertResult(expected)(
-      compile("let y 5").mkString)
   }
 
 }

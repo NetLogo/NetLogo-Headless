@@ -8,11 +8,6 @@ import org.nlogo.nvm.{ Reporter, Context, EngineException }
 
 class _linkvariable(_vn: Int) extends Reporter {
 
-  override def syntax =
-    Syntax.reporterSyntax(
-      ret = Syntax.WildcardType | Syntax.ReferenceType,
-      agentClassString = "---L")
-
   override def toString =
     super.toString + ":" +
       Option(world).map(_.linksOwnNameAt(vn)).getOrElse(vn.toString)

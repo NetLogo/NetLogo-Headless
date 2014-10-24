@@ -11,11 +11,6 @@ class _patchvariabledouble(private[this] var _vn: Int) extends Reporter {
 
   def this() = this(0)
 
-  override def syntax =
-    Syntax.reporterSyntax(
-      ret = Syntax.NumberType,
-      agentClassString = "-TP-")
-
   override def toString =
     super.toString + ":" +
       Option(world).map(_.patchesOwnNameAt(vn)).getOrElse(vn.toString)

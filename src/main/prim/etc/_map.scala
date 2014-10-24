@@ -8,12 +8,6 @@ import org.nlogo.nvm.{ EngineException, Context, Reporter }
 
 class _map extends Reporter {
 
-  override def syntax =
-    Syntax.reporterSyntax(
-      right = List(Syntax.ReporterTaskType, Syntax.RepeatableType | Syntax.ListType),
-      ret = Syntax.ListType,
-      defaultOption = Some(2))
-
   // Oh boy, this is going to be really fun one to generate...
   //   ~Forrest (7/21/2006)
   // Perhaps we should have separate primitives for the variadic and
