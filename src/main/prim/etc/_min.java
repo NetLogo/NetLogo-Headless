@@ -13,12 +13,6 @@ import org.nlogo.nvm.Pure;
 import org.nlogo.nvm.Reporter;
 
 public final strictfp class _min extends Reporter implements Pure {
-  @Override
-  public Syntax syntax() {
-    return SyntaxJ.reporterSyntax
-        (new int[]{Syntax.ListType()},
-            Syntax.NumberType());
-  }
 
   @Override
   public Object report(Context context) {

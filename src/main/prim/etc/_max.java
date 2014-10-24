@@ -14,13 +14,6 @@ import org.nlogo.nvm.Reporter;
 
 public final strictfp class _max extends Reporter implements Pure {
   @Override
-  public Syntax syntax() {
-    return SyntaxJ.reporterSyntax
-        (new int[]{Syntax.ListType()},
-            Syntax.NumberType());
-  }
-
-  @Override
   public Object report(Context context) {
     LogoList list = argEvalList(context, 0);
     double winner = 0;

@@ -10,11 +10,7 @@ class _setlinkvariable(_vn: Int) extends Command {
 
   def this(original: _linkvariable) = this(original.vn)
 
-  override def syntax =
-    Syntax.commandSyntax(
-      right = List(Syntax.WildcardType),
-      agentClassString = "---L",
-      switches = true)
+  switches = true
 
   override def toString =
     super.toString + ":" +

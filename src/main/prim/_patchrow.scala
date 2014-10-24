@@ -8,11 +8,6 @@ import org.nlogo.nvm.{ Reporter, Context }
 
 class _patchrow extends Reporter {
 
-  override def syntax =
-    Syntax.reporterSyntax(
-      right = List(Syntax.NumberType),
-      ret = Syntax.PatchsetType)
-
   override def report(context: Context): AnyRef = {
     val builder = new AgentSetBuilder(AgentKind.Patch, world.worldHeight)
     val yDouble = argEvalDoubleValue(context, 0)

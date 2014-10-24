@@ -17,13 +17,6 @@ import org.nlogo.nvm.Reporter;
 
 public final strictfp class _lessorequal
     extends Reporter implements Pure {
-  @Override
-  public Syntax syntax() {
-    int left = Syntax.NumberType() | Syntax.StringType() | Syntax.AgentType();
-    int[] right = {Syntax.NumberType() | Syntax.StringType() | Syntax.AgentType()};
-    int ret = Syntax.BooleanType();
-    return SyntaxJ.reporterSyntax(left, right, ret, org.nlogo.core.Syntax.NormalPrecedence() - 4);
-  }
 
   @Override
   public Object report(Context context) {

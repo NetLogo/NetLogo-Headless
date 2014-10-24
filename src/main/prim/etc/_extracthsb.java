@@ -11,12 +11,6 @@ import org.nlogo.nvm.Reporter;
 
 public final strictfp class _extracthsb
     extends Reporter {
-  @Override
-  public Syntax syntax() {
-    int[] right = {Syntax.NumberType() | Syntax.ListType()};
-    int ret = Syntax.ListType();
-    return SyntaxJ.reporterSyntax(right, ret);
-  }
 
   @Override
   public Object report(Context context) {

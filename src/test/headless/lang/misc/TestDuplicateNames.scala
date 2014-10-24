@@ -72,7 +72,7 @@ class TestDuplicateNames extends FixtureSuite with SlowTest {
   // at least we get errors on these, but the messages aren't great
   // https://github.com/NetLogo/NetLogo/issues/352
   testBadName("array:set",
-    "There is already a _extern:+0 called ARRAY:SET",
+    "There is already a _extern called ARRAY:SET",
     "extensions [array]")
 
 }

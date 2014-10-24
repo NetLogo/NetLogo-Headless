@@ -13,7 +13,8 @@ import org.nlogo.nvm.{ Command, CustomGenerated, Context, Activation, Procedure 
 class _call(val procedure: Procedure)
 extends Command with CustomGenerated {
 
-  override def syntax = procedure.syntax
+  override def returnType =
+     Syntax.VoidType
 
   override def toString =
     super.toString + ":" + procedure.name

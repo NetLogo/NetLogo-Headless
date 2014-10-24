@@ -9,11 +9,6 @@ import org.nlogo.agent.{ Agent, Turtle, Patch, AgentSet }
 
 class _breedon(breedName: String) extends Reporter {
 
-  override def syntax =
-    Syntax.reporterSyntax(
-      right = List(Syntax.TurtleType | Syntax.PatchType | Syntax.TurtlesetType | Syntax.PatchsetType),
-      ret = Syntax.TurtlesetType)
-
   override def toString =
     super.toString + ":" + breedName
 

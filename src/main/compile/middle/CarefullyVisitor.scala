@@ -15,7 +15,7 @@ import Fail._
 class CarefullyVisitor extends DefaultAstVisitor {
   private val stack = new collection.mutable.Stack[_carefully]
   override def visitStatement(stmt: Statement) {
-    stmt.command match {
+    stmt.nvmCommand match {
       case c:_carefully =>
         // carefully takes two arguments, both command blocks.
         // error-message is allowed only within the second block.
@@ -27,7 +27,7 @@ class CarefullyVisitor extends DefaultAstVisitor {
     }
   }
   override def visitReporterApp(app: ReporterApp) {
-    app.reporter match {
+    app.nvmReporter match {
       case em: _errormessage =>
         if(stack.isEmpty)
           exception(I18N.errors.getN("compiler.CarefullyVisitor.badNesting", em.token.text), app)

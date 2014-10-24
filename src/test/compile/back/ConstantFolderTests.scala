@@ -24,18 +24,11 @@ class ConstantFolderTests extends FunSuite {
   /// not pure
   test("NonConstant") { assertResult("_timer[]")(compile("timer")) }
   test("NestedNonConstant") {
-    assertResult("_plus[_constdouble:1.0[], _timer[]]")(
+    assertResult("_plus[_const:1[], _timer[]]")(
       compile("1 + timer"))
   }
 
-  /// pure, easy
-  test("Number") { assertResult("_constdouble:1.0[]")(compile("1")) }
-  test("Boolean") { assertResult("_constboolean:true[]")(compile("true")) }
-  test("List") { assertResult("_constlist:[1 2 3][]")(compile("[1 2 3]")) }
-  test("String") { assertResult("_conststring:\"foo\"[]")(compile("\"foo\"")) }
-  test("Nobody") { assertResult("_nobody[]")(compile("nobody")) }
-
-  /// pure, harder
+  /// pure
   test("Addition") { assertResult("_constdouble:4.0[]")(compile("2 + 2")) }
   test("Nesting") { assertResult("_constdouble:19.0[]")(compile("2 + 3 * 4 + 5")) }
 

@@ -23,12 +23,6 @@ public final strictfp class _shuffle
     return LogoList.fromJava(result);
   }
 
-  @Override
-  public Syntax syntax() {
-    return SyntaxJ.reporterSyntax(new int[]{Syntax.ListType()},
-        Syntax.ListType());
-  }
-
   public LogoList report_1(Context context, LogoList l0) {
     ArrayList<Object> result =
         new ArrayList<Object>(l0);

@@ -11,12 +11,6 @@ class _inlinkfrom(val breedName: String) extends Reporter {
 
   def this() = this(null)
 
-  override def syntax =
-    Syntax.reporterSyntax(
-      right = List(Syntax.AgentType),
-      ret = Syntax.AgentType,
-      agentClassString = "-T--")
-
   override def toString =
     super.toString + ":" + breedName
 

@@ -2,6 +2,7 @@
 
 package org.nlogo.api
 
+import org.nlogo.core
 import collection.immutable.{ Vector, VectorBuilder }
 import language.implicitConversions
 
@@ -20,7 +21,7 @@ object LogoList {
 }
 
 class LogoList private (private val v: Vector[AnyRef])
-extends java.util.AbstractSequentialList[AnyRef] with Serializable {
+extends java.util.AbstractSequentialList[AnyRef] with Serializable with core.LogoList {
 
   def scalaIterator = v.iterator
   def toVector = v

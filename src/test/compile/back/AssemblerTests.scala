@@ -64,8 +64,8 @@ class AssemblerTests extends FunSuite {
   test("stuffArithmetic") {
     assertResult("""|[0]_print
            |      _plus
-           |        _constdouble:2.0
-           |        _constdouble:2.0
+           |        _const:2
+           |        _const:2
            |[1]_return
            |""".stripMargin.replaceAll("\r\n", "\n"))(
       test2("print 2 + 2"))

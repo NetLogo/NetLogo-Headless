@@ -14,6 +14,7 @@ trait CompilerInterface {
   def compileMoreCode(source: String, displayName: Option[String], program: Program,
     oldProcedures: ProceduresMap, extensionManager: ExtensionManager,
     flags: CompilerFlags = CompilerFlags()): CompilerResults
+  def makeLiteralReporter(value: AnyRef): Reporter
 }
 
 case class CompilerFlags(

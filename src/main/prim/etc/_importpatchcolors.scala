@@ -9,11 +9,7 @@ import org.nlogo.agent.ImportPatchColors.importPatchColors
 
 class _importpatchcolors extends Command {
 
-  override def syntax =
-    Syntax.commandSyntax(
-      right = List(Syntax.StringType),
-      agentClassString = "O---",
-      switches = true)
+  switches = true
 
   override def perform(context: Context) {
     try importPatchColors(

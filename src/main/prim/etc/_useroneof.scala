@@ -8,11 +8,6 @@ import org.nlogo.nvm.{ Context, EngineException, HaltException, Reporter }
 
 class _useroneof extends Reporter {
 
-  override def syntax =
-    Syntax.reporterSyntax(
-      right = List(Syntax.WildcardType, Syntax.ListType),
-      ret = Syntax.WildcardType)
-
   override def report(context: Context): AnyRef = {
     val message = Dump.logoObject(args(0).report(context))
     val list = argEvalList(context, 1)

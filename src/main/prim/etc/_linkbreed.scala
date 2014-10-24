@@ -7,9 +7,6 @@ import org.nlogo.core.{ Syntax }
 import org.nlogo.nvm.{ Reporter, Context }
 
 class _linkbreed(breedName: String) extends Reporter {
-  override def syntax =
-    Syntax.reporterSyntax(
-      ret = Syntax.LinksetType)
   override def toString =
     super.toString + ":" + breedName
   override def report(context: Context): AgentSet =

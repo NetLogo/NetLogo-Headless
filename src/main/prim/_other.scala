@@ -8,11 +8,6 @@ import org.nlogo.nvm.{ Reporter, Context }
 
 class _other extends Reporter {
 
-  override def syntax =
-    Syntax.reporterSyntax(
-      right = List(Syntax.AgentsetType),
-      ret = Syntax.AgentsetType)
-
   override def report(context: Context): AgentSet =
     report_1(context, argEvalAgentSet(context, 0))
 

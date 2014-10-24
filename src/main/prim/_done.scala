@@ -14,7 +14,6 @@ import org.nlogo.nvm.{ Command, Context }
 // commands after the _ask.
 
 class _done extends Command {
-  override def syntax = Syntax.commandSyntax()
   override def perform(context: Context) {
     perform_1(context)
   }

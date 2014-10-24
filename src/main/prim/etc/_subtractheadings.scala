@@ -9,11 +9,6 @@ import org.nlogo.nvm.{ Context, Pure, Reporter }
 
 class _subtractheadings extends Reporter with Pure {
 
-  override def syntax =
-    Syntax.reporterSyntax(
-      right = List(Syntax.NumberType, Syntax.NumberType),
-      ret = Syntax.NumberType)
-
   override def report(context: Context): java.lang.Double =
     Double.box(
       report_1(context,

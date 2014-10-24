@@ -5,14 +5,10 @@ package org.nlogo.prim
 import org.nlogo.core.Syntax
 import org.nlogo.nvm.{ Reporter, Pure, Context }
 
-class _constboolean(value: java.lang.Boolean) extends Reporter with Pure {
+class _constboolean(_primitiveValue: Boolean) extends Reporter with Pure {
 
-  private[this] val _primitiveValue = value.booleanValue
-  def primitiveValue = _primitiveValue
-
-  override def syntax =
-    Syntax.reporterSyntax(
-      ret = Syntax.BooleanType)
+  private[this] val value = Boolean.box(_primitiveValue)
+  val primitiveValue = _primitiveValue
 
   override def toString =
     super.toString + ":" + primitiveValue

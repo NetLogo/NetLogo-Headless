@@ -22,19 +22,16 @@ import org.nlogo.{ core, api, nvm, parse, prim },
 class Namer(
   program: api.Program,
   procedures: nvm.FrontEndInterface.ProceduresMap,
-  extensionManager: api.ExtensionManager,
-  lets: Vector[api.Let]) {
+  extensionManager: api.ExtensionManager) {
 
   def process(tokens: Iterator[Token], procedure: nvm.Procedure): Iterator[Token] = {
-    val it = new parse.CountedIterator(tokens)
     // the handlers are mutually exclusive (only one applies), so the order the handlers
     // appear is arbitrary, except that for checkName to work, ProcedureVariableHandler
     // and CallHandler must come last - ST 5/14/13, 5/16/13
-    val handlers = Stream[Token => Option[(TokenType, nvm.Instruction)]](
+    val handlers = Stream[Token => Option[(TokenType, core.Instruction)]](
       CommandHandler,
       ReporterHandler,
       TaskVariableHandler,
-      new LetVariableHandler(lets, () => it.count),
       new BreedHandler(program),
       new AgentVariableReporterHandler(program),
       new ExtensionPrimitiveHandler(extensionManager),
@@ -51,29 +48,26 @@ class Namer(
     }
     def checkName(token: Token) {
       val newVal = processOne(token).map(_.value).get
-      val ok = newVal.isInstanceOf[prim._call] ||
-        newVal.isInstanceOf[prim._callreport] ||
-        newVal.isInstanceOf[prim._procedurevariable]
-      cAssert(ok, alreadyTaken(newVal.toString, token.text.toUpperCase), token)
+      val ok = newVal.isInstanceOf[core.prim._call] ||
+        newVal.isInstanceOf[core.prim._callreport] ||
+        newVal.isInstanceOf[core.prim._procedurevariable]
+      cAssert(ok, alreadyTaken(newVal.getClass.getSimpleName, token.text.toUpperCase), token)
     }
     for (token <- procedure.nameToken +: procedure.argTokens)
       checkName(token)
-    it.map{token => token.tpe match {
+    // anything that we don't recognize, we just assume for now that it's
+    // a reference to a local variable established by _let. later, LetScoper
+    // will connect each _letvariable to the right _let - ST 9/3/14
+    tokens.map{token => token.tpe match {
       case TokenType.Ident =>
-        processOne(token).getOrElse(fail(token))
+        processOne(token).getOrElse(
+          token.refine(core.prim._letvariable(null), tpe = TokenType.Reporter)
+        )
       case _ =>
         token
     }}
   }
 
-  /// errors
-
-  def fail(token: Token): Nothing =
-    exception(unknownIdentifier(
-      token.value.asInstanceOf[String]), token)
-
-  private def unknownIdentifier(s: String) =
-    "Nothing named " + s + " has been defined"
   private def alreadyTaken(theirs: String, ours: String) =
     "There is already a " + theirs + " called " + ours
 

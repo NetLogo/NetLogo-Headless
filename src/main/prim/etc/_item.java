@@ -44,11 +44,4 @@ public final strictfp class _item
     }
   }
 
-  @Override
-  public Syntax syntax() {
-    int[] right = {Syntax.NumberType(),
-        Syntax.ListType() | Syntax.StringType()};
-    int ret = Syntax.WildcardType();
-    return SyntaxJ.reporterSyntax(right, ret);
-  }
 }

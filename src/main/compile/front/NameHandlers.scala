@@ -7,7 +7,7 @@ import org.nlogo.{ core, api, nvm, parse, prim },
   core.{ Token, TokenType },
   Fail._
 
-trait NameHandler extends (Token => Option[(TokenType, nvm.Instruction)])
+trait NameHandler extends (Token => Option[(TokenType, core.Instruction)])
 
 class ProcedureVariableHandler(args: Seq[String])
 extends NameHandler {
@@ -15,42 +15,26 @@ extends NameHandler {
     Some(token.value.asInstanceOf[String])
       .filter(args.contains)
       .map(ident =>
-        (TokenType.Reporter, new prim._procedurevariable(args.indexOf(ident), ident)))
-}
-
-class LetVariableHandler(lets: Vector[api.Let], count: () => Int)
-extends NameHandler {
-  override def apply(token: Token) = {
-    def getLetFromArg(ident: String, tokPos: Int): Option[api.Let] = {
-      def checkLet(let: api.Let): Option[api.Let] =
-        if(tokPos < let.start || tokPos > let.end || let.name != ident)
-          None
-        else
-          Some(let)
-      lets.map(checkLet).find(_.isDefined).getOrElse(None)
-    }
-    Some(token.value.asInstanceOf[String])
-      .flatMap{ident =>
-        getLetFromArg(ident, count()).map(let =>
-          (TokenType.Reporter, new prim._letvariable(let)))}
-  }
+        (TokenType.Reporter, new core.prim._procedurevariable(args.indexOf(ident), ident)))
 }
 
 class CallHandler(procedures: nvm.FrontEndInterface.ProceduresMap) extends NameHandler {
-  override def apply(token: Token) =
-    Some(token.value.asInstanceOf[String])
+  override def apply(token: Token) = {
+    val name = token.value.asInstanceOf[String]
+    Some(name)
       .flatMap{procedures.get}
       .map{callproc =>
         if (callproc.isReporter)
-          (TokenType.Reporter, new prim._callreport(callproc))
+          (TokenType.Reporter, new core.prim._callreport(name, callproc.syntax))
         else
-          (TokenType.Command, new prim._call(callproc))}
+          (TokenType.Command, new core.prim._call(name, callproc.syntax))}
+  }
 }
 
 abstract class PrimitiveHandler extends NameHandler {
-  def lookup(token: Token, fn: String => Option[core.TokenHolder], newType: TokenType): Option[(TokenType, nvm.Instruction)] =
+  def lookup(token: Token, fn: String => Option[core.TokenHolder], newType: TokenType): Option[(TokenType, core.Instruction)] =
     fn(token.value.asInstanceOf[String]).map{holder =>
-      (newType, holder.asInstanceOf[nvm.Instruction])}
+      (newType, holder.asInstanceOf[core.Instruction])}
 }
 
 object CommandHandler extends PrimitiveHandler {
@@ -68,8 +52,8 @@ class BreedHandler(program: api.Program) extends NameHandler {
   override def apply(token: Token) =
     parse.BreedIdentifierHandler.process(token, program) map {
       case (className, breedName, tokenType) =>
-        (tokenType, Instantiator.newInstance[nvm.Instruction](
-          Class.forName("org.nlogo.prim." + className), breedName))
+        (tokenType, Instantiator.newInstance[core.Instruction](
+          Class.forName("org.nlogo.core.prim." + className), breedName))
     }
 }
 
@@ -94,12 +78,12 @@ class ExtensionPrimitiveHandler(extensionManager: api.ExtensionManager) extends 
           Some((newType, wrap(primitive, name)))
       }
     }
-  private def wrap(primitive: api.Primitive, name: String): nvm.Instruction =
+  private def wrap(primitive: api.Primitive, name: String): core.Instruction =
     primitive match {
       case c: api.Command  =>
-        new prim._extern(c)
+        new core.prim._extern(c.getSyntax)
       case r: api.Reporter =>
-        new prim._externreport(r)
+        new core.prim._externreport(r.getSyntax)
     }
 }
 
@@ -118,7 +102,7 @@ object TaskVariableHandler extends NameHandler {
             catch { case e: NumberFormatException =>
               exception(InvalidTaskVariable, token) }
         cAssert(varNumber > 0, InvalidTaskVariable, token)
-        (TokenType.Reporter, new prim._taskvariable(varNumber))
+        (TokenType.Reporter, new core.prim._taskvariable(varNumber))
     }
   val InvalidTaskVariable =
     "variables may not begin with a question mark unless they are the special variables ?, ?1, ?2, ..."
@@ -131,19 +115,19 @@ class AgentVariableReporterHandler(program: api.Program) extends NameHandler {
   import PartialFunction.condOpt
   def boolOpt[T](b: Boolean)(x: => T) =
     if (b) Some(x) else None
-  def getAgentVariableReporter(varName: String): Option[nvm.Reporter] =
+  def getAgentVariableReporter(varName: String): Option[core.Reporter] =
     boolOpt(program.breeds.values.exists(_.owns.contains(varName)))(
-      new prim._breedvariable(varName)) orElse
+      new core.prim._breedvariable(varName)) orElse
     boolOpt(program.linkBreeds.values.exists(_.owns.contains(varName)))(
-      new prim._linkbreedvariable(varName)) orElse
+      new core.prim._linkbreedvariable(varName)) orElse
     boolOpt(program.turtlesOwn.contains(varName) && program.linksOwn.contains(varName))(
-      new prim._turtleorlinkvariable(varName)) orElse
+      new core.prim._turtleorlinkvariable(varName)) orElse
     condOpt(program.turtlesOwn.indexOf(varName)) {
-      case n if n != -1 => new prim._turtlevariable(n) } orElse
+      case n if n != -1 => new core.prim._turtlevariable(n) } orElse
     condOpt(program.patchesOwn.indexOf(varName)) {
-      case n if n != -1 => new prim._patchvariable(n) } orElse
+      case n if n != -1 => new core.prim._patchvariable(n) } orElse
     condOpt(program.linksOwn.indexOf(varName)) {
-      case n if n != -1 => new prim._linkvariable(n) } orElse
+      case n if n != -1 => new core.prim._linkvariable(n) } orElse
     condOpt(program.globals.indexOf(varName)) {
-      case n if n != -1 => new prim._observervariable(n) }
+      case n if n != -1 => new core.prim._observervariable(n) }
 }

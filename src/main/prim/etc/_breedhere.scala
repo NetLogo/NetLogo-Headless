@@ -8,11 +8,6 @@ import org.nlogo.nvm.{ Reporter, Context }
 
 class _breedhere(breedName: String) extends Reporter {
 
-  override def syntax =
-    Syntax.reporterSyntax(
-      ret = Syntax.TurtlesetType,
-      agentClassString = "-TP-")
-
   override def toString =
     super.toString + ":" + breedName
 

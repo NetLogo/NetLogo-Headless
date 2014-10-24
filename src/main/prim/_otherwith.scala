@@ -9,13 +9,6 @@ import org.nlogo.nvm.{ Reporter, Context, EngineException }
 
 class _otherwith extends Reporter {
 
-  override def syntax =
-    Syntax.reporterSyntax(
-      right = List(Syntax.AgentsetType, Syntax.BooleanBlockType),
-      ret = Syntax.AgentsetType,
-      agentClassString = "OTPL",
-      blockAgentClassString = "?")
-
   override def report(context: Context): AgentSet =
     report_1(context, argEvalAgentSet(context, 0), args(1))
 

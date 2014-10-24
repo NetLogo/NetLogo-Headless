@@ -390,7 +390,7 @@ R ticks etc._ticks
 R timer etc._timer
 R towards etc._towards
 R towardsxy etc._towardsxy
-R turtle etc._turtle
+R turtle _turtle
 R turtle-set etc._turtleset
 R turtles _turtles
 R turtles-at etc._turtlesat

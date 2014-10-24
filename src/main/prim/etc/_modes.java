@@ -55,10 +55,4 @@ public final strictfp class _modes
     return modes.toLogoList();
   }
 
-  @Override
-  public Syntax syntax() {
-    int[] right = {Syntax.ListType()};
-    int ret = Syntax.ListType();
-    return SyntaxJ.reporterSyntax(right, ret);
-  }
 }

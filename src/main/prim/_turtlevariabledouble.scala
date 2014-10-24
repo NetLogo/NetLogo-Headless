@@ -11,11 +11,6 @@ class _turtlevariabledouble(private[this] var _vn: Int) extends Reporter {
 
   def this() = this(0)
 
-  override def syntax =
-    Syntax.reporterSyntax(
-      ret = Syntax.NumberType,
-      agentClassString = "-T--")
-
   override def toString =
     super.toString + ":" +
       Option(world).map(_.turtlesOwnNameAt(vn)).getOrElse(vn.toString)

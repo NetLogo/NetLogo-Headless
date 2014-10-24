@@ -12,12 +12,6 @@ import org.nlogo.nvm.Reporter;
 
 public final strictfp class _turtlesat
     extends Reporter {
-  @Override
-  public Syntax syntax() {
-    return SyntaxJ.reporterSyntax
-        (new int[]{Syntax.NumberType(), Syntax.NumberType()},
-            Syntax.TurtlesetType(), "-TP-");
-  }
 
   @Override
   public Object report(final Context context) {

@@ -10,11 +10,6 @@ import org.nlogo.nvm.Context;
 public final strictfp class _while
     extends Command
     implements org.nlogo.nvm.CustomAssembled {
-  @Override
-  public Syntax syntax() {
-    int[] right = {Syntax.BooleanBlockType(), Syntax.CommandBlockType()};
-    return SyntaxJ.commandSyntax(right);
-  }
 
   @Override
   public String toString() {

@@ -11,11 +11,6 @@ import org.nlogo.nvm.Context;
 public final strictfp class _withoutinterruption
     extends Command
     implements org.nlogo.nvm.CustomAssembled {
-  @Override
-  public Syntax syntax() {
-    return SyntaxJ.commandSyntax
-        (new int[]{Syntax.CommandBlockType()});
-  }
 
   @Override
   public String toString() {
