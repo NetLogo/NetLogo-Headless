@@ -11,10 +11,6 @@ import org.nlogo.nvm.Procedure;
 
 public final strictfp class _stop
     extends Command {
-  @Override
-  public Syntax syntax() {
-    return SyntaxJ.commandSyntax();
-  }
 
   @Override
   public void perform(final org.nlogo.nvm.Context context) {

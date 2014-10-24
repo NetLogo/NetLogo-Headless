@@ -8,10 +8,6 @@ import org.nlogo.nvm.{ Command, Context, MutableLong,
 
 class _repeatlocal(vn: Int) extends Command with CustomAssembled {
 
-  override def syntax =
-    Syntax.commandSyntax(List(Syntax.NumberType,
-                               Syntax.CommandBlockType))
-
   override def toString =
     super.toString + ":" + vn + ",+" + offset
 

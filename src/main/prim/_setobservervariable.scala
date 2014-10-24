@@ -10,10 +10,7 @@ class _setobservervariable(_vn: Int) extends Command {
 
   def this(original: _observervariable) = this(original.vn)
 
-  override def syntax =
-    Syntax.commandSyntax(
-      right = List(Syntax.WildcardType),
-      switches = true)
+  switches = true
 
   override def toString =
     super.toString + ":" +

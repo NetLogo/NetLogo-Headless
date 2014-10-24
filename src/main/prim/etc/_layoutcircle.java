@@ -15,12 +15,9 @@ import org.nlogo.nvm.EngineException;
 
 public final strictfp class _layoutcircle
     extends Command {
-  @Override
-  public Syntax syntax() {
-    return SyntaxJ.commandSyntax
-        (new int[]{Syntax.TurtlesetType() | Syntax.ListType(),
-            Syntax.NumberType()},
-            true);
+
+  public _layoutcircle() {
+    switches = true;
   }
 
   @Override

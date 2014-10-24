@@ -8,10 +8,6 @@ import org.nlogo.nvm.{ Context, EngineException, Reporter }
 
 class _usernewfile extends Reporter {
 
-  override def syntax =
-    Syntax.reporterSyntax(
-      ret = Syntax.StringType | Syntax.BooleanType)
-
   override def report(context: Context): AnyRef = {
     workspace.updateUI(context)
     val result: Option[String] =

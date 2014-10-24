@@ -9,11 +9,9 @@ import org.nlogo.nvm.Context;
 
 public final strictfp class _setpatchsize
     extends Command {
-  @Override
-  public Syntax syntax() {
-    return SyntaxJ.commandSyntax(
-        new int[]{Syntax.NumberType()},
-        "O---", true);
+
+  public _setpatchsize() {
+    switches = true;
   }
 
   @Override

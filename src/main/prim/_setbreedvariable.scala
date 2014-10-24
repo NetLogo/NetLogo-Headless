@@ -10,11 +10,7 @@ class _setbreedvariable(name: String) extends Command {
 
   def this(original: _breedvariable) = this(original.name)
 
-  override def syntax =
-    Syntax.commandSyntax(
-      right = List(Syntax.WildcardType),
-      agentClassString = "-T--",
-      switches = true)
+  switches = true
 
   override def toString =
     super.toString + ":" + name

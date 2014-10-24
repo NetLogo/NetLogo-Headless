@@ -2,7 +2,8 @@
 
 package org.nlogo.nvm
 
-import org.nlogo.{ api, core }
+import org.nlogo.{ api, core },
+  core.Let
 
 class Procedure(
   val isReporter: Boolean,
@@ -29,11 +30,11 @@ class Procedure(
 
   // ExpressionParser doesn't know how many parameters the task is going to take;
   // that's determined by TaskVisitor. so for now this is mutable - ST 2/4/11
-  val taskFormals = collection.mutable.Buffer[api.Let]()
+  val taskFormals = collection.mutable.Buffer[Let]()
 
-  def getTaskFormal(n: Int, token: core.Token): api.Let = {
+  def getTaskFormal(n: Int): Let = {
     while (taskFormals.size < n)
-      taskFormals += api.Let("?" + n, token.start, token.end)
+      taskFormals += Let("?" + n)
     taskFormals.last
   }
 

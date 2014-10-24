@@ -10,11 +10,6 @@ class _mylinks(val breedName: String) extends Reporter {
 
   def this() = this(null)
 
-  override def syntax =
-    Syntax.reporterSyntax(
-      ret = Syntax.LinksetType,
-      agentClassString = "-T--")
-
   override def toString =
     super.toString + ":" + breedName
 

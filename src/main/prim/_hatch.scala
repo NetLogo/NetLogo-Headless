@@ -10,12 +10,7 @@ class _hatch(val breedName: String) extends Command with CustomAssembled {
 
   def this() = this("")
 
-  override def syntax =
-    Syntax.commandSyntax(
-      right = List(Syntax.NumberType, Syntax.CommandBlockType | Syntax.OptionalType),
-      agentClassString = "-T--",
-      blockAgentClassString = "-T--",
-      switches = true)
+  switches = true
 
   override def toString =
     super.toString + ":" + breedName + ",+" + offset

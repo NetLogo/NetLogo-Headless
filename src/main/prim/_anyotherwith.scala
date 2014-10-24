@@ -9,13 +9,6 @@ import org.nlogo.agent.AgentSet
 
 class _anyotherwith extends Reporter {
 
-  override def syntax =
-    Syntax.reporterSyntax(
-      right = List(Syntax.AgentsetType, Syntax.BooleanBlockType),
-      ret = Syntax.BooleanType,
-      agentClassString = "-TPL",
-      blockAgentClassString = "?")
-
   override def report(context: Context): java.lang.Boolean =
     Boolean.box(report_1(context, argEvalAgentSet(context, 0), args(1)))
 

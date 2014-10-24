@@ -24,8 +24,6 @@ object Instruction {
 
 abstract class Instruction extends InstructionJ with TokenHolder {
 
-  def syntax: Syntax
-
   var token: Token = null
   var token2: Token = null
 
@@ -79,7 +77,7 @@ abstract class Instruction extends InstructionJ with TokenHolder {
     val allowedKinds =
       for {
         (kind, c) <- pairs
-        if syntax.agentClassString.contains(c)
+        if agentClassString.contains(c)
       }
       yield kind
     throw new EngineException(context, this,

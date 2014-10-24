@@ -14,12 +14,9 @@ import org.nlogo.nvm.EngineException;
 
 public final strictfp class _layoutradial
     extends Command {
-  @Override
-  public Syntax syntax() {
-    return SyntaxJ.commandSyntax
-        (new int[]{Syntax.TurtlesetType(), Syntax.LinksetType(),
-            Syntax.TurtleType()},
-            true);
+
+  public _layoutradial() {
+    switches = true;
   }
 
   @Override

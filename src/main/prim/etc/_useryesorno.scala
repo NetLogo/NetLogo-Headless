@@ -8,11 +8,6 @@ import org.nlogo.nvm.{ Context, EngineException, HaltException, Reporter }
 
 class _useryesorno extends Reporter {
 
-  override def syntax =
-    Syntax.reporterSyntax(
-      right = List(Syntax.WildcardType),
-      ret = Syntax.BooleanType)
-
   override def report(context: Context): java.lang.Boolean = {
     val message = Dump.logoObject(args(0).report(context))
     workspace.updateUI(context)

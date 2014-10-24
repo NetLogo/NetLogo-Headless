@@ -47,10 +47,4 @@ public final strictfp class _median
         ((middle1.doubleValue() + middle2.doubleValue()) / 2);
   }
 
-  @Override
-  public Syntax syntax() {
-    return SyntaxJ.reporterSyntax
-        (new int[]{Syntax.ListType()},
-            Syntax.NumberType());
-  }
 }

@@ -9,13 +9,6 @@ import org.nlogo.nvm.{ Reporter, Pure, Context }
 
 class _notequal extends Reporter with Pure {
 
-  override def syntax =
-    Syntax.reporterSyntax(
-      left = Syntax.WildcardType,
-      right = List(Syntax.WildcardType),
-      ret = Syntax.BooleanType,
-      precedence = Syntax.NormalPrecedence - 5)
-
   override def report(context: Context): java.lang.Boolean =
     Boolean.box(
       report_1(context,

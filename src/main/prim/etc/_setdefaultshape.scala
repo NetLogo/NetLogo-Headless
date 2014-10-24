@@ -9,14 +9,6 @@ import org.nlogo.nvm.{ Command, Context, EngineException }
 
 class _setdefaultshape extends Command {
 
-  override def syntax =
-    Syntax.commandSyntax(
-      right =
-        List(
-          Syntax.TurtlesetType | Syntax.LinksetType,
-          Syntax.StringType),
-      agentClassString = "O---")
-
   override def perform(context: Context) {
     val breed = argEvalAgentSet(context, 0)
     val shape = argEvalString(context, 1)

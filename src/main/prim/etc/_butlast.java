@@ -14,13 +14,6 @@ public final strictfp class _butlast
     extends Reporter
     implements org.nlogo.nvm.Pure {
   @Override
-  public Syntax syntax() {
-    int[] right = {Syntax.ListType() | Syntax.StringType()};
-    int ret = Syntax.ListType() | Syntax.StringType();
-    return SyntaxJ.reporterSyntax(right, ret);
-  }
-
-  @Override
   public Object report(final org.nlogo.nvm.Context context) {
     return report_1(context, args[0].report(context));
   }

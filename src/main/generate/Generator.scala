@@ -131,11 +131,13 @@ class Generator(source: String, procedure: Procedure, profilingEnabled: Boolean)
       // handling later, among other things.
       val thisInstrUID = curInstructionUID
       keepInstruction(instr, thisInstrUID)
+      // yuck, we should pattern match here - ST 10/23/14
       if (instr.isInstanceOf[CustomGenerated]) {
+        val cg = instr.asInstanceOf[CustomGenerated]
         nlgen.markLineNumber(thisInstrUID)
-        new CustomGenerator(profilingEnabled).generate(instr.asInstanceOf[CustomGenerated], nlgen, thisInstrUID, ip)
+        new CustomGenerator(profilingEnabled).generate(cg, nlgen, thisInstrUID, ip)
         nlgen.markLineNumber(parentInstrUID)
-        val actualReturnType = instr.syntax.ret match {
+        val actualReturnType = cg.returnType match {
           case Syntax.BooleanType => classOf[Boolean]
           case Syntax.ListType => classOf[org.nlogo.api.LogoList]
           case Syntax.StringType => classOf[String]
@@ -143,7 +145,8 @@ class Generator(source: String, procedure: Procedure, profilingEnabled: Boolean)
           case Syntax.VoidType => java.lang.Void.TYPE
         }
         nlgen.generateConversion(actualReturnType, retTypeWanted, parentInstr, argIndex)
-      } else {
+      }
+      else {
         MethodSelector.select(instr, retTypeWanted, profilingEnabled) match {
           case None =>
             generateOldStyleCall(instr, retTypeWanted, parentInstrUID, parentInstr, argIndex)

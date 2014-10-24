@@ -19,12 +19,6 @@ import java.util.List;
 
 public final strictfp class _turtleson
     extends Reporter {
-  @Override
-  public Syntax syntax() {
-    return SyntaxJ.reporterSyntax
-        (new int[]{Syntax.AgentType() | Syntax.AgentsetType()},
-            Syntax.TurtlesetType());
-  }
 
   @Override
   public Object report(final org.nlogo.nvm.Context context) {

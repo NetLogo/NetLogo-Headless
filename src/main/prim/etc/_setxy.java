@@ -12,10 +12,9 @@ import org.nlogo.nvm.EngineException;
 
 public final strictfp class _setxy
     extends Command {
-  @Override
-  public Syntax syntax() {
-    int[] right = {Syntax.NumberType(), Syntax.NumberType()};
-    return SyntaxJ.commandSyntax(right, "-T--", true);
+
+  public _setxy() {
+    switches = true;
   }
 
   @Override

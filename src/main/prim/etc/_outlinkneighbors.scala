@@ -10,11 +10,6 @@ class _outlinkneighbors(val breedName: String) extends Reporter {
 
   def this() = this(null)
 
-  override def syntax =
-    Syntax.reporterSyntax(
-      ret = Syntax.AgentsetType,
-      agentClassString = "-T--")
-
   override def report(context: Context): AgentSet = {
     val breed =
       if (breedName == null)

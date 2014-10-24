@@ -8,10 +8,6 @@ import org.nlogo.nvm.{ Command, Context, EngineException }
 
 class _randomseed extends Command {
 
-  override def syntax =
-    Syntax.commandSyntax(
-      right = List(Syntax.NumberType))
-
   override def perform(context: Context) {
     perform_1(context, argEvalDoubleValue(context, 0))
   }

@@ -10,11 +10,7 @@ class _setpatchvariable(_vn: Int) extends Command {
 
   def this(original: _patchvariable) = this(original.vn)
 
-  override def syntax =
-    Syntax.commandSyntax(
-      right = List(Syntax.WildcardType),
-      agentClassString = "-TP-",
-      switches = true)
+  switches = true
 
   override def toString =
     super.toString + ":" +

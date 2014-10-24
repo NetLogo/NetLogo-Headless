@@ -9,11 +9,6 @@ import org.nlogo.nvm.{ Reporter, Context, EngineException, ArgumentTypeException
 
 class _oneof extends Reporter {
 
-  override def syntax =
-    Syntax.reporterSyntax(
-      right = List(Syntax.AgentsetType | Syntax.ListType),
-      ret = Syntax.WildcardType)
-
   override def report(context: Context): AnyRef =
     report_3(context, args(0).report(context))
 

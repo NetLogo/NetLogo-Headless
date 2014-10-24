@@ -12,11 +12,9 @@ import org.nlogo.nvm.EngineException;
 
 public final strictfp class _ride
     extends Command {
-  @Override
-  public Syntax syntax() {
-    return SyntaxJ.commandSyntax
-        (new int[]{Syntax.TurtleType()},
-            "O---", true);
+
+  public _ride() {
+    switches = true;
   }
 
   @Override
