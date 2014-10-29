@@ -505,3 +505,10 @@ NeighborsWorldWidth2
   to-report all-topologies let result [] foreach [true false] [ let wrapx ? foreach [true false] [ let wrapy ? __change-topology wrapx wrapy set result lput counts result ] ] report result end
   O> resize-world 0 1 0 1
   all-topologies => [[3 3 3 3 2 2 2 2] [3 3 3 3 2 2 2 2] [3 3 3 3 2 2 2 2] [3 3 3 3 2 2 2 2]]
+
+NeighborsCacheRetained
+  to setup random-seed 0 clear-all ask patches [ ask one-of neighbors [ set pcolor 123 ] ] end
+  O> setup
+  count patches with [pcolor = 123] => 81
+  O> setup
+  count patches with [pcolor = 123] => 81
