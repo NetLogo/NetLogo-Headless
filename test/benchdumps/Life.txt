@@ -690,7 +690,7 @@ procedure GO:[]{O---}:
          L7
          FRAME FULL [org/nlogo/prim/_asm_procedurego_setpatchvariable_1 org/nlogo/nvm/Context org/nlogo/agent/Agent T org/nlogo/agent/Patch] [org/nlogo/agent/AgentSet]
           ALOAD 0
-          GETFIELD org/nlogo/prim/_asm_procedurego_setpatchvariable_1.keptinstr4 : Lorg/nlogo/prim/_asm_procedurego_patchvariable_2;
+          GETFIELD org/nlogo/prim/_asm_procedurego_setpatchvariable_1.keptinstr4 : Lorg/nlogo/nvm/Reporter;
           ASTORE 3
           ASTORE 2
           ALOAD 3
@@ -709,7 +709,7 @@ procedure GO:[]{O---}:
           INVOKEVIRTUAL org/nlogo/agent/AgentSet.iterator ()Lorg/nlogo/agent/AgentIterator;
           ASTORE 6
          L8
-         FRAME FULL [org/nlogo/prim/_asm_procedurego_setpatchvariable_1 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_procedurego_patchvariable_2 org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator] []
+         FRAME FULL [org/nlogo/prim/_asm_procedurego_setpatchvariable_1 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator] []
           ALOAD 6
           INVOKEINTERFACE org/nlogo/agent/AgentIterator.hasNext ()Z
           IFEQ L9

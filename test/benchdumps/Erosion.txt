@@ -866,7 +866,7 @@ procedure SETUP:[_repeatlocal:0]{O---}:
           INVOKEVIRTUAL org/nlogo/agent/World.patches ()Lorg/nlogo/agent/AgentSet;
          L1
           ALOAD 0
-          GETFIELD org/nlogo/prim/_asm_proceduresetup_ask_16.keptinstr4 : Lorg/nlogo/prim/_asm_proceduresetup_notequal_17;
+          GETFIELD org/nlogo/prim/_asm_proceduresetup_ask_16.keptinstr4 : Lorg/nlogo/nvm/Reporter;
           ASTORE 3
           ASTORE 2
           NEW org/nlogo/nvm/Context
@@ -888,7 +888,7 @@ procedure SETUP:[_repeatlocal:0]{O---}:
           INVOKEVIRTUAL org/nlogo/agent/AgentSet.iterator ()Lorg/nlogo/agent/AgentIterator;
           ASTORE 6
          L2
-         FRAME FULL [org/nlogo/prim/_asm_proceduresetup_ask_16 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduresetup_notequal_17 org/nlogo/nvm/Context scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
+         FRAME FULL [org/nlogo/prim/_asm_proceduresetup_ask_16 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
           ALOAD 6
           INVOKEINTERFACE org/nlogo/agent/AgentIterator.hasNext ()Z
           IFEQ L3
@@ -1121,7 +1121,7 @@ procedure SETUP:[_repeatlocal:0]{O---}:
           INVOKEVIRTUAL org/nlogo/agent/World.patches ()Lorg/nlogo/agent/AgentSet;
          L4
           ALOAD 0
-          GETFIELD org/nlogo/prim/_asm_proceduresetup_setobservervariable_21.keptinstr4 : Lorg/nlogo/prim/_asm_proceduresetup_patchvariable_22;
+          GETFIELD org/nlogo/prim/_asm_proceduresetup_setobservervariable_21.keptinstr4 : Lorg/nlogo/nvm/Reporter;
           ASTORE 3
           ASTORE 2
           NEW org/nlogo/nvm/Context
@@ -1143,7 +1143,7 @@ procedure SETUP:[_repeatlocal:0]{O---}:
           INVOKEVIRTUAL org/nlogo/agent/AgentSet.iterator ()Lorg/nlogo/agent/AgentIterator;
           ASTORE 6
          L5
-         FRAME FULL [org/nlogo/prim/_asm_proceduresetup_setobservervariable_21 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduresetup_patchvariable_22 org/nlogo/nvm/Context scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
+         FRAME FULL [org/nlogo/prim/_asm_proceduresetup_setobservervariable_21 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
           ALOAD 6
           INVOKEINTERFACE org/nlogo/agent/AgentIterator.hasNext ()Z
           IFEQ L6
@@ -1322,7 +1322,7 @@ procedure SETUP:[_repeatlocal:0]{O---}:
           INVOKEVIRTUAL org/nlogo/agent/World.patches ()Lorg/nlogo/agent/AgentSet;
          L4
           ALOAD 0
-          GETFIELD org/nlogo/prim/_asm_proceduresetup_setobservervariable_23.keptinstr4 : Lorg/nlogo/prim/_asm_proceduresetup_not_24;
+          GETFIELD org/nlogo/prim/_asm_proceduresetup_setobservervariable_23.keptinstr4 : Lorg/nlogo/nvm/Reporter;
           ASTORE 3
           ASTORE 2
           NEW org/nlogo/nvm/Context
@@ -1344,7 +1344,7 @@ procedure SETUP:[_repeatlocal:0]{O---}:
           INVOKEVIRTUAL org/nlogo/agent/AgentSet.iterator ()Lorg/nlogo/agent/AgentIterator;
           ASTORE 6
          L5
-         FRAME FULL [org/nlogo/prim/_asm_proceduresetup_setobservervariable_23 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduresetup_not_24 org/nlogo/nvm/Context scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
+         FRAME FULL [org/nlogo/prim/_asm_proceduresetup_setobservervariable_23 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
           ALOAD 6
           INVOKEINTERFACE org/nlogo/agent/AgentIterator.hasNext ()Z
           IFEQ L6

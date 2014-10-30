@@ -166,7 +166,7 @@ class Generator(source: String, procedure: Procedure, profilingEnabled: Boolean)
                 curInstructionUID += 1
                 val newArg = recurse(instr.args(i))
                 instr.args(i) = newArg
-                keepAndLoadInstruction(newArg, curInstructionUID)
+                keepAndLoadReporter(newArg, curInstructionUID)
               } else generateInstruction(instr.args(i), paramType, thisInstrUID, instr, i)
             }
             // pop off the stack into local vars, in backwards order because this is where the
@@ -284,11 +284,15 @@ class Generator(source: String, procedure: Procedure, profilingEnabled: Boolean)
     /**
      * returns the field name that the object will be stored in
      */
-    def keepInstruction(obj: Instruction, instrUID: Int): String = {
+    def keepInstruction(obj: Instruction, instrUID: Int): String =
+      keepInstructionWithType(obj, instrUID, Type.getType(obj.getClass))
+
+    def keepInstructionWithType(obj: Instruction, instrUID: Int, keptType: Type): String = {
       val fieldName = Generator.KEPT_INSTRUCTION_PREFIX + instrUID
-      keep(fieldName, obj, Type.getType(obj.getClass), ACC_PUBLIC)
+      keep(fieldName, obj, keptType, ACC_PUBLIC)
       fieldName
     }
+
     def loadInstruction(instrUID: Int) {
       val fieldName = Generator.KEPT_INSTRUCTION_PREFIX + instrUID
       loadKept(fieldName)
@@ -298,19 +302,24 @@ class Generator(source: String, procedure: Procedure, profilingEnabled: Boolean)
      * to be able to load it multiple times, then you should first call "keep" and save the index
      * that is returned.  Then call loadKept(index) whenever you want to load the object.
      */
-    def keepAndLoadInstruction(obj: Instruction, instrUID: Int) {
+    def keepAndLoadInstruction(obj: Instruction, instrUID: Int) =
       loadKept(keepInstruction(obj, instrUID))
-    }
+
+    def keepAndLoadReporter(obj: Instruction, instrUID: Int) =
+      loadKept(keepInstructionWithType(obj, instrUID, Type.getType(classOf[Reporter])))
+
     def keep(fieldName: String, obj: Object, tpe: Type, accessCode: Int) {
       keptThings.put(fieldName, obj)
       keptThingsTypes.put(fieldName, tpe)
       keptThingsAccessCodes.put(fieldName, Int.box(accessCode))
     }
-    def loadKept(fieldName: String) {
+
+    def loadKept(fieldName: String): Unit = {
       val descriptor = keptThingsTypes.get(fieldName).getDescriptor
       nlgen.visitVarInsn(ALOAD, 0)
       nlgen.visitFieldInsn(GETFIELD, fullClassName, fieldName, descriptor)
     }
+
     def remapFieldName(originalName: String, instrUID: Int) =
       "kept" + instrUID + "_" + originalName
     def translateGetField(origFieldName: String, instrUID: Int, obj: Object, tpe: Type, accessCode: Int) {

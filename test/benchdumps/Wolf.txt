@@ -4207,7 +4207,7 @@ procedure GRAPH:[]{OTPL}:
             INVOKEVIRTUAL org/nlogo/agent/World.patches ()Lorg/nlogo/agent/AgentSet;
            L1
             ALOAD 0
-            GETFIELD org/nlogo/prim/_asm_proceduregraph_div_6.keptinstr4 : Lorg/nlogo/prim/_asm_proceduregraph_equal_7;
+            GETFIELD org/nlogo/prim/_asm_proceduregraph_div_6.keptinstr4 : Lorg/nlogo/nvm/Reporter;
             ASTORE 3
             ASTORE 2
             ALOAD 3
@@ -4226,7 +4226,7 @@ procedure GRAPH:[]{OTPL}:
             INVOKEVIRTUAL org/nlogo/agent/AgentSet.iterator ()Lorg/nlogo/agent/AgentIterator;
             ASTORE 6
            L2
-           FRAME FULL [org/nlogo/prim/_asm_proceduregraph_div_6 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduregraph_equal_7 org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator] []
+           FRAME FULL [org/nlogo/prim/_asm_proceduregraph_div_6 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator] []
             ALOAD 6
             INVOKEINTERFACE org/nlogo/agent/AgentIterator.hasNext ()Z
             IFEQ L3

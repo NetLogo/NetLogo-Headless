@@ -1418,7 +1418,7 @@ procedure FIND-NEW-STATE:[A B S]{-TP-}:
          L4
          FRAME FULL [org/nlogo/prim/_asm_procedurefindnewstate_setprocedurevariable_3 org/nlogo/nvm/Context org/nlogo/agent/Agent T org/nlogo/agent/Patch] [org/nlogo/agent/AgentSet]
           ALOAD 0
-          GETFIELD org/nlogo/prim/_asm_procedurefindnewstate_setprocedurevariable_3.keptinstr4 : Lorg/nlogo/prim/_asm_procedurefindnewstate_and_4;
+          GETFIELD org/nlogo/prim/_asm_procedurefindnewstate_setprocedurevariable_3.keptinstr4 : Lorg/nlogo/nvm/Reporter;
           ASTORE 3
           ASTORE 2
           ALOAD 3
@@ -1437,7 +1437,7 @@ procedure FIND-NEW-STATE:[A B S]{-TP-}:
           INVOKEVIRTUAL org/nlogo/agent/AgentSet.iterator ()Lorg/nlogo/agent/AgentIterator;
           ASTORE 6
          L5
-         FRAME FULL [org/nlogo/prim/_asm_procedurefindnewstate_setprocedurevariable_3 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_procedurefindnewstate_and_4 org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator] []
+         FRAME FULL [org/nlogo/prim/_asm_procedurefindnewstate_setprocedurevariable_3 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator] []
           ALOAD 6
           INVOKEINTERFACE org/nlogo/agent/AgentIterator.hasNext ()Z
           IFEQ L6
@@ -1613,7 +1613,7 @@ procedure FIND-NEW-STATE:[A B S]{-TP-}:
          L4
          FRAME FULL [org/nlogo/prim/_asm_procedurefindnewstate_setprocedurevariable_5 org/nlogo/nvm/Context org/nlogo/agent/Agent T org/nlogo/agent/Patch] [org/nlogo/agent/AgentSet]
           ALOAD 0
-          GETFIELD org/nlogo/prim/_asm_procedurefindnewstate_setprocedurevariable_5.keptinstr4 : Lorg/nlogo/prim/_asm_procedurefindnewstate_equal_6;
+          GETFIELD org/nlogo/prim/_asm_procedurefindnewstate_setprocedurevariable_5.keptinstr4 : Lorg/nlogo/nvm/Reporter;
           ASTORE 3
           ASTORE 2
           ALOAD 3
@@ -1632,7 +1632,7 @@ procedure FIND-NEW-STATE:[A B S]{-TP-}:
           INVOKEVIRTUAL org/nlogo/agent/AgentSet.iterator ()Lorg/nlogo/agent/AgentIterator;
           ASTORE 6
          L5
-         FRAME FULL [org/nlogo/prim/_asm_procedurefindnewstate_setprocedurevariable_5 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_procedurefindnewstate_equal_6 org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator] []
+         FRAME FULL [org/nlogo/prim/_asm_procedurefindnewstate_setprocedurevariable_5 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator] []
           ALOAD 6
           INVOKEINTERFACE org/nlogo/agent/AgentIterator.hasNext ()Z
           IFEQ L6

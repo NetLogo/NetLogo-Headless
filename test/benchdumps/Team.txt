@@ -2207,7 +2207,7 @@ procedure PICK-TEAM-MEMBERS:[NEW-TEAM-MEMBER _repeatlocal:1]{O---}:
                 INVOKEVIRTUAL org/nlogo/agent/AgentSet$.fromIterator (Lorg/nlogo/core/AgentKind;Lscala/collection/Iterator;)Lorg/nlogo/agent/AgentSet;
                L12
                 ALOAD 0
-                GETFIELD org/nlogo/prim/_asm_procedurepickteammembers_and_7.keptinstr5 : Lorg/nlogo/prim/_asm_procedurepickteammembers_not_8;
+                GETFIELD org/nlogo/prim/_asm_procedurepickteammembers_and_7.keptinstr5 : Lorg/nlogo/nvm/Reporter;
                 ASTORE 3
                 ASTORE 2
                 NEW org/nlogo/nvm/Context
@@ -2224,7 +2224,7 @@ procedure PICK-TEAM-MEMBERS:[NEW-TEAM-MEMBER _repeatlocal:1]{O---}:
                 INVOKEVIRTUAL org/nlogo/agent/AgentSet.iterator ()Lorg/nlogo/agent/AgentIterator;
                 ASTORE 5
                L13
-               FRAME FULL [org/nlogo/prim/_asm_procedurepickteammembers_and_7 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_procedurepickteammembers_not_8 org/nlogo/nvm/Context org/nlogo/agent/AgentIterator] []
+               FRAME FULL [org/nlogo/prim/_asm_procedurepickteammembers_and_7 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context org/nlogo/agent/AgentIterator] []
                 ALOAD 5
                 INVOKEINTERFACE org/nlogo/agent/AgentIterator.hasNext ()Z
                 IFEQ L14
@@ -2381,7 +2381,7 @@ procedure PICK-TEAM-MEMBERS:[NEW-TEAM-MEMBER _repeatlocal:1]{O---}:
           INVOKEVIRTUAL org/nlogo/agent/World.turtles ()Lorg/nlogo/agent/AgentSet;
          L10
           ALOAD 0
-          GETFIELD org/nlogo/prim/_asm_procedurepickteammembers_ifelse_6.keptinstr9 : Lorg/nlogo/prim/_asm_procedurepickteammembers_and_7;
+          GETFIELD org/nlogo/prim/_asm_procedurepickteammembers_ifelse_6.keptinstr9 : Lorg/nlogo/nvm/Reporter;
           ASTORE 3
           ASTORE 2
           NEW org/nlogo/nvm/Context
@@ -2398,7 +2398,7 @@ procedure PICK-TEAM-MEMBERS:[NEW-TEAM-MEMBER _repeatlocal:1]{O---}:
           INVOKEVIRTUAL org/nlogo/agent/AgentSet.iterator ()Lorg/nlogo/agent/AgentIterator;
           ASTORE 5
          L11
-         FRAME FULL [org/nlogo/prim/_asm_procedurepickteammembers_ifelse_6 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_procedurepickteammembers_and_7 org/nlogo/nvm/Context org/nlogo/agent/AgentIterator java/lang/Object] []
+         FRAME FULL [org/nlogo/prim/_asm_procedurepickteammembers_ifelse_6 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context org/nlogo/agent/AgentIterator java/lang/Object] []
           ALOAD 5
           INVOKEINTERFACE org/nlogo/agent/AgentIterator.hasNext ()Z
           IFEQ L12
@@ -2423,7 +2423,7 @@ procedure PICK-TEAM-MEMBERS:[NEW-TEAM-MEMBER _repeatlocal:1]{O---}:
           ICONST_1
           GOTO L15
          L14
-         FRAME FULL [org/nlogo/prim/_asm_procedurepickteammembers_ifelse_6 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_procedurepickteammembers_and_7 org/nlogo/nvm/Context org/nlogo/agent/AgentIterator org/nlogo/agent/Agent java/lang/Object java/lang/Boolean] []
+         FRAME FULL [org/nlogo/prim/_asm_procedurepickteammembers_ifelse_6 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context org/nlogo/agent/AgentIterator org/nlogo/agent/Agent java/lang/Object java/lang/Boolean] []
           GETSTATIC scala/runtime/BoxedUnit.UNIT : Lscala/runtime/BoxedUnit;
           ASTORE 9
           GOTO L11
@@ -2456,7 +2456,7 @@ procedure PICK-TEAM-MEMBERS:[NEW-TEAM-MEMBER _repeatlocal:1]{O---}:
           INVOKESPECIAL org/nlogo/nvm/EngineException.<init> (Lorg/nlogo/nvm/Context;Lorg/nlogo/nvm/Instruction;Ljava/lang/String;)V
           ATHROW
          L12
-         FRAME FULL [org/nlogo/prim/_asm_procedurepickteammembers_ifelse_6 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_procedurepickteammembers_and_7 org/nlogo/nvm/Context org/nlogo/agent/AgentIterator java/lang/Object] []
+         FRAME FULL [org/nlogo/prim/_asm_procedurepickteammembers_ifelse_6 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context org/nlogo/agent/AgentIterator java/lang/Object] []
           ICONST_0
          L15
          FRAME SAME1 I
@@ -2613,7 +2613,7 @@ procedure PICK-TEAM-MEMBERS:[NEW-TEAM-MEMBER _repeatlocal:1]{O---}:
               INVOKEVIRTUAL org/nlogo/agent/AgentSet$.fromIterator (Lorg/nlogo/core/AgentKind;Lscala/collection/Iterator;)Lorg/nlogo/agent/AgentSet;
              L14
               ALOAD 0
-              GETFIELD org/nlogo/prim/_asm_procedurepickteammembers_and_10.keptinstr6 : Lorg/nlogo/prim/_asm_procedurepickteammembers_turtlevariable_11;
+              GETFIELD org/nlogo/prim/_asm_procedurepickteammembers_and_10.keptinstr6 : Lorg/nlogo/nvm/Reporter;
               ASTORE 3
               ASTORE 2
               NEW org/nlogo/nvm/Context
@@ -2630,7 +2630,7 @@ procedure PICK-TEAM-MEMBERS:[NEW-TEAM-MEMBER _repeatlocal:1]{O---}:
               INVOKEVIRTUAL org/nlogo/agent/AgentSet.iterator ()Lorg/nlogo/agent/AgentIterator;
               ASTORE 5
              L15
-             FRAME FULL [org/nlogo/prim/_asm_procedurepickteammembers_and_10 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_procedurepickteammembers_turtlevariable_11 org/nlogo/nvm/Context org/nlogo/agent/AgentIterator] []
+             FRAME FULL [org/nlogo/prim/_asm_procedurepickteammembers_and_10 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context org/nlogo/agent/AgentIterator] []
               ALOAD 5
               INVOKEINTERFACE org/nlogo/agent/AgentIterator.hasNext ()Z
               IFEQ L16
@@ -2713,7 +2713,7 @@ procedure PICK-TEAM-MEMBERS:[NEW-TEAM-MEMBER _repeatlocal:1]{O---}:
           INVOKEVIRTUAL org/nlogo/agent/World.turtles ()Lorg/nlogo/agent/AgentSet;
          L1
           ALOAD 0
-          GETFIELD org/nlogo/prim/_asm_procedurepickteammembers_setprocedurevariable_9.keptinstr4 : Lorg/nlogo/prim/_asm_procedurepickteammembers_and_10;
+          GETFIELD org/nlogo/prim/_asm_procedurepickteammembers_setprocedurevariable_9.keptinstr4 : Lorg/nlogo/nvm/Reporter;
           ASTORE 3
           ASTORE 2
           NEW org/nlogo/nvm/Context
@@ -2733,7 +2733,7 @@ procedure PICK-TEAM-MEMBERS:[NEW-TEAM-MEMBER _repeatlocal:1]{O---}:
           INVOKEVIRTUAL org/nlogo/agent/AgentSet.shufflerator (Lorg/nlogo/api/MersenneTwisterFast;)Lorg/nlogo/agent/AgentIterator;
           ASTORE 5
          L2
-         FRAME FULL [org/nlogo/prim/_asm_procedurepickteammembers_setprocedurevariable_9 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_procedurepickteammembers_and_10 org/nlogo/nvm/Context org/nlogo/agent/AgentIterator] []
+         FRAME FULL [org/nlogo/prim/_asm_procedurepickteammembers_setprocedurevariable_9 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context org/nlogo/agent/AgentIterator] []
           ALOAD 5
           INVOKEINTERFACE org/nlogo/agent/AgentIterator.hasNext ()Z
           IFEQ L3
@@ -2886,7 +2886,7 @@ procedure PICK-TEAM-MEMBERS:[NEW-TEAM-MEMBER _repeatlocal:1]{O---}:
           INVOKEVIRTUAL org/nlogo/agent/World.turtles ()Lorg/nlogo/agent/AgentSet;
          L1
           ALOAD 0
-          GETFIELD org/nlogo/prim/_asm_procedurepickteammembers_setprocedurevariable_13.keptinstr4 : Lorg/nlogo/prim/_asm_procedurepickteammembers_not_14;
+          GETFIELD org/nlogo/prim/_asm_procedurepickteammembers_setprocedurevariable_13.keptinstr4 : Lorg/nlogo/nvm/Reporter;
           ASTORE 3
           ASTORE 2
           NEW org/nlogo/nvm/Context
@@ -2906,7 +2906,7 @@ procedure PICK-TEAM-MEMBERS:[NEW-TEAM-MEMBER _repeatlocal:1]{O---}:
           INVOKEVIRTUAL org/nlogo/agent/AgentSet.shufflerator (Lorg/nlogo/api/MersenneTwisterFast;)Lorg/nlogo/agent/AgentIterator;
           ASTORE 5
          L2
-         FRAME FULL [org/nlogo/prim/_asm_procedurepickteammembers_setprocedurevariable_13 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_procedurepickteammembers_not_14 org/nlogo/nvm/Context org/nlogo/agent/AgentIterator] []
+         FRAME FULL [org/nlogo/prim/_asm_procedurepickteammembers_setprocedurevariable_13 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context org/nlogo/agent/AgentIterator] []
           ALOAD 5
           INVOKEINTERFACE org/nlogo/agent/AgentIterator.hasNext ()Z
           IFEQ L3
@@ -3357,7 +3357,7 @@ procedure TIE-COLLABORATORS:[]{OTPL}:
           INVOKEVIRTUAL org/nlogo/agent/World.turtles ()Lorg/nlogo/agent/AgentSet;
          L1
           ALOAD 0
-          GETFIELD org/nlogo/prim/_asm_proceduretiecollaborators_ask_0.keptinstr4 : Lorg/nlogo/prim/_asm_proceduretiecollaborators_turtlevariable_1;
+          GETFIELD org/nlogo/prim/_asm_proceduretiecollaborators_ask_0.keptinstr4 : Lorg/nlogo/nvm/Reporter;
           ASTORE 3
           ASTORE 2
           NEW org/nlogo/nvm/Context
@@ -3379,7 +3379,7 @@ procedure TIE-COLLABORATORS:[]{OTPL}:
           INVOKEVIRTUAL org/nlogo/agent/AgentSet.iterator ()Lorg/nlogo/agent/AgentIterator;
           ASTORE 6
          L2
-         FRAME FULL [org/nlogo/prim/_asm_proceduretiecollaborators_ask_0 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduretiecollaborators_turtlevariable_1 org/nlogo/nvm/Context scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
+         FRAME FULL [org/nlogo/prim/_asm_proceduretiecollaborators_ask_0 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
           ALOAD 6
           INVOKEINTERFACE org/nlogo/agent/AgentIterator.hasNext ()Z
           IFEQ L3
@@ -3538,7 +3538,7 @@ procedure TIE-COLLABORATORS:[]{OTPL}:
             INVOKEVIRTUAL org/nlogo/agent/World.turtles ()Lorg/nlogo/agent/AgentSet;
            L1
             ALOAD 0
-            GETFIELD org/nlogo/prim/_asm_proceduretiecollaborators_otherwith_2.keptinstr3 : Lorg/nlogo/prim/_asm_proceduretiecollaborators_turtlevariable_3;
+            GETFIELD org/nlogo/prim/_asm_proceduretiecollaborators_otherwith_2.keptinstr3 : Lorg/nlogo/nvm/Reporter;
             ASTORE 3
             ASTORE 2
             NEW org/nlogo/nvm/Context
@@ -3560,7 +3560,7 @@ procedure TIE-COLLABORATORS:[]{OTPL}:
             INVOKEVIRTUAL org/nlogo/agent/AgentSet.iterator ()Lorg/nlogo/agent/AgentIterator;
             ASTORE 6
            L2
-           FRAME FULL [org/nlogo/prim/_asm_proceduretiecollaborators_otherwith_2 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduretiecollaborators_turtlevariable_3 org/nlogo/nvm/Context scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
+           FRAME FULL [org/nlogo/prim/_asm_proceduretiecollaborators_otherwith_2 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
             ALOAD 6
             INVOKEINTERFACE org/nlogo/agent/AgentIterator.hasNext ()Z
             IFEQ L3
@@ -4077,7 +4077,7 @@ procedure COLOR-COLLABORATIONS:[]{OTPL}:
           INVOKEVIRTUAL org/nlogo/agent/World.links ()Lorg/nlogo/agent/AgentSet;
          L1
           ALOAD 0
-          GETFIELD org/nlogo/prim/_asm_procedurecolorcollaborations_ask_0.keptinstr4 : Lorg/nlogo/prim/_asm_procedurecolorcollaborations_and_1;
+          GETFIELD org/nlogo/prim/_asm_procedurecolorcollaborations_ask_0.keptinstr4 : Lorg/nlogo/nvm/Reporter;
           ASTORE 3
           ASTORE 2
           NEW org/nlogo/nvm/Context
@@ -4099,7 +4099,7 @@ procedure COLOR-COLLABORATIONS:[]{OTPL}:
           INVOKEVIRTUAL org/nlogo/agent/AgentSet.iterator ()Lorg/nlogo/agent/AgentIterator;
           ASTORE 6
          L2
-         FRAME FULL [org/nlogo/prim/_asm_procedurecolorcollaborations_ask_0 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_procedurecolorcollaborations_and_1 org/nlogo/nvm/Context scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
+         FRAME FULL [org/nlogo/prim/_asm_procedurecolorcollaborations_ask_0 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
           ALOAD 6
           INVOKEINTERFACE org/nlogo/agent/AgentIterator.hasNext ()Z
           IFEQ L3
@@ -5395,7 +5395,7 @@ procedure DO-PLOT:[TOTAL]{OTPL}:
           INVOKEVIRTUAL org/nlogo/agent/World.links ()Lorg/nlogo/agent/AgentSet;
          L5
           ALOAD 0
-          GETFIELD org/nlogo/prim/_asm_proceduredoplot_setprocedurevariable_5.keptinstr6 : Lorg/nlogo/prim/_asm_proceduredoplot_equal_6;
+          GETFIELD org/nlogo/prim/_asm_proceduredoplot_setprocedurevariable_5.keptinstr6 : Lorg/nlogo/nvm/Reporter;
           ASTORE 3
           ASTORE 2
           ALOAD 3
@@ -5414,7 +5414,7 @@ procedure DO-PLOT:[TOTAL]{OTPL}:
           INVOKEVIRTUAL org/nlogo/agent/AgentSet.iterator ()Lorg/nlogo/agent/AgentIterator;
           ASTORE 6
          L6
-         FRAME FULL [org/nlogo/prim/_asm_proceduredoplot_setprocedurevariable_5 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredoplot_equal_6 org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator] [D]
+         FRAME FULL [org/nlogo/prim/_asm_proceduredoplot_setprocedurevariable_5 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator] [D]
           ALOAD 6
           INVOKEINTERFACE org/nlogo/agent/AgentIterator.hasNext ()Z
           IFEQ L7
@@ -5442,14 +5442,14 @@ procedure DO-PLOT:[TOTAL]{OTPL}:
           GETSTATIC scala/runtime/BoxedUnit.UNIT : Lscala/runtime/BoxedUnit;
           GOTO L10
          L9
-         FRAME FULL [org/nlogo/prim/_asm_proceduredoplot_setprocedurevariable_5 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredoplot_equal_6 org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator org/nlogo/agent/Agent java/lang/Object java/lang/Boolean] [D]
+         FRAME FULL [org/nlogo/prim/_asm_proceduredoplot_setprocedurevariable_5 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator org/nlogo/agent/Agent java/lang/Object java/lang/Boolean] [D]
           GETSTATIC scala/runtime/BoxedUnit.UNIT : Lscala/runtime/BoxedUnit;
          L10
-         FRAME FULL [org/nlogo/prim/_asm_proceduredoplot_setprocedurevariable_5 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredoplot_equal_6 org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator org/nlogo/agent/Agent java/lang/Object java/lang/Boolean] [D scala/runtime/BoxedUnit]
+         FRAME FULL [org/nlogo/prim/_asm_proceduredoplot_setprocedurevariable_5 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator org/nlogo/agent/Agent java/lang/Object java/lang/Boolean] [D scala/runtime/BoxedUnit]
           ASTORE 10
           GOTO L6
          L8
-         FRAME FULL [org/nlogo/prim/_asm_proceduredoplot_setprocedurevariable_5 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredoplot_equal_6 org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator org/nlogo/agent/Agent java/lang/Object] [D]
+         FRAME FULL [org/nlogo/prim/_asm_proceduredoplot_setprocedurevariable_5 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator org/nlogo/agent/Agent java/lang/Object] [D]
           NEW org/nlogo/nvm/EngineException
           DUP
           ALOAD 1
@@ -5481,7 +5481,7 @@ procedure DO-PLOT:[TOTAL]{OTPL}:
           INVOKESPECIAL org/nlogo/nvm/EngineException.<init> (Lorg/nlogo/nvm/Context;Lorg/nlogo/nvm/Instruction;Ljava/lang/String;)V
           ATHROW
          L7
-         FRAME FULL [org/nlogo/prim/_asm_proceduredoplot_setprocedurevariable_5 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredoplot_equal_6 org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator] [D]
+         FRAME FULL [org/nlogo/prim/_asm_proceduredoplot_setprocedurevariable_5 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator] [D]
           ILOAD 5
           I2D
          L11
@@ -5699,7 +5699,7 @@ procedure DO-PLOT:[TOTAL]{OTPL}:
           INVOKEVIRTUAL org/nlogo/agent/World.links ()Lorg/nlogo/agent/AgentSet;
          L5
           ALOAD 0
-          GETFIELD org/nlogo/prim/_asm_proceduredoplot_setprocedurevariable_12.keptinstr6 : Lorg/nlogo/prim/_asm_proceduredoplot_equal_13;
+          GETFIELD org/nlogo/prim/_asm_proceduredoplot_setprocedurevariable_12.keptinstr6 : Lorg/nlogo/nvm/Reporter;
           ASTORE 3
           ASTORE 2
           ALOAD 3
@@ -5718,7 +5718,7 @@ procedure DO-PLOT:[TOTAL]{OTPL}:
           INVOKEVIRTUAL org/nlogo/agent/AgentSet.iterator ()Lorg/nlogo/agent/AgentIterator;
           ASTORE 6
          L6
-         FRAME FULL [org/nlogo/prim/_asm_proceduredoplot_setprocedurevariable_12 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredoplot_equal_13 org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator] [D]
+         FRAME FULL [org/nlogo/prim/_asm_proceduredoplot_setprocedurevariable_12 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator] [D]
           ALOAD 6
           INVOKEINTERFACE org/nlogo/agent/AgentIterator.hasNext ()Z
           IFEQ L7
@@ -5746,14 +5746,14 @@ procedure DO-PLOT:[TOTAL]{OTPL}:
           GETSTATIC scala/runtime/BoxedUnit.UNIT : Lscala/runtime/BoxedUnit;
           GOTO L10
          L9
-         FRAME FULL [org/nlogo/prim/_asm_proceduredoplot_setprocedurevariable_12 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredoplot_equal_13 org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator org/nlogo/agent/Agent java/lang/Object java/lang/Boolean] [D]
+         FRAME FULL [org/nlogo/prim/_asm_proceduredoplot_setprocedurevariable_12 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator org/nlogo/agent/Agent java/lang/Object java/lang/Boolean] [D]
           GETSTATIC scala/runtime/BoxedUnit.UNIT : Lscala/runtime/BoxedUnit;
          L10
-         FRAME FULL [org/nlogo/prim/_asm_proceduredoplot_setprocedurevariable_12 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredoplot_equal_13 org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator org/nlogo/agent/Agent java/lang/Object java/lang/Boolean] [D scala/runtime/BoxedUnit]
+         FRAME FULL [org/nlogo/prim/_asm_proceduredoplot_setprocedurevariable_12 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator org/nlogo/agent/Agent java/lang/Object java/lang/Boolean] [D scala/runtime/BoxedUnit]
           ASTORE 10
           GOTO L6
          L8
-         FRAME FULL [org/nlogo/prim/_asm_proceduredoplot_setprocedurevariable_12 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredoplot_equal_13 org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator org/nlogo/agent/Agent java/lang/Object] [D]
+         FRAME FULL [org/nlogo/prim/_asm_proceduredoplot_setprocedurevariable_12 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator org/nlogo/agent/Agent java/lang/Object] [D]
           NEW org/nlogo/nvm/EngineException
           DUP
           ALOAD 1
@@ -5785,7 +5785,7 @@ procedure DO-PLOT:[TOTAL]{OTPL}:
           INVOKESPECIAL org/nlogo/nvm/EngineException.<init> (Lorg/nlogo/nvm/Context;Lorg/nlogo/nvm/Instruction;Ljava/lang/String;)V
           ATHROW
          L7
-         FRAME FULL [org/nlogo/prim/_asm_proceduredoplot_setprocedurevariable_12 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredoplot_equal_13 org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator] [D]
+         FRAME FULL [org/nlogo/prim/_asm_proceduredoplot_setprocedurevariable_12 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator] [D]
           ILOAD 5
           I2D
          L11
@@ -6003,7 +6003,7 @@ procedure DO-PLOT:[TOTAL]{OTPL}:
           INVOKEVIRTUAL org/nlogo/agent/World.links ()Lorg/nlogo/agent/AgentSet;
          L5
           ALOAD 0
-          GETFIELD org/nlogo/prim/_asm_proceduredoplot_setprocedurevariable_19.keptinstr6 : Lorg/nlogo/prim/_asm_proceduredoplot_equal_20;
+          GETFIELD org/nlogo/prim/_asm_proceduredoplot_setprocedurevariable_19.keptinstr6 : Lorg/nlogo/nvm/Reporter;
           ASTORE 3
           ASTORE 2
           ALOAD 3
@@ -6022,7 +6022,7 @@ procedure DO-PLOT:[TOTAL]{OTPL}:
           INVOKEVIRTUAL org/nlogo/agent/AgentSet.iterator ()Lorg/nlogo/agent/AgentIterator;
           ASTORE 6
          L6
-         FRAME FULL [org/nlogo/prim/_asm_proceduredoplot_setprocedurevariable_19 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredoplot_equal_20 org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator] [D]
+         FRAME FULL [org/nlogo/prim/_asm_proceduredoplot_setprocedurevariable_19 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator] [D]
           ALOAD 6
           INVOKEINTERFACE org/nlogo/agent/AgentIterator.hasNext ()Z
           IFEQ L7
@@ -6050,14 +6050,14 @@ procedure DO-PLOT:[TOTAL]{OTPL}:
           GETSTATIC scala/runtime/BoxedUnit.UNIT : Lscala/runtime/BoxedUnit;
           GOTO L10
          L9
-         FRAME FULL [org/nlogo/prim/_asm_proceduredoplot_setprocedurevariable_19 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredoplot_equal_20 org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator org/nlogo/agent/Agent java/lang/Object java/lang/Boolean] [D]
+         FRAME FULL [org/nlogo/prim/_asm_proceduredoplot_setprocedurevariable_19 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator org/nlogo/agent/Agent java/lang/Object java/lang/Boolean] [D]
           GETSTATIC scala/runtime/BoxedUnit.UNIT : Lscala/runtime/BoxedUnit;
          L10
-         FRAME FULL [org/nlogo/prim/_asm_proceduredoplot_setprocedurevariable_19 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredoplot_equal_20 org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator org/nlogo/agent/Agent java/lang/Object java/lang/Boolean] [D scala/runtime/BoxedUnit]
+         FRAME FULL [org/nlogo/prim/_asm_proceduredoplot_setprocedurevariable_19 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator org/nlogo/agent/Agent java/lang/Object java/lang/Boolean] [D scala/runtime/BoxedUnit]
           ASTORE 10
           GOTO L6
          L8
-         FRAME FULL [org/nlogo/prim/_asm_proceduredoplot_setprocedurevariable_19 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredoplot_equal_20 org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator org/nlogo/agent/Agent java/lang/Object] [D]
+         FRAME FULL [org/nlogo/prim/_asm_proceduredoplot_setprocedurevariable_19 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator org/nlogo/agent/Agent java/lang/Object] [D]
           NEW org/nlogo/nvm/EngineException
           DUP
           ALOAD 1
@@ -6089,7 +6089,7 @@ procedure DO-PLOT:[TOTAL]{OTPL}:
           INVOKESPECIAL org/nlogo/nvm/EngineException.<init> (Lorg/nlogo/nvm/Context;Lorg/nlogo/nvm/Instruction;Ljava/lang/String;)V
           ATHROW
          L7
-         FRAME FULL [org/nlogo/prim/_asm_proceduredoplot_setprocedurevariable_19 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredoplot_equal_20 org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator] [D]
+         FRAME FULL [org/nlogo/prim/_asm_proceduredoplot_setprocedurevariable_19 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator] [D]
           ILOAD 5
           I2D
          L11
@@ -6307,7 +6307,7 @@ procedure DO-PLOT:[TOTAL]{OTPL}:
           INVOKEVIRTUAL org/nlogo/agent/World.links ()Lorg/nlogo/agent/AgentSet;
          L5
           ALOAD 0
-          GETFIELD org/nlogo/prim/_asm_proceduredoplot_setprocedurevariable_26.keptinstr6 : Lorg/nlogo/prim/_asm_proceduredoplot_equal_27;
+          GETFIELD org/nlogo/prim/_asm_proceduredoplot_setprocedurevariable_26.keptinstr6 : Lorg/nlogo/nvm/Reporter;
           ASTORE 3
           ASTORE 2
           ALOAD 3
@@ -6326,7 +6326,7 @@ procedure DO-PLOT:[TOTAL]{OTPL}:
           INVOKEVIRTUAL org/nlogo/agent/AgentSet.iterator ()Lorg/nlogo/agent/AgentIterator;
           ASTORE 6
          L6
-         FRAME FULL [org/nlogo/prim/_asm_proceduredoplot_setprocedurevariable_26 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredoplot_equal_27 org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator] [D]
+         FRAME FULL [org/nlogo/prim/_asm_proceduredoplot_setprocedurevariable_26 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator] [D]
           ALOAD 6
           INVOKEINTERFACE org/nlogo/agent/AgentIterator.hasNext ()Z
           IFEQ L7
@@ -6354,14 +6354,14 @@ procedure DO-PLOT:[TOTAL]{OTPL}:
           GETSTATIC scala/runtime/BoxedUnit.UNIT : Lscala/runtime/BoxedUnit;
           GOTO L10
          L9
-         FRAME FULL [org/nlogo/prim/_asm_proceduredoplot_setprocedurevariable_26 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredoplot_equal_27 org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator org/nlogo/agent/Agent java/lang/Object java/lang/Boolean] [D]
+         FRAME FULL [org/nlogo/prim/_asm_proceduredoplot_setprocedurevariable_26 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator org/nlogo/agent/Agent java/lang/Object java/lang/Boolean] [D]
           GETSTATIC scala/runtime/BoxedUnit.UNIT : Lscala/runtime/BoxedUnit;
          L10
-         FRAME FULL [org/nlogo/prim/_asm_proceduredoplot_setprocedurevariable_26 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredoplot_equal_27 org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator org/nlogo/agent/Agent java/lang/Object java/lang/Boolean] [D scala/runtime/BoxedUnit]
+         FRAME FULL [org/nlogo/prim/_asm_proceduredoplot_setprocedurevariable_26 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator org/nlogo/agent/Agent java/lang/Object java/lang/Boolean] [D scala/runtime/BoxedUnit]
           ASTORE 10
           GOTO L6
          L8
-         FRAME FULL [org/nlogo/prim/_asm_proceduredoplot_setprocedurevariable_26 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredoplot_equal_27 org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator org/nlogo/agent/Agent java/lang/Object] [D]
+         FRAME FULL [org/nlogo/prim/_asm_proceduredoplot_setprocedurevariable_26 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator org/nlogo/agent/Agent java/lang/Object] [D]
           NEW org/nlogo/nvm/EngineException
           DUP
           ALOAD 1
@@ -6393,7 +6393,7 @@ procedure DO-PLOT:[TOTAL]{OTPL}:
           INVOKESPECIAL org/nlogo/nvm/EngineException.<init> (Lorg/nlogo/nvm/Context;Lorg/nlogo/nvm/Instruction;Ljava/lang/String;)V
           ATHROW
          L7
-         FRAME FULL [org/nlogo/prim/_asm_proceduredoplot_setprocedurevariable_26 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredoplot_equal_27 org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator] [D]
+         FRAME FULL [org/nlogo/prim/_asm_proceduredoplot_setprocedurevariable_26 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator] [D]
           ILOAD 5
           I2D
          L11
@@ -6970,7 +6970,7 @@ procedure FIND-ALL-COMPONENTS:[START]{OTPL}:
           INVOKEVIRTUAL org/nlogo/agent/World.turtles ()Lorg/nlogo/agent/AgentSet;
          L1
           ALOAD 0
-          GETFIELD org/nlogo/prim/_asm_procedurefindallcomponents_setprocedurevariable_5.keptinstr4 : Lorg/nlogo/prim/_asm_procedurefindallcomponents_not_6;
+          GETFIELD org/nlogo/prim/_asm_procedurefindallcomponents_setprocedurevariable_5.keptinstr4 : Lorg/nlogo/nvm/Reporter;
           ASTORE 3
           ASTORE 2
           NEW org/nlogo/nvm/Context
@@ -6990,7 +6990,7 @@ procedure FIND-ALL-COMPONENTS:[START]{OTPL}:
           INVOKEVIRTUAL org/nlogo/agent/AgentSet.shufflerator (Lorg/nlogo/api/MersenneTwisterFast;)Lorg/nlogo/agent/AgentIterator;
           ASTORE 5
          L2
-         FRAME FULL [org/nlogo/prim/_asm_procedurefindallcomponents_setprocedurevariable_5 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_procedurefindallcomponents_not_6 org/nlogo/nvm/Context org/nlogo/agent/AgentIterator] []
+         FRAME FULL [org/nlogo/prim/_asm_procedurefindallcomponents_setprocedurevariable_5 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context org/nlogo/agent/AgentIterator] []
           ALOAD 5
           INVOKEINTERFACE org/nlogo/agent/AgentIterator.hasNext ()Z
           IFEQ L3

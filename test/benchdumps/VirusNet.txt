@@ -1241,7 +1241,7 @@ procedure SETUP-SPATIALLY-CLUSTERED-NETWORK:[NUM-LINKS _repeatlocal:1]{OTPL}:
               INVOKEVIRTUAL org/nlogo/agent/World.turtles ()Lorg/nlogo/agent/AgentSet;
              L1
               ALOAD 0
-              GETFIELD org/nlogo/prim/_asm_proceduresetupspatiallyclusterednetwork_otherwith_4.keptinstr3 : Lorg/nlogo/prim/_asm_proceduresetupspatiallyclusterednetwork_not_5;
+              GETFIELD org/nlogo/prim/_asm_proceduresetupspatiallyclusterednetwork_otherwith_4.keptinstr3 : Lorg/nlogo/nvm/Reporter;
               ASTORE 3
               ASTORE 2
               NEW org/nlogo/nvm/Context
@@ -1263,7 +1263,7 @@ procedure SETUP-SPATIALLY-CLUSTERED-NETWORK:[NUM-LINKS _repeatlocal:1]{OTPL}:
               INVOKEVIRTUAL org/nlogo/agent/AgentSet.iterator ()Lorg/nlogo/agent/AgentIterator;
               ASTORE 6
              L2
-             FRAME FULL [org/nlogo/prim/_asm_proceduresetupspatiallyclusterednetwork_otherwith_4 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduresetupspatiallyclusterednetwork_not_5 org/nlogo/nvm/Context scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
+             FRAME FULL [org/nlogo/prim/_asm_proceduresetupspatiallyclusterednetwork_otherwith_4 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
               ALOAD 6
               INVOKEINTERFACE org/nlogo/agent/AgentIterator.hasNext ()Z
               IFEQ L3
@@ -1840,7 +1840,7 @@ procedure GO:[]{O---}:
           INVOKEVIRTUAL org/nlogo/agent/World.turtles ()Lorg/nlogo/agent/AgentSet;
          L1
           ALOAD 0
-          GETFIELD org/nlogo/prim/_asm_procedurego_if_0.keptinstr4 : Lorg/nlogo/prim/_asm_procedurego_not_1;
+          GETFIELD org/nlogo/prim/_asm_procedurego_if_0.keptinstr4 : Lorg/nlogo/nvm/Reporter;
           ASTORE 3
           ASTORE 2
           NEW org/nlogo/nvm/Context
@@ -1857,7 +1857,7 @@ procedure GO:[]{O---}:
           INVOKEVIRTUAL org/nlogo/agent/AgentSet.iterator ()Lorg/nlogo/agent/AgentIterator;
           ASTORE 5
          L2
-         FRAME FULL [org/nlogo/prim/_asm_procedurego_if_0 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_procedurego_not_1 org/nlogo/nvm/Context org/nlogo/agent/AgentIterator] []
+         FRAME FULL [org/nlogo/prim/_asm_procedurego_if_0 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context org/nlogo/agent/AgentIterator] []
           ALOAD 5
           INVOKEINTERFACE org/nlogo/agent/AgentIterator.hasNext ()Z
           IFEQ L3
@@ -1922,10 +1922,10 @@ procedure GO:[]{O---}:
           ICONST_1
           GOTO L8
          L7
-         FRAME FULL [org/nlogo/prim/_asm_procedurego_if_0 org/nlogo/nvm/Context I org/nlogo/prim/_asm_procedurego_not_1 org/nlogo/nvm/Context org/nlogo/agent/AgentIterator] [org/nlogo/nvm/Context]
+         FRAME FULL [org/nlogo/prim/_asm_procedurego_if_0 org/nlogo/nvm/Context I org/nlogo/nvm/Reporter org/nlogo/nvm/Context org/nlogo/agent/AgentIterator] [org/nlogo/nvm/Context]
           ICONST_2
          L8
-         FRAME FULL [org/nlogo/prim/_asm_procedurego_if_0 org/nlogo/nvm/Context I org/nlogo/prim/_asm_procedurego_not_1 org/nlogo/nvm/Context org/nlogo/agent/AgentIterator] [org/nlogo/nvm/Context I]
+         FRAME FULL [org/nlogo/prim/_asm_procedurego_if_0 org/nlogo/nvm/Context I org/nlogo/nvm/Reporter org/nlogo/nvm/Context org/nlogo/agent/AgentIterator] [org/nlogo/nvm/Context I]
           PUTFIELD org/nlogo/nvm/Context.ip : I
          L9
           RETURN
@@ -2901,7 +2901,7 @@ procedure SPREAD-VIRUS:[]{OTPL}:
           INVOKEVIRTUAL org/nlogo/agent/World.turtles ()Lorg/nlogo/agent/AgentSet;
          L1
           ALOAD 0
-          GETFIELD org/nlogo/prim/_asm_procedurespreadvirus_ask_0.keptinstr4 : Lorg/nlogo/prim/_asm_procedurespreadvirus_turtlevariable_1;
+          GETFIELD org/nlogo/prim/_asm_procedurespreadvirus_ask_0.keptinstr4 : Lorg/nlogo/nvm/Reporter;
           ASTORE 3
           ASTORE 2
           NEW org/nlogo/nvm/Context
@@ -2923,7 +2923,7 @@ procedure SPREAD-VIRUS:[]{OTPL}:
           INVOKEVIRTUAL org/nlogo/agent/AgentSet.iterator ()Lorg/nlogo/agent/AgentIterator;
           ASTORE 6
          L2
-         FRAME FULL [org/nlogo/prim/_asm_procedurespreadvirus_ask_0 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_procedurespreadvirus_turtlevariable_1 org/nlogo/nvm/Context scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
+         FRAME FULL [org/nlogo/prim/_asm_procedurespreadvirus_ask_0 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
           ALOAD 6
           INVOKEINTERFACE org/nlogo/agent/AgentIterator.hasNext ()Z
           IFEQ L3
@@ -3165,7 +3165,7 @@ procedure SPREAD-VIRUS:[]{OTPL}:
           INVOKEVIRTUAL org/nlogo/agent/AgentSet$.fromIterator (Lorg/nlogo/core/AgentKind;Lscala/collection/Iterator;)Lorg/nlogo/agent/AgentSet;
          L4
           ALOAD 0
-          GETFIELD org/nlogo/prim/_asm_procedurespreadvirus_ask_2.keptinstr4 : Lorg/nlogo/prim/_asm_procedurespreadvirus_not_3;
+          GETFIELD org/nlogo/prim/_asm_procedurespreadvirus_ask_2.keptinstr4 : Lorg/nlogo/nvm/Reporter;
           ASTORE 3
           ASTORE 2
           NEW org/nlogo/nvm/Context
@@ -3187,7 +3187,7 @@ procedure SPREAD-VIRUS:[]{OTPL}:
           INVOKEVIRTUAL org/nlogo/agent/AgentSet.iterator ()Lorg/nlogo/agent/AgentIterator;
           ASTORE 6
          L5
-         FRAME FULL [org/nlogo/prim/_asm_procedurespreadvirus_ask_2 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_procedurespreadvirus_not_3 org/nlogo/nvm/Context scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
+         FRAME FULL [org/nlogo/prim/_asm_procedurespreadvirus_ask_2 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
           ALOAD 6
           INVOKEINTERFACE org/nlogo/agent/AgentIterator.hasNext ()Z
           IFEQ L6
@@ -3576,7 +3576,7 @@ procedure DO-VIRUS-CHECKS:[]{OTPL}:
           INVOKEVIRTUAL org/nlogo/agent/World.turtles ()Lorg/nlogo/agent/AgentSet;
          L1
           ALOAD 0
-          GETFIELD org/nlogo/prim/_asm_proceduredoviruschecks_ask_0.keptinstr4 : Lorg/nlogo/prim/_asm_proceduredoviruschecks_and_1;
+          GETFIELD org/nlogo/prim/_asm_proceduredoviruschecks_ask_0.keptinstr4 : Lorg/nlogo/nvm/Reporter;
           ASTORE 3
           ASTORE 2
           NEW org/nlogo/nvm/Context
@@ -3598,7 +3598,7 @@ procedure DO-VIRUS-CHECKS:[]{OTPL}:
           INVOKEVIRTUAL org/nlogo/agent/AgentSet.iterator ()Lorg/nlogo/agent/AgentIterator;
           ASTORE 6
          L2
-         FRAME FULL [org/nlogo/prim/_asm_proceduredoviruschecks_ask_0 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredoviruschecks_and_1 org/nlogo/nvm/Context scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
+         FRAME FULL [org/nlogo/prim/_asm_proceduredoviruschecks_ask_0 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
           ALOAD 6
           INVOKEINTERFACE org/nlogo/agent/AgentIterator.hasNext ()Z
           IFEQ L3
@@ -4113,7 +4113,7 @@ procedure UPDATE-PLOT:[]{OTPL}:
             INVOKEVIRTUAL org/nlogo/agent/World.turtles ()Lorg/nlogo/agent/AgentSet;
            L1
             ALOAD 0
-            GETFIELD org/nlogo/prim/_asm_procedureupdateplot_mult_2.keptinstr5 : Lorg/nlogo/prim/_asm_procedureupdateplot_and_3;
+            GETFIELD org/nlogo/prim/_asm_procedureupdateplot_mult_2.keptinstr5 : Lorg/nlogo/nvm/Reporter;
             ASTORE 3
             ASTORE 2
             ALOAD 3
@@ -4132,7 +4132,7 @@ procedure UPDATE-PLOT:[]{OTPL}:
             INVOKEVIRTUAL org/nlogo/agent/AgentSet.iterator ()Lorg/nlogo/agent/AgentIterator;
             ASTORE 6
            L2
-           FRAME FULL [org/nlogo/prim/_asm_procedureupdateplot_mult_2 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_procedureupdateplot_and_3 org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator] []
+           FRAME FULL [org/nlogo/prim/_asm_procedureupdateplot_mult_2 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator] []
             ALOAD 6
             INVOKEINTERFACE org/nlogo/agent/AgentIterator.hasNext ()Z
             IFEQ L3
@@ -4290,7 +4290,7 @@ procedure UPDATE-PLOT:[]{OTPL}:
             INVOKEVIRTUAL org/nlogo/agent/World.turtles ()Lorg/nlogo/agent/AgentSet;
            L1
             ALOAD 0
-            GETFIELD org/nlogo/prim/_asm_procedureupdateplot_mult_5.keptinstr5 : Lorg/nlogo/prim/_asm_procedureupdateplot_turtlevariable_6;
+            GETFIELD org/nlogo/prim/_asm_procedureupdateplot_mult_5.keptinstr5 : Lorg/nlogo/nvm/Reporter;
             ASTORE 3
             ASTORE 2
             ALOAD 3
@@ -4309,7 +4309,7 @@ procedure UPDATE-PLOT:[]{OTPL}:
             INVOKEVIRTUAL org/nlogo/agent/AgentSet.iterator ()Lorg/nlogo/agent/AgentIterator;
             ASTORE 6
            L2
-           FRAME FULL [org/nlogo/prim/_asm_procedureupdateplot_mult_5 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_procedureupdateplot_turtlevariable_6 org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator] []
+           FRAME FULL [org/nlogo/prim/_asm_procedureupdateplot_mult_5 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator] []
             ALOAD 6
             INVOKEINTERFACE org/nlogo/agent/AgentIterator.hasNext ()Z
             IFEQ L3
@@ -4467,7 +4467,7 @@ procedure UPDATE-PLOT:[]{OTPL}:
             INVOKEVIRTUAL org/nlogo/agent/World.turtles ()Lorg/nlogo/agent/AgentSet;
            L1
             ALOAD 0
-            GETFIELD org/nlogo/prim/_asm_procedureupdateplot_mult_8.keptinstr5 : Lorg/nlogo/prim/_asm_procedureupdateplot_turtlevariable_9;
+            GETFIELD org/nlogo/prim/_asm_procedureupdateplot_mult_8.keptinstr5 : Lorg/nlogo/nvm/Reporter;
             ASTORE 3
             ASTORE 2
             ALOAD 3
@@ -4486,7 +4486,7 @@ procedure UPDATE-PLOT:[]{OTPL}:
             INVOKEVIRTUAL org/nlogo/agent/AgentSet.iterator ()Lorg/nlogo/agent/AgentIterator;
             ASTORE 6
            L2
-           FRAME FULL [org/nlogo/prim/_asm_procedureupdateplot_mult_8 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_procedureupdateplot_turtlevariable_9 org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator] []
+           FRAME FULL [org/nlogo/prim/_asm_procedureupdateplot_mult_8 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator] []
             ALOAD 6
             INVOKEINTERFACE org/nlogo/agent/AgentIterator.hasNext ()Z
             IFEQ L3

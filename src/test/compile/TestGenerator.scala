@@ -124,4 +124,16 @@ class TestGenerator extends FunSuite {
       ).mkString("\n"))(disassembleReporter("xcor = 0"))
     }
 
+  if(Version.useGenerator)
+    test("Correctly generates custom code for or") {
+      Compiler.compileProgram(
+        """
+          |breed [agents agent]
+          |
+          |to-report move
+          |  report all? agents-here [true] or all? agents-here [false]
+          |end
+        """.stripMargin, Program.empty(), new DummyExtensionManager
+      )
+    }
 }

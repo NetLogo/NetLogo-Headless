@@ -678,7 +678,7 @@ procedure SETUP-PATCHES:[_repeatlocal:0 _repeatlocal:1]{O---}:
           INVOKEVIRTUAL org/nlogo/agent/World.patches ()Lorg/nlogo/agent/AgentSet;
          L1
           ALOAD 0
-          GETFIELD org/nlogo/prim/_asm_proceduresetuppatches_ask_7.keptinstr4 : Lorg/nlogo/prim/_asm_proceduresetuppatches_notequal_8;
+          GETFIELD org/nlogo/prim/_asm_proceduresetuppatches_ask_7.keptinstr4 : Lorg/nlogo/nvm/Reporter;
           ASTORE 3
           ASTORE 2
           NEW org/nlogo/nvm/Context
@@ -700,7 +700,7 @@ procedure SETUP-PATCHES:[_repeatlocal:0 _repeatlocal:1]{O---}:
           INVOKEVIRTUAL org/nlogo/agent/AgentSet.iterator ()Lorg/nlogo/agent/AgentIterator;
           ASTORE 6
          L2
-         FRAME FULL [org/nlogo/prim/_asm_proceduresetuppatches_ask_7 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduresetuppatches_notequal_8 org/nlogo/nvm/Context scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
+         FRAME FULL [org/nlogo/prim/_asm_proceduresetuppatches_ask_7 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
           ALOAD 6
           INVOKEINTERFACE org/nlogo/agent/AgentIterator.hasNext ()Z
           IFEQ L3
@@ -6414,7 +6414,7 @@ procedure UPDATE-CLASS-PLOT:[]{OTPL}:
             INVOKEVIRTUAL org/nlogo/agent/World.turtles ()Lorg/nlogo/agent/AgentSet;
            L1
             ALOAD 0
-            GETFIELD org/nlogo/prim/_asm_procedureupdateclassplot_countwith_2.keptinstr3 : Lorg/nlogo/prim/_asm_procedureupdateclassplot_equal_3;
+            GETFIELD org/nlogo/prim/_asm_procedureupdateclassplot_countwith_2.keptinstr3 : Lorg/nlogo/nvm/Reporter;
             ASTORE 3
             ASTORE 2
             ALOAD 3
@@ -6433,7 +6433,7 @@ procedure UPDATE-CLASS-PLOT:[]{OTPL}:
             INVOKEVIRTUAL org/nlogo/agent/AgentSet.iterator ()Lorg/nlogo/agent/AgentIterator;
             ASTORE 6
            L2
-           FRAME FULL [org/nlogo/prim/_asm_procedureupdateclassplot_countwith_2 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_procedureupdateclassplot_equal_3 org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator] []
+           FRAME FULL [org/nlogo/prim/_asm_procedureupdateclassplot_countwith_2 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator] []
             ALOAD 6
             INVOKEINTERFACE org/nlogo/agent/AgentIterator.hasNext ()Z
             IFEQ L3
@@ -6592,7 +6592,7 @@ procedure UPDATE-CLASS-PLOT:[]{OTPL}:
             INVOKEVIRTUAL org/nlogo/agent/World.turtles ()Lorg/nlogo/agent/AgentSet;
            L1
             ALOAD 0
-            GETFIELD org/nlogo/prim/_asm_procedureupdateclassplot_countwith_5.keptinstr3 : Lorg/nlogo/prim/_asm_procedureupdateclassplot_equal_6;
+            GETFIELD org/nlogo/prim/_asm_procedureupdateclassplot_countwith_5.keptinstr3 : Lorg/nlogo/nvm/Reporter;
             ASTORE 3
             ASTORE 2
             ALOAD 3
@@ -6611,7 +6611,7 @@ procedure UPDATE-CLASS-PLOT:[]{OTPL}:
             INVOKEVIRTUAL org/nlogo/agent/AgentSet.iterator ()Lorg/nlogo/agent/AgentIterator;
             ASTORE 6
            L2
-           FRAME FULL [org/nlogo/prim/_asm_procedureupdateclassplot_countwith_5 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_procedureupdateclassplot_equal_6 org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator] []
+           FRAME FULL [org/nlogo/prim/_asm_procedureupdateclassplot_countwith_5 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator] []
             ALOAD 6
             INVOKEINTERFACE org/nlogo/agent/AgentIterator.hasNext ()Z
             IFEQ L3
@@ -6770,7 +6770,7 @@ procedure UPDATE-CLASS-PLOT:[]{OTPL}:
             INVOKEVIRTUAL org/nlogo/agent/World.turtles ()Lorg/nlogo/agent/AgentSet;
            L1
             ALOAD 0
-            GETFIELD org/nlogo/prim/_asm_procedureupdateclassplot_countwith_8.keptinstr3 : Lorg/nlogo/prim/_asm_procedureupdateclassplot_equal_9;
+            GETFIELD org/nlogo/prim/_asm_procedureupdateclassplot_countwith_8.keptinstr3 : Lorg/nlogo/nvm/Reporter;
             ASTORE 3
             ASTORE 2
             ALOAD 3
@@ -6789,7 +6789,7 @@ procedure UPDATE-CLASS-PLOT:[]{OTPL}:
             INVOKEVIRTUAL org/nlogo/agent/AgentSet.iterator ()Lorg/nlogo/agent/AgentIterator;
             ASTORE 6
            L2
-           FRAME FULL [org/nlogo/prim/_asm_procedureupdateclassplot_countwith_8 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_procedureupdateclassplot_equal_9 org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator] []
+           FRAME FULL [org/nlogo/prim/_asm_procedureupdateclassplot_countwith_8 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator] []
             ALOAD 6
             INVOKEINTERFACE org/nlogo/agent/AgentIterator.hasNext ()Z
             IFEQ L3
@@ -6967,7 +6967,7 @@ procedure UPDATE-CLASS-HISTOGRAM:[]{OTPL}:
             INVOKEVIRTUAL org/nlogo/agent/World.turtles ()Lorg/nlogo/agent/AgentSet;
            L1
             ALOAD 0
-            GETFIELD org/nlogo/prim/_asm_procedureupdateclasshistogram_countwith_2.keptinstr3 : Lorg/nlogo/prim/_asm_procedureupdateclasshistogram_equal_3;
+            GETFIELD org/nlogo/prim/_asm_procedureupdateclasshistogram_countwith_2.keptinstr3 : Lorg/nlogo/nvm/Reporter;
             ASTORE 3
             ASTORE 2
             ALOAD 3
@@ -6986,7 +6986,7 @@ procedure UPDATE-CLASS-HISTOGRAM:[]{OTPL}:
             INVOKEVIRTUAL org/nlogo/agent/AgentSet.iterator ()Lorg/nlogo/agent/AgentIterator;
             ASTORE 6
            L2
-           FRAME FULL [org/nlogo/prim/_asm_procedureupdateclasshistogram_countwith_2 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_procedureupdateclasshistogram_equal_3 org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator] []
+           FRAME FULL [org/nlogo/prim/_asm_procedureupdateclasshistogram_countwith_2 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator] []
             ALOAD 6
             INVOKEINTERFACE org/nlogo/agent/AgentIterator.hasNext ()Z
             IFEQ L3
@@ -7146,7 +7146,7 @@ procedure UPDATE-CLASS-HISTOGRAM:[]{OTPL}:
             INVOKEVIRTUAL org/nlogo/agent/World.turtles ()Lorg/nlogo/agent/AgentSet;
            L1
             ALOAD 0
-            GETFIELD org/nlogo/prim/_asm_procedureupdateclasshistogram_countwith_5.keptinstr3 : Lorg/nlogo/prim/_asm_procedureupdateclasshistogram_equal_6;
+            GETFIELD org/nlogo/prim/_asm_procedureupdateclasshistogram_countwith_5.keptinstr3 : Lorg/nlogo/nvm/Reporter;
             ASTORE 3
             ASTORE 2
             ALOAD 3
@@ -7165,7 +7165,7 @@ procedure UPDATE-CLASS-HISTOGRAM:[]{OTPL}:
             INVOKEVIRTUAL org/nlogo/agent/AgentSet.iterator ()Lorg/nlogo/agent/AgentIterator;
             ASTORE 6
            L2
-           FRAME FULL [org/nlogo/prim/_asm_procedureupdateclasshistogram_countwith_5 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_procedureupdateclasshistogram_equal_6 org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator] []
+           FRAME FULL [org/nlogo/prim/_asm_procedureupdateclasshistogram_countwith_5 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator] []
             ALOAD 6
             INVOKEINTERFACE org/nlogo/agent/AgentIterator.hasNext ()Z
             IFEQ L3
@@ -7325,7 +7325,7 @@ procedure UPDATE-CLASS-HISTOGRAM:[]{OTPL}:
             INVOKEVIRTUAL org/nlogo/agent/World.turtles ()Lorg/nlogo/agent/AgentSet;
            L1
             ALOAD 0
-            GETFIELD org/nlogo/prim/_asm_procedureupdateclasshistogram_countwith_8.keptinstr3 : Lorg/nlogo/prim/_asm_procedureupdateclasshistogram_equal_9;
+            GETFIELD org/nlogo/prim/_asm_procedureupdateclasshistogram_countwith_8.keptinstr3 : Lorg/nlogo/nvm/Reporter;
             ASTORE 3
             ASTORE 2
             ALOAD 3
@@ -7344,7 +7344,7 @@ procedure UPDATE-CLASS-HISTOGRAM:[]{OTPL}:
             INVOKEVIRTUAL org/nlogo/agent/AgentSet.iterator ()Lorg/nlogo/agent/AgentIterator;
             ASTORE 6
            L2
-           FRAME FULL [org/nlogo/prim/_asm_procedureupdateclasshistogram_countwith_8 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_procedureupdateclasshistogram_equal_9 org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator] []
+           FRAME FULL [org/nlogo/prim/_asm_procedureupdateclasshistogram_countwith_8 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator] []
             ALOAD 6
             INVOKEINTERFACE org/nlogo/agent/AgentIterator.hasNext ()Z
             IFEQ L3

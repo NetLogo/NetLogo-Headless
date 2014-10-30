@@ -1203,7 +1203,7 @@ procedure UPDATE-VARIABLES:[]{OTPL}:
           INVOKEVIRTUAL org/nlogo/agent/World.turtles ()Lorg/nlogo/agent/AgentSet;
          L4
           ALOAD 0
-          GETFIELD org/nlogo/prim/_asm_procedureupdatevariables_setobservervariable_4.keptinstr4 : Lorg/nlogo/prim/_asm_procedureupdatevariables_equal_5;
+          GETFIELD org/nlogo/prim/_asm_procedureupdatevariables_setobservervariable_4.keptinstr4 : Lorg/nlogo/nvm/Reporter;
           ASTORE 3
           ASTORE 2
           ALOAD 3
@@ -1222,7 +1222,7 @@ procedure UPDATE-VARIABLES:[]{OTPL}:
           INVOKEVIRTUAL org/nlogo/agent/AgentSet.iterator ()Lorg/nlogo/agent/AgentIterator;
           ASTORE 6
          L5
-         FRAME FULL [org/nlogo/prim/_asm_procedureupdatevariables_setobservervariable_4 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_procedureupdatevariables_equal_5 org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator] []
+         FRAME FULL [org/nlogo/prim/_asm_procedureupdatevariables_setobservervariable_4 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator] []
           ALOAD 6
           INVOKEINTERFACE org/nlogo/agent/AgentIterator.hasNext ()Z
           IFEQ L6
@@ -1402,7 +1402,7 @@ procedure UPDATE-VARIABLES:[]{OTPL}:
           INVOKEVIRTUAL org/nlogo/agent/World.turtles ()Lorg/nlogo/agent/AgentSet;
          L4
           ALOAD 0
-          GETFIELD org/nlogo/prim/_asm_procedureupdatevariables_setobservervariable_6.keptinstr4 : Lorg/nlogo/prim/_asm_procedureupdatevariables_equal_7;
+          GETFIELD org/nlogo/prim/_asm_procedureupdatevariables_setobservervariable_6.keptinstr4 : Lorg/nlogo/nvm/Reporter;
           ASTORE 3
           ASTORE 2
           ALOAD 3
@@ -1421,7 +1421,7 @@ procedure UPDATE-VARIABLES:[]{OTPL}:
           INVOKEVIRTUAL org/nlogo/agent/AgentSet.iterator ()Lorg/nlogo/agent/AgentIterator;
           ASTORE 6
          L5
-         FRAME FULL [org/nlogo/prim/_asm_procedureupdatevariables_setobservervariable_6 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_procedureupdatevariables_equal_7 org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator] []
+         FRAME FULL [org/nlogo/prim/_asm_procedureupdatevariables_setobservervariable_6 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator] []
           ALOAD 6
           INVOKEINTERFACE org/nlogo/agent/AgentIterator.hasNext ()Z
           IFEQ L6
@@ -1601,7 +1601,7 @@ procedure UPDATE-VARIABLES:[]{OTPL}:
           INVOKEVIRTUAL org/nlogo/agent/World.turtles ()Lorg/nlogo/agent/AgentSet;
          L4
           ALOAD 0
-          GETFIELD org/nlogo/prim/_asm_procedureupdatevariables_setobservervariable_8.keptinstr4 : Lorg/nlogo/prim/_asm_procedureupdatevariables_equal_9;
+          GETFIELD org/nlogo/prim/_asm_procedureupdatevariables_setobservervariable_8.keptinstr4 : Lorg/nlogo/nvm/Reporter;
           ASTORE 3
           ASTORE 2
           ALOAD 3
@@ -1620,7 +1620,7 @@ procedure UPDATE-VARIABLES:[]{OTPL}:
           INVOKEVIRTUAL org/nlogo/agent/AgentSet.iterator ()Lorg/nlogo/agent/AgentIterator;
           ASTORE 6
          L5
-         FRAME FULL [org/nlogo/prim/_asm_procedureupdatevariables_setobservervariable_8 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_procedureupdatevariables_equal_9 org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator] []
+         FRAME FULL [org/nlogo/prim/_asm_procedureupdatevariables_setobservervariable_8 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context I org/nlogo/agent/AgentIterator] []
           ALOAD 6
           INVOKEINTERFACE org/nlogo/agent/AgentIterator.hasNext ()Z
           IFEQ L6
@@ -13625,7 +13625,7 @@ procedure DO-HISTOGRAMS:[]{OTPL}:
             INVOKEVIRTUAL org/nlogo/agent/World.turtles ()Lorg/nlogo/agent/AgentSet;
            L5
             ALOAD 0
-            GETFIELD org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_2.keptinstr4 : Lorg/nlogo/prim/_asm_proceduredohistograms_equal_3;
+            GETFIELD org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_2.keptinstr4 : Lorg/nlogo/nvm/Reporter;
             ASTORE 3
             ASTORE 2
             NEW org/nlogo/nvm/Context
@@ -13647,7 +13647,7 @@ procedure DO-HISTOGRAMS:[]{OTPL}:
             INVOKEVIRTUAL org/nlogo/agent/AgentSet.iterator ()Lorg/nlogo/agent/AgentIterator;
             ASTORE 6
            L6
-           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_2 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredohistograms_equal_3 org/nlogo/nvm/Context scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
+           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_2 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
             ALOAD 6
             INVOKEINTERFACE org/nlogo/agent/AgentIterator.hasNext ()Z
             IFEQ L7
@@ -13761,14 +13761,14 @@ procedure DO-HISTOGRAMS:[]{OTPL}:
             INVOKESPECIAL org/nlogo/nvm/EngineException.<init> (Lorg/nlogo/nvm/Context;Lorg/nlogo/nvm/Instruction;Ljava/lang/String;)V
             ATHROW
            L13
-           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_2 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredohistograms_equal_3 org/nlogo/agent/AgentSet org/nlogo/agent/Agent org/nlogo/agent/AgentIterator] []
+           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_2 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/agent/AgentSet org/nlogo/agent/Agent org/nlogo/agent/AgentIterator] []
             ALOAD 5
             BIPUSH 13
             INVOKEVIRTUAL org/nlogo/agent/Agent.getTurtleVariable (I)Ljava/lang/Object;
             ASTORE 6
             GOTO L14
            L12
-           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_2 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredohistograms_equal_3 org/nlogo/agent/AgentSet scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
+           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_2 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/agent/AgentSet scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
             ALOAD 4
             INSTANCEOF org/nlogo/agent/AgentSet
             IFEQ L0
@@ -13803,12 +13803,12 @@ procedure DO-HISTOGRAMS:[]{OTPL}:
             INVOKEVIRTUAL org/nlogo/api/LogoListBuilder.toLogoList ()Lorg/nlogo/api/LogoList;
             ASTORE 6
            L14
-           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_2 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredohistograms_equal_3 org/nlogo/agent/AgentSet java/lang/Object java/lang/Object] []
+           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_2 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/agent/AgentSet java/lang/Object java/lang/Object] []
             ALOAD 6
            L3
             GOTO L17
            L0
-           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_2 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredohistograms_equal_3 org/nlogo/agent/AgentSet scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
+           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_2 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/agent/AgentSet scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
             NEW org/nlogo/nvm/ArgumentTypeException
             DUP
             ALOAD 1
@@ -13823,7 +13823,7 @@ procedure DO-HISTOGRAMS:[]{OTPL}:
             INVOKESPECIAL org/nlogo/nvm/ArgumentTypeException.<init> (Lorg/nlogo/nvm/Context;Lorg/nlogo/nvm/Instruction;IILjava/lang/Object;)V
             ATHROW
            L1
-           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_2 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredohistograms_equal_3 java/lang/Object java/lang/Object java/lang/Object] [org/nlogo/api/AgentException]
+           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_2 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter java/lang/Object java/lang/Object java/lang/Object] [org/nlogo/api/AgentException]
             ASTORE 3
             NEW org/nlogo/nvm/EngineException
             DUP
@@ -13834,7 +13834,7 @@ procedure DO-HISTOGRAMS:[]{OTPL}:
             INVOKESPECIAL org/nlogo/nvm/EngineException.<init> (Lorg/nlogo/nvm/Context;Lorg/nlogo/nvm/Instruction;Ljava/lang/String;)V
             ATHROW
            L17
-           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_2 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredohistograms_equal_3 org/nlogo/agent/AgentSet java/lang/Object java/lang/Object] [java/lang/Object]
+           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_2 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/agent/AgentSet java/lang/Object java/lang/Object] [java/lang/Object]
             ARETURN
 [3]_setcurrentplotpen
       _asm_proceduredohistograms_conststring_4 ""slow"" => String
@@ -13921,7 +13921,7 @@ procedure DO-HISTOGRAMS:[]{OTPL}:
             INVOKEVIRTUAL org/nlogo/agent/World.turtles ()Lorg/nlogo/agent/AgentSet;
            L5
             ALOAD 0
-            GETFIELD org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_5.keptinstr4 : Lorg/nlogo/prim/_asm_proceduredohistograms_equal_6;
+            GETFIELD org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_5.keptinstr4 : Lorg/nlogo/nvm/Reporter;
             ASTORE 3
             ASTORE 2
             NEW org/nlogo/nvm/Context
@@ -13943,7 +13943,7 @@ procedure DO-HISTOGRAMS:[]{OTPL}:
             INVOKEVIRTUAL org/nlogo/agent/AgentSet.iterator ()Lorg/nlogo/agent/AgentIterator;
             ASTORE 6
            L6
-           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_5 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredohistograms_equal_6 org/nlogo/nvm/Context scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
+           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_5 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
             ALOAD 6
             INVOKEINTERFACE org/nlogo/agent/AgentIterator.hasNext ()Z
             IFEQ L7
@@ -14057,14 +14057,14 @@ procedure DO-HISTOGRAMS:[]{OTPL}:
             INVOKESPECIAL org/nlogo/nvm/EngineException.<init> (Lorg/nlogo/nvm/Context;Lorg/nlogo/nvm/Instruction;Ljava/lang/String;)V
             ATHROW
            L13
-           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_5 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredohistograms_equal_6 org/nlogo/agent/AgentSet org/nlogo/agent/Agent org/nlogo/agent/AgentIterator] []
+           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_5 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/agent/AgentSet org/nlogo/agent/Agent org/nlogo/agent/AgentIterator] []
             ALOAD 5
             BIPUSH 13
             INVOKEVIRTUAL org/nlogo/agent/Agent.getTurtleVariable (I)Ljava/lang/Object;
             ASTORE 6
             GOTO L14
            L12
-           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_5 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredohistograms_equal_6 org/nlogo/agent/AgentSet scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
+           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_5 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/agent/AgentSet scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
             ALOAD 4
             INSTANCEOF org/nlogo/agent/AgentSet
             IFEQ L0
@@ -14099,12 +14099,12 @@ procedure DO-HISTOGRAMS:[]{OTPL}:
             INVOKEVIRTUAL org/nlogo/api/LogoListBuilder.toLogoList ()Lorg/nlogo/api/LogoList;
             ASTORE 6
            L14
-           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_5 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredohistograms_equal_6 org/nlogo/agent/AgentSet java/lang/Object java/lang/Object] []
+           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_5 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/agent/AgentSet java/lang/Object java/lang/Object] []
             ALOAD 6
            L3
             GOTO L17
            L0
-           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_5 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredohistograms_equal_6 org/nlogo/agent/AgentSet scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
+           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_5 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/agent/AgentSet scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
             NEW org/nlogo/nvm/ArgumentTypeException
             DUP
             ALOAD 1
@@ -14119,7 +14119,7 @@ procedure DO-HISTOGRAMS:[]{OTPL}:
             INVOKESPECIAL org/nlogo/nvm/ArgumentTypeException.<init> (Lorg/nlogo/nvm/Context;Lorg/nlogo/nvm/Instruction;IILjava/lang/Object;)V
             ATHROW
            L1
-           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_5 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredohistograms_equal_6 java/lang/Object java/lang/Object java/lang/Object] [org/nlogo/api/AgentException]
+           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_5 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter java/lang/Object java/lang/Object java/lang/Object] [org/nlogo/api/AgentException]
             ASTORE 3
             NEW org/nlogo/nvm/EngineException
             DUP
@@ -14130,7 +14130,7 @@ procedure DO-HISTOGRAMS:[]{OTPL}:
             INVOKESPECIAL org/nlogo/nvm/EngineException.<init> (Lorg/nlogo/nvm/Context;Lorg/nlogo/nvm/Instruction;Ljava/lang/String;)V
             ATHROW
            L17
-           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_5 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredohistograms_equal_6 org/nlogo/agent/AgentSet java/lang/Object java/lang/Object] [java/lang/Object]
+           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_5 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/agent/AgentSet java/lang/Object java/lang/Object] [java/lang/Object]
             ARETURN
 [5]_setcurrentplotpen
       _asm_proceduredohistograms_conststring_7 ""fast"" => String
@@ -14217,7 +14217,7 @@ procedure DO-HISTOGRAMS:[]{OTPL}:
             INVOKEVIRTUAL org/nlogo/agent/World.turtles ()Lorg/nlogo/agent/AgentSet;
            L5
             ALOAD 0
-            GETFIELD org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_8.keptinstr4 : Lorg/nlogo/prim/_asm_proceduredohistograms_equal_9;
+            GETFIELD org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_8.keptinstr4 : Lorg/nlogo/nvm/Reporter;
             ASTORE 3
             ASTORE 2
             NEW org/nlogo/nvm/Context
@@ -14239,7 +14239,7 @@ procedure DO-HISTOGRAMS:[]{OTPL}:
             INVOKEVIRTUAL org/nlogo/agent/AgentSet.iterator ()Lorg/nlogo/agent/AgentIterator;
             ASTORE 6
            L6
-           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_8 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredohistograms_equal_9 org/nlogo/nvm/Context scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
+           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_8 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
             ALOAD 6
             INVOKEINTERFACE org/nlogo/agent/AgentIterator.hasNext ()Z
             IFEQ L7
@@ -14353,14 +14353,14 @@ procedure DO-HISTOGRAMS:[]{OTPL}:
             INVOKESPECIAL org/nlogo/nvm/EngineException.<init> (Lorg/nlogo/nvm/Context;Lorg/nlogo/nvm/Instruction;Ljava/lang/String;)V
             ATHROW
            L13
-           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_8 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredohistograms_equal_9 org/nlogo/agent/AgentSet org/nlogo/agent/Agent org/nlogo/agent/AgentIterator] []
+           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_8 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/agent/AgentSet org/nlogo/agent/Agent org/nlogo/agent/AgentIterator] []
             ALOAD 5
             BIPUSH 13
             INVOKEVIRTUAL org/nlogo/agent/Agent.getTurtleVariable (I)Ljava/lang/Object;
             ASTORE 6
             GOTO L14
            L12
-           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_8 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredohistograms_equal_9 org/nlogo/agent/AgentSet scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
+           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_8 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/agent/AgentSet scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
             ALOAD 4
             INSTANCEOF org/nlogo/agent/AgentSet
             IFEQ L0
@@ -14395,12 +14395,12 @@ procedure DO-HISTOGRAMS:[]{OTPL}:
             INVOKEVIRTUAL org/nlogo/api/LogoListBuilder.toLogoList ()Lorg/nlogo/api/LogoList;
             ASTORE 6
            L14
-           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_8 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredohistograms_equal_9 org/nlogo/agent/AgentSet java/lang/Object java/lang/Object] []
+           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_8 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/agent/AgentSet java/lang/Object java/lang/Object] []
             ALOAD 6
            L3
             GOTO L17
            L0
-           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_8 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredohistograms_equal_9 org/nlogo/agent/AgentSet scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
+           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_8 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/agent/AgentSet scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
             NEW org/nlogo/nvm/ArgumentTypeException
             DUP
             ALOAD 1
@@ -14415,7 +14415,7 @@ procedure DO-HISTOGRAMS:[]{OTPL}:
             INVOKESPECIAL org/nlogo/nvm/ArgumentTypeException.<init> (Lorg/nlogo/nvm/Context;Lorg/nlogo/nvm/Instruction;IILjava/lang/Object;)V
             ATHROW
            L1
-           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_8 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredohistograms_equal_9 java/lang/Object java/lang/Object java/lang/Object] [org/nlogo/api/AgentException]
+           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_8 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter java/lang/Object java/lang/Object java/lang/Object] [org/nlogo/api/AgentException]
             ASTORE 3
             NEW org/nlogo/nvm/EngineException
             DUP
@@ -14426,7 +14426,7 @@ procedure DO-HISTOGRAMS:[]{OTPL}:
             INVOKESPECIAL org/nlogo/nvm/EngineException.<init> (Lorg/nlogo/nvm/Context;Lorg/nlogo/nvm/Instruction;Ljava/lang/String;)V
             ATHROW
            L17
-           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_8 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredohistograms_equal_9 org/nlogo/agent/AgentSet java/lang/Object java/lang/Object] [java/lang/Object]
+           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_8 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/agent/AgentSet java/lang/Object java/lang/Object] [java/lang/Object]
             ARETURN
 [7]_setcurrentplotpen
       _asm_proceduredohistograms_conststring_10 ""Vert-Line"" => String
@@ -14604,7 +14604,7 @@ procedure DO-HISTOGRAMS:[]{OTPL}:
             INVOKEVIRTUAL org/nlogo/agent/World.turtles ()Lorg/nlogo/agent/AgentSet;
            L5
             ALOAD 0
-            GETFIELD org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_15.keptinstr4 : Lorg/nlogo/prim/_asm_proceduredohistograms_equal_16;
+            GETFIELD org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_15.keptinstr4 : Lorg/nlogo/nvm/Reporter;
             ASTORE 3
             ASTORE 2
             NEW org/nlogo/nvm/Context
@@ -14626,7 +14626,7 @@ procedure DO-HISTOGRAMS:[]{OTPL}:
             INVOKEVIRTUAL org/nlogo/agent/AgentSet.iterator ()Lorg/nlogo/agent/AgentIterator;
             ASTORE 6
            L6
-           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_15 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredohistograms_equal_16 org/nlogo/nvm/Context scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
+           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_15 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
             ALOAD 6
             INVOKEINTERFACE org/nlogo/agent/AgentIterator.hasNext ()Z
             IFEQ L7
@@ -14740,14 +14740,14 @@ procedure DO-HISTOGRAMS:[]{OTPL}:
             INVOKESPECIAL org/nlogo/nvm/EngineException.<init> (Lorg/nlogo/nvm/Context;Lorg/nlogo/nvm/Instruction;Ljava/lang/String;)V
             ATHROW
            L13
-           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_15 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredohistograms_equal_16 org/nlogo/agent/AgentSet org/nlogo/agent/Agent org/nlogo/agent/AgentIterator] []
+           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_15 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/agent/AgentSet org/nlogo/agent/Agent org/nlogo/agent/AgentIterator] []
             ALOAD 5
             BIPUSH 15
             INVOKEVIRTUAL org/nlogo/agent/Agent.getTurtleVariable (I)Ljava/lang/Object;
             ASTORE 6
             GOTO L14
            L12
-           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_15 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredohistograms_equal_16 org/nlogo/agent/AgentSet scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
+           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_15 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/agent/AgentSet scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
             ALOAD 4
             INSTANCEOF org/nlogo/agent/AgentSet
             IFEQ L0
@@ -14782,12 +14782,12 @@ procedure DO-HISTOGRAMS:[]{OTPL}:
             INVOKEVIRTUAL org/nlogo/api/LogoListBuilder.toLogoList ()Lorg/nlogo/api/LogoList;
             ASTORE 6
            L14
-           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_15 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredohistograms_equal_16 org/nlogo/agent/AgentSet java/lang/Object java/lang/Object] []
+           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_15 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/agent/AgentSet java/lang/Object java/lang/Object] []
             ALOAD 6
            L3
             GOTO L17
            L0
-           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_15 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredohistograms_equal_16 org/nlogo/agent/AgentSet scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
+           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_15 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/agent/AgentSet scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
             NEW org/nlogo/nvm/ArgumentTypeException
             DUP
             ALOAD 1
@@ -14802,7 +14802,7 @@ procedure DO-HISTOGRAMS:[]{OTPL}:
             INVOKESPECIAL org/nlogo/nvm/ArgumentTypeException.<init> (Lorg/nlogo/nvm/Context;Lorg/nlogo/nvm/Instruction;IILjava/lang/Object;)V
             ATHROW
            L1
-           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_15 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredohistograms_equal_16 java/lang/Object java/lang/Object java/lang/Object] [org/nlogo/api/AgentException]
+           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_15 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter java/lang/Object java/lang/Object java/lang/Object] [org/nlogo/api/AgentException]
             ASTORE 3
             NEW org/nlogo/nvm/EngineException
             DUP
@@ -14813,7 +14813,7 @@ procedure DO-HISTOGRAMS:[]{OTPL}:
             INVOKESPECIAL org/nlogo/nvm/EngineException.<init> (Lorg/nlogo/nvm/Context;Lorg/nlogo/nvm/Instruction;Ljava/lang/String;)V
             ATHROW
            L17
-           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_15 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredohistograms_equal_16 org/nlogo/agent/AgentSet java/lang/Object java/lang/Object] [java/lang/Object]
+           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_15 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/agent/AgentSet java/lang/Object java/lang/Object] [java/lang/Object]
             ARETURN
 [14]_setcurrentplotpen
       _asm_proceduredohistograms_conststring_17 ""slow"" => String
@@ -14900,7 +14900,7 @@ procedure DO-HISTOGRAMS:[]{OTPL}:
             INVOKEVIRTUAL org/nlogo/agent/World.turtles ()Lorg/nlogo/agent/AgentSet;
            L5
             ALOAD 0
-            GETFIELD org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_18.keptinstr4 : Lorg/nlogo/prim/_asm_proceduredohistograms_equal_19;
+            GETFIELD org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_18.keptinstr4 : Lorg/nlogo/nvm/Reporter;
             ASTORE 3
             ASTORE 2
             NEW org/nlogo/nvm/Context
@@ -14922,7 +14922,7 @@ procedure DO-HISTOGRAMS:[]{OTPL}:
             INVOKEVIRTUAL org/nlogo/agent/AgentSet.iterator ()Lorg/nlogo/agent/AgentIterator;
             ASTORE 6
            L6
-           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_18 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredohistograms_equal_19 org/nlogo/nvm/Context scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
+           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_18 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
             ALOAD 6
             INVOKEINTERFACE org/nlogo/agent/AgentIterator.hasNext ()Z
             IFEQ L7
@@ -15036,14 +15036,14 @@ procedure DO-HISTOGRAMS:[]{OTPL}:
             INVOKESPECIAL org/nlogo/nvm/EngineException.<init> (Lorg/nlogo/nvm/Context;Lorg/nlogo/nvm/Instruction;Ljava/lang/String;)V
             ATHROW
            L13
-           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_18 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredohistograms_equal_19 org/nlogo/agent/AgentSet org/nlogo/agent/Agent org/nlogo/agent/AgentIterator] []
+           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_18 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/agent/AgentSet org/nlogo/agent/Agent org/nlogo/agent/AgentIterator] []
             ALOAD 5
             BIPUSH 15
             INVOKEVIRTUAL org/nlogo/agent/Agent.getTurtleVariable (I)Ljava/lang/Object;
             ASTORE 6
             GOTO L14
            L12
-           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_18 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredohistograms_equal_19 org/nlogo/agent/AgentSet scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
+           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_18 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/agent/AgentSet scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
             ALOAD 4
             INSTANCEOF org/nlogo/agent/AgentSet
             IFEQ L0
@@ -15078,12 +15078,12 @@ procedure DO-HISTOGRAMS:[]{OTPL}:
             INVOKEVIRTUAL org/nlogo/api/LogoListBuilder.toLogoList ()Lorg/nlogo/api/LogoList;
             ASTORE 6
            L14
-           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_18 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredohistograms_equal_19 org/nlogo/agent/AgentSet java/lang/Object java/lang/Object] []
+           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_18 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/agent/AgentSet java/lang/Object java/lang/Object] []
             ALOAD 6
            L3
             GOTO L17
            L0
-           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_18 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredohistograms_equal_19 org/nlogo/agent/AgentSet scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
+           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_18 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/agent/AgentSet scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
             NEW org/nlogo/nvm/ArgumentTypeException
             DUP
             ALOAD 1
@@ -15098,7 +15098,7 @@ procedure DO-HISTOGRAMS:[]{OTPL}:
             INVOKESPECIAL org/nlogo/nvm/ArgumentTypeException.<init> (Lorg/nlogo/nvm/Context;Lorg/nlogo/nvm/Instruction;IILjava/lang/Object;)V
             ATHROW
            L1
-           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_18 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredohistograms_equal_19 java/lang/Object java/lang/Object java/lang/Object] [org/nlogo/api/AgentException]
+           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_18 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter java/lang/Object java/lang/Object java/lang/Object] [org/nlogo/api/AgentException]
             ASTORE 3
             NEW org/nlogo/nvm/EngineException
             DUP
@@ -15109,7 +15109,7 @@ procedure DO-HISTOGRAMS:[]{OTPL}:
             INVOKESPECIAL org/nlogo/nvm/EngineException.<init> (Lorg/nlogo/nvm/Context;Lorg/nlogo/nvm/Instruction;Ljava/lang/String;)V
             ATHROW
            L17
-           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_18 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredohistograms_equal_19 org/nlogo/agent/AgentSet java/lang/Object java/lang/Object] [java/lang/Object]
+           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_18 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/agent/AgentSet java/lang/Object java/lang/Object] [java/lang/Object]
             ARETURN
 [16]_setcurrentplotpen
       _asm_proceduredohistograms_conststring_20 ""fast"" => String
@@ -15196,7 +15196,7 @@ procedure DO-HISTOGRAMS:[]{OTPL}:
             INVOKEVIRTUAL org/nlogo/agent/World.turtles ()Lorg/nlogo/agent/AgentSet;
            L5
             ALOAD 0
-            GETFIELD org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_21.keptinstr4 : Lorg/nlogo/prim/_asm_proceduredohistograms_equal_22;
+            GETFIELD org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_21.keptinstr4 : Lorg/nlogo/nvm/Reporter;
             ASTORE 3
             ASTORE 2
             NEW org/nlogo/nvm/Context
@@ -15218,7 +15218,7 @@ procedure DO-HISTOGRAMS:[]{OTPL}:
             INVOKEVIRTUAL org/nlogo/agent/AgentSet.iterator ()Lorg/nlogo/agent/AgentIterator;
             ASTORE 6
            L6
-           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_21 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredohistograms_equal_22 org/nlogo/nvm/Context scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
+           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_21 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
             ALOAD 6
             INVOKEINTERFACE org/nlogo/agent/AgentIterator.hasNext ()Z
             IFEQ L7
@@ -15332,14 +15332,14 @@ procedure DO-HISTOGRAMS:[]{OTPL}:
             INVOKESPECIAL org/nlogo/nvm/EngineException.<init> (Lorg/nlogo/nvm/Context;Lorg/nlogo/nvm/Instruction;Ljava/lang/String;)V
             ATHROW
            L13
-           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_21 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredohistograms_equal_22 org/nlogo/agent/AgentSet org/nlogo/agent/Agent org/nlogo/agent/AgentIterator] []
+           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_21 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/agent/AgentSet org/nlogo/agent/Agent org/nlogo/agent/AgentIterator] []
             ALOAD 5
             BIPUSH 15
             INVOKEVIRTUAL org/nlogo/agent/Agent.getTurtleVariable (I)Ljava/lang/Object;
             ASTORE 6
             GOTO L14
            L12
-           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_21 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredohistograms_equal_22 org/nlogo/agent/AgentSet scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
+           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_21 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/agent/AgentSet scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
             ALOAD 4
             INSTANCEOF org/nlogo/agent/AgentSet
             IFEQ L0
@@ -15374,12 +15374,12 @@ procedure DO-HISTOGRAMS:[]{OTPL}:
             INVOKEVIRTUAL org/nlogo/api/LogoListBuilder.toLogoList ()Lorg/nlogo/api/LogoList;
             ASTORE 6
            L14
-           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_21 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredohistograms_equal_22 org/nlogo/agent/AgentSet java/lang/Object java/lang/Object] []
+           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_21 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/agent/AgentSet java/lang/Object java/lang/Object] []
             ALOAD 6
            L3
             GOTO L17
            L0
-           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_21 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredohistograms_equal_22 org/nlogo/agent/AgentSet scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
+           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_21 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/agent/AgentSet scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
             NEW org/nlogo/nvm/ArgumentTypeException
             DUP
             ALOAD 1
@@ -15394,7 +15394,7 @@ procedure DO-HISTOGRAMS:[]{OTPL}:
             INVOKESPECIAL org/nlogo/nvm/ArgumentTypeException.<init> (Lorg/nlogo/nvm/Context;Lorg/nlogo/nvm/Instruction;IILjava/lang/Object;)V
             ATHROW
            L1
-           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_21 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredohistograms_equal_22 java/lang/Object java/lang/Object java/lang/Object] [org/nlogo/api/AgentException]
+           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_21 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter java/lang/Object java/lang/Object java/lang/Object] [org/nlogo/api/AgentException]
             ASTORE 3
             NEW org/nlogo/nvm/EngineException
             DUP
@@ -15405,7 +15405,7 @@ procedure DO-HISTOGRAMS:[]{OTPL}:
             INVOKESPECIAL org/nlogo/nvm/EngineException.<init> (Lorg/nlogo/nvm/Context;Lorg/nlogo/nvm/Instruction;Ljava/lang/String;)V
             ATHROW
            L17
-           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_21 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduredohistograms_equal_22 org/nlogo/agent/AgentSet java/lang/Object java/lang/Object] [java/lang/Object]
+           FRAME FULL [org/nlogo/prim/_asm_proceduredohistograms_turtlevariableof_21 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/agent/AgentSet java/lang/Object java/lang/Object] [java/lang/Object]
             ARETURN
 [18]_setcurrentplotpen
       _asm_proceduredohistograms_conststring_23 ""Vert-Line"" => String

@@ -13768,7 +13768,7 @@ procedure MAKE-BOX:[]{OTPL}:
           INVOKEVIRTUAL org/nlogo/agent/World.patches ()Lorg/nlogo/agent/AgentSet;
          L1
           ALOAD 0
-          GETFIELD org/nlogo/prim/_asm_proceduremakebox_ask_0.keptinstr4 : Lorg/nlogo/prim/_asm_proceduremakebox_or_1;
+          GETFIELD org/nlogo/prim/_asm_proceduremakebox_ask_0.keptinstr4 : Lorg/nlogo/nvm/Reporter;
           ASTORE 3
           ASTORE 2
           NEW org/nlogo/nvm/Context
@@ -13790,7 +13790,7 @@ procedure MAKE-BOX:[]{OTPL}:
           INVOKEVIRTUAL org/nlogo/agent/AgentSet.iterator ()Lorg/nlogo/agent/AgentIterator;
           ASTORE 6
          L2
-         FRAME FULL [org/nlogo/prim/_asm_proceduremakebox_ask_0 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_proceduremakebox_or_1 org/nlogo/nvm/Context scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
+         FRAME FULL [org/nlogo/prim/_asm_proceduremakebox_ask_0 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] []
           ALOAD 6
           INVOKEINTERFACE org/nlogo/agent/AgentIterator.hasNext ()Z
           IFEQ L3
@@ -14603,7 +14603,7 @@ procedure ARRANGE:[PARTICLE-SET]{OTPL}:
          L5
          FRAME FULL [org/nlogo/prim/_asm_procedurearrange_call_5 org/nlogo/nvm/Context java/lang/Object] [org/nlogo/nvm/Activation [Ljava/lang/Object; I org/nlogo/agent/AgentSet]
           ALOAD 0
-          GETFIELD org/nlogo/prim/_asm_procedurearrange_call_5.keptinstr4 : Lorg/nlogo/prim/_asm_procedurearrange_callreport_6;
+          GETFIELD org/nlogo/prim/_asm_procedurearrange_call_5.keptinstr4 : Lorg/nlogo/nvm/Reporter;
           ASTORE 3
           ASTORE 2
           NEW org/nlogo/nvm/Context
@@ -14625,7 +14625,7 @@ procedure ARRANGE:[PARTICLE-SET]{OTPL}:
           INVOKEVIRTUAL org/nlogo/agent/AgentSet.iterator ()Lorg/nlogo/agent/AgentIterator;
           ASTORE 6
          L6
-         FRAME FULL [org/nlogo/prim/_asm_procedurearrange_call_5 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_procedurearrange_callreport_6 org/nlogo/nvm/Context scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] [org/nlogo/nvm/Activation [Ljava/lang/Object; I]
+         FRAME FULL [org/nlogo/prim/_asm_procedurearrange_call_5 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] [org/nlogo/nvm/Activation [Ljava/lang/Object; I]
           ALOAD 6
           INVOKEINTERFACE org/nlogo/agent/AgentIterator.hasNext ()Z
           IFEQ L7
@@ -14651,16 +14651,16 @@ procedure ARRANGE:[PARTICLE-SET]{OTPL}:
           INVOKEVIRTUAL scala/collection/mutable/ArrayBuffer.$plus$eq (Ljava/lang/Object;)Lscala/collection/mutable/ArrayBuffer;
           GOTO L10
          L9
-         FRAME FULL [org/nlogo/prim/_asm_procedurearrange_call_5 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_procedurearrange_callreport_6 org/nlogo/nvm/Context scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator org/nlogo/agent/Agent java/lang/Object java/lang/Boolean] [org/nlogo/nvm/Activation [Ljava/lang/Object; I]
+         FRAME FULL [org/nlogo/prim/_asm_procedurearrange_call_5 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator org/nlogo/agent/Agent java/lang/Object java/lang/Boolean] [org/nlogo/nvm/Activation [Ljava/lang/Object; I]
           GETSTATIC scala/runtime/BoxedUnit.UNIT : Lscala/runtime/BoxedUnit;
          L10
-         FRAME FULL [org/nlogo/prim/_asm_procedurearrange_call_5 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_procedurearrange_callreport_6 org/nlogo/nvm/Context scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator org/nlogo/agent/Agent java/lang/Object java/lang/Boolean] [org/nlogo/nvm/Activation [Ljava/lang/Object; I java/lang/Object]
+         FRAME FULL [org/nlogo/prim/_asm_procedurearrange_call_5 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator org/nlogo/agent/Agent java/lang/Object java/lang/Boolean] [org/nlogo/nvm/Activation [Ljava/lang/Object; I java/lang/Object]
           ASTORE 10
           ALOAD 10
           POP
           GOTO L6
          L8
-         FRAME FULL [org/nlogo/prim/_asm_procedurearrange_call_5 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_procedurearrange_callreport_6 org/nlogo/nvm/Context scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator org/nlogo/agent/Agent java/lang/Object] [org/nlogo/nvm/Activation [Ljava/lang/Object; I]
+         FRAME FULL [org/nlogo/prim/_asm_procedurearrange_call_5 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator org/nlogo/agent/Agent java/lang/Object] [org/nlogo/nvm/Activation [Ljava/lang/Object; I]
           NEW org/nlogo/nvm/EngineException
           DUP
           ALOAD 1
@@ -14692,7 +14692,7 @@ procedure ARRANGE:[PARTICLE-SET]{OTPL}:
           INVOKESPECIAL org/nlogo/nvm/EngineException.<init> (Lorg/nlogo/nvm/Context;Lorg/nlogo/nvm/Instruction;Ljava/lang/String;)V
           ATHROW
          L7
-         FRAME FULL [org/nlogo/prim/_asm_procedurearrange_call_5 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_procedurearrange_callreport_6 org/nlogo/nvm/Context scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] [org/nlogo/nvm/Activation [Ljava/lang/Object; I]
+         FRAME FULL [org/nlogo/prim/_asm_procedurearrange_call_5 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator] [org/nlogo/nvm/Activation [Ljava/lang/Object; I]
           GETSTATIC org/nlogo/agent/AgentSet$.MODULE$ : Lorg/nlogo/agent/AgentSet$;
           ALOAD 2
           INVOKEVIRTUAL org/nlogo/agent/AgentSet.kind ()Lorg/nlogo/core/AgentKind;
@@ -15064,7 +15064,7 @@ reporter procedure OVERLAPPING?:[]{-T--}:
          L3
          FRAME SAME1 org/nlogo/agent/AgentSet
           ALOAD 0
-          GETFIELD org/nlogo/prim/_asm_procedureoverlapping_report_0.keptinstr4 : Lorg/nlogo/prim/_asm_procedureoverlapping_lessthan_3;
+          GETFIELD org/nlogo/prim/_asm_procedureoverlapping_report_0.keptinstr4 : Lorg/nlogo/nvm/Reporter;
           ASTORE 3
           ASTORE 2
           NEW org/nlogo/nvm/Context
@@ -15081,7 +15081,7 @@ reporter procedure OVERLAPPING?:[]{-T--}:
           INVOKEVIRTUAL org/nlogo/agent/AgentSet.iterator ()Lorg/nlogo/agent/AgentIterator;
           ASTORE 5
          L4
-         FRAME FULL [org/nlogo/prim/_asm_procedureoverlapping_report_0 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/prim/_asm_procedureoverlapping_lessthan_3 org/nlogo/nvm/Context org/nlogo/agent/AgentIterator] []
+         FRAME FULL [org/nlogo/prim/_asm_procedureoverlapping_report_0 org/nlogo/nvm/Context org/nlogo/agent/AgentSet org/nlogo/nvm/Reporter org/nlogo/nvm/Context org/nlogo/agent/AgentIterator] []
           ALOAD 5
           INVOKEINTERFACE org/nlogo/agent/AgentIterator.hasNext ()Z
           IFEQ L5
@@ -15177,7 +15177,7 @@ reporter procedure OVERLAPPING?:[]{-T--}:
           GETSTATIC org/nlogo/nvm/NonLocalExit$.MODULE$ : Lorg/nlogo/nvm/NonLocalExit$;
           ATHROW
          L11
-         FRAME FULL [org/nlogo/prim/_asm_procedureoverlapping_report_0 org/nlogo/nvm/Context java/lang/Boolean org/nlogo/prim/_asm_procedureoverlapping_lessthan_3 org/nlogo/nvm/Context org/nlogo/agent/AgentIterator] []
+         FRAME FULL [org/nlogo/prim/_asm_procedureoverlapping_report_0 org/nlogo/nvm/Context java/lang/Boolean org/nlogo/nvm/Reporter org/nlogo/nvm/Context org/nlogo/agent/AgentIterator] []
           ALOAD 1
           GETFIELD org/nlogo/nvm/Context.activation : Lorg/nlogo/nvm/Activation;
           INVOKEVIRTUAL org/nlogo/nvm/Activation.procedure ()Lorg/nlogo/nvm/Procedure;
