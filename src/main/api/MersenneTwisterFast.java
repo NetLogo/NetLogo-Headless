@@ -2,6 +2,9 @@ package org.nlogo.api;
 
 import java.io.Serializable;
 
+// MT home page has moved to
+//   http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html
+
 /**
  * <h3>MersenneTwister and MersenneTwisterFast</h3>
  * <p><b>Version 9</b>, based on version MT199937(99/10/29)
