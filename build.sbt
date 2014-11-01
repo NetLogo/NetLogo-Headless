@@ -1,6 +1,6 @@
 val root = project in file (".") configs(FastMediumSlow.configs: _*)
 
-scalaVersion := "2.11.2"
+scalaVersion := "2.11.4"
 
 mainClass in Compile := Some("org.nlogo.headless.Main")
 
