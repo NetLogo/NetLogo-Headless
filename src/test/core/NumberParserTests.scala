@@ -6,7 +6,7 @@ import org.scalatest.FunSuite
 
 class NumberParserTests extends FunSuite {
   for(input <- List("", "-", ".", "-.", ".-"))
-    test(input) {
+    test(s"isLeft $input") {
       assert(NumberParser.parse(input).isLeft)
     }
 }
