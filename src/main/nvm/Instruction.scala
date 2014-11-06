@@ -25,15 +25,6 @@ object Instruction {
 abstract class Instruction extends InstructionJ with TokenHolder {
 
   var token: Token = null
-  var token2: Token = null
-
-  // for some instructions two tokens are relevant for example
-  // _setturtlevariable, the SET is what we want to report
-  // for runtime errors since it's expecting a command
-  // however, the type is actually limited by the variable
-  // name not the set and we want to compiler to report that ev 7/13/07
-  def tokenLimitingType =
-    Option(token2).getOrElse(token)
 
   /// the bytecode generator uses these to store text for dump() to print
 
