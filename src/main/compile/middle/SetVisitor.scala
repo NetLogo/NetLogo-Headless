@@ -26,7 +26,6 @@ class SetVisitor extends DefaultAstVisitor {
         Instantiator.newInstance[nvm.Command](
           newCommandClass, rApp.nvmReporter)
       newCommand.token = stmt.nvmCommand.token
-      newCommand.token2 = rApp.nvmReporter.token
       stmt.nvmCommand = newCommand
       stmt.removeArgument(0)
     }
