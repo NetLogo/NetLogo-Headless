@@ -5,13 +5,15 @@ package org.nlogo.nvm
 import org.nlogo.{ api, core },
   core.Let
 
+import scala.collection.immutable.ListMap
+
 class Procedure(
   val isReporter: Boolean,
   val name: String,
   val nameToken: core.Token,
   val argTokens: Seq[core.Token],
   _displayName: Option[String] = None,
-  val parent: Procedure = null) {
+  val parent: Procedure = null) extends api.FrontEndProcedure {
 
   val filename = nameToken.filename; // used by cities include-file stuff
   val displayName = buildDisplayName(_displayName)
@@ -19,10 +21,8 @@ class Procedure(
   var end: Int = 0
   var agentClassString = "OTPL"
   var localsCount = 0
-  var topLevel = false
   private var _owner: api.SourceOwner = null
   val children = collection.mutable.Buffer[Procedure]()
-  var args = Vector[String]()
   def isTask = parent != null
 
   // cache args.size() for efficiency with making Activations
@@ -103,5 +103,9 @@ class Procedure(
     _owner = owner
     children.foreach(_.owner = owner)
   }
+}
 
+object Procedure {
+  type ProceduresMap = ListMap[String, Procedure]
+  val NoProcedures = ListMap[String, Procedure]()
 }

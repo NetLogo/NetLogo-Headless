@@ -20,11 +20,11 @@ class FrontEndExtrasTests extends FunSuite {
     def dummyProcedure(p: ProcedureDefinition) =
       new nvm.Procedure(p.procedure.isReporter, p.procedure.name,
         core.Token.Eof, Seq())
-    val (procedures, structureResults) = FrontEnd.frontEnd(src)
+    val (procedures, prog) = FrontEnd.frontEnd(src)
     val proceduresMap =
       collection.immutable.ListMap(
         procedures.map(p => p.procedure.name -> dummyProcedure(p)): _*)
-    (proceduresMap, structureResults.program)
+    (proceduresMap, prog)
   }
 
   def isReporter(s: String) =

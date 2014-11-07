@@ -4,7 +4,8 @@ package org.nlogo.compile
 
 import org.scalatest.FunSuite
 import org.nlogo.api.{ DummyExtensionManager, Program, Version }
-import org.nlogo.nvm
+import org.nlogo.nvm.Procedure.NoProcedures
+
 
 class TestGenerator extends FunSuite {
 
@@ -14,7 +15,7 @@ class TestGenerator extends FunSuite {
   def compile(source: String, preamble: String) =
     Compiler.compileMoreCode(
       "to foo " + preamble + source + "\nend", None,
-      program, nvm.FrontEndInterface.NoProcedures,
+      program, NoProcedures,
       new DummyExtensionManager).head.code.head
   def disassembleCommand(source: String): String =
     condense(compile(source, "").disassembly.value)

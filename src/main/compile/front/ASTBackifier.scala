@@ -3,12 +3,34 @@
 package org.nlogo.compile
 package front
 
-import org.nlogo.{ core, nvm }
+import org.nlogo.api
+import org.nlogo.api.FrontEndProcedure
+import org.nlogo.{ core, nvm },
+  nvm.Procedure
 
-class ASTBackifier(backifier: Backifier) {
+import scala.collection.immutable.ListMap
 
-  def backify(procedure: nvm.Procedure, pd: core.ProcedureDefinition): ProcedureDefinition =
-    new ProcedureDefinition(procedure, backify(pd.statements))
+class ASTBackifier(program: api.Program,
+                   extensionManager: api.ExtensionManager,
+                   _procedures: api.FrontEndInterface.ProceduresMap) {
+
+  type ProceduresWithDefinitions = Iterable[(FrontEndProcedure, core.ProcedureDefinition)]
+
+  val procedures: ListMap[String, nvm.Procedure] = _procedures.map {
+    case (k, p: FrontEndProcedure) => k -> fromApiProcedure(p)
+  }
+
+  val backifier = new Backifier(program, extensionManager, procedures)
+
+  def backifyAll(proceduresAndDefinitions: ProceduresWithDefinitions): (Seq[ProcedureDefinition], api.Program) = {
+    val procdefs = proceduresAndDefinitions.map {
+      case (x: FrontEndProcedure, y: core.ProcedureDefinition) => backify(x, y)
+    }.toSeq
+    (procdefs, program)
+  }
+
+  def backify(procedure: org.nlogo.api.FrontEndProcedure, pd: core.ProcedureDefinition): ProcedureDefinition =
+    new ProcedureDefinition(procedures(procedure.name), backify(pd.statements))
 
   def backify(expr: core.Expression): Expression =
     expr match {
@@ -47,4 +69,20 @@ class ASTBackifier(backifier: Backifier) {
     result
   }
 
+  private def fromApiProcedure(frontEndProcedure: api.FrontEndProcedure): Procedure = {
+    frontEndProcedure match {
+      case nvmProcedure: Procedure => nvmProcedure
+      case p =>
+        val proc = new Procedure(
+          isReporter = p.isReporter,
+          name = p.name,
+          nameToken = p.nameToken,
+          argTokens = p.argTokens,
+          _displayName = if (p.displayName == "") None else Some(p.displayName)
+        )
+        proc.topLevel = p.topLevel
+        proc.args = p.args
+        proc
+    }
+  }
 }

@@ -17,12 +17,12 @@ class AssemblerTests extends FunSuite {
     val (defs, results) =
       frontEnd.frontEnd(
         keyword + " foo " + source + "\nend")
-    assertResult(1)(results.procedures.size)
+    assertResult(1)(defs.size)
     for (procdef <- defs) {
       procdef.accept(new ArgumentStuffer)
       new Assembler().assemble(procdef)
     }
-    results.procedures.values.head
+    defs.head.procedure
   }
 
   // these tests focus more on assembly, ignoring argument stuffing.

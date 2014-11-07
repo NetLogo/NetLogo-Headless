@@ -3,7 +3,8 @@
 package org.nlogo.compile
 package front
 
-import org.nlogo.{ core, api, nvm, parse, prim },
+import org.nlogo.{ core, api, parse, prim },
+  api.FrontEndInterface.ProceduresMap,
   core.{ Token, TokenType },
   Fail._
 
@@ -18,7 +19,7 @@ extends NameHandler {
         (TokenType.Reporter, new core.prim._procedurevariable(args.indexOf(ident), ident)))
 }
 
-class CallHandler(procedures: nvm.FrontEndInterface.ProceduresMap) extends NameHandler {
+class CallHandler(procedures: ProceduresMap) extends NameHandler {
   override def apply(token: Token) = {
     val name = token.value.asInstanceOf[String]
     Some(name)
