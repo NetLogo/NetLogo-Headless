@@ -7,6 +7,8 @@ import org.nlogo.core.StringEscaper.unescapeString
 import org.nlogo.core.StringEscaper.escapeString
 import org.nlogo.core._
 
+import scala.annotation.tailrec
+
 // parse and valid are separated for clarity later on in the overarching reader, FD 4/16/14
 trait WidgetLine[T] {
   def parse(line: String): T
@@ -183,21 +185,18 @@ object PenReader {
   // This is tricky because the string literals may contain escaped double quotes, so it's
   // nontrivial to figure out where one literal ends and the next starts.  Assumes the
   // opening double quote has already been detected and discarded.
-  private def parseOne(s: String): (String, String) =
+  // There are some models (Scatter in particular) where recursion here can cause
+  // a StackOverflowError in certain circumstances.
+  // @tailrec protects against this problem cropping up without warning.
+  @tailrec private def parseOne(s: String, stringLiteral: String = ""): (String, String) =
     if(s.isEmpty)
-      ("", "")
+      (stringLiteral, s)
     else if (s.head == '"')
-      ("", s.tail.trim)
+      (stringLiteral, s.tail.trim)
     else if(s.take(2) == "\\\"")
-      parseOne(s.drop(2)) match {
-        case (more1, more2) =>
-          ('"' + more1, more2)
-      }
+      parseOne(s.drop(2), stringLiteral + "\"")
     else
-      parseOne(s.tail) match {
-        case (more1, more2) =>
-          (s.head + more1, more2)
-      }
+      parseOne(s.tail, stringLiteral + s.head.toString)
   def quoted(s:String) = '"' + s + '"'
   def parseStringLiterals(s: String): List[String] =
     s.headOption match {
