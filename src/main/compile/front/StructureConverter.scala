@@ -12,7 +12,7 @@ import org.nlogo.{ core, api, nvm, parse },
 
 object StructureConverter {
 
-  import parse.StructureDeclarations._
+  import core.StructureDeclarations._
 
   def convert(declarations: Seq[Declaration],
       displayName: Option[String],

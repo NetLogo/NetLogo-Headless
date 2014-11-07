@@ -6,7 +6,7 @@ import
   scala.util.matching.Regex
 
 import org.nlogo.{ core, api },
-  core.{ Token, TokenType },
+  core.{ Token, TokenType, StructureDeclarations },
     TokenType.{ Command, Reporter },
   api.{ Breed, Program }
 
