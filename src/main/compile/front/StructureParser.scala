@@ -19,11 +19,11 @@ package front
 // will be discovered as we parse, through __include declarations.  (Included files might themselves
 // include further files.)
 
-import org.nlogo.{ core, api, nvm, parse },
+import org.nlogo.{ core, api, parse },
   parse._,
   core.{ Token, StructureDeclarations },
-  nvm.StructureResults,
-  nvm.FrontEndInterface.ProceduresMap,
+  org.nlogo.api.FrontEndInterface,
+    FrontEndInterface.ProceduresMap,
   Fail._
 
 object StructureParser {
@@ -38,7 +38,7 @@ object StructureParser {
       extensionManager.startFullCompilation()
     val sources = Seq((source, ""))
     val oldResults = StructureResults(program, oldProcedures)
-    def parseOne(source: String, filename: String, previousResults: StructureResults) = {
+    def parseOne(source: String, filename: String, previousResults: StructureResults): StructureResults = {
       val tokens =
         tokenizer.tokenizeString(source, filename)
           .filter(_.tpe != core.TokenType.Comment)
@@ -110,7 +110,7 @@ class StructureParser(
             oldResults.program, oldResults.procedures, declarations))
         StructureConverter.convert(declarations, displayName,
           if (subprogram)
-            StructureResults.empty.copy(program = oldResults.program)
+            StructureResults(program = oldResults.program)
           else oldResults,
           subprogram)
       case Left((msg, token)) =>

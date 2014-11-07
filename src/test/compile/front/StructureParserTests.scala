@@ -6,17 +6,16 @@ package front
 import org.scalatest.FunSuite
 
 import org.nlogo.{ core, api, nvm, parse },
-  api.CompilerException,
-  org.nlogo.api.Femto
+  org.nlogo.api.{CompilerException, Femto}
 
 class StructureParserTests extends FunSuite {
 
   val tokenizer: core.TokenizerInterface =
     Femto.scalaSingleton("org.nlogo.lex.Tokenizer")
 
-  def compile(source: String): nvm.StructureResults =
+  def compile(source: String): StructureResults =
     new StructureParser(tokenizer.tokenizeString(source).map(parse.Namer0),
-                        None, nvm.StructureResults.empty)
+                        None, StructureResults.empty)
       .parse(false)
 
   def expectError(source: String, error: String) {
@@ -29,7 +28,7 @@ class StructureParserTests extends FunSuite {
   test("empty") {
     val results = compile("")
     assert(results.procedures.isEmpty)
-    assert(results.tokens.isEmpty)
+    assert(results.procedureTokens.isEmpty)
     assertResult("globals []\n" +
       "interfaceGlobals []\n" +
       "turtles-own [WHO COLOR HEADING XCOR YCOR SHAPE LABEL LABEL-COLOR BREED HIDDEN? SIZE PEN-SIZE PEN-MODE]\n" +

@@ -2,12 +2,12 @@
 
 package org.nlogo.nvm
 
-import org.nlogo.api, api.{ Program, ExtensionManager }
+import org.nlogo.api, api.{ Program, ExtensionManager, FrontEndInterface }
 
 // ought to be in the api package, except oops, it depends on nvm.Procedure - ST 2/23/09
 
 trait CompilerInterface {
-  import FrontEndInterface.ProceduresMap
+  import Procedure.ProceduresMap
   def frontEnd: FrontEndInterface
   def compileProgram(source: String, program: Program, extensionManager: ExtensionManager,
     flags: CompilerFlags = CompilerFlags()): CompilerResults

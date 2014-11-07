@@ -6,7 +6,7 @@ package front
 import org.scalatest.FunSuite
 import org.nlogo.{ core, api, nvm, parse },
   core.{ Token, TokenType },
-  api.{ DummyExtensionManager, Program }
+  api.{ DummyExtensionManager, Program, FrontEndInterface }
 
 class NamerTests extends FunSuite {
 
@@ -15,13 +15,13 @@ class NamerTests extends FunSuite {
     val program = Program.empty().copy(interfaceGlobals = Seq("X"))
     val results = new StructureParser(
         FrontEnd.tokenizer.tokenizeString(wrappedSource).map(parse.Namer0),
-        None, nvm.StructureResults(program))
+        None, StructureResults(program))
       .parse(false)
     assertResult(1)(results.procedures.size)
     val procedure = results.procedures.values.iterator.next()
     new Namer(results.program, results.procedures,
         new DummyExtensionManager)
-      .process(results.tokens(procedure).iterator, procedure)
+      .process(results.procedureTokens(procedure.name).iterator, procedure)
       .takeWhile(_.tpe != TokenType.Eof)
   }
 

@@ -3,6 +3,7 @@
 package org.nlogo.compile
 package front
 
+import org.nlogo.compile.FrontEndInterface
 import org.nlogo.{ core, api, agent, nvm, parse }
 import org.nlogo.api.Femto
 
@@ -29,28 +30,27 @@ class FrontEnd extends FrontEndMain
 
 trait FrontEndMain {
 
-  import nvm.FrontEndInterface.ProceduresMap
+  import api.FrontEndInterface
+  import api.FrontEndInterface.ProceduresMap
   import FrontEnd.tokenizer
 
   // entry points
 
-  def frontEnd(source: String, oldProcedures: ProceduresMap = nvm.FrontEndInterface.NoProcedures,
-      program: api.Program = api.Program.empty()): (Seq[ProcedureDefinition], nvm.StructureResults) =
+  def frontEnd(source: String, oldProcedures: ProceduresMap = api.FrontEndInterface.NoProcedures,
+      program: api.Program = api.Program.empty()): (Seq[ProcedureDefinition], api.Program) =
     frontEndHelper(source, None, program, true,
       oldProcedures, new api.DummyExtensionManager)
 
   def frontEndHelper(source: String, displayName: Option[String], program: api.Program, subprogram: Boolean,
-      oldProcedures: ProceduresMap, extensionManager: api.ExtensionManager)
-    : (Seq[ProcedureDefinition], nvm.StructureResults) = {
+      oldProcedures: FrontEndInterface.ProceduresMap, extensionManager: api.ExtensionManager)
+    : (Seq[ProcedureDefinition], api.Program) = {
     val structureResults = StructureParser.parseAll(
       tokenizer, source, displayName, program, subprogram, oldProcedures, extensionManager)
-    val backifier = new Backifier(structureResults.program, extensionManager,
-      oldProcedures ++ structureResults.procedures)
-    def parseProcedure(procedure: nvm.Procedure): ProcedureDefinition = {
-      val rawTokens = structureResults.tokens(procedure)
+    def parseProcedure(procedure: api.FrontEndProcedure): core.ProcedureDefinition = {
+      val rawTokens = structureResults.procedureTokens(procedure.name)
       val usedNames =
         StructureParser.usedNames(structureResults.program,
-          structureResults.procedures ++ oldProcedures) ++
+          oldProcedures ++ structureResults.procedures) ++
         procedure.args.map(_ -> "local variable here")
       // on LetNamer vs. Namer vs. LetScoper, see comments in LetScoper
       val namedTokens = {
@@ -63,11 +63,12 @@ trait FrontEndMain {
         val letScoper = new parse.LetScoper(usedNames)
         letScoper(namedTokens.buffered)
       }
-      new ASTBackifier(backifier)
-        .backify(procedure, ExpressionParser(namedTokens))
+      ExpressionParser(namedTokens)
     }
-    val procdefs = structureResults.procedures.values.map(parseProcedure).toVector
-    (procdefs, structureResults)
+    val procs = structureResults.procedures.values
+    val procDefs = procs.map(parseProcedure)
+    val astBackifier = new ASTBackifier(structureResults.program, extensionManager,
+      oldProcedures ++ structureResults.procedures)
+    astBackifier.backifyAll(procs.zip(procDefs))
   }
-
 }
