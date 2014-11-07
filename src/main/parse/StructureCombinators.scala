@@ -25,8 +25,9 @@ package org.nlogo.parse
 // It's annoying that there's no ~>! (to both disallow backtracking
 // and discard input).
 
-import org.nlogo.core.{ Token, TokenType }
-import StructureDeclarations._
+import
+  org.nlogo.core.{ Token, TokenType, StructureDeclarations },
+  StructureDeclarations._
 
 object StructureCombinators {
   def parse(tokens: Iterator[Token]): Either[(String, Token), Seq[Declaration]] = {
