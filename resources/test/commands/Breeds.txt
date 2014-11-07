@@ -44,3 +44,10 @@ SetBreedToNonBreed
   O> crt 1 [ set breed links ] => ERROR You can't set BREED to a non-breed agentset.
   O> crt 1 [ set breed directed-links ] => ERROR You can't set BREED to a non-breed agentset.
 
+HatchWithBreedsOwn
+  breed [rabbits rabbit]
+  rabbits-own [energy]
+  O> create-rabbits 1 [ set energy 10 ]
+  T> hatch 1
+  [energy] of turtle 0 => 10
+  [energy] of turtle 1 => 10
