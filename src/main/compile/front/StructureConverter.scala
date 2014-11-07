@@ -3,10 +3,9 @@
 package org.nlogo.compile
 package front
 
-import org.nlogo.{ core, api, nvm, parse },
+import org.nlogo.{ core, api },
   core.Token,
-  api.Program,
-  nvm.StructureResults
+  api.FrontEndProcedure
 
 /// Stage #3 of StructureParser
 
@@ -15,41 +14,43 @@ object StructureConverter {
   import core.StructureDeclarations._
 
   def convert(declarations: Seq[Declaration],
-      displayName: Option[String],
-      oldResults: StructureResults,
-      subprogram: Boolean): StructureResults = {
-    val is = declarations.collect{
+              displayName: Option[String],
+              oldResults: StructureResults,
+              subprogram: Boolean): StructureResults = {
+    val is = declarations.collect {
       case i: Includes =>
-        i.names}.flatten
-    val ps = declarations.collect{
+        i.names
+    }.flatten
+    val ps = declarations.collect {
       case p: Procedure =>
-        buildProcedure(p, displayName)}
+        buildProcedure(p, displayName)
+    }
     ps.foreach(_._1.topLevel = subprogram)
     StructureResults(
       program =
         updateProgram(oldResults.program, declarations),
       procedures =
         oldResults.procedures ++
-          ps.map{case (pp, _) => pp.name -> pp},
-      tokens = oldResults.tokens ++ ps,
+          ps.map { case (pp, _) => pp.name -> pp},
+      procedureTokens = oldResults.procedureTokens ++ ps.map {
+        case (p, toks) => p.name -> toks
+      },
       includes = oldResults.includes ++ is,
       extensions = oldResults.extensions ++
-        declarations.collect{
+        declarations.collect {
           case e: Extensions =>
-            e.names.map(_.token)}.flatten)
+            e.names.map(_.token)
+        }.flatten)
   }
 
-  def buildProcedure(p: Procedure, displayName: Option[String]): (nvm.Procedure, Iterable[Token]) = {
-    val proc = new nvm.Procedure(
-      p.isReporter, p.tokens.tail.head.value.asInstanceOf[String],
-      p.tokens.tail.head, p.inputs.map(_.token), displayName, null)
-    proc.args = p.inputs.map(_.name).toVector
+  def buildProcedure(p: Procedure, displayName: Option[String]): (api.FrontEndProcedure, Iterable[Token]) = {
+    val proc = new RawProcedure(p, displayName)
     (proc, p.tokens.drop(2).init :+ Token.Eof)
   }
 
   def updateProgram(program: api.Program, declarations: Seq[Declaration]): api.Program = {
     def updateVariables(program: api.Program): api.Program =
-      declarations.foldLeft(program){
+      declarations.foldLeft(program) {
         case (program, Variables(Identifier("GLOBALS", _), identifiers)) =>
           program.copy(userGlobals = program.userGlobals ++ identifiers.map(_.name))
         case (program, Variables(Identifier("TURTLES-OWN", _), identifiers)) =>
@@ -64,7 +65,7 @@ object StructureConverter {
           program
       }
     def updateBreeds(program: api.Program): api.Program =
-      declarations.foldLeft(program){
+      declarations.foldLeft(program) {
         case (program, Breed(plural, singular, isLinkBreed, isDirected)) =>
           val breed = api.Breed(plural.name, singular.name,
             isLinkBreed = isLinkBreed, isDirected = isDirected)
@@ -92,7 +93,7 @@ object StructureConverter {
     def orderPreservingUpdate(breedMap: BreedMap, breed: api.Breed): BreedMap = {
       val keys = breedMap.keys.toSeq
       val newMapInWrongOrder = breedMap.updated(breed.name, breed)
-      val result = ListMap(keys.map{k => (k, newMapInWrongOrder(k))}.toSeq: _*)
+      val result = ListMap(keys.map { k => (k, newMapInWrongOrder(k))}.toSeq: _*)
       assert(keys sameElements result.keys.toSeq)
       result
     }

@@ -10,8 +10,9 @@ import
   agent.{ World, Agent, AbstractExporter, AgentSet },
   api.{ PlotInterface, Dump, CommandLogoThunk, ReporterLogoThunk, Femto,
     CompilerException, LogoException, JobOwner, SimpleJobOwner, ModelType, Exceptions },
-  nvm.{ FrontEndInterface, FileManager, Instruction, EngineException, Context,
+  nvm.{ FileManager, Instruction, EngineException, Context,
     Procedure, Job, Command, MutableLong, Workspace, Activation },
+  nvm.Procedure.{ ProceduresMap, NoProcedures },
   plot.{ PlotExporter, PlotManager },
   java.io.{ IOException, PrintWriter },
   collection.mutable.WeakHashMap
@@ -143,8 +144,8 @@ object AbstractWorkspaceTraits {
   }
 
   trait Procedures { this: AbstractWorkspace =>
-    var procedures: FrontEndInterface.ProceduresMap =
-      FrontEndInterface.NoProcedures
+    var procedures: ProceduresMap =
+      NoProcedures
     def init() {
       procedures.values.foreach(_.init(this))
     }

@@ -3,11 +3,11 @@
 package org.nlogo.compile
 package front
 
-import org.nlogo.{ core, api, nvm, parse }
+import org.nlogo.{ core, api, parse }
 
-trait FrontEndExtras { this: nvm.FrontEndInterface =>
+trait FrontEndExtras { this: FrontEndInterface =>
 
-  import nvm.FrontEndInterface.ProceduresMap
+  import api.FrontEndInterface.ProceduresMap
   import FrontEnd.tokenizer
 
   // In the following 3 methods, the initial call to NumberParser is a performance optimization.
@@ -64,12 +64,12 @@ trait FrontEndExtras { this: nvm.FrontEndInterface =>
       val sp = new StructureParser(
         tokenizer.tokenizeString("to __is-reporter? report " + s + "\nend")
           .map(parse.Namer0),
-        None, nvm.StructureResults(program, procedures))
+        None, StructureResults(program, procedures))
       val results = sp.parse(subprogram = true)
       val namer =
         new Namer(program, procedures ++ results.procedures, extensionManager)
       val proc = results.procedures.values.head
-      val tokens = namer.process(results.tokens(proc).iterator, proc)
+      val tokens = namer.process(results.procedureTokens(proc.name).iterator, proc)
       tokens.toStream
         .drop(1)  // skip _report
         .dropWhile(_.tpe == core.TokenType.OpenParen)
