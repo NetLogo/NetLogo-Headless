@@ -9,13 +9,9 @@ import org.nlogo.api.Femto
 
 class ConstantFolderTests extends FunSuite {
 
-  // cheating here - ST 8/27/13
-  val frontEnd = Femto.get[FrontEndInterface](
-    "org.nlogo.compile.front.FrontEnd")
-
   def compile(source: String): String = {
-    val (procdef +: _, _) =
-      frontEnd.frontEnd(
+    val procdef +: _ =
+      Scaffold.apply(
         "to-report __test report " + source + "\nend")
     procdef.accept(new ConstantFolder)
     procdef.statements.stmts.head.args.head.toString

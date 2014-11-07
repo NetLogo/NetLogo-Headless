@@ -3,7 +3,7 @@
 package org.nlogo.compile
 
 import org.nlogo.{ api, nvm },
-  nvm.FrontEndInterface.{ ProceduresMap, NoProcedures },
+  nvm.Procedure.{ ProceduresMap, NoProcedures },
   org.nlogo.api.Femto
 
 // One design principle here is that calling the compiler shouldn't have any side effects that are
@@ -31,12 +31,15 @@ object Compiler extends nvm.CompilerInterface {
       flags: nvm.CompilerFlags): nvm.CompilerResults =
     compile(source, displayName, program, true, oldProcedures, extensionManager, flags)
 
-  private def compile(source: String, displayName: Option[String], program: api.Program, subprogram: Boolean,
+  private def compile(source: String, displayName: Option[String], oldProgram: api.Program, subprogram: Boolean,
       oldProcedures: ProceduresMap, extensionManager: api.ExtensionManager,
       flags: nvm.CompilerFlags): nvm.CompilerResults = {
     val (topLevelDefs, structureResults) =
-      frontEnd.frontEndHelper(source, displayName, program, subprogram, oldProcedures, extensionManager)
-    val allDefs = middleEnd.middleEnd(topLevelDefs, flags)
+      frontEnd.frontEnd(source, displayName, oldProgram, subprogram, oldProcedures, extensionManager)
+    val bridged =
+      FrontMiddleBridge(
+        structureResults, extensionManager, oldProcedures, topLevelDefs)
+    val allDefs = middleEnd.middleEnd(bridged, flags)
     backEnd.backEnd(allDefs, structureResults.program, source, extensionManager.profilingEnabled, flags)
   }
 

@@ -2,7 +2,8 @@
 
 package org.nlogo.nvm
 
-import org.nlogo.{ api, core }
+import org.nlogo.{ api, core },
+  api.FrontEndInterface
 import org.nlogo.agent.{ Agent, AgentSet }
 import collection.mutable.WeakHashMap
 
@@ -12,8 +13,8 @@ trait Workspace extends api.Workspace with JobManagerOwner with api.ViewSettings
   def updateUI(context: Context) { }
   def joinForeverButtons(agent: Agent)
   def addJobFromJobThread(job: Job)
-  def procedures: FrontEndInterface.ProceduresMap
-  def procedures_=(procedures: FrontEndInterface.ProceduresMap)
+  def procedures: Procedure.ProceduresMap
+  def procedures_=(procedures: Procedure.ProceduresMap)
   def fileManager: FileManager
   def tick(c: Context, originalInstruction: Instruction)
   def compiler: CompilerInterface

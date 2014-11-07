@@ -16,7 +16,7 @@ class FrontEndTests extends FunSuite {
   val POSTAMBLE = "\nend"
 
   /// helpers
-  def compile(source: String, preamble: String = PREAMBLE): Seq[Statements] =
+  def compile(source: String, preamble: String = PREAMBLE): Seq[core.Statements] =
     FrontEnd.frontEnd(preamble + source + POSTAMBLE) match {
       case (procs, _) =>
         procs.map(_.statements)
@@ -26,7 +26,7 @@ class FrontEndTests extends FunSuite {
    * utility method useful for testing that start()
    * and end() return right answers everywhere
    */
-  def statementsToString(ss: Seq[Statements], source: String) =
+  def statementsToString(ss: Seq[core.Statements], source: String) =
     (for (stmts <- ss) yield {
       val visitor = new PositionsCheckVisitor(source)
       visitor.visitStatements(stmts)
@@ -37,19 +37,19 @@ class FrontEndTests extends FunSuite {
     assertResult(preorderDump)(statementsToString(compile(source), source))
   }
   // preorder traversal
-  class PositionsCheckVisitor(source: String) extends DefaultAstVisitor {
+  class PositionsCheckVisitor(source: String) extends core.AstVisitor {
     val buf = new StringBuilder()
-    override def visitCommandBlock(node: CommandBlock) { visit(node); super.visitCommandBlock(node) }
-    override def visitReporterApp(node: ReporterApp) { visit(node); super.visitReporterApp(node) }
-    override def visitReporterBlock(node: ReporterBlock) { visit(node); super.visitReporterBlock(node) }
-    override def visitStatement(node: Statement) { visit(node); super.visitStatement(node) }
-    override def visitStatements(node: Statements) {
+    override def visitCommandBlock(node: core.CommandBlock) { visit(node); super.visitCommandBlock(node) }
+    override def visitReporterApp(node: core.ReporterApp) { visit(node); super.visitReporterApp(node) }
+    override def visitReporterBlock(node: core.ReporterBlock) { visit(node); super.visitReporterBlock(node) }
+    override def visitStatement(node: core.Statement) { visit(node); super.visitStatement(node) }
+    override def visitStatements(node: core.Statements) {
       if (node.stmts.isEmpty)
         buf.append(node.getClass.getSimpleName + " '' ")
       else visit(node)
       super.visitStatements(node)
     }
-    def visit(node: AstNode) {
+    def visit(node: core.AstNode) {
       val start = node.start - PREAMBLE.length
       val end = node.end - PREAMBLE.length
       val text =
@@ -75,15 +75,15 @@ class FrontEndTests extends FunSuite {
 
   /// now, the actual tests
   test("DoParseSimpleCommand") {
-    runTest("__ignore round 0.5", "_ignore[_round[_const:0.5[]]]")
+    runTest("__ignore round 0.5", "_ignore()[_round()[_const(0.5)[]]]")
   }
   test("DoParseCommandWithInfix") {
-    runTest("__ignore 5 + 2", "_ignore[_plus[_const:5[], _const:2[]]]")
+    runTest("__ignore 5 + 2", "_ignore()[_plus()[_const(5.0)[], _const(2.0)[]]]")
   }
   test("DoParseTwoCommands") {
     runTest("__ignore round 0.5 fd 5",
-      "_ignore[_round[_const:0.5[]]] " +
-      "_fd[_const:5[]]")
+      "_ignore()[_round()[_const(0.5)[]]] " +
+      "_fd()[_const(5.0)[]]")
   }
   test("DoParseBadCommand1") {
     runFailure("__ignore 1 2 3", "Expected command.", 11, 12)
@@ -116,73 +116,79 @@ class FrontEndTests extends FunSuite {
   }
   test("DoParseMap") {
     runTest("__ignore map [round ?] [1.2 1.7 3.2]",
-      "_ignore[_map[_reportertask[_round[_taskvariable:1[]]], _const:[1.2 1.7 3.2][]]]")
+      "_ignore()[_map()[_reportertask()[_round()[_taskvariable(1)[]]], _const([1.2, 1.7, 3.2])[]]]")
   }
   test("DoParseMapShortSyntax") {
     runTest("__ignore map round [1.2 1.7 3.2]",
-      "_ignore[_map[_reportertask[_round[_taskvariable:1[]]], _const:[1.2 1.7 3.2][]]]")
+      "_ignore()[_map()[_reportertask()[_round()[_taskvariable(1)[]]], _const([1.2, 1.7, 3.2])[]]]")
   }
   test("DoParseForeach") {
     runTest("foreach [1 2 3] [__ignore ?]",
-      "_foreach[_const:[1 2 3][], _commandtask[[_ignore[_taskvariable:1[]]]]]")
+      "_foreach()[_const([1.0, 2.0, 3.0])[], _commandtask()[[_ignore()[_taskvariable(1)[]]]]]")
   }
   test("DoParseParenthesizedCommand") {
-    runTest("(__ignore 5)", "_ignore[_const:5[]]")
+    runTest("(__ignore 5)",
+      "_ignore()[_const(5.0)[]]")
   }
   test("DoParseParenthesizedCommandAsFromEvaluator") {
     runTest("__observercode (__ignore 5) __done",
-      "_observercode[] _ignore[_const:5[]] _done[]")
+      "_observercode()[] " +
+      "_ignore()[_const(5.0)[]] " +
+      "_done()[]")
   }
   test("ParseExpressionWithInfix") {
     runTest("__ignore 5 + 2",
-      "_ignore[_plus[_const:5[], _const:2[]]]")
+      "_ignore()[_plus()[_const(5.0)[], _const(2.0)[]]]")
   }
   test("ParseExpressionWithInfix2") {
     runTest("__ignore 5 + 2 * 7",
-      "_ignore[_plus[_const:5[], _mult[_const:2[], _const:7[]]]]")
+      "_ignore()[_plus()[_const(5.0)[], _mult()[_const(2.0)[], _const(7.0)[]]]]")
   }
   test("ParseExpressionWithInfix3") {
     runTest("__ignore 5 + 2 * 7 - 2",
-      "_ignore[_minus[_plus[_const:5[], _mult[_const:2[], _const:7[]]], _const:2[]]]")
+      "_ignore()[_minus()[_plus()[_const(5.0)[], _mult()[_const(2.0)[], _const(7.0)[]]], _const(2.0)[]]]")
   }
   test("ParseExpressionWithInfixAndPrefix") {
     runTest("__ignore round 5.2 + log 64 2 * log 64 2 - random 2",
-      "_ignore[_minus[_plus[_round[_const:5.2[]], _mult[_log[_const:64[], _const:2[]], _log[_const:64[], _const:2[]]]], _random[_const:2[]]]]")
+      "_ignore()[_minus()[_plus()[_round()[_const(5.2)[]], _mult()[_log()[_const(64.0)[], _const(2.0)[]], _log()[_const(64.0)[], _const(2.0)[]]]], _random()[_const(2.0)[]]]]")
   }
   test("ParseConstantInteger") {
-    runTest("__ignore 5", "_ignore[_const:5[]]")
+    runTest("__ignore 5",
+      "_ignore()[_const(5.0)[]]")
   }
   test("ParseConstantList") {
-    runTest("__ignore [5]", "_ignore[_const:[5][]]")
+    runTest("__ignore [5]",
+      "_ignore()[_const([5.0])[]]")
   }
   test("ParseConstantListWithSublists") {
-    runTest("__ignore [[1] [2]]", "_ignore[_const:[[1] [2]][]]")
+    runTest("__ignore [[1] [2]]",
+      "_ignore()[_const([[1.0], [2.0]])[]]")
   }
   test("ParseConstantListInsideTask1") {
     runTest("__ignore n-values 10 [[]]",
-      "_ignore[_nvalues[_const:10[], _reportertask[_const:[][]]]]")
+      "_ignore()[_nvalues()[_const(10.0)[], _reportertask()[_const([])[]]]]")
   }
   test("ParseConstantListInsideTask2") {
     runTest("__ignore n-values 10 [[5]]",
-      "_ignore[_nvalues[_const:10[], _reportertask[_const:[5][]]]]")
+      "_ignore()[_nvalues()[_const(10.0)[], _reportertask()[_const([5.0])[]]]]")
   }
   test("ParseCommandTask1") {
     runTest("__ignore task [print ?]",
-      "_ignore[_task[_commandtask[[_print[_taskvariable:1[]]]]]]")
+      "_ignore()[_task()[_commandtask()[[_print()[_taskvariable(1)[]]]]]]")
   }
   test("ParseCommandTask2") {
     runTest("__ignore task [print 5]",
-      "_ignore[_task[_commandtask[[_print[_const:5[]]]]]]")
+      "_ignore()[_task()[_commandtask()[[_print()[_const(5.0)[]]]]]]")
   }
   test("ParseCommandTask3") {
     // it would be nice if this resulted in a CompilerException instead
     // of failing at runtime - ST 2/6/11
     runTest("__ignore runresult task [__ignore 5]",
-      "_ignore[_runresult[_task[_commandtask[[_ignore[_const:5[]]]]]]]")
+      "_ignore()[_runresult()[_task()[_commandtask()[[_ignore()[_const(5.0)[]]]]]]]")
   }
   test("ParseDiffuse") {
     runTest("diffuse pcolor 1",
-      "_diffuse[_patchvariable:2[], _const:1[]]")
+      "_diffuse()[_patchvariable(2)[], _const(1.0)[]]")
   }
 
   // in SetBreed2, we are checking that since no singular form of `fish`
@@ -190,13 +196,11 @@ class FrontEndTests extends FunSuite {
   // isn't mistaken for a singular form and parsed as `_breedsingular` - ST 4/12/14
   test("SetBreed1") {
     runTest("__ignore turtle 0",
-      "_ignore[_turtle[_const:0[]]]",
-      "breed [fish a-fish] " + PREAMBLE)
+      "_ignore()[_turtle()[_const(0.0)[]]]")
   }
   test("SetBreed2") {
     runTest("__ignore turtle 0",
-      "_ignore[_turtle[_const:0[]]]",
-      "breed [fish] " + PREAMBLE)
+      "_ignore()[_turtle()[_const(0.0)[]]]")
   }
 
   /// tests using testStartAndEnd

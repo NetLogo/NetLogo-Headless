@@ -1,14 +1,22 @@
 // (C) Uri Wilensky. https://github.com/NetLogo/NetLogo
 
 package org.nlogo.compile
-package front
+package middle
 
-import org.nlogo.{ core, nvm }
+import org.nlogo.{ api, core, nvm }
+
+// This can't be an ASTVisitor, unless ASTVisitor were generalized,
+// because each of the methods needs to return a value, and the
+// types are always different.
+//
+// You could imagine generalizing this into some visitor-like thing,
+// but right now, this is the only place in the code where we need
+// to do something like this with core ASTs.
 
 class ASTBackifier(backifier: Backifier) {
 
-  def backify(procedure: nvm.Procedure, pd: core.ProcedureDefinition): ProcedureDefinition =
-    new ProcedureDefinition(procedure, backify(pd.statements))
+  def backify(proc: nvm.Procedure, pd: core.ProcedureDefinition): ProcedureDefinition =
+    new ProcedureDefinition(proc, backify(pd.statements))
 
   def backify(expr: core.Expression): Expression =
     expr match {

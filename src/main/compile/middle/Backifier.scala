@@ -1,16 +1,17 @@
 // (C) Uri Wilensky. https://github.com/NetLogo/NetLogo
 
 package org.nlogo.compile
-package front
+package middle
 
-import org.nlogo.{ api, core, nvm, parse, prim }
+import org.nlogo.{ api, core, nvm, parse, prim },
+  nvm.Procedure.ProceduresMap
 
 // This is seriously gross and horrible. - ST 4/11/14
 
 class Backifier(
   program: api.Program,
   extensionManager: api.ExtensionManager,
-  procedures: nvm.FrontEndInterface.ProceduresMap) {
+  procedures: ProceduresMap) {
 
   private def backifyName(name: String): String =
     name.replaceFirst("\\.core\\.", ".")
