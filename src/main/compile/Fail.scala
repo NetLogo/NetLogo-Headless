@@ -2,8 +2,9 @@
 
 package org.nlogo.compile
 
-import org.nlogo.core.Token
-import org.nlogo.api.CompilerException
+import
+  org.nlogo.core, core.Token,
+  org.nlogo.api.CompilerException
 
 object Fail {
 
@@ -18,6 +19,10 @@ object Fail {
     if(!condition)
       exception(desc, token)
   }
+  def cAssert(condition: Boolean, desc: =>String, node: core.AstNode) {
+    if(!condition)
+      exception(desc, node)
+  }
   def cAssert(condition: Boolean, desc: =>String, node: AstNode) {
     if(!condition)
       exception(desc, node)
@@ -27,6 +32,8 @@ object Fail {
     throw new CompilerException(message, start, end, filename)
   def exception(message: String, token: Token) =
     throw new CompilerException(message, token.start, token.end, token.filename)
+  def exception(message: String, node: core.AstNode) =
+    throw new CompilerException(message, node.start, node.end, node.file)
   def exception(message: String, node: AstNode) =
     throw new CompilerException(message, node.start, node.end, node.file)
 
