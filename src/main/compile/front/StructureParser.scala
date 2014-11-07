@@ -21,7 +21,7 @@ package front
 
 import org.nlogo.{ core, api, nvm, parse },
   parse._,
-  core.Token,
+  core.{ Token, StructureDeclarations },
   nvm.StructureResults,
   nvm.FrontEndInterface.ProceduresMap,
   Fail._
@@ -84,7 +84,7 @@ object StructureParser {
 
   private def breedPrimitives(declarations: Seq[StructureDeclarations.Declaration]): Map[String, String] = {
     import org.nlogo.parse.BreedIdentifierHandler._
-    import org.nlogo.parse.StructureDeclarations.Breed
+    import org.nlogo.core.StructureDeclarations.Breed
 
     declarations.flatMap {
       case breed: Breed =>
