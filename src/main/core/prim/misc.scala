@@ -392,6 +392,12 @@ case class _turtlevariable(vn: Int) extends Reporter {
       ret = Syntax.WildcardType | Syntax.ReferenceType,
       agentClassString = "-T--")
 }
+case class _unaryminus() extends Reporter {
+  override def syntax =
+    Syntax.reporterSyntax(
+      right = List(Syntax.NumberType),
+      ret = Syntax.NumberType)
+}
 case class _with() extends Reporter {
   override def syntax =
     Syntax.reporterSyntax(

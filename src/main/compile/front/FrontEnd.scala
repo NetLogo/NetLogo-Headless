@@ -63,10 +63,8 @@ trait FrontEndMain {
         val letScoper = new parse.LetScoper(usedNames)
         letScoper(namedTokens.buffered)
       }
-      val procdef =
-        new ExpressionParser(backifier, procedure)
-          .parse(namedTokens)
-      procdef
+      new ASTBackifier(backifier)
+        .backify(procedure, ExpressionParser(namedTokens))
     }
     val procdefs = structureResults.procedures.values.map(parseProcedure).toVector
     (procdefs, structureResults)

@@ -1,8 +1,24 @@
 // (C) Uri Wilensky. https://github.com/NetLogo/NetLogo
 
-package org.nlogo.compile
+package org.nlogo.core
 
-import org.nlogo.{ core, nvm }
+// here is the AstNode (AST = Abstract Syntax Tree) trait, along with its extending traits
+// Expression and Application and their subclasses: ProcedureDefinition, Statements, Statement,
+// ReporterApp, ReporterBlock, CommandBlock, DelayedBlock.
+
+/*
+ * The jargon here is a bit different from the usual NetLogo terminology:
+ *  - "command" is an actual command token itself, e.g., show, run.
+ *  - "reporter" is an actual reporter itself, e.g., +, round, with.
+ *  - "statement" is a syntactic form with no value and a command as head (e.g., show 5)
+ *  - "expression" is a syntactic form which can occur as an argument to a command or to a
+ *    reporter. expressions denote values. there are two basic kinds of expression:
+ *     - reporter applications (infix or prefix). Note that this is reporter in the internal sense,
+ *       which includes variables and literals. So these include, e.g., turtles with [ true ], 5 +
+ *       10, 5, [1 2 3].
+ *     - blocks. command and reporter blocks are expressions of this type.  a command block contains
+ *       zero or more statements, while a reporter block contains exactly one expression.
+ */
 
 /**
  * An interface representing a node in the NetLogo abstract syntax tree (AKA parse tree, in
@@ -16,35 +32,6 @@ trait AstNode {
   def start: Int
   def end: Int
   def file: String
-  def accept(v: AstVisitor)
-}
-
-/**
- * an interface for AST tree-walkers. This represents the usual Visitor
- * pattern with double-dispatch.
- */
-trait AstVisitor {
-  def visitProcedureDefinition(proc: ProcedureDefinition)
-  def visitCommandBlock(block: CommandBlock)
-  def visitReporterApp(app: ReporterApp)
-  def visitReporterBlock(block: ReporterBlock)
-  def visitStatement(stmt: Statement)
-  def visitStatements(stmts: Statements)
-}
-
-/**
- * The default AST tree-walker. This simply visits each node of the
- * tree, and visits any children of each node in turn. Subclasses can
- * implement pre-order or post-order traversal, or a wide range of other
- * strategies.
- */
-class DefaultAstVisitor extends AstVisitor {
-  def visitProcedureDefinition(proc: ProcedureDefinition) { proc.statements.accept(this) }
-  def visitCommandBlock(block: CommandBlock) { block.statements.accept(this) }
-  def visitReporterApp(app: ReporterApp) { app.args.foreach(_.accept(this)) }
-  def visitReporterBlock(block: ReporterBlock) { block.app.accept(this) }
-  def visitStatement(stmt: Statement) { stmt.args.foreach(_.accept(this)) }
-  def visitStatements(stmts: Statements) { stmts.stmts.foreach(_.accept(this)) }
 }
 
 /**
@@ -69,8 +56,7 @@ trait Expression extends AstNode {
  */
 trait Application extends AstNode {
   def args: Seq[Expression]
-  def coreInstruction: core.Instruction
-  def nvmInstruction: nvm.Instruction
+  def instruction: Instruction
   def end_=(end: Int)
   def addArgument(arg: Expression)
   def replaceArg(index: Int, expr: Expression)
@@ -80,11 +66,10 @@ trait Application extends AstNode {
  * represents a single procedure definition.  really just a container
  * for the procedure body, which is a Statements object.
  */
-class ProcedureDefinition(val procedure: nvm.Procedure, val statements: Statements) extends AstNode {
-  def start = procedure.pos
-  def end = procedure.end
-  def file = procedure.filename
-  def accept(v: AstVisitor) { v.visitProcedureDefinition(this) }
+class ProcedureDefinition(val procedure: StructureDeclarations.Procedure, val statements: Statements) extends AstNode {
+  def start = throw new UnsupportedOperationException
+  def end = throw new UnsupportedOperationException
+  def file = throw new UnsupportedOperationException
 }
 
 /**
@@ -110,24 +95,20 @@ class Statements(val file: String) extends AstNode {
     else { start = stmts(0).start; end = stmts(stmts.size - 1).end }
   }
   override def toString = stmts.mkString(" ")
-  def accept(v: AstVisitor) { v.visitStatements(this) }
 }
 
 /**
  * represents a NetLogo statement. Statements only have one form: command
  * application.
  */
-class Statement(var coreCommand: core.Command, var nvmCommand: nvm.Command, var start: Int, var end: Int, val file: String)
+class Statement(var command: Command, var start: Int, var end: Int, val file: String)
     extends Application {
   private val _args = collection.mutable.Buffer[Expression]()
   override def args: Seq[Expression] = _args
-  def nvmInstruction = nvmCommand // for Application
-  def coreInstruction = coreCommand // for Application
+  def instruction = command // for Application
   def addArgument(arg: Expression) { _args.append(arg) }
-  override def toString = nvmCommand.toString + "[" + args.mkString(", ") + "]"
-  def accept(v: AstVisitor) { v.visitStatement(this) }
+  override def toString = command.toString + "[" + args.mkString(", ") + "]"
   def replaceArg(index: Int, expr: Expression) { _args(index) = expr }
-
   def removeArgument(index: Int) { _args.remove(index) }
 }
 
@@ -138,9 +119,8 @@ class Statement(var coreCommand: core.Command, var nvmCommand: nvm.Command, var 
  * to commands and reporters, etc.
  */
 class CommandBlock(val statements: Statements, var start: Int, var end: Int, val file: String) extends Expression {
-  def reportedType() = core.Syntax.CommandBlockType
+  def reportedType() = Syntax.CommandBlockType
   override def toString = "[" + statements.toString + "]"
-  def accept(v: AstVisitor) { v.visitCommandBlock(this) }
 }
 
 /**
@@ -152,7 +132,6 @@ class CommandBlock(val statements: Statements, var start: Int, var end: Int, val
  */
 class ReporterBlock(val app: ReporterApp, var start: Int, var end: Int, val file: String) extends Expression {
   override def toString = "[" + app.toString() + "]"
-  def accept(v: AstVisitor) { v.visitReporterBlock(this) }
   /**
    * computes the type of this block. Reporter block types are
    * determined in a somewhat complicated way. This is derived from
@@ -160,7 +139,7 @@ class ReporterBlock(val app: ReporterApp, var start: Int, var end: Int, val file
    */
   def reportedType(): Int = {
     val appType = app.reportedType
-    import core.Syntax._
+    import Syntax._
     appType match {
       case BooleanType => BooleanBlockType
       case NumberType => NumberBlockType
@@ -179,20 +158,18 @@ class ReporterBlock(val app: ReporterApp, var start: Int, var end: Int, val file
  * represents things like constants, which are converted into no-arg reporter
  * applications as they're parsed.
  */
-class ReporterApp(var coreReporter: core.Reporter, var nvmReporter: nvm.Reporter, var start: Int, var end: Int, val file: String)
+class ReporterApp(var reporter: Reporter, var start: Int, var end: Int, val file: String)
 extends Expression with Application {
   /**
    * the args for this application.
    */
   private val _args = collection.mutable.Buffer[Expression]()
   override def args: Seq[Expression] = _args
-  def coreInstruction = coreReporter // for Application
-  def nvmInstruction = nvmReporter // for Application
+  def instruction = reporter // for Application
   def addArgument(arg: Expression) { _args.append(arg) }
-  def reportedType() = coreReporter.syntax.ret
-  def accept(v: AstVisitor) { v.visitReporterApp(this) }
+  def reportedType() = reporter.syntax.ret
   def removeArgument(index: Int) { _args.remove(index) }
   def replaceArg(index: Int, expr: Expression) { _args(index) = expr }
   def clearArgs() { _args.clear() }
-  override def toString = nvmReporter.toString + "[" + args.mkString(", ") + "]"
+  override def toString = reporter.toString + "[" + args.mkString(", ") + "]"
 }
