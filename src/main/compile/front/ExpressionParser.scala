@@ -4,7 +4,7 @@ package org.nlogo.compile
 package front
 
 import Fail.{ cAssert, exception }
-import org.nlogo.{ core, api, nvm, parse, prim },
+import org.nlogo.{ core, api, parse, prim },
   core.{ Syntax, Token, TokenType },
     Syntax.compatible,
   api.{ LogoList, Nobody },
@@ -14,7 +14,7 @@ import org.nlogo.{ core, api, nvm, parse, prim },
  * Parses procedure bodies.
  */
 
-class ExpressionParser(backifier: Backifier, procedure: nvm.Procedure) {
+object ExpressionParser {
 
   /**
    * one less than the lowest valid operator precedence. See Syntax.
@@ -24,52 +24,12 @@ class ExpressionParser(backifier: Backifier, procedure: nvm.Procedure) {
   /**
    * parses a procedure. Procedures are a bunch of statements (not a block of statements, that's
    * something else), and so are parsed as such. */
-  def parse(tokens: Iterator[Token]): ProcedureDefinition = {
+  def apply(tokens: Iterator[Token]): core.ProcedureDefinition = {
     val buffered = tokens.buffered
     val stmts = new core.Statements(buffered.head.filename)
     while (buffered.head.tpe != TokenType.Eof)
       stmts.addStatement(parseStatement(buffered, false))
-    backify(new core.ProcedureDefinition(null, stmts))
-  }
-
-  def backify(pd: core.ProcedureDefinition): ProcedureDefinition =
-    new ProcedureDefinition(procedure, backify(pd.statements))
-
-  def backify(expr: core.Expression): Expression =
-    expr match {
-      case cb: core.CommandBlock => backify(cb)
-      case rb: core.ReporterBlock => backify(rb)
-      case ra: core.ReporterApp => backify(ra)
-    }
-
-  def backify(stmts: core.Statements): Statements = {
-    val result = new Statements(stmts.file)
-    stmts.stmts.map(backify).foreach(result.addStatement)
-    result
-  }
-
-  def backify(stmt: core.Statement): Statement = {
-    val result =
-      new Statement(stmt.command, backifier(stmt.command),
-        stmt.start, stmt.end, stmt.file)
-    stmt.args.map(backify).foreach(result.addArgument)
-    result
-  }
-
-  def backify(cb: core.CommandBlock): CommandBlock =
-    new CommandBlock(backify(cb.statements),
-      cb.start, cb.end, cb.file)
-
-  def backify(rb: core.ReporterBlock): ReporterBlock =
-    new ReporterBlock(backify(rb.app),
-      rb.start, rb.end, rb.file)
-
-  def backify(ra: core.ReporterApp): ReporterApp = {
-    val result =
-      new ReporterApp(ra.reporter, backifier(ra.reporter),
-        ra.start, ra.end, ra.file)
-    ra.args.map(backify).foreach(result.addArgument)
-    result
+    new core.ProcedureDefinition(null, stmts)  // TODO: null?!
   }
 
   /**
