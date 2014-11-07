@@ -2,7 +2,8 @@
 
 package org.nlogo.parse
 
-import org.nlogo.parse.StructureDeclarations.Identifier
+import org.nlogo.core.StructureDeclarations,
+  StructureDeclarations.Identifier
 import org.scalatest.FunSuite
 import collection.immutable.ListMap
 import org.nlogo.{ core, api },

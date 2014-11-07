@@ -1,8 +1,6 @@
 // (C) Uri Wilensky. https://github.com/NetLogo/NetLogo
 
-package org.nlogo.parse
-
-import org.nlogo.core.Token
+package org.nlogo.core
 
 // retains tokens so we can report error locations
 
