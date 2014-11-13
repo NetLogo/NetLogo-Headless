@@ -22,12 +22,10 @@ class ASTBackifier(program: api.Program,
 
   val backifier = new Backifier(program, extensionManager, procedures)
 
-  def backifyAll(proceduresAndDefinitions: ProceduresWithDefinitions): (Seq[ProcedureDefinition], api.Program) = {
-    val procdefs = proceduresAndDefinitions.map {
+  def backifyAll(proceduresAndDefinitions: ProceduresWithDefinitions): Seq[ProcedureDefinition] =
+    proceduresAndDefinitions.map {
       case (x: FrontEndProcedure, y: core.ProcedureDefinition) => backify(x, y)
     }.toSeq
-    (procdefs, program)
-  }
 
   def backify(procedure: org.nlogo.api.FrontEndProcedure, pd: core.ProcedureDefinition): ProcedureDefinition =
     new ProcedureDefinition(procedures(procedure.name), backify(pd.statements))

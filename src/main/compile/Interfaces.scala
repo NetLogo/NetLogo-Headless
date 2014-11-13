@@ -8,7 +8,7 @@ import org.nlogo.{ api, nvm },
   api.FrontEndInterface.ProceduresMap
 
 object FrontEndInterface {
-  type FrontEndResults = (Seq[ProcedureDefinition], api.Program)
+  type FrontEndResults = (Seq[ProcedureDefinition], StructureResults)
 }
 trait FrontEndInterface extends api.FrontEndInterface {
   def frontEnd(

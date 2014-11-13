@@ -34,10 +34,10 @@ object Compiler extends nvm.CompilerInterface {
   private def compile(source: String, displayName: Option[String], program: api.Program, subprogram: Boolean,
       oldProcedures: ProceduresMap, extensionManager: api.ExtensionManager,
       flags: nvm.CompilerFlags): nvm.CompilerResults = {
-    val (topLevelDefs, compiledProgram) =
+    val (topLevelDefs, structureResults) =
       frontEnd.frontEnd(source, displayName, program, subprogram, oldProcedures, extensionManager)
     val allDefs = middleEnd.middleEnd(topLevelDefs, flags)
-    backEnd.backEnd(allDefs, compiledProgram, source, extensionManager.profilingEnabled, flags)
+    backEnd.backEnd(allDefs, structureResults.program, source, extensionManager.profilingEnabled, flags)
   }
 
   def makeLiteralReporter(value: AnyRef): nvm.Reporter =

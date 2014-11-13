@@ -68,6 +68,6 @@ trait FrontEndMain {
     val procDefs = procs.map(parseProcedure)
     val astBackifier = new ASTBackifier(structureResults.program, extensionManager,
       oldProcedures ++ structureResults.procedures)
-    astBackifier.backifyAll(procs.zip(procDefs))
+    (astBackifier.backifyAll(procs.zip(procDefs)), structureResults)
   }
 }

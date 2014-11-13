@@ -1,7 +1,6 @@
 // (C) Uri Wilensky. https://github.com/NetLogo/NetLogo
 
 package org.nlogo.compile
-package front
 
 import org.nlogo.{core, api},
   api.FrontEndInterface.{ ProceduresMap, NoProcedures }
