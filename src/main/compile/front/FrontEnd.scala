@@ -36,14 +36,14 @@ trait FrontEndMain {
 
   // entry points
 
-  def frontEnd(source: String, oldProcedures: ProceduresMap = api.FrontEndInterface.NoProcedures,
-      program: api.Program = api.Program.empty()): (Seq[ProcedureDefinition], api.Program) =
-    frontEndHelper(source, None, program, true,
-      oldProcedures, new api.DummyExtensionManager)
-
-  def frontEndHelper(source: String, displayName: Option[String], program: api.Program, subprogram: Boolean,
-      oldProcedures: FrontEndInterface.ProceduresMap, extensionManager: api.ExtensionManager)
-    : (Seq[ProcedureDefinition], api.Program) = {
+  def frontEnd(
+        source: String,
+        displayName: Option[String] = None,
+        program: api.Program = api.Program.empty(),
+        subprogram: Boolean = true,
+        oldProcedures: FrontEndInterface.ProceduresMap = api.FrontEndInterface.NoProcedures,
+        extensionManager: api.ExtensionManager = new api.DummyExtensionManager)
+      : (Seq[ProcedureDefinition], api.Program) = {
     val structureResults = StructureParser.parseAll(
       tokenizer, source, displayName, program, subprogram, oldProcedures, extensionManager)
     def parseProcedure(procedure: api.FrontEndProcedure): core.ProcedureDefinition = {
