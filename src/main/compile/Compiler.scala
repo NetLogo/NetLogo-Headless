@@ -35,7 +35,7 @@ object Compiler extends nvm.CompilerInterface {
       oldProcedures: ProceduresMap, extensionManager: api.ExtensionManager,
       flags: nvm.CompilerFlags): nvm.CompilerResults = {
     val (topLevelDefs, compiledProgram) =
-      frontEnd.frontEndHelper(source, displayName, program, subprogram, oldProcedures, extensionManager)
+      frontEnd.frontEnd(source, displayName, program, subprogram, oldProcedures, extensionManager)
     val allDefs = middleEnd.middleEnd(topLevelDefs, flags)
     backEnd.backEnd(allDefs, compiledProgram, source, extensionManager.profilingEnabled, flags)
   }
