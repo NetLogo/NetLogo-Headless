@@ -30,7 +30,6 @@ class FrontEnd extends FrontEndMain
 
 trait FrontEndMain {
 
-  import api.FrontEndInterface
   import api.FrontEndInterface.ProceduresMap
   import FrontEnd.tokenizer
 
@@ -41,9 +40,9 @@ trait FrontEndMain {
         displayName: Option[String] = None,
         program: api.Program = api.Program.empty(),
         subprogram: Boolean = true,
-        oldProcedures: FrontEndInterface.ProceduresMap = api.FrontEndInterface.NoProcedures,
+        oldProcedures: api.FrontEndInterface.ProceduresMap = api.FrontEndInterface.NoProcedures,
         extensionManager: api.ExtensionManager = new api.DummyExtensionManager)
-      : (Seq[ProcedureDefinition], api.Program) = {
+      : FrontEndInterface.FrontEndResults = {
     val structureResults = StructureParser.parseAll(
       tokenizer, source, displayName, program, subprogram, oldProcedures, extensionManager)
     def parseProcedure(procedure: api.FrontEndProcedure): core.ProcedureDefinition = {

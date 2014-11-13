@@ -7,6 +7,9 @@ package org.nlogo.compile
 import org.nlogo.{ api, nvm },
   api.FrontEndInterface.ProceduresMap
 
+object FrontEndInterface {
+  type FrontEndResults = (Seq[ProcedureDefinition], api.Program)
+}
 trait FrontEndInterface extends api.FrontEndInterface {
   def frontEnd(
         source: String,
@@ -15,7 +18,7 @@ trait FrontEndInterface extends api.FrontEndInterface {
         subprogram: Boolean = true,
         oldProcedures: api.FrontEndInterface.ProceduresMap = api.FrontEndInterface.NoProcedures,
         extensionManager: api.ExtensionManager = new api.DummyExtensionManager)
-      : (Seq[ProcedureDefinition], api.Program)
+      : FrontEndInterface.FrontEndResults
 }
 
 trait MiddleEndInterface {
