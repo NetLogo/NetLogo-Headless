@@ -36,7 +36,12 @@ object Compiler extends nvm.CompilerInterface {
       flags: nvm.CompilerFlags): nvm.CompilerResults = {
     val (topLevelDefs, structureResults) =
       frontEnd.frontEnd(source, displayName, program, subprogram, oldProcedures, extensionManager)
-    val allDefs = middleEnd.middleEnd(topLevelDefs, flags)
+    val astBackifier = new front.ASTBackifier(structureResults.program, extensionManager,
+      oldProcedures ++ structureResults.procedures)
+    val backifiedProcDefs =
+      astBackifier.backifyAll(
+        structureResults.procedures.values.zip(topLevelDefs))
+    val allDefs = middleEnd.middleEnd(backifiedProcDefs, flags)
     backEnd.backEnd(allDefs, structureResults.program, source, extensionManager.profilingEnabled, flags)
   }
 

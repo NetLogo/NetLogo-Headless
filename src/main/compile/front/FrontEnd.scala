@@ -64,10 +64,6 @@ trait FrontEndMain {
       }
       ExpressionParser(namedTokens)
     }
-    val procs = structureResults.procedures.values
-    val procDefs = procs.map(parseProcedure)
-    val astBackifier = new ASTBackifier(structureResults.program, extensionManager,
-      oldProcedures ++ structureResults.procedures)
-    (astBackifier.backifyAll(procs.zip(procDefs)), structureResults)
+    (structureResults.procedures.values.map(parseProcedure).toSeq, structureResults)
   }
 }
