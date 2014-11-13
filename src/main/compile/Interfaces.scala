@@ -4,11 +4,11 @@ package org.nlogo.compile
 
 // has to be in this package because that's where ProcedureDefinition is - ST 8/27/13
 
-import org.nlogo.{ api, nvm },
+import org.nlogo.{ api, core, nvm },
   api.FrontEndInterface.ProceduresMap
 
 object FrontEndInterface {
-  type FrontEndResults = (Seq[ProcedureDefinition], StructureResults)
+  type FrontEndResults = (Seq[core.ProcedureDefinition], StructureResults)
 }
 trait FrontEndInterface extends api.FrontEndInterface {
   def frontEnd(
