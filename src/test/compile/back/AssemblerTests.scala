@@ -5,18 +5,13 @@ package back
 
 import org.scalatest.FunSuite
 import org.nlogo.nvm
-import org.nlogo.api.Femto
+import org.nlogo.api, api.Femto
 
 class AssemblerTests extends FunSuite {
 
-  // cheating here - ST 8/27/13
-  val frontEnd = Femto.get[FrontEndInterface](
-    "org.nlogo.compile.front.FrontEnd")
-
   def compile(keyword: String, source: String): nvm.Procedure = {
-    val (defs, results) =
-      frontEnd.frontEnd(
-        keyword + " foo " + source + "\nend")
+    val defs = Scaffold.apply(
+      keyword + " foo " + source + "\nend")
     assertResult(1)(defs.size)
     for (procdef <- defs) {
       procdef.accept(new ArgumentStuffer)
