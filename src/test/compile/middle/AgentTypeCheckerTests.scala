@@ -9,17 +9,12 @@ import org.nlogo.api.Femto
 
 class AgentTypeCheckerTests extends FunSuite {
 
-  // cheating here - ST 8/27/13
-  val frontEnd = Femto.get[FrontEndInterface](
-    "org.nlogo.compile.front.FrontEnd")
-
   /// first some helpers
-  def compile(source: String): Seq[ProcedureDefinition] =
-    frontEnd.frontEnd(source) match {
-      case (defs, _) =>
-        new AgentTypeChecker(defs).check()
-        defs
-    }
+  def compile(source: String): Seq[ProcedureDefinition] = {
+    val defs = back.Scaffold(source)
+    new AgentTypeChecker(defs).check()
+    defs
+  }
 
   def testBoth(source: String, expected: String) {
     testOne(source, expected)

@@ -16,7 +16,7 @@ class FrontEndTests extends FunSuite {
   val POSTAMBLE = "\nend"
 
   /// helpers
-  def compile(source: String, preamble: String = PREAMBLE): Seq[Statements] =
+  def compile(source: String, preamble: String = PREAMBLE): Seq[core.Statements] =
     FrontEnd.frontEnd(preamble + source + POSTAMBLE) match {
       case (procs, _) =>
         procs.map(_.statements)
@@ -26,7 +26,7 @@ class FrontEndTests extends FunSuite {
    * utility method useful for testing that start()
    * and end() return right answers everywhere
    */
-  def statementsToString(ss: Seq[Statements], source: String) =
+  def statementsToString(ss: Seq[core.Statements], source: String) =
     (for (stmts <- ss) yield {
       val visitor = new PositionsCheckVisitor(source)
       visitor.visitStatements(stmts)

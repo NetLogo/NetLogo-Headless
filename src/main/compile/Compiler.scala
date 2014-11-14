@@ -2,7 +2,7 @@
 
 package org.nlogo.compile
 
-import org.nlogo.{ api, nvm },
+import org.nlogo.{ core, api, nvm },
   nvm.Procedure.{ ProceduresMap, NoProcedures },
   org.nlogo.api.Femto
 
@@ -34,28 +34,35 @@ object Compiler extends nvm.CompilerInterface {
   private def compile(source: String, displayName: Option[String], oldProgram: api.Program, subprogram: Boolean,
       oldProcedures: ProceduresMap, extensionManager: api.ExtensionManager,
       flags: nvm.CompilerFlags): nvm.CompilerResults = {
-    // front end
     val (topLevelDefs, structureResults) =
       frontEnd.frontEnd(source, displayName, oldProgram, subprogram, oldProcedures, extensionManager)
-    // translate from front to middle/back
-    val backifiedProcDefs = {
-      val newProcedures = structureResults.procedures.mapValues(fromApiProcedure).toMap
-      val backifier = new middle.Backifier(
-        structureResults.program, extensionManager, oldProcedures ++ newProcedures)
-      val astBackifier = new middle.ASTBackifier(backifier)
-      (newProcedures.values, topLevelDefs)
-        .zipped
-        .map(astBackifier.backify)
-        .toSeq
-    }
-    // middle end
-    val allDefs = middleEnd.middleEnd(backifiedProcDefs, flags)
-    // back end
+    val fmb = FrontMiddleBridge(structureResults, extensionManager, oldProcedures, topLevelDefs)
+    val bridged = bridge(fmb)
+    val allDefs = middleEnd.middleEnd(bridged, flags)
     backEnd.backEnd(allDefs, structureResults.program, source, extensionManager.profilingEnabled, flags)
   }
 
   def makeLiteralReporter(value: AnyRef): nvm.Reporter =
     Literals.makeLiteralReporter(value)
+
+  case class FrontMiddleBridge(
+    structureResults: StructureResults,
+    extensionManager: api.ExtensionManager,
+    oldProcedures: ProceduresMap,
+    topLevelDefs: Seq[core.ProcedureDefinition]
+  )
+
+  def bridge(fmb: FrontMiddleBridge): Seq[ProcedureDefinition] = {
+    import fmb._
+    val newProcedures = structureResults.procedures.mapValues(fromApiProcedure).toMap
+    val backifier = new middle.Backifier(
+      structureResults.program, extensionManager, oldProcedures ++ newProcedures)
+    val astBackifier = new middle.ASTBackifier(backifier)
+    (newProcedures.values, topLevelDefs)
+      .zipped
+      .map(astBackifier.backify)
+      .toSeq
+  }
 
   private def fromApiProcedure(p: api.FrontEndProcedure): nvm.Procedure = {
     val proc = new nvm.Procedure(

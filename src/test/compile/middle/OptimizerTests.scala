@@ -8,10 +8,6 @@ import org.nlogo.api.Femto
 
 class OptimizerTests extends FunSuite {
 
-  // cheating here - ST 8/27/13
-  val frontEnd = Femto.get[FrontEndInterface](
-    "org.nlogo.compile.front.FrontEnd")
-
   def compileReporter(source: String) =
     compile("globals [glob1] breed [frogs frog] to-report __test [x] report " + source + "\nend")
       .statements.stmts.head.args.head.toString
@@ -20,7 +16,7 @@ class OptimizerTests extends FunSuite {
       .statements.stmts.head.toString
 
   def compile(source: String): ProcedureDefinition = {
-    val (procdef +: _, _) = frontEnd.frontEnd(source)
+    val procdef +: _ = back.Scaffold(source)
     procdef.accept(Optimizer)
     procdef
   }
