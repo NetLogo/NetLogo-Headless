@@ -14,7 +14,7 @@ class WidgetTests extends FunSuite {
     val chooser = Chooser(
       display = "FOOBAR",
       varName = "FOOBAR",
-      choices = List(l, 4.toDouble).asInstanceOf[List[AnyRef]])
+      choices = List(ChooseableList(l), ChooseableDouble(4.toDouble)))
     assertResult("[[1.0 2.0 3.0] 4.0]")(chooser.constraint(1))
   }
 }

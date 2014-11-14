@@ -2,7 +2,8 @@
 
 package org.nlogo.api.model
 
-import org.nlogo.api
+import org.nlogo.api,
+  api.{CompilerException, Nobody}
 import org.nlogo.core.StringEscaper.unescapeString
 import org.nlogo.core.StringEscaper.escapeString
 import org.nlogo.core._
@@ -347,7 +348,7 @@ object SwitchReader extends BaseWidgetReader {
   }
 }
 
-case class ChooserReader(val parser: api.ParserServices) extends BaseWidgetReader {
+case class ChooserReader(parser: api.ParserServices) extends BaseWidgetReader {
   type T = Chooser
 
   def definition = List(new SpecifiedLine("CHOOSER"),
@@ -361,13 +362,24 @@ case class ChooserReader(val parser: api.ParserServices) extends BaseWidgetReade
                         IntLine()   // current choice
                       )
   def asList(chooser: Chooser) = List((), chooser.left, chooser.top, chooser.right, chooser.bottom, chooser.display,
-    chooser.varName, chooser.choices.map(v => api.Dump.logoObject(v, true, false)).mkString(" "), chooser.currentChoice)
+    chooser.varName, chooser.choices.map(v => api.Dump.logoObject(v.value, true, false)).mkString(" "), chooser.currentChoice)
   def asWidget(vals: List[Any]): Chooser = {
     val List(_, left: Int, top: Int, right: Int, bottom: Int, display: String, varName: String,
-      choicesStr: String, currentChoice: Int) = vals
-    val choices = parser.readFromString("[" + choicesStr + "]").asInstanceOf[api.LogoList]
+    choicesStr: String, currentChoice: Int) = vals
 
-    Chooser(display, left, top, right, bottom, varName, choices.toList, currentChoice)
+    val choices = parser.readFromString(s"[$choicesStr]").asInstanceOf[api.LogoList].toList
+
+    def isOrContainsNobody(l: Any): Boolean = l match {
+      case Nobody => true
+      case l: List[Any] => l.exists(isOrContainsNobody)
+      case ll: LogoList => isOrContainsNobody(ll.toList)
+      case _ => false
+    }
+
+    if (isOrContainsNobody(choices)) throw new CompilerException(
+      "nobody may not appear in a chooser value", Int.MaxValue, Int.MaxValue, "")
+
+    Chooser(display, left, top, right, bottom, varName, choices.map(Chooseable(_)), currentChoice)
   }
 }
 

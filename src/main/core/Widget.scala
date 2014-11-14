@@ -40,12 +40,48 @@ case class Switch(display: String, left: Int = 0, top: Int = 0, right: Int = 0, 
   override def default = on
   override def constraint = List("SWITCH", asNetLogoString(default))
 }
-case class Chooser(display: String, left: Int = 0, top: Int = 0, right: Int = 0, bottom: Int = 0,
-             varName: String, choices: List[AnyRef] = Nil, currentChoice: Int = 0)
-           extends Widget with DeclaresGlobal with DeclaresGlobalCommand with DeclaresConstraint {
-  override def default = choices(currentChoice)
-  override def constraint = List("CHOOSER", asNetLogoString(choices), currentChoice.toString)
+
+sealed trait Chooseable {
+  type ChosenType <: AnyRef
+
+  def value: ChosenType
 }
+
+object Chooseable {
+  def apply(a: AnyRef): Chooseable = {
+    a match {
+      case s: String => ChooseableString(s)
+      case d: java.lang.Double => ChooseableDouble(d)
+      case b: java.lang.Boolean => ChooseableBoolean(b)
+      case l: LogoList => ChooseableList(l)
+      case invalidElement => throw new RuntimeException(s"Invalid chooser option $invalidElement")
+    }
+  }
+}
+
+case class ChooseableDouble(value: java.lang.Double) extends Chooseable {
+  type ChosenType = java.lang.Double
+}
+
+case class ChooseableString(value: String) extends Chooseable {
+  type ChosenType = String
+}
+
+case class ChooseableList(value: LogoList) extends Chooseable {
+  type ChosenType = LogoList
+}
+
+case class ChooseableBoolean(value: java.lang.Boolean) extends Chooseable {
+  type ChosenType = java.lang.Boolean
+}
+
+case class Chooser(display: String, left: Int = 0, top: Int = 0, right: Int = 0, bottom: Int = 0,
+             varName: String, choices: List[Chooseable] = Nil, currentChoice: Int = 0)
+           extends Widget with DeclaresGlobal with DeclaresGlobalCommand with DeclaresConstraint {
+  override def default = choices(currentChoice).value
+  override def constraint = List("CHOOSER", asNetLogoString(choices.map(_.value)), currentChoice.toString)
+}
+
 sealed trait Direction
 case object Horizontal extends Direction
 case object Vertical extends Direction

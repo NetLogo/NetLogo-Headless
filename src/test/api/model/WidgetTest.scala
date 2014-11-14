@@ -290,23 +290,48 @@ class WidgetTest extends FunSuite {
   }
 
   test("chooser") {
-    val ps = new api.DummyParserServices()
-    val chooser = """|CHOOSER
-                     |164
-                     |10
-                     |315
-                     |55
-                     |visualize-time-steps
-                     |visualize-time-steps
-                     |"days" "years"
-                     |1""".stripMargin.split("\n").toList
-    val cr = new ChooserReader(ps)
+    val chooser = chooserWithChoices(""""days" "years"""")
+    val cr = chooserReader
     assert(cr.validate(chooser))
-    assert(Chooser("visualize-time-steps", 164, 10, 315, 55, "visualize-time-steps", List("days", "years"), 1) ==
+    assert(Chooser("visualize-time-steps", 164, 10, 315, 55, "visualize-time-steps", List(ChooseableString("days"), ChooseableString("years")), 1) ==
       cr.parse(chooser))
     assert(cr.validate(cr.format(cr.parse(chooser)).split("\n").toList))
-    assert(Chooser("visualize-time-steps", 164, 10, 315, 55, "visualize-time-steps", List("days", "years"), 1) ==
+    assert(Chooser("visualize-time-steps", 164, 10, 315, 55, "visualize-time-steps", List(ChooseableString("days"), ChooseableString("years")), 1) ==
       cr.parse(cr.format(cr.parse(chooser)).split("\n").toList))
+  }
+
+  test("chooser with nobody raises CompilerException") {
+    val chooser = chooserWithChoices(""""days" "years" nobody""")
+    val cr = chooserReader
+    assert(cr.validate(chooser))
+    intercept[CompilerException] {
+      cr.parse(chooser)
+    }
+  }
+
+  test("chooser with nested nobody") {
+    val chooser = chooserWithChoices("""["days" "years" [nobody]]""")
+    val cr = chooserReader
+    intercept[CompilerException] {
+      cr.parse(chooser)
+    }
+  }
+
+  private def chooserWithChoices(choices: String): List[String] = {
+    s"""|CHOOSER
+        |164
+        |10
+        |315
+        |55
+        |visualize-time-steps
+        |visualize-time-steps
+        |$choices
+        |1""".stripMargin.split("\n").toList
+  }
+
+  private def chooserReader: ChooserReader = {
+    val ps = new api.DummyParserServices()
+    new ChooserReader(ps)
   }
 
   test("output") {

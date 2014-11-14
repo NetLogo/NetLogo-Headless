@@ -36,11 +36,17 @@ class TestConstraintModels extends FixtureSuite {
     import fixture._
     open(Model(widgets = List(
       View(),
-      Chooser(display = "foo", varName = "foo", choices = List(Double.box(1), Double.box(2), Double.box(3), Double.box(4), Double.box(5)),
+      Chooser(display = "foo", varName = "foo", choices = List(1, 2, 3, 4, 5).map(Double.box(_)).map(ChooseableDouble(_)),
         currentChoice = 0),
-      Chooser(display = "bar", varName = "bar", choices = List("a", "b", "c", "d"), currentChoice = 3),
-      Chooser(display = "mix", varName = "mix", choices = List(Double.box(12), "aaa", Double.box(34), "bbb", Double.box(56)),
-      currentChoice = 0))))
+      Chooser(display = "bar", varName = "bar", choices = List("a", "b", "c", "d").map(ChooseableString(_)), currentChoice = 3),
+      Chooser(display = "mix", varName = "mix",
+        choices = List(
+          ChooseableDouble(Double.box(12)),
+          ChooseableString("aaa"),
+          ChooseableDouble(Double.box(34)),
+          ChooseableString("bbb"),
+          ChooseableDouble(Double.box(56))),
+        currentChoice = 0))))
     testReporter("foo", "1")
     testReporter("bar", "\"d\"")
     testReporter("mix", "12")
