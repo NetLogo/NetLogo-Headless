@@ -31,21 +31,43 @@ object Compiler extends nvm.CompilerInterface {
       flags: nvm.CompilerFlags): nvm.CompilerResults =
     compile(source, displayName, program, true, oldProcedures, extensionManager, flags)
 
-  private def compile(source: String, displayName: Option[String], program: api.Program, subprogram: Boolean,
+  private def compile(source: String, displayName: Option[String], oldProgram: api.Program, subprogram: Boolean,
       oldProcedures: ProceduresMap, extensionManager: api.ExtensionManager,
       flags: nvm.CompilerFlags): nvm.CompilerResults = {
+    // front end
     val (topLevelDefs, structureResults) =
-      frontEnd.frontEnd(source, displayName, program, subprogram, oldProcedures, extensionManager)
-    val astBackifier = new middle.ASTBackifier(structureResults.program, extensionManager,
-      oldProcedures ++ structureResults.procedures)
-    val backifiedProcDefs =
-      astBackifier.backifyAll(
-        structureResults.procedures.values.zip(topLevelDefs))
+      frontEnd.frontEnd(source, displayName, oldProgram, subprogram, oldProcedures, extensionManager)
+    // translate from front to middle/back
+    val backifiedProcDefs = {
+      val newProcedures = structureResults.procedures.mapValues(fromApiProcedure).toMap
+      val backifier = new middle.Backifier(
+        structureResults.program, extensionManager, oldProcedures ++ newProcedures)
+      val astBackifier = new middle.ASTBackifier(backifier)
+      (newProcedures.values, topLevelDefs)
+        .zipped
+        .map(astBackifier.backify)
+        .toSeq
+    }
+    // middle end
     val allDefs = middleEnd.middleEnd(backifiedProcDefs, flags)
+    // back end
     backEnd.backEnd(allDefs, structureResults.program, source, extensionManager.profilingEnabled, flags)
   }
 
   def makeLiteralReporter(value: AnyRef): nvm.Reporter =
     Literals.makeLiteralReporter(value)
+
+  private def fromApiProcedure(p: api.FrontEndProcedure): nvm.Procedure = {
+    val proc = new nvm.Procedure(
+      isReporter = p.isReporter,
+      name = p.name,
+      nameToken = p.nameToken,
+      argTokens = p.argTokens,
+      _displayName = if (p.displayName == "") None else Some(p.displayName)
+    )
+    proc.topLevel = p.topLevel
+    proc.args = p.args
+    proc
+  }
 
 }

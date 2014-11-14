@@ -3,32 +3,12 @@
 package org.nlogo.compile
 package middle
 
-import org.nlogo.api
-import org.nlogo.api.FrontEndProcedure
-import org.nlogo.{ core, nvm },
-  nvm.Procedure
+import org.nlogo.{ api, core, nvm }
 
-import scala.collection.immutable.ListMap
+class ASTBackifier(backifier: Backifier) {
 
-class ASTBackifier(program: api.Program,
-                   extensionManager: api.ExtensionManager,
-                   _procedures: api.FrontEndInterface.ProceduresMap) {
-
-  type ProceduresWithDefinitions = Iterable[(FrontEndProcedure, core.ProcedureDefinition)]
-
-  val procedures: ListMap[String, nvm.Procedure] = _procedures.map {
-    case (k, p: FrontEndProcedure) => k -> fromApiProcedure(p)
-  }
-
-  val backifier = new Backifier(program, extensionManager, procedures)
-
-  def backifyAll(proceduresAndDefinitions: ProceduresWithDefinitions): Seq[ProcedureDefinition] =
-    proceduresAndDefinitions.map {
-      case (x: FrontEndProcedure, y: core.ProcedureDefinition) => backify(x, y)
-    }.toSeq
-
-  def backify(procedure: org.nlogo.api.FrontEndProcedure, pd: core.ProcedureDefinition): ProcedureDefinition =
-    new ProcedureDefinition(procedures(procedure.name), backify(pd.statements))
+  def backify(proc: nvm.Procedure, pd: core.ProcedureDefinition): ProcedureDefinition =
+    new ProcedureDefinition(proc, backify(pd.statements))
 
   def backify(expr: core.Expression): Expression =
     expr match {
@@ -67,20 +47,4 @@ class ASTBackifier(program: api.Program,
     result
   }
 
-  private def fromApiProcedure(frontEndProcedure: api.FrontEndProcedure): Procedure = {
-    frontEndProcedure match {
-      case nvmProcedure: Procedure => nvmProcedure
-      case p =>
-        val proc = new Procedure(
-          isReporter = p.isReporter,
-          name = p.name,
-          nameToken = p.nameToken,
-          argTokens = p.argTokens,
-          _displayName = if (p.displayName == "") None else Some(p.displayName)
-        )
-        proc.topLevel = p.topLevel
-        proc.args = p.args
-        proc
-    }
-  }
 }
