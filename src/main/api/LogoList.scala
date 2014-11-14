@@ -2,6 +2,7 @@
 
 package org.nlogo.api
 
+import org.nlogo.core.{ LogoList => CoreLogoList }
 import collection.immutable.{ Vector, VectorBuilder }
 import language.implicitConversions
 
@@ -20,7 +21,7 @@ object LogoList {
 }
 
 class LogoList private (private val v: Vector[AnyRef])
-extends java.util.AbstractSequentialList[AnyRef] with Serializable {
+extends java.util.AbstractSequentialList[AnyRef] with Serializable with CoreLogoList {
 
   def scalaIterator = v.iterator
   def toVector = v
@@ -34,6 +35,10 @@ extends java.util.AbstractSequentialList[AnyRef] with Serializable {
   override def listIterator(i: Int): java.util.ListIterator[AnyRef] =
     new Iterator(v.drop(i))
   override def add(index: Int, obj: AnyRef) = unsupported
+
+  /// methods required by CoreLogoList
+
+  override def toList: List[AnyRef] = scalaIterator.toList
 
   /// public methods for prims. input validity checking is caller's job
 

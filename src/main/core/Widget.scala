@@ -17,7 +17,8 @@ sealed trait DeclaresGlobalCommand {
   def asNetLogoString(x: Any): String = x match {
     case s: String => s""""$s""""
     case b: Boolean => if(b) "true" else "false"
-    case l: List[Any] => "[" + l.map(asNetLogoString).mkString(" ") + "]"
+    case l: List[Any] => l.map(asNetLogoString).mkString("[", " ", "]")
+    case ll: LogoList => ll.toList.map(asNetLogoString).mkString("[" , " ", "]")
     case o: AnyRef => o.toString
   }
   def command: String = "set " + varName + " " + asNetLogoString(default)
