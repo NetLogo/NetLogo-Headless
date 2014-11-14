@@ -61,7 +61,7 @@ case class Monitor(rawDisplay: Option[String], left: Int, top: Int, right: Int, 
 }
 case class Output(left: Int, top: Int, right: Int, bottom: Int, fontSize: Int) extends Widget
 
-abstract class InputBoxType[T](val name:String)
+sealed abstract class InputBoxType[T](val name:String)
 case object Num extends InputBoxType[Double]("Number")
 case object Str extends InputBoxType[String]("String")
 case object StrReporter extends InputBoxType[String]("String (reporter)")
