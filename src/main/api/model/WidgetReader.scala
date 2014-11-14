@@ -172,7 +172,7 @@ object ButtonReader extends BaseWidgetReader {
                         ReservedLine(),
                         BooleanLine(Some(true))  // go time
                       )
-  def asList(button: Button) = List((), button.left, button.top, button.right, button.bottom, button.rawDisplay,
+  def asList(button: Button) = List((), button.left, button.top, button.right, button.bottom, button.display,
                                     button.source, button.forever, (), (), button.buttonType, (), button.actionKey, (), (), true)
   def asWidget(vals: List[Any]): Button = {
     val List(_, left: Int, top: Int, right: Int, bottom: Int, rawDisplay: Option[String] @unchecked,
