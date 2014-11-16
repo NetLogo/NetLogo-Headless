@@ -138,7 +138,7 @@ class WidgetTest extends FunSuite {
     assert(ButtonReader.validate(ButtonReader.format(ButtonReader.parse(button)).split("\n").toList))
     assert(Button(None,202,101,271,134,"go",true) ==
       ButtonReader.parse(ButtonReader.format(ButtonReader.parse(button)).split("\n").toList))
-    assert("go" == ButtonReader.parse(button).display)
+    assert(None == ButtonReader.parse(button).display)
   }
   test("slider") {
      val slider = """|SLIDER
