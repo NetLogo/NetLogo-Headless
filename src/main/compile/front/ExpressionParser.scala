@@ -620,7 +620,6 @@ object ExpressionParser {
                              val file: String)
   extends core.Expression {
     def reportedType = throw new UnsupportedOperationException
-    override def accept(v: core.AstVisitor): Unit = throw new UnsupportedOperationException
     def isCommandTask =
       tokens.tail.dropWhile(_.tpe == TokenType.OpenParen)
             .headOption

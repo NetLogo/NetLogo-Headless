@@ -37,7 +37,7 @@ class FrontEndTests extends FunSuite {
     assertResult(preorderDump)(statementsToString(compile(source), source))
   }
   // preorder traversal
-  class PositionsCheckVisitor(source: String) extends core.DefaultAstVisitor {
+  class PositionsCheckVisitor(source: String) extends core.AstVisitor {
     val buf = new StringBuilder()
     override def visitCommandBlock(node: core.CommandBlock) { visit(node); super.visitCommandBlock(node) }
     override def visitReporterApp(node: core.ReporterApp) { visit(node); super.visitReporterApp(node) }
