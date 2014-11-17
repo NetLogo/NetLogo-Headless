@@ -2,7 +2,7 @@
 
 package org.nlogo.compile
 
-import org.nlogo.{ core, api, nvm },
+import org.nlogo.{ api, nvm },
   nvm.Procedure.{ ProceduresMap, NoProcedures },
   org.nlogo.api.Femto
 
@@ -36,50 +36,14 @@ object Compiler extends nvm.CompilerInterface {
       flags: nvm.CompilerFlags): nvm.CompilerResults = {
     val (topLevelDefs, structureResults) =
       frontEnd.frontEnd(source, displayName, oldProgram, subprogram, oldProcedures, extensionManager)
-    val fmb = FrontMiddleBridge(structureResults, extensionManager, oldProcedures, topLevelDefs)
-    val bridged = bridge(fmb)
+    val bridged =
+      FrontMiddleBridge(
+        structureResults, extensionManager, oldProcedures, topLevelDefs)
     val allDefs = middleEnd.middleEnd(bridged, flags)
     backEnd.backEnd(allDefs, structureResults.program, source, extensionManager.profilingEnabled, flags)
   }
 
   def makeLiteralReporter(value: AnyRef): nvm.Reporter =
     Literals.makeLiteralReporter(value)
-
-  case class FrontMiddleBridge(
-    structureResults: StructureResults,
-    extensionManager: api.ExtensionManager,
-    oldProcedures: ProceduresMap,
-    topLevelDefs: Seq[core.ProcedureDefinition]
-  )
-
-  def bridge(fmb: FrontMiddleBridge): Seq[ProcedureDefinition] = {
-    import fmb._
-    val newProcedures = structureResults.procedures.map {
-      case (k, p) => k -> fromApiProcedure(p)
-    }.toMap
-    // mapValues won't work here because we need identity preservation across all uses of newProcedures
-    // assert(newProcedures.forall { case (k, p) => newProcedures(k) eq p })
-    val backifier = new middle.Backifier(
-      structureResults.program, extensionManager, oldProcedures ++ newProcedures)
-    val astBackifier = new middle.ASTBackifier(backifier)
-    (newProcedures.values, topLevelDefs)
-      .zipped
-      .map(astBackifier.backify)
-      .toSeq
-  }
-
-  private def fromApiProcedure(p: api.FrontEndProcedure): nvm.Procedure = {
-    val proc = new nvm.Procedure(
-      isReporter = p.isReporter,
-      name = p.name,
-      nameToken = p.nameToken,
-      argTokens = p.argTokens,
-      _displayName = if (p.displayName == "") None else Some(p.displayName),
-      procedureDeclaration = p.procedureDeclaration
-    )
-    proc.topLevel = p.topLevel
-    proc.args = p.args
-    proc
-  }
 
 }

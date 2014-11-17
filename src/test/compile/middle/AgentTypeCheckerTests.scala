@@ -11,7 +11,7 @@ class AgentTypeCheckerTests extends FunSuite {
 
   /// first some helpers
   def compile(source: String): Seq[ProcedureDefinition] = {
-    val defs = back.Scaffold(source)
+    val defs = Scaffold(source)
     new AgentTypeChecker(defs).check()
     defs
   }
