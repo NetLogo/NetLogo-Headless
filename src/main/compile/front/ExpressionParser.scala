@@ -4,10 +4,10 @@ package org.nlogo.compile
 package front
 
 import Fail.{ cAssert, exception }
-import org.nlogo.{ core, api, parse, prim },
+
+import org.nlogo.{ core, api, parse },
   core.{ Syntax, Token, TokenType },
     Syntax.compatible,
-  api.{ LogoList, Nobody },
   parse.LiteralParser
 
 /**
@@ -618,7 +618,7 @@ object ExpressionParser {
                              val file: String)
   extends core.Expression {
     def reportedType = throw new UnsupportedOperationException
-    def accept(v: AstVisitor) = throw new UnsupportedOperationException
+    override def accept(v: core.AstVisitor): Unit = throw new UnsupportedOperationException
     def isCommandTask =
       tokens.tail.dropWhile(_.tpe == TokenType.OpenParen)
             .headOption

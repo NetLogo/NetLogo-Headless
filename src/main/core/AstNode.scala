@@ -32,6 +32,35 @@ trait AstNode {
   def start: Int
   def end: Int
   def file: String
+  def accept(v: AstVisitor)
+}
+
+/**
+ * an interface for AST tree-walkers. This represents the usual Visitor
+ * pattern with double-dispatch.
+ */
+trait AstVisitor {
+  def visitProcedureDefinition(proc: ProcedureDefinition)
+  def visitCommandBlock(block: CommandBlock)
+  def visitReporterApp(app: ReporterApp)
+  def visitReporterBlock(block: ReporterBlock)
+  def visitStatement(stmt: Statement)
+  def visitStatements(stmts: Statements)
+}
+
+/**
+ * The default AST tree-walker. This simply visits each node of the
+ * tree, and visits any children of each node in turn. Subclasses can
+ * implement pre-order or post-order traversal, or a wide range of other
+ * strategies.
+ */
+class DefaultAstVisitor extends AstVisitor {
+  def visitProcedureDefinition(proc: ProcedureDefinition) { proc.statements.accept(this) }
+  def visitCommandBlock(block: CommandBlock) { block.statements.accept(this) }
+  def visitReporterApp(app: ReporterApp) { app.args.foreach(_.accept(this)) }
+  def visitReporterBlock(block: ReporterBlock) { block.app.accept(this) }
+  def visitStatement(stmt: Statement) { stmt.args.foreach(_.accept(this)) }
+  def visitStatements(stmts: Statements) { stmts.stmts.foreach(_.accept(this)) }
 }
 
 /**
@@ -70,6 +99,7 @@ class ProcedureDefinition(val procedure: StructureDeclarations.Procedure, val st
   def start = throw new UnsupportedOperationException
   def end = throw new UnsupportedOperationException
   def file = throw new UnsupportedOperationException
+  def accept(v: AstVisitor) { v.visitProcedureDefinition(this) }
 }
 
 /**
@@ -95,6 +125,7 @@ class Statements(val file: String) extends AstNode {
     else { start = stmts(0).start; end = stmts(stmts.size - 1).end }
   }
   override def toString = stmts.mkString(" ")
+  def accept(v: AstVisitor) { v.visitStatements(this) }
 }
 
 /**
@@ -110,6 +141,7 @@ class Statement(var command: Command, var start: Int, var end: Int, val file: St
   override def toString = command.toString + "[" + args.mkString(", ") + "]"
   def replaceArg(index: Int, expr: Expression) { _args(index) = expr }
   def removeArgument(index: Int) { _args.remove(index) }
+  def accept(v: AstVisitor) { v.visitStatement(this) }
 }
 
 /**
@@ -121,6 +153,7 @@ class Statement(var command: Command, var start: Int, var end: Int, val file: St
 class CommandBlock(val statements: Statements, var start: Int, var end: Int, val file: String) extends Expression {
   def reportedType() = Syntax.CommandBlockType
   override def toString = "[" + statements.toString + "]"
+  def accept(v: AstVisitor) { v.visitCommandBlock(this) }
 }
 
 /**
@@ -150,6 +183,7 @@ class ReporterBlock(val app: ReporterApp, var start: Int, var end: Int, val file
         else OtherBlockType
     }
   }
+  def accept(v: AstVisitor) { v.visitReporterBlock(this) }
 }
 
 /**
@@ -172,4 +206,5 @@ extends Expression with Application {
   def replaceArg(index: Int, expr: Expression) { _args(index) = expr }
   def clearArgs() { _args.clear() }
   override def toString = reporter.toString + "[" + args.mkString(", ") + "]"
+  def accept(v: AstVisitor) { v.visitReporterApp(this) }
 }
