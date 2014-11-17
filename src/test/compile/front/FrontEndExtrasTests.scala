@@ -4,7 +4,10 @@ package org.nlogo.compile
 package front
 
 import org.scalatest.FunSuite
-import org.nlogo.{ core, api, nvm }
+import org.nlogo.{ core, api },
+  api.FrontEndProcedure,
+  core.{StructureDeclarations, Syntax, Token},
+  StructureDeclarations.Procedure
 
 class FrontEndExtrasTests extends FunSuite {
 
@@ -17,13 +20,29 @@ class FrontEndExtrasTests extends FunSuite {
   // dummy Procedure objects, but isReporter requires us to supply a
   // ProceduresMap. - ST 7/17/13
   val (proceduresMap, program) = {
-    def dummyProcedure(p: ProcedureDefinition) =
-      new nvm.Procedure(p.procedure.isReporter, p.procedure.name,
-        core.Token.Eof, Seq())
+    def dummyProcedure(p: core.ProcedureDefinition): FrontEndProcedure =
+      new FrontEndProcedure {
+        override def procedureDeclaration: Procedure = null
+        override def dump: String = ""
+        override def nameToken: Token = p.procedure.name.token
+        override def syntax: Syntax =
+          core.Syntax.reporterSyntax(
+            right = List.fill(argTokens.size)(core.Syntax.WildcardType),
+            ret = core.Syntax.WildcardType
+          )
+        override def displayName: String = p.procedure.name.name
+        override def isReporter: Boolean = p.procedure.isReporter
+        override def filename: String = "FrontEndExtrasTests.scala"
+        override def name: String = p.procedure.name.name
+        override def argTokens: Seq[Token] = p.procedure.inputs.map(_.token)
+      }
     val (procedures, structureResults) = FrontEnd.frontEnd(src)
     val proceduresMap =
       collection.immutable.ListMap(
-        procedures.map(p => p.procedure.name -> dummyProcedure(p)): _*)
+        procedures.map { p =>
+          val prc = dummyProcedure(p)
+          prc.name -> prc
+        }: _*)
     (proceduresMap, structureResults.program)
   }
 
@@ -45,5 +64,4 @@ class FrontEndExtrasTests extends FunSuite {
     test("isn't a reporter: '" + x + "'") {
       assert(!isReporter(x))
     }
-
 }

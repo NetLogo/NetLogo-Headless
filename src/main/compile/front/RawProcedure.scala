@@ -7,12 +7,12 @@ import org.nlogo.{ api, core },
   api.FrontEndProcedure,
   core.StructureDeclarations.Procedure
 
-class RawProcedure(val procedure: Procedure, val displayNameOption: Option[String]) extends FrontEndProcedure {
-  val isReporter: Boolean = procedure.isReporter
-  val nameToken: core.Token = procedure.tokens.tail.head
-  val argTokens: Seq[core.Token] = procedure.inputs.map(_.token)
+class RawProcedure(val procedureDeclaration: Procedure, val displayNameOption: Option[String]) extends FrontEndProcedure {
+  val isReporter: Boolean = procedureDeclaration.isReporter
+  val nameToken: core.Token = procedureDeclaration.tokens.tail.head
+  val argTokens: Seq[core.Token] = procedureDeclaration.inputs.map(_.token)
 
-  args = procedure.inputs.map(_.name).toVector
+  args = procedureDeclaration.inputs.map(_.name).toVector
 
   def displayName: String = displayNameOption.getOrElse("")
 

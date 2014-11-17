@@ -4,10 +4,12 @@ package org.nlogo.compile
 package front
 
 import Fail.{ cAssert, exception }
+import org.nlogo.api.FrontEndProcedure
 
 import org.nlogo.{ core, api, parse },
-  core.{ Syntax, Token, TokenType },
+  core.{ StructureDeclarations, Syntax, Token, TokenType },
     Syntax.compatible,
+    StructureDeclarations.Procedure,
   parse.LiteralParser
 
 /**
@@ -24,12 +26,12 @@ object ExpressionParser {
   /**
    * parses a procedure. Procedures are a bunch of statements (not a block of statements, that's
    * something else), and so are parsed as such. */
-  def apply(tokens: Iterator[Token]): core.ProcedureDefinition = {
+  def apply(procedureDeclaration: Procedure, tokens: Iterator[Token]): core.ProcedureDefinition = {
     val buffered = tokens.buffered
     val stmts = new core.Statements(buffered.head.filename)
     while (buffered.head.tpe != TokenType.Eof)
       stmts.addStatement(parseStatement(buffered, false))
-    new core.ProcedureDefinition(null, stmts)  // TODO: null?!
+    new core.ProcedureDefinition(procedureDeclaration, stmts)
   }
 
   /**
