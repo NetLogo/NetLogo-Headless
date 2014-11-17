@@ -54,7 +54,11 @@ object Compiler extends nvm.CompilerInterface {
 
   def bridge(fmb: FrontMiddleBridge): Seq[ProcedureDefinition] = {
     import fmb._
-    val newProcedures = structureResults.procedures.mapValues(fromApiProcedure).toMap
+    val newProcedures = structureResults.procedures.map {
+      case (k, p) => k -> fromApiProcedure(p)
+    }.toMap
+    // mapValues won't work here because we need identity preservation across all uses of newProcedures
+    // assert(newProcedures.forall { case (k, p) => newProcedures(k) eq p })
     val backifier = new middle.Backifier(
       structureResults.program, extensionManager, oldProcedures ++ newProcedures)
     val astBackifier = new middle.ASTBackifier(backifier)
