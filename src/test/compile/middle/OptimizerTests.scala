@@ -16,7 +16,7 @@ class OptimizerTests extends FunSuite {
       .statements.stmts.head.toString
 
   def compile(source: String): ProcedureDefinition = {
-    val procdef +: _ = back.Scaffold(source)
+    val procdef +: _ = Scaffold(source)
     procdef.accept(Optimizer)
     procdef
   }
