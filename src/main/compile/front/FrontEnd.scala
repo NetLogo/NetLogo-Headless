@@ -62,7 +62,7 @@ trait FrontEndMain {
         val letScoper = new parse.LetScoper(usedNames)
         letScoper(namedTokens.buffered)
       }
-      ExpressionParser(namedTokens)
+      ExpressionParser(procedure.procedureDeclaration, namedTokens)
     }
     (structureResults.procedures.values.map(parseProcedure).toSeq, structureResults)
   }

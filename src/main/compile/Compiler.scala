@@ -70,7 +70,8 @@ object Compiler extends nvm.CompilerInterface {
       name = p.name,
       nameToken = p.nameToken,
       argTokens = p.argTokens,
-      _displayName = if (p.displayName == "") None else Some(p.displayName)
+      _displayName = if (p.displayName == "") None else Some(p.displayName),
+      procedureDeclaration = p.procedureDeclaration
     )
     proc.topLevel = p.topLevel
     proc.args = p.args

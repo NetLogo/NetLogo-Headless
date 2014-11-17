@@ -7,6 +7,7 @@ import org.nlogo.api.FrontEndInterface.{ ProceduresMap, NoProcedures }
 import org.nlogo.core.{Syntax, Token}
 
 trait FrontEndProcedure {
+  def procedureDeclaration: core.StructureDeclarations.Procedure
   def syntax: core.Syntax
   def name: String
   def isReporter: Boolean

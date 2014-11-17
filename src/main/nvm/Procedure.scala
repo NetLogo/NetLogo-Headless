@@ -13,7 +13,8 @@ class Procedure(
   val nameToken: core.Token,
   val argTokens: Seq[core.Token],
   _displayName: Option[String] = None,
-  val parent: Procedure = null) extends api.FrontEndProcedure {
+  val parent: Procedure = null,
+  val procedureDeclaration: core.StructureDeclarations.Procedure = null) extends api.FrontEndProcedure {
 
   val filename = nameToken.filename; // used by cities include-file stuff
   val displayName = buildDisplayName(_displayName)
