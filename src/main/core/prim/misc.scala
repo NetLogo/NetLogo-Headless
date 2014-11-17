@@ -76,6 +76,11 @@ case class _const(value: AnyRef) extends Reporter {
         case s: String => Syntax.StringType
         case _ => Syntax.WildcardType
       })
+  override def toString =
+  value match {
+    case l: LogoList => s"${super.toString}:${l.toList.mkString("[", " ", "]")}"
+    case x => s"${super.toString}:${value.toString}"
+  }
 }
 case class _count() extends Reporter {
   override def syntax =
@@ -249,6 +254,7 @@ case class _observervariable(vn: Int) extends Reporter with Referenceable {
       ret = Syntax.WildcardType | Syntax.ReferenceType)
   def makeReference =
     new Reference(AgentKind.Observer, vn, this)
+  override def toString: String = s"${super.toString}($vn)"
 }
 case class _of() extends Reporter {
   override def syntax =
@@ -300,6 +306,7 @@ case class _patchvariable(vn: Int) extends Reporter with Referenceable {
       agentClassString = "-TP-")
   def makeReference =
     new Reference(AgentKind.Patch, vn, this)
+  override def toString: String = s"${super.toString}:$vn"
 }
 case class _procedurevariable(vn: Int, name: String) extends Reporter {
   override def syntax =
@@ -368,6 +375,7 @@ case class _taskvariable(vn: Int) extends Reporter {
   override def syntax =
     Syntax.reporterSyntax(
       ret = Syntax.WildcardType)
+  override def toString = s"${super.toString}:$vn"
 }
 case class _turtle() extends Reporter {
   override def syntax =
