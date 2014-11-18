@@ -63,7 +63,7 @@ object Depend {
       "compile" -> List("prim"),
       "compile/back" -> List("compile"),
       "compile/front" -> List("compile", "parse"),
-      "compile/middle" -> List("compile"),
+      "compile/middle" -> List("compile", "core/prim"),
       "core" -> Nil,
       "core/prim" -> List("core"),
       "core/prim/etc" -> List("core"),

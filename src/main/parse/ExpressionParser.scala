@@ -1,16 +1,13 @@
 // (C) Uri Wilensky. https://github.com/NetLogo/NetLogo
 
-package org.nlogo.compile
-package front
+package org.nlogo.parse
 
-import Fail.{ cAssert, exception }
-import org.nlogo.api.FrontEndProcedure
-
-import org.nlogo.{ core, api, parse },
+import org.nlogo.{ core, api },
+  api.{ FrontEndProcedure, Fail },
+    Fail.{ cAssert, exception },
   core.{ StructureDeclarations, Syntax, Token, TokenType },
     Syntax.compatible,
-    StructureDeclarations.Procedure,
-  parse.LiteralParser
+    StructureDeclarations.Procedure
 
 /**
  * Parses procedure bodies.

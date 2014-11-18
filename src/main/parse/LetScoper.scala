@@ -74,8 +74,8 @@ package org.nlogo.parse
 
 import org.nlogo.{ core, api },
   core.{ Token, TokenType, Let },
-  api.I18N
-import Fail._
+  api.I18N,
+  api.Fail._
 
 class LetScoper(usedNames: Map[String, String]) {
 

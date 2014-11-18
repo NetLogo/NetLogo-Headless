@@ -1,7 +1,6 @@
 // (C) Uri Wilensky. https://github.com/NetLogo/NetLogo
 
-package org.nlogo.compile
-package front
+package org.nlogo.parse
 
 // For each source file, input is Tokens, output is a StructureResults -- which is mostly just a
 // Program and some Procedures.
@@ -19,12 +18,11 @@ package front
 // will be discovered as we parse, through __include declarations.  (Included files might themselves
 // include further files.)
 
-import org.nlogo.{ core, api, parse },
-  parse._,
+import org.nlogo.{ core, api },
   core.{ Token, StructureDeclarations },
-  org.nlogo.api.FrontEndInterface,
+  api.{ StructureResults, FrontEndInterface},
     FrontEndInterface.ProceduresMap,
-  Fail._
+  api.Fail._
 
 object StructureParser {
 
@@ -42,7 +40,7 @@ object StructureParser {
       val tokens =
         tokenizer.tokenizeString(source, filename)
           .filter(_.tpe != core.TokenType.Comment)
-          .map(parse.Namer0)
+          .map(Namer0)
       new StructureParser(tokens, displayName, previousResults)
         .parse(subprogram)
     }
@@ -83,7 +81,7 @@ object StructureParser {
   }
 
   private def breedPrimitives(declarations: Seq[StructureDeclarations.Declaration]): Map[String, String] = {
-    import org.nlogo.parse.BreedIdentifierHandler._
+    import api.BreedIdentifierHandler._
     import org.nlogo.core.StructureDeclarations.Breed
 
     declarations.flatMap {

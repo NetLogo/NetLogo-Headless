@@ -3,7 +3,8 @@
 package org.nlogo.compile
 package middle
 
-import org.nlogo.{ api, core, nvm, parse, prim },
+import org.nlogo.{ api, core, nvm, prim },
+  api.Instantiator,
   nvm.Procedure.ProceduresMap
 
 // This is seriously gross and horrible. - ST 4/11/14
@@ -17,7 +18,7 @@ class Backifier(
     name.replaceFirst("\\.core\\.", ".")
 
   private def fallback[T1 <: core.Instruction, T2 <: nvm.Instruction](i: T1): T2 =
-    parse.BreedIdentifierHandler.process(i.token.copy(value = i.token.text.toUpperCase), program) match {
+    api.BreedIdentifierHandler.process(i.token.copy(value = i.token.text.toUpperCase), program) match {
       case None =>
         Instantiator.newInstance[T2](
           Class.forName(backifyName(i.getClass.getName)))

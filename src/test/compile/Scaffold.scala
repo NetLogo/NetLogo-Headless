@@ -7,13 +7,14 @@ import org.nlogo.{ api, nvm },
 
 object Scaffold {
 
-  // cheating here - ST 8/27/13
-  val frontEnd = Femto.get[FrontEndInterface](
-    "org.nlogo.compile.front.FrontEnd")
+  val frontEnd = Femto.get[api.FrontEndInterface](
+    "org.nlogo.parse.FrontEnd")
+  val bridge = Femto.scalaSingleton[FrontMiddleBridgeInterface](
+    "org.nlogo.compile.middle.FrontMiddleBridge")
 
   def apply(source: String): Seq[ProcedureDefinition] = {
     val (coreDefs, results) = frontEnd.frontEnd(source)
-    FrontMiddleBridge(
+    bridge(
       results,
       new api.DummyExtensionManager,
       nvm.Procedure.NoProcedures,

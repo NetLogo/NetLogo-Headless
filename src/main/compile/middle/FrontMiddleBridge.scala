@@ -1,13 +1,14 @@
 // (C) Uri Wilensky. https://github.com/NetLogo/NetLogo
 
 package org.nlogo.compile
+package middle
 
 import org.nlogo.{ core, api, nvm },
   nvm.Procedure.ProceduresMap
 
-object FrontMiddleBridge {
+object FrontMiddleBridge extends FrontMiddleBridgeInterface {
   def apply(
-    structureResults: StructureResults,
+    structureResults: api.StructureResults,
     extensionManager: api.ExtensionManager,
     oldProcedures: ProceduresMap,
     topLevelDefs: Seq[core.ProcedureDefinition]

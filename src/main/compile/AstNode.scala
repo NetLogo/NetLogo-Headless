@@ -12,7 +12,7 @@ import org.nlogo.{ core, nvm }
  * indicated by the position and length. It's the compiler's job to make sure these values are
  * always reasonable.
  */
-trait AstNode {
+trait AstNode extends core.AstNode {
   def start: Int
   def end: Int
   def file: String

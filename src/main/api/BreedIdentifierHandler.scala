@@ -1,14 +1,13 @@
 // (C) Uri Wilensky. https://github.com/NetLogo/NetLogo
 
-package org.nlogo.parse
+package org.nlogo.api
 
 import
   scala.util.matching.Regex
 
-import org.nlogo.{ core, api },
+import org.nlogo.{ core },
   core.{ Token, TokenType, StructureDeclarations },
-    TokenType.{ Command, Reporter },
-  api.{ Breed, Program }
+    TokenType.{ Command, Reporter }
 
 import StructureDeclarations.{ Breed => DeclBreed }
 
@@ -126,17 +125,20 @@ object BreedIdentifierHandler {
 
   }
 
-  private[parse] case class TurtlePrimitive(patternString: String, tokenType: TokenType, primClass: String) extends BreedPrimSpec {
+  // sigh, these are private[api] rather than just private so we can reference
+  // them directly in the tests - ST 11/17/14
+
+  private[api] case class TurtlePrimitive(patternString: String, tokenType: TokenType, primClass: String) extends BreedPrimSpec {
     override def breeds(program: Program):   Map[String, Breed] = program.breeds
     override def isValidBreed(breed: Breed): Boolean            = true
   }
 
-  private[parse] case class DirectedLinkPrimitive(patternString: String, tokenType: TokenType, primClass: String) extends BreedPrimSpec {
+  private[api] case class DirectedLinkPrimitive(patternString: String, tokenType: TokenType, primClass: String) extends BreedPrimSpec {
     override def breeds(program: Program):   Map[String, Breed] = program.linkBreeds
     override def isValidBreed(breed: Breed): Boolean            = breed.isDirected
   }
 
-  private[parse] case class UndirectedLinkPrimitive(patternString: String, tokenType: TokenType, primClass: String) extends BreedPrimSpec {
+  private[api] case class UndirectedLinkPrimitive(patternString: String, tokenType: TokenType, primClass: String) extends BreedPrimSpec {
     override def breeds(program: Program):   Map[String, Breed] = program.linkBreeds
     override def isValidBreed(breed: Breed): Boolean            = !breed.isDirected
   }
