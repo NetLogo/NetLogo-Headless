@@ -16,9 +16,7 @@ object FrontEnd extends FrontEnd {
     lazy val literalParser =
       new LiteralParser(world, extensionManager, parseLiteralAgentOrAgentSet)
     lazy val parseLiteralAgentOrAgentSet: Iterator[core.Token] => AnyRef =
-      new agent.LiteralAgentParser(
-          world, literalParser.readLiteralPrefix _, api.Fail.cAssert _, api.Fail.exception _)
-        .parseLiteralAgentOrAgentSet _
+      new agent.LiteralAgentParser(world, literalParser.readLiteralPrefix)
     literalParser
   }
 }
