@@ -1,12 +1,11 @@
 // (C) Uri Wilensky. https://github.com/NetLogo/NetLogo
 
-package org.nlogo.compile
-package front
+package org.nlogo.parse
 
-import org.nlogo.{ core, api, parse, prim },
+import org.nlogo.{ core, api, prim },
   api.FrontEndInterface.ProceduresMap,
   core.{ Token, TokenType },
-  Fail._
+  api.Fail._
 
 trait NameHandler extends (Token => Option[(TokenType, core.Instruction)])
 
@@ -51,9 +50,9 @@ object ReporterHandler extends PrimitiveHandler {
 // go thru our breed prim handlers, if one triggers, return the result
 class BreedHandler(program: api.Program) extends NameHandler {
   override def apply(token: Token) =
-    parse.BreedIdentifierHandler.process(token, program) map {
+    api.BreedIdentifierHandler.process(token, program) map {
       case (className, breedName, tokenType) =>
-        (tokenType, Instantiator.newInstance[core.Instruction](
+        (tokenType, api.Instantiator.newInstance[core.Instruction](
           Class.forName("org.nlogo.core.prim." + className), breedName))
     }
 }

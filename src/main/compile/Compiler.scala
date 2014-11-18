@@ -3,8 +3,8 @@
 package org.nlogo.compile
 
 import org.nlogo.{ api, nvm },
-  nvm.Procedure.{ ProceduresMap, NoProcedures },
-  org.nlogo.api.Femto
+  api.Femto,
+  nvm.Procedure.{ ProceduresMap, NoProcedures }
 
 // One design principle here is that calling the compiler shouldn't have any side effects that are
 // visible to the caller; it should only cause results to be constructed and returned.  There is a
@@ -13,8 +13,10 @@ import org.nlogo.{ api, nvm },
 
 object Compiler extends nvm.CompilerInterface {
 
-  val frontEnd = Femto.get[FrontEndInterface](
-    "org.nlogo.compile.front.FrontEnd")
+  val frontEnd = Femto.scalaSingleton[api.FrontEndInterface](
+    "org.nlogo.parse.FrontEnd")
+  val bridge = Femto.scalaSingleton[FrontMiddleBridgeInterface](
+    "org.nlogo.compile.middle.FrontMiddleBridge")
   val middleEnd = Femto.scalaSingleton[MiddleEndInterface](
     "org.nlogo.compile.middle.MiddleEnd")
   val backEnd = Femto.scalaSingleton[BackEndInterface](
@@ -36,9 +38,7 @@ object Compiler extends nvm.CompilerInterface {
       flags: nvm.CompilerFlags): nvm.CompilerResults = {
     val (topLevelDefs, structureResults) =
       frontEnd.frontEnd(source, displayName, oldProgram, subprogram, oldProcedures, extensionManager)
-    val bridged =
-      FrontMiddleBridge(
-        structureResults, extensionManager, oldProcedures, topLevelDefs)
+    val bridged = bridge(structureResults, extensionManager, oldProcedures, topLevelDefs)
     val allDefs = middleEnd.middleEnd(bridged, flags)
     backEnd.backEnd(allDefs, structureResults.program, source, extensionManager.profilingEnabled, flags)
   }

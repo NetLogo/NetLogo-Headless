@@ -1,6 +1,6 @@
 // (C) Uri Wilensky. https://github.com/NetLogo/NetLogo
 
-package org.nlogo.compile
+package org.nlogo.api
 
 object Instantiator {
   def newInstance[T](clazz: Class[_], args: Any*) = {

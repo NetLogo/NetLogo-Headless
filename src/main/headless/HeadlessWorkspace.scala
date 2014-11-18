@@ -46,7 +46,7 @@ object HeadlessWorkspace {
 
   def newLab: LabInterface = {
     val frontEnd: FrontEndInterface =
-      Femto.scalaSingleton("org.nlogo.compile.front.FrontEnd")
+      Femto.scalaSingleton("org.nlogo.parse.FrontEnd")
     // kludgy, use AnyRef here because ProtocolLoader doesn't implement an interface - ST 4/25/13
     val protocolLoader: AnyRef =
       Femto.get("org.nlogo.lab.ProtocolLoader",

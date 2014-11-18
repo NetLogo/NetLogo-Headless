@@ -1,7 +1,6 @@
 // (C) Uri Wilensky. https://github.com/NetLogo/NetLogo
 
-package org.nlogo.compile
-package front
+package org.nlogo.parse
 
 import org.nlogo.{ api, core },
   api.FrontEndProcedure,

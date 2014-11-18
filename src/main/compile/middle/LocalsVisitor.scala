@@ -5,9 +5,9 @@ package middle
 
 import org.nlogo.core.Let
 import org.nlogo.api.I18N
+import org.nlogo.api.Fail._
 import org.nlogo.nvm.Procedure
 import org.nlogo.prim._
-import Fail._
 
 /**
  * This is an AstVisitor that optimizes "let" variables by converting them to "locals" variables
