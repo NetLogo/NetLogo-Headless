@@ -62,7 +62,6 @@ object Depend {
       "api/model" -> List("api"),
       "compile" -> List("prim"),
       "compile/back" -> List("compile"),
-      "compile/front" -> List("compile", "parse"),
       "compile/middle" -> List("compile", "core/prim"),
       "core" -> Nil,
       "core/prim" -> List("core"),
