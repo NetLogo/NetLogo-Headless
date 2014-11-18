@@ -1,7 +1,6 @@
 // (C) Uri Wilensky. https://github.com/NetLogo/NetLogo
 
-package org.nlogo.compile
-package front
+package org.nlogo.parse
 
 import org.scalatest.FunSuite
 import org.nlogo.{ core, api, nvm, parse },
@@ -15,7 +14,7 @@ class NamerTests extends FunSuite {
     val program = Program.empty().copy(interfaceGlobals = Seq("X"))
     val results = new StructureParser(
         FrontEnd.tokenizer.tokenizeString(wrappedSource).map(parse.Namer0),
-        None, StructureResults(program))
+        None, api.StructureResults(program))
       .parse(false)
     assertResult(1)(results.procedures.size)
     val procedure = results.procedures.values.iterator.next()

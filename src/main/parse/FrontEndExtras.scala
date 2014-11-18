@@ -1,11 +1,10 @@
 // (C) Uri Wilensky. https://github.com/NetLogo/NetLogo
 
-package org.nlogo.compile
-package front
+package org.nlogo.parse
 
-import org.nlogo.{ core, api, parse }
+import org.nlogo.{ core, api }
 
-trait FrontEndExtras { this: FrontEndInterface =>
+trait FrontEndExtras { this: api.FrontEndInterface =>
 
   import api.FrontEndInterface.ProceduresMap
   import FrontEnd.tokenizer
@@ -17,27 +16,27 @@ trait FrontEndExtras { this: FrontEndInterface =>
 
   def readFromString(source: String): AnyRef =
     core.NumberParser.parse(source).right.getOrElse(
-      new parse.LiteralParser(null, null, null)
+      new LiteralParser(null, null, null)
         .getLiteralValue(tokenizer.tokenizeString(source)
-          .map(parse.Namer0)))
+          .map(Namer0)))
 
   def readFromString(source: String, world: api.World, extensionManager: api.ExtensionManager): AnyRef =
     core.NumberParser.parse(source).right.getOrElse(
       FrontEnd.literalParser(world, extensionManager)
         .getLiteralValue(tokenizer.tokenizeString(source)
-          .map(parse.Namer0)))
+          .map(Namer0)))
 
   def readNumberFromString(source: String, world: api.World, extensionManager: api.ExtensionManager): java.lang.Double =
     core.NumberParser.parse(source).right.getOrElse(
       FrontEnd.literalParser(world, extensionManager)
         .getNumberValue(tokenizer.tokenizeString(source)
-          .map(parse.Namer0)))
+          .map(Namer0)))
 
   @throws(classOf[java.io.IOException])
   def readFromFile(currFile: api.File, world: api.World, extensionManager: api.ExtensionManager): AnyRef = {
     val tokens: Iterator[core.Token] =
-      new parse.TokenReader(currFile, tokenizer)
-        .map(parse.Namer0)
+      new TokenReader(currFile, tokenizer)
+        .map(Namer0)
     val result =
       FrontEnd.literalParser(world, extensionManager)
         .getLiteralFromFile(tokens)
@@ -63,8 +62,8 @@ trait FrontEndExtras { this: FrontEndInterface =>
     try {
       val sp = new StructureParser(
         tokenizer.tokenizeString("to __is-reporter? report " + s + "\nend")
-          .map(parse.Namer0),
-        None, StructureResults(program, procedures))
+          .map(Namer0),
+        None, api.StructureResults(program, procedures))
       val results = sp.parse(subprogram = true)
       val namer =
         new Namer(program, procedures ++ results.procedures, extensionManager)

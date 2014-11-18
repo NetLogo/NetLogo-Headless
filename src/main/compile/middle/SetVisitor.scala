@@ -4,8 +4,9 @@ package org.nlogo.compile
 package middle
 
 import org.nlogo.{ api, nvm, prim },
-  prim._,
-  Fail._
+  api.{ Instantiator, Fail },
+    Fail._,
+  prim._
 
 /**
  * an AstVisitor that handles the set command. We convert constructs like

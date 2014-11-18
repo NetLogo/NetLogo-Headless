@@ -1,12 +1,11 @@
 // (C) Uri Wilensky. https://github.com/NetLogo/NetLogo
 
-package org.nlogo.compile.front
+package org.nlogo.parse
 
 import org.scalatest.FunSuite
 import org.nlogo.agent.{AgentSet, Patch, Turtle, World}
 import org.nlogo.api.{CompilerException, Dump, ExtensionManager, ExtensionObject, LogoList}
 import org.nlogo.util.MockSuite
-import org.nlogo.parse
 
 // Even though LiteralParser is in parse, we can't test it fully without
 // a LiteralAgentParser, and that's in the agent package, so these tests
@@ -27,10 +26,10 @@ class TestLiteralParser extends FunSuite with MockSuite {
                  world: World = defaultWorld,
                  extensionManager: ExtensionManager = null): AnyRef =
     FrontEnd.literalParser(world, extensionManager)
-      .getLiteralValue(FrontEnd.tokenizer.tokenizeString(input).map(parse.Namer0))
+      .getLiteralValue(FrontEnd.tokenizer.tokenizeString(input).map(Namer0))
 
   def toLiteralList(input: String, world: World = defaultWorld): LogoList = {
-    val tokens = FrontEnd.tokenizer.tokenizeString(input).map(parse.Namer0)
+    val tokens = FrontEnd.tokenizer.tokenizeString(input).map(Namer0)
     val (result, _) = FrontEnd.literalParser(world, null).parseLiteralList(tokens.next(), tokens)
     result
   }

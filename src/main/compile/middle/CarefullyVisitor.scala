@@ -4,8 +4,8 @@ package org.nlogo.compile
 package middle
 
 import org.nlogo.api.I18N
+import org.nlogo.api.Fail._
 import org.nlogo.prim._
-import Fail._
 
 /**
  * This is an AstVisitor that connects "error-message" reporters to

@@ -1,7 +1,6 @@
 // (C) Uri Wilensky. https://github.com/NetLogo/NetLogo
 
-package org.nlogo.compile
-package front
+package org.nlogo.parse
 
 import org.scalatest.FunSuite
 
@@ -13,9 +12,9 @@ class StructureParserTests extends FunSuite {
   val tokenizer: core.TokenizerInterface =
     Femto.scalaSingleton("org.nlogo.lex.Tokenizer")
 
-  def compile(source: String): StructureResults =
-    new StructureParser(tokenizer.tokenizeString(source).map(parse.Namer0),
-                        None, StructureResults.empty)
+  def compile(source: String): api.StructureResults =
+    new StructureParser(tokenizer.tokenizeString(source).map(Namer0),
+                        None, api.StructureResults.empty)
       .parse(false)
 
   def expectError(source: String, error: String) {

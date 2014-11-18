@@ -1,12 +1,11 @@
 // (C) Uri Wilensky. https://github.com/NetLogo/NetLogo
 
-package org.nlogo.compile
-package front
+package org.nlogo.parse
 
-import org.nlogo.{ core, api, parse, prim },
+import org.nlogo.{ core, api, prim },
   api.FrontEndInterface,
   core.{ Token, TokenType },
-  Fail._
+  api.Fail._
 
 /**
   * Classifies identifier tokens as commands or reporters.

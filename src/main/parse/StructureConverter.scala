@@ -1,11 +1,10 @@
 // (C) Uri Wilensky. https://github.com/NetLogo/NetLogo
 
-package org.nlogo.compile
-package front
+package org.nlogo.parse
 
 import org.nlogo.{ core, api },
   core.Token,
-  api.FrontEndProcedure
+  api.{ FrontEndProcedure, StructureResults }
 
 /// Stage #3 of StructureParser
 

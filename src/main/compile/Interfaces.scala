@@ -2,23 +2,16 @@
 
 package org.nlogo.compile
 
-// has to be in this package because that's where ProcedureDefinition is - ST 8/27/13
+import org.nlogo.{ core, api, nvm },
+  nvm.Procedure.ProceduresMap
 
-import org.nlogo.{ api, core, nvm },
-  api.FrontEndInterface.ProceduresMap
-
-object FrontEndInterface {
-  type FrontEndResults = (Seq[core.ProcedureDefinition], StructureResults)
-}
-trait FrontEndInterface extends api.FrontEndInterface {
-  def frontEnd(
-        source: String,
-        displayName: Option[String] = None,
-        program: api.Program = api.Program.empty(),
-        subprogram: Boolean = true,
-        oldProcedures: api.FrontEndInterface.ProceduresMap = api.FrontEndInterface.NoProcedures,
-        extensionManager: api.ExtensionManager = new api.DummyExtensionManager)
-      : FrontEndInterface.FrontEndResults
+trait FrontMiddleBridgeInterface {
+  def apply(
+    structureResults: api.StructureResults,
+    extensionManager: api.ExtensionManager,
+    oldProcedures: ProceduresMap,
+    topLevelDefs: Seq[core.ProcedureDefinition]
+  ): Seq[ProcedureDefinition]
 }
 
 trait MiddleEndInterface {
