@@ -2,16 +2,17 @@
 
 package org.nlogo.agent
 
-import org.nlogo.{ api, core },
-  core.{ Token, TokenType }
+import org.nlogo.{ core, api },
+  core.{ Token, TokenType },
+  api.Fail._
 
 // This is only used for importing worlds; the regular NetLogo language
 // doesn't have literal agents and agentsets.
 
 class LiteralAgentParser(_world: api.World,
-  readLiteralPrefix: (Token, Iterator[Token]) => AnyRef,
-  cAssert: (Boolean, =>String, Token) => Unit,
-  exception: (String, Token) => Nothing) {
+  readLiteralPrefix: (Token, Iterator[Token]) => AnyRef)
+extends (Iterator[Token] => AnyRef)  // returns Agent or AgentSet
+{
 
   // janky, but oh well - ST 5/2/13
   def world = _world.asInstanceOf[World]
@@ -43,7 +44,7 @@ class LiteralAgentParser(_world: api.World,
    *   {breed some-breed} {turtles 1 2 3 4 5} {patches [1 2] [3 4] [5 6]} {links [0 1] [1 2]}
    * To parse the turtle and patch forms, it uses parseLiteralAgent().
    */
-  def parseLiteralAgentOrAgentSet(tokens: Iterator[Token]): AnyRef = {  // returns Agent or AgentSet
+  def apply(tokens: Iterator[Token]): AnyRef = {  // returns Agent or AgentSet
     val token = tokens.next()
     // next token should be an identifier or reporter. reporter is a special case because "turtles"
     // and "patches" end up getting turned into Reporters when tokenizing, which is kind of ugly.
