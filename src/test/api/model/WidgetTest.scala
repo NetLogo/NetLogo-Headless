@@ -364,6 +364,22 @@ class WidgetTest extends FunSuite {
       TextBoxReader.parse(TextBoxReader.format(TextBoxReader.parse(textBox)).split("\n").toList))
   }
 
+  test("textboxWithEscapes") {
+    val textBox = """|TEXTBOX
+                     |18
+                     |95
+                     |168
+                     |151
+                     |Note, with	tabs and\n\nnewlines and\nescaped newlines \"\\n\"
+                     |11
+                     |0.0
+                     |1""".stripMargin.split("\n").toList
+    val escapedText = "Note, with\ttabs and\n\nnewlines and\nescaped newlines \"\\n\""
+    assert(TextBoxReader.validate(textBox))
+    assertResult(TextBox(escapedText, 18, 95, 168, 151, 11, 0.0, true))(TextBoxReader.parse(textBox))
+    assert(TextBoxReader.validate(TextBoxReader.format(TextBoxReader.parse(textBox)).split("\n").toList))
+  }
+
   test("inputbox color") {
     val inputBox = """|INPUTBOX
                       |119
