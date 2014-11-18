@@ -11,11 +11,12 @@ sealed trait DeclaresConstraint {
   def varName: String
   def constraint: List[String]
 }
+
 sealed trait DeclaresGlobalCommand {
   def varName: String
   def default: Any
   def asNetLogoString(x: Any): String = x match {
-    case s: String => s""""$s""""
+    case s: String => s""""${StringEscaper.escapeString(s)}""""
     case b: Boolean => if(b) "true" else "false"
     case l: List[Any] => l.map(asNetLogoString).mkString("[", " ", "]")
     case ll: LogoList => ll.toList.map(asNetLogoString).mkString("[" , " ", "]")
