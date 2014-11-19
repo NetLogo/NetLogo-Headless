@@ -3,6 +3,7 @@
 package org.nlogo.core
 
 import org.scalatest.FunSuite
+import ConstraintSpecification.ChoiceConstraintSpecification
 
 class WidgetTests extends FunSuite {
   test("Chooser handles choices with lists") {
