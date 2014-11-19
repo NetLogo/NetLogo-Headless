@@ -1,5 +1,4 @@
 // (C) Uri Wilensky. https://github.com/NetLogo/NetLogo
-
 package org.nlogo.headless
 
 import org.nlogo.workspace
@@ -8,8 +7,8 @@ import org.nlogo.plot.PlotLoader
 import org.nlogo.agent.{BooleanConstraint, ChooserConstraint, InputBoxConstraint, NumericConstraint}
 import org.nlogo.api.{CompilerException, FileIO, LogoList, Program, ValueConstraint, Version}
 import org.nlogo.api.model.ModelReader
-import org.nlogo.core.{Model, Widget, DeclaresGlobal, DeclaresGlobalCommand, DeclaresConstraint}
-import org.nlogo.core.{ConstraintSpecification, NumericConstraintSpecification, ChoiceConstraintSpecification, BooleanConstraintSpecification, NumericInputConstraintSpecification, StringInputConstraintSpecification }
+import org.nlogo.core.{ConstraintSpecification, Model},
+  ConstraintSpecification._
 
 import org.nlogo.shape.{LinkShape, VectorShape}
 

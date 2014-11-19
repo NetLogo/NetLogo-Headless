@@ -2,23 +2,18 @@
 
 package org.nlogo.core
 
+import ConstraintSpecification._
+
 trait Widget
+
 sealed trait DeclaresGlobal {
   def varName: String
 }
-
-sealed trait ConstraintSpecification
 
 sealed trait DeclaresConstraint {
   def varName: String
   def constraint: ConstraintSpecification
 }
-
-case class NumericConstraintSpecification(defaultValue: java.lang.Double) extends ConstraintSpecification
-case class ChoiceConstraintSpecification(vals: List[AnyRef], defaultIndex: Int) extends ConstraintSpecification
-case class BooleanConstraintSpecification(default: java.lang.Boolean) extends ConstraintSpecification
-case class NumericInputConstraintSpecification(typeName: String, default: java.lang.Double) extends ConstraintSpecification
-case class StringInputConstraintSpecification(typeName: String, default: String) extends ConstraintSpecification
 
 sealed trait DeclaresGlobalCommand {
   def varName: String
