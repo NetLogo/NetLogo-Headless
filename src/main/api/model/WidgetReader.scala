@@ -440,8 +440,8 @@ class InputBoxReader extends BaseWidgetReader {
 
     val List((), left: Int, top: Int, right: Int, bottom: Int, varName: String, value: String,
       multiline: Boolean, _, inputBoxTypeStr: String) = vals
-    val (inputBoxType: InputBoxType[U], widgetline: WidgetLine[U]) = inputBoxTypes.find(_._1.name == inputBoxTypeStr) match {
-      case Some(t) => t.asInstanceOf[Tuple2[InputBoxType[U], WidgetLine[U]]]
+    val (inputBoxType: InputBoxType, widgetline: WidgetLine[U]) = inputBoxTypes.find(_._1.name == inputBoxTypeStr) match {
+      case Some(t) => t.asInstanceOf[(InputBoxType, WidgetLine[U])]
       case None =>
         throw new RuntimeException(
           "Couldn't find corresponding input box type for " + inputBoxTypeStr)

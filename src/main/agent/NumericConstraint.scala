@@ -7,11 +7,9 @@ import org.nlogo.api.ValueConstraint
 /**
  * Constraint suitable for Slider variables.
  */
-class NumericConstraint(_defaultValue: AnyRef) extends ValueConstraint {
+class NumericConstraint(var defaultValue: java.lang.Double) extends ValueConstraint {
 
   def this() = this(World.ZERO)
-
-  var defaultValue: java.lang.Double = coerceValue(_defaultValue)
 
   @throws(classOf[ValueConstraint.Violation])
   def assertConstraint(value: AnyRef) {

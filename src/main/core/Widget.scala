@@ -7,10 +7,18 @@ sealed trait DeclaresGlobal {
   def varName: String
 }
 
+sealed trait ConstraintSpecification
+
 sealed trait DeclaresConstraint {
   def varName: String
-  def constraint: List[String]
+  def constraint: ConstraintSpecification
 }
+
+case class NumericConstraintSpecification(defaultValue: java.lang.Double) extends ConstraintSpecification
+case class ChoiceConstraintSpecification(vals: List[AnyRef], defaultIndex: Int) extends ConstraintSpecification
+case class BooleanConstraintSpecification(default: java.lang.Boolean) extends ConstraintSpecification
+case class NumericInputConstraintSpecification(typeName: String, default: java.lang.Double) extends ConstraintSpecification
+case class StringInputConstraintSpecification(typeName: String, default: String) extends ConstraintSpecification
 
 sealed trait DeclaresGlobalCommand {
   def varName: String
@@ -39,13 +47,13 @@ case class Switch(display: String, left: Int = 0, top: Int = 0, right: Int = 0, 
              varName: String, on: Boolean = false)
               extends Widget with DeclaresGlobal with DeclaresGlobalCommand with DeclaresConstraint {
   override def default = on
-  override def constraint = List("SWITCH", asNetLogoString(default))
+  override def constraint = BooleanConstraintSpecification(default)
 }
 case class Chooser(display: String, left: Int = 0, top: Int = 0, right: Int = 0, bottom: Int = 0,
              varName: String, choices: List[AnyRef] = Nil, currentChoice: Int = 0)
            extends Widget with DeclaresGlobal with DeclaresGlobalCommand with DeclaresConstraint {
   override def default = choices(currentChoice)
-  override def constraint = List("CHOOSER", asNetLogoString(choices), currentChoice.toString)
+  override def constraint = ChoiceConstraintSpecification(choices, currentChoice)
 }
 sealed trait Direction
 case object Horizontal extends Direction
@@ -54,7 +62,7 @@ case class Slider(display: String, left: Int = 0, top: Int = 0, right: Int = 0, 
              varName: String, min: String = "1", max: String = "10", default: Double = 1, step: String = "1",
              units: String = "", direction: Direction = Horizontal)
              extends Widget with DeclaresGlobal with DeclaresGlobalCommand with DeclaresConstraint {
-  override def constraint = List("SLIDER", min, max, step, default.toString)
+  override def constraint = NumericConstraintSpecification(default)
 }
 case class Monitor(rawDisplay: Option[String], left: Int, top: Int, right: Int, bottom: Int,
              source: String, precision: Int, fontSize: Int) extends Widget {
@@ -62,17 +70,21 @@ case class Monitor(rawDisplay: Option[String], left: Int, top: Int, right: Int, 
 }
 case class Output(left: Int, top: Int, right: Int, bottom: Int, fontSize: Int) extends Widget
 
-abstract class InputBoxType[T](val name:String)
-case object Num extends InputBoxType[Double]("Number")
-case object Str extends InputBoxType[String]("String")
-case object StrReporter extends InputBoxType[String]("String (reporter)")
-case object StrCommand extends InputBoxType[String]("String (commands)")
-case object Col extends InputBoxType[Int]("Color")
+abstract class InputBoxType(val name:String)
+case object Num extends InputBoxType("Number")
+case object Str extends InputBoxType("String")
+case object StrReporter extends InputBoxType("String (reporter)")
+case object StrCommand extends InputBoxType("String (commands)")
+case object Col extends InputBoxType("Color")
 case class InputBox[T](left: Int = 0, top: Int = 0, right: Int = 0, bottom: Int = 0, varName: String,
-             value: T, multiline: Boolean = false, boxtype: InputBoxType[T])
+             value: T, multiline: Boolean = false, boxtype: InputBoxType)
            extends Widget with DeclaresGlobal with DeclaresGlobalCommand with DeclaresConstraint {
   override def default = value
-  override def constraint = List("INPUTBOX", default.toString, boxtype.name)
+  override def constraint = boxtype match {
+    case Col => NumericInputConstraintSpecification(boxtype.name, value.asInstanceOf[Int].toDouble)
+    case Num => NumericInputConstraintSpecification(boxtype.name, value.asInstanceOf[Double])
+    case _ => StringInputConstraintSpecification(boxtype.name, value.asInstanceOf[String])
+  }
 }
 case class View(left: Int = 0, top: Int = 0, right: Int = 5, bottom: Int = 5,
   patchSize: Double = 12, fontSize: Int = 9, wrappingAllowedInX: Boolean = true, wrappingAllowedInY: Boolean = true,
