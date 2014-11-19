@@ -9,6 +9,7 @@ import org.nlogo.agent.{BooleanConstraint, ChooserConstraint, InputBoxConstraint
 import org.nlogo.api.{CompilerException, FileIO, LogoList, Program, ValueConstraint, Version}
 import org.nlogo.api.model.ModelReader
 import org.nlogo.core.{Model, Widget, DeclaresGlobal, DeclaresGlobalCommand, DeclaresConstraint}
+import org.nlogo.core.{ConstraintSpecification, NumericConstraintSpecification, ChoiceConstraintSpecification, BooleanConstraintSpecification, NumericInputConstraintSpecification, StringInputConstraintSpecification }
 
 import org.nlogo.shape.{LinkShape, VectorShape}
 
@@ -70,7 +71,7 @@ class HeadlessModelOpener(ws: HeadlessWorkspace) {
     if (ws.compilerTestingMode)
       testCompileWidgets(results.program, netLogoVersion, buttonCode.toList, monitorCode.toList)
     else
-      finish(Map() ++ model.constraints, results.program, model.interfaceGlobalCommands.mkString("\n"))
+      finish(model.constraints, results.program, model.interfaceGlobalCommands.mkString("\n"))
   }
 
 
@@ -83,27 +84,22 @@ class HeadlessModelOpener(ws: HeadlessWorkspace) {
     if (linkShapeLines.isEmpty) ws.world.linkShapeList.add(LinkShape.getDefaultLinkShape)
   }
 
-  private def finish(constraints: Map[String, List[String]], program: Program, interfaceGlobalCommands: String) {
+  private def finish(constraints: Map[String, ConstraintSpecification], program: Program, interfaceGlobalCommands: String) {
     ws.world.realloc()
 
     val errors = ws.plotManager.compileAllPlots()
     if(errors.nonEmpty) throw errors(0)
 
     for ((vname, spec) <- constraints) {
-      val con: ValueConstraint = spec(0) match {
-        case "SLIDER" =>
-          new NumericConstraint(spec(4))
-        case "CHOOSER" =>
-          val vals = ws.compiler.frontEnd.readFromString(spec(1)).asInstanceOf[LogoList]
-          val defaultIndex = spec(2).toInt
-          new ChooserConstraint(vals, defaultIndex)
-        case "SWITCH" => new BooleanConstraint(spec(1))
-        case "INPUTBOX" =>
-          var defaultVal: AnyRef = spec(1)
-          if (spec(2) == "Number" || spec(2) == "Color")
-            defaultVal = ws.compiler.frontEnd.readNumberFromString(spec(1), ws.world,
-              ws.getExtensionManager)
-          new InputBoxConstraint(spec(2), defaultVal)
+      val con: ValueConstraint = spec match {
+        case NumericConstraintSpecification(default) => new NumericConstraint(default)
+        case ChoiceConstraintSpecification(vals, defaultIndex) => new ChooserConstraint(
+          LogoList.fromIterator(vals.iterator),
+          defaultIndex
+        )
+        case BooleanConstraintSpecification(default) => new BooleanConstraint(default)
+        case StringInputConstraintSpecification(typeName, default) => new InputBoxConstraint(typeName, default)
+        case NumericInputConstraintSpecification(typeName, default) => new InputBoxConstraint(typeName, default)
       }
       ws.world.observer().setConstraint(ws.world.observerOwnsIndexOf(vname.toUpperCase), con)
     }

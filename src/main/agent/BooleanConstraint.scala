@@ -7,11 +7,9 @@ import org.nlogo.api.{I18N, ValueConstraint}
 /**
  * Constraint suitable for Switch variables.
  */
-class BooleanConstraint(_defaultValue: AnyRef) extends ValueConstraint {
+class BooleanConstraint(var defaultValue: java.lang.Boolean) extends ValueConstraint {
 
   def this() = this(java.lang.Boolean.FALSE)
-
-  var defaultValue: java.lang.Boolean = coerceValue(_defaultValue)
 
   @throws(classOf[ValueConstraint.Violation])
   def assertConstraint(value: AnyRef) {
