@@ -53,6 +53,11 @@ case class StringLine(override val default: Option[String] = None) extends Widge
   def format(v: String): String = v
   def valid(v: String): Boolean = true
 }
+case class EscapedStringLine(override val default: Option[String] = None) extends WidgetLine[String] {
+  def parse(line: String): String = unescapeString(line)
+  def format(v: String): String = escapeString(v)
+  def valid(v: String): Boolean = true
+}
 case class SpecifiedLine(str: String) extends WidgetLine[Unit] {
   def parse(line: String): Unit = {}
   def format(x: Unit): String = str
@@ -308,14 +313,14 @@ object TextBoxReader extends BaseWidgetReader {
   type T = TextBox
 
   def definition = List(new SpecifiedLine("TEXTBOX"),
-                        IntLine(),  // left
-                        IntLine(),  // top
-                        IntLine(),  // right
-                        IntLine(),  // bottom
-                        StringLine(),   // display
-                        IntLine(),   // font size
-                        DoubleLine(), // color
-                        BooleanLine()  // transparent
+                        IntLine(),           // left
+                        IntLine(),           // top
+                        IntLine(),           // right
+                        IntLine(),           // bottom
+                        EscapedStringLine(), // display
+                        IntLine(),           // font size
+                        DoubleLine(),        // color
+                        BooleanLine()        // transparent
                       )
   def asList(textBox: TextBox) = List((), textBox.left, textBox.top, textBox.right, textBox.bottom,
                                     textBox.display, textBox.fontSize, textBox.color, textBox.transparent)
@@ -435,8 +440,8 @@ class InputBoxReader extends BaseWidgetReader {
 
     val List((), left: Int, top: Int, right: Int, bottom: Int, varName: String, value: String,
       multiline: Boolean, _, inputBoxTypeStr: String) = vals
-    val (inputBoxType: InputBoxType[U], widgetline: WidgetLine[U]) = inputBoxTypes.find(_._1.name == inputBoxTypeStr) match {
-      case Some(t) => t.asInstanceOf[Tuple2[InputBoxType[U], WidgetLine[U]]]
+    val (inputBoxType: InputBoxType, widgetline: WidgetLine[U]) = inputBoxTypes.find(_._1.name == inputBoxTypeStr) match {
+      case Some(t) => t.asInstanceOf[(InputBoxType, WidgetLine[U])]
       case None =>
         throw new RuntimeException(
           "Couldn't find corresponding input box type for " + inputBoxTypeStr)
