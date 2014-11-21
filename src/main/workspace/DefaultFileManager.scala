@@ -158,7 +158,7 @@ private[workspace] final class DefaultFileManager(private val workspace: Abstrac
   }
 
   def read(world: World): AnyRef = {
-    val readLiteral = (file: File) => workspace.compiler.frontEnd.readFromFile(file, world, workspace.getExtensionManager)
+    val readLiteral = (file: File) => workspace.compiler.utilities.readFromFile(file, world, workspace.getExtensionManager)
     currentFile.map(asReadableFile _ andThen asFileNotAtEof andThen readLiteral).getOrElse(throwNoOpenFile())
   }
 

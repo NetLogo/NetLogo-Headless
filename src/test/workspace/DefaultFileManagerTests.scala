@@ -8,8 +8,8 @@ import
 import
   org.nlogo.{ agent, api, nvm },
     agent.OutputObject,
-    api.{ ExtensionManager => APIExtensionManager, File, FileMode, Program, World },
-    nvm.{ CompilerFlags, CompilerInterface, CompilerResults, FrontEndInterface, Reporter },
+org.nlogo.api.{ExtensionManager => APIExtensionManager, CompilerUtilitiesInterface, File, FileMode, FrontEndInterface, Program, World},
+org.nlogo.nvm.{Procedure, CompilerFlags, CompilerInterface, CompilerResults, Reporter},
       FrontEndInterface.ProceduresMap
 
 import
@@ -289,30 +289,33 @@ class DefaultFileManagerTests extends FunSuite with OneInstancePerTest {
   val output = new OutputObject("", "bar", false, false)
 
   val dummyCompiler = new CompilerInterface {
-    override def frontEnd: FrontEndInterface = dummyFrontEnd
+    override def utilities: CompilerUtilitiesInterface = dummyFrontEnd
 
     override def compileProgram(source: String,
                                 program: Program,
                                 extensionManager: APIExtensionManager,
                                 flags: CompilerFlags): CompilerResults = ???
 
+    override def makeLiteralReporter(value: AnyRef): Reporter = ???
+
     override def compileMoreCode(source: String,
                                  displayName: Option[String],
                                  program: Program,
-                                 oldProcedures: ProceduresMap,
+                                 oldProcedures: Procedure.ProceduresMap,
                                  extensionManager: APIExtensionManager,
                                  flags: CompilerFlags): CompilerResults = ???
+
+    override def frontEnd: FrontEndInterface = ???
   }
 
   var readFile: Option[File] = None
 
-  val dummyFrontEnd = new FrontEndInterface {
+  val dummyFrontEnd = new CompilerUtilitiesInterface {
     override def readFromString(source: String): AnyRef = ???
     override def readFromString(source: String, world: World,
                                 extensionManager: api.ExtensionManager): AnyRef = ???
     override def isReporter(s: String, program: Program, procedures: ProceduresMap,
                             extensionManager: api.ExtensionManager): Boolean = ???
-    override def makeLiteralReporter(value: AnyRef): Reporter = ???
 
     @throws(classOf[IOException])
     override def readFromFile(currFile: File, world: World, extensionManager: api.ExtensionManager): AnyRef = {
