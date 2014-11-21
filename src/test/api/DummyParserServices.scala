@@ -13,8 +13,10 @@ class DummyParserServices extends ParserServices {
         s match {
           case "true" => true: java.lang.Boolean
           case "false" => false: java.lang.Boolean
-          case _ if(s.head == '[') =>  LogoList(s.tail.init.split(" ").map(readFromString): _*)
-          case _ if(s.head == '"') =>  s.tail.init
+          case "nobody" => Nobody
+          case _ if s.head == '[' && s.charAt(1) == '[' =>  LogoList(readFromString(s.tail.init))
+          case _ if s.head == '[' =>  LogoList(s.tail.init.split(" ").map(readFromString): _*)
+          case _ if s.head == '"' && s.last == '"' =>  s.tail.init
           case _ => throw new CompilerException(
             s + " not a constant recognized by DummyParserServices", 0, s.size, "")
         }
