@@ -580,7 +580,7 @@ object AbstractWorkspaceTraits {
       new agent.ImporterJ.StringReader {
         @throws(classOf[agent.ImporterJ.StringReaderException])
         def readFromString(s: String): AnyRef =
-          try compiler.frontEnd.readFromString(s, world, getExtensionManager)
+          try compiler.utilities.readFromString(s, world, getExtensionManager)
           catch { case ex: CompilerException =>
               throw new agent.ImporterJ.StringReaderException(ex.getMessage)
           }

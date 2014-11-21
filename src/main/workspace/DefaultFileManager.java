@@ -313,7 +313,7 @@ public final strictfp class DefaultFileManager
     if (eof()) {
       throw new java.io.EOFException();
     }
-    return workspace.compiler().frontEnd().readFromFile
+    return workspace.compiler().utilities().readFromFile
         (currentFile, world, workspace.getExtensionManager());
   }
 
