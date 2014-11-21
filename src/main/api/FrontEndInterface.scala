@@ -28,7 +28,7 @@ object FrontEndInterface {
   type FrontEndResults = (Seq[ProcedureDefinition], StructureResults)
 }
 
-trait FrontEndInterface extends CompilerUtilitiesInterface {
+trait FrontEndInterface {
   def frontEnd(
         source: String,
         displayName: Option[String] = None,

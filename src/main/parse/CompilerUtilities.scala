@@ -6,7 +6,7 @@ import org.nlogo.{ core, api, agent },
   api.CompilerUtilitiesInterface,
   agent.LiteralAgentParser
 
-trait CompilerUtilities extends CompilerUtilitiesInterface {
+object CompilerUtilities extends CompilerUtilitiesInterface {
 
   import api.FrontEndInterface.ProceduresMap
   import FrontEnd.tokenizer

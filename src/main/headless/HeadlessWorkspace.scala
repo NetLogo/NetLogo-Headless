@@ -10,7 +10,7 @@ import org.nlogo.agent.Agent
 import org.nlogo.core.{ AgentKind, WorldDimensions }
 import org.nlogo.api.{ Program, Version, RendererInterface,
                        CompilerException, LogoException, SimpleJobOwner,
-                       CommandRunnable, ReporterRunnable, FrontEndInterface }
+                       CommandRunnable, ReporterRunnable, Femto, CompilerUtilitiesInterface }
 import org.nlogo.core.{ Model, UpdateMode }
 import org.nlogo.api.model.ModelReader
 
@@ -18,7 +18,6 @@ import org.nlogo.agent.World
 import org.nlogo.nvm, nvm.{ LabInterface, Context,
                             DefaultParserServices, CompilerInterface }
 import org.nlogo.workspace.AbstractWorkspace
-import org.nlogo.api.Femto
 import org.nlogo.drawing.DrawingActionBroker
 
 /**
@@ -45,12 +44,12 @@ object HeadlessWorkspace {
   }
 
   def newLab: LabInterface = {
-    val frontEnd: FrontEndInterface =
-      Femto.scalaSingleton("org.nlogo.parse.FrontEnd")
+    val utilities: CompilerUtilitiesInterface =
+      Femto.scalaSingleton("org.nlogo.parse.CompilerUtilities")
     // kludgy, use AnyRef here because ProtocolLoader doesn't implement an interface - ST 4/25/13
     val protocolLoader: AnyRef =
       Femto.get("org.nlogo.lab.ProtocolLoader",
-        new DefaultParserServices(frontEnd))
+        new DefaultParserServices(utilities))
     Femto.get("org.nlogo.lab.Lab", protocolLoader)
   }
 
