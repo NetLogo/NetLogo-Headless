@@ -45,10 +45,7 @@ class CompilerUtilitiesTests extends FunSuite {
     (proceduresMap, structureResults.program)
   }
 
-  def compilerUtilities: api.CompilerUtilitiesInterface =
-    new CompilerUtilities {
-      override def literalParser(world: World, extensionManager: ExtensionManager): LiteralParser = null
-    }
+  def compilerUtilities: api.CompilerUtilitiesInterface = CompilerUtilities
 
   def isReporter(s: String) =
     compilerUtilities.isReporter(s, program,
