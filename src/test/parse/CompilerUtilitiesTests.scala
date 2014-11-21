@@ -4,11 +4,11 @@ package org.nlogo.parse
 
 import org.scalatest.FunSuite
 import org.nlogo.{ core, api },
-  api.FrontEndProcedure,
+org.nlogo.api.{ExtensionManager, World, FrontEndProcedure},
   core.{StructureDeclarations, Syntax, Token},
   StructureDeclarations.Procedure
 
-class FrontEndExtrasTests extends FunSuite {
+class CompilerUtilitiesTests extends FunSuite {
 
   /// helpers
 
@@ -45,8 +45,13 @@ class FrontEndExtrasTests extends FunSuite {
     (proceduresMap, structureResults.program)
   }
 
+  def compilerUtilities: api.CompilerUtilitiesInterface =
+    new CompilerUtilities {
+      override def literalParser(world: World, extensionManager: ExtensionManager): LiteralParser = null
+    }
+
   def isReporter(s: String) =
-    (FrontEnd: FrontEndExtras).isReporter(s, program,
+    compilerUtilities.isReporter(s, program,
       proceduresMap, new api.DummyExtensionManager)
 
   /// tests for isReporter

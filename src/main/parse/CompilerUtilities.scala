@@ -2,12 +2,14 @@
 
 package org.nlogo.parse
 
-import org.nlogo.{ core, api }
+import org.nlogo.{ core, api },
+  api.CompilerUtilitiesInterface
 
-trait FrontEndExtras { this: api.FrontEndInterface =>
+trait CompilerUtilities extends CompilerUtilitiesInterface {
 
   import api.FrontEndInterface.ProceduresMap
   import FrontEnd.tokenizer
+  def literalParser(world: api.World, extensionManager: api.ExtensionManager): LiteralParser
 
   // In the following 3 methods, the initial call to NumberParser is a performance optimization.
   // During import-world, we're calling readFromString over and over again and most of the time
@@ -22,13 +24,13 @@ trait FrontEndExtras { this: api.FrontEndInterface =>
 
   def readFromString(source: String, world: api.World, extensionManager: api.ExtensionManager): AnyRef =
     core.NumberParser.parse(source).right.getOrElse(
-      FrontEnd.literalParser(world, extensionManager)
+      literalParser(world, extensionManager)
         .getLiteralValue(tokenizer.tokenizeString(source)
           .map(Namer0)))
 
   def readNumberFromString(source: String, world: api.World, extensionManager: api.ExtensionManager): java.lang.Double =
     core.NumberParser.parse(source).right.getOrElse(
-      FrontEnd.literalParser(world, extensionManager)
+      literalParser(world, extensionManager)
         .getNumberValue(tokenizer.tokenizeString(source)
           .map(Namer0)))
 
@@ -38,7 +40,7 @@ trait FrontEndExtras { this: api.FrontEndInterface =>
       new TokenReader(currFile, tokenizer)
         .map(Namer0)
     val result =
-      FrontEnd.literalParser(world, extensionManager)
+      literalParser(world, extensionManager)
         .getLiteralFromFile(tokens)
     // now skip whitespace, so that the model can use file-at-end? to see whether there are any
     // more values left - ST 2/18/04
