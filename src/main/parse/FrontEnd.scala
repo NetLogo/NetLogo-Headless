@@ -2,23 +2,14 @@
 
 package org.nlogo.parse
 
-import org.nlogo.{ core, api, agent },
-org.nlogo.api.{ExtensionManager, World, Femto, FrontEndInterface}
+import org.nlogo.{ core, api },
+  api.{ Femto, FrontEndInterface }
 
 object FrontEnd extends FrontEnd {
   val tokenizer: core.TokenizerInterface =
     Femto.scalaSingleton("org.nlogo.lex.Tokenizer")
   val tokenMapper = new TokenMapper(
     "/system/tokens.txt", "org.nlogo.core.prim.")
-  // well this is pretty ugly.  LiteralParser and LiteralAgentParser call each other,
-  // so they're hard to instantiate, but we "tie the knot" using lazy val. - ST 5/3/13
-  def literalParser(world: api.World, extensionManager: api.ExtensionManager): LiteralParser = {
-    lazy val literalParser =
-      new LiteralParser(world, extensionManager, parseLiteralAgentOrAgentSet)
-    lazy val parseLiteralAgentOrAgentSet: Iterator[core.Token] => AnyRef =
-      new agent.LiteralAgentParser(world, literalParser.readLiteralPrefix)
-    literalParser
-  }
 }
 
 abstract class FrontEnd extends FrontEndMain
