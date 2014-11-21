@@ -15,7 +15,8 @@ object Compiler extends nvm.CompilerInterface {
 
   val frontEnd = Femto.scalaSingleton[api.FrontEndInterface](
     "org.nlogo.parse.FrontEnd")
-  val utilities = frontEnd
+  val utilities = Femto.scalaSingleton[api.CompilerUtilitiesInterface](
+    "org.nlogo.parse.CompilerUtilities")
   val bridge = Femto.scalaSingleton[FrontMiddleBridgeInterface](
     "org.nlogo.compile.middle.FrontMiddleBridge")
   val middleEnd = Femto.scalaSingleton[MiddleEndInterface](

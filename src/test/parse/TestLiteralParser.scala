@@ -4,7 +4,7 @@ package org.nlogo.parse
 
 import org.scalatest.FunSuite
 import org.nlogo.agent.{AgentSet, Patch, Turtle, World}
-import org.nlogo.api.{CompilerException, Dump, ExtensionManager, ExtensionObject, LogoList}
+import org.nlogo.api.{CompilerException, Dump, ExtensionManager, ExtensionObject, LogoList, World => APIWorld}
 import org.nlogo.util.MockSuite
 
 // Even though LiteralParser is in parse, we can't test it fully without
@@ -23,24 +23,24 @@ class TestLiteralParser extends FunSuite with MockSuite {
   }
 
   def toLiteral(input: String,
-                 world: World = defaultWorld,
+                 world: APIWorld = defaultWorld,
                  extensionManager: ExtensionManager = null): AnyRef =
-    FrontEnd.literalParser(world, extensionManager)
+    CompilerUtilities.literalParser(world, extensionManager)
       .getLiteralValue(FrontEnd.tokenizer.tokenizeString(input).map(Namer0))
 
-  def toLiteralList(input: String, world: World = defaultWorld): LogoList = {
+  def toLiteralList(input: String, world: APIWorld = defaultWorld): LogoList = {
     val tokens = FrontEnd.tokenizer.tokenizeString(input).map(Namer0)
-    val (result, _) = FrontEnd.literalParser(world, null).parseLiteralList(tokens.next(), tokens)
+    val (result, _) = CompilerUtilities.literalParser(world, null).parseLiteralList(tokens.next(), tokens)
     result
   }
 
-  def testError(input: String, error: String, world: World = defaultWorld) {
+  def testError(input: String, error: String, world: APIWorld = defaultWorld) {
     val e = intercept[CompilerException] {
       toLiteral(input, world)
     }
     assertResult(error)(e.getMessage)
   }
-  def testListError(input: String, error: String, world: World = defaultWorld) {
+  def testListError(input: String, error: String, world: APIWorld = defaultWorld) {
     val e = intercept[CompilerException] {
       toLiteralList(input, world)
     }

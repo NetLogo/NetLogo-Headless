@@ -12,8 +12,8 @@ object FrontEnd extends FrontEnd {
     "/system/tokens.txt", "org.nlogo.core.prim.")
 }
 
-abstract class FrontEnd extends FrontEndMain
-    with FrontEndInterface with CompilerUtilities
+class FrontEnd extends FrontEndMain
+    with FrontEndInterface
 
 trait FrontEndMain {
 
