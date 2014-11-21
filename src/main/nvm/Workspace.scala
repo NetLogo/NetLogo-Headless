@@ -3,7 +3,7 @@
 package org.nlogo.nvm
 
 import org.nlogo.{ api, core },
-  api.FrontEndInterface
+  api.{CompilerUtilitiesInterface, FrontEndInterface}
 import org.nlogo.agent.{ Agent, AgentSet }
 import collection.mutable.WeakHashMap
 
@@ -18,7 +18,7 @@ trait Workspace extends api.Workspace with JobManagerOwner with api.ViewSettings
   def fileManager: FileManager
   def tick(c: Context, originalInstruction: Instruction)
   def compiler: CompilerInterface
-  def parser: FrontEndInterface
+  def parser: CompilerUtilitiesInterface
   def lastRunTimes: WeakHashMap[Job, WeakHashMap[Agent, WeakHashMap[Command, MutableLong]]]  // for _every
   def completedActivations: WeakHashMap[Activation, Boolean]  // for _thunkdidfinish
   def profilingTracer: Tracer

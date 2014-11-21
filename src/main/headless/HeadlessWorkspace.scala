@@ -81,7 +81,7 @@ class HeadlessWorkspace(
 extends AbstractWorkspace(_world)
 with org.nlogo.workspace.WorldLoaderInterface {
 
-  override def parser = compiler.frontEnd
+  override def parser = compiler.utilities
 
   val drawingActionBroker = new DrawingActionBroker(renderer.trailDrawer)
   world.trailDrawer(drawingActionBroker)

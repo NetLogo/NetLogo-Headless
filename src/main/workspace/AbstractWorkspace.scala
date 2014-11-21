@@ -135,11 +135,11 @@ object AbstractWorkspaceTraits {
     var flags = nvm.CompilerFlags()
 
     override def readNumberFromString(source: String) =
-      compiler.frontEnd.readNumberFromString(
+      compiler.utilities.readNumberFromString(
         source, world, getExtensionManager)
 
     override def isReporter(s: String) =
-      compiler.frontEnd.isReporter(s, world.program, procedures, getExtensionManager)
+      compiler.utilities.isReporter(s, world.program, procedures, getExtensionManager)
 
   }
 
