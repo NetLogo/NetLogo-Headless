@@ -28,13 +28,7 @@ object FrontEndInterface {
   type FrontEndResults = (Seq[ProcedureDefinition], StructureResults)
 }
 
-trait FrontEndInterface {
-  def readFromString(source: String): AnyRef
-  def readFromString(source: String, world: World, extensionManager: ExtensionManager): AnyRef
-  def readNumberFromString(source: String, world: World, extensionManager: ExtensionManager): AnyRef
-  @throws(classOf[java.io.IOException])
-  def readFromFile(currFile: File, world: World, extensionManager: ExtensionManager): AnyRef
-  def isReporter(s: String, program: Program, procedures: ProceduresMap, extensionManager: ExtensionManager): Boolean
+trait FrontEndInterface extends CompilerUtilitiesInterface {
   def frontEnd(
         source: String,
         displayName: Option[String] = None,

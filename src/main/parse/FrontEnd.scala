@@ -3,7 +3,7 @@
 package org.nlogo.parse
 
 import org.nlogo.{ core, api, agent },
-  api.{ Femto, FrontEndInterface }
+org.nlogo.api.{ExtensionManager, World, Femto, FrontEndInterface}
 
 object FrontEnd extends FrontEnd {
   val tokenizer: core.TokenizerInterface =
@@ -21,8 +21,8 @@ object FrontEnd extends FrontEnd {
   }
 }
 
-class FrontEnd extends FrontEndMain
-    with FrontEndInterface with FrontEndExtras
+abstract class FrontEnd extends FrontEndMain
+    with FrontEndInterface with CompilerUtilities
 
 trait FrontEndMain {
 
