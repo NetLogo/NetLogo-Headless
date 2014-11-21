@@ -84,7 +84,7 @@ class Fixture(name: String) extends AbstractFixture {
   def declare(model: Model) = workspace.openModel(model)
 
   def readFromString(literal: String): AnyRef =
-    compiler.frontEnd.readFromString(literal)
+    compiler.utilities.readFromString(literal)
 
   // tempted to DRY runReporter and runCommand together since they're so similar, but refraining
   // since there are many little differences, too - ST 8/15/13
