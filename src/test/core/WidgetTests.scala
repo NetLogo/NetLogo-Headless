@@ -3,6 +3,7 @@
 package org.nlogo.core
 
 import org.scalatest.FunSuite
+import ConstraintSpecification.ChoiceConstraintSpecification
 
 class WidgetTests extends FunSuite {
   test("Chooser handles choices with lists") {
@@ -11,10 +12,9 @@ class WidgetTests extends FunSuite {
       override def toString: String = toList.toString()
     }
 
-    val chooser = Chooser(
-      display = "FOOBAR",
-      varName = "FOOBAR",
-      choices = List(l, 4.toDouble).asInstanceOf[List[AnyRef]])
-    assertResult("[[1.0 2.0 3.0] 4.0]")(chooser.constraint(1))
+    val inputChoices = List(ChooseableList(l), ChooseableDouble(4.toDouble))
+    val expectedChoices = List[AnyRef](l, 4.0.asInstanceOf[AnyRef]).asInstanceOf[List[AnyRef]]
+    val chooser = Chooser(display = "FOOBAR", varName = "FOOBAR", choices = inputChoices)
+    assertResult(ChoiceConstraintSpecification(expectedChoices, 0))(chooser.constraint)
   }
 }

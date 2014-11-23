@@ -2,7 +2,8 @@
 
 package org.nlogo.api.model
 
-import org.nlogo.api
+import org.nlogo.api,
+  api.{CompilerException, Nobody}
 import org.nlogo.core.StringEscaper.unescapeString
 import org.nlogo.core.StringEscaper.escapeString
 import org.nlogo.core._
@@ -51,6 +52,11 @@ case class DoubleLine(override val default: Option[Double] = None) extends Widge
 case class StringLine(override val default: Option[String] = None) extends WidgetLine[String] {
   def parse(line: String): String = line
   def format(v: String): String = v
+  def valid(v: String): Boolean = true
+}
+case class EscapedStringLine(override val default: Option[String] = None) extends WidgetLine[String] {
+  def parse(line: String): String = unescapeString(line)
+  def format(v: String): String = escapeString(v)
   def valid(v: String): Boolean = true
 }
 case class SpecifiedLine(str: String) extends WidgetLine[Unit] {
@@ -308,14 +314,14 @@ object TextBoxReader extends BaseWidgetReader {
   type T = TextBox
 
   def definition = List(new SpecifiedLine("TEXTBOX"),
-                        IntLine(),  // left
-                        IntLine(),  // top
-                        IntLine(),  // right
-                        IntLine(),  // bottom
-                        StringLine(),   // display
-                        IntLine(),   // font size
-                        DoubleLine(), // color
-                        BooleanLine()  // transparent
+                        IntLine(),           // left
+                        IntLine(),           // top
+                        IntLine(),           // right
+                        IntLine(),           // bottom
+                        EscapedStringLine(), // display
+                        IntLine(),           // font size
+                        DoubleLine(),        // color
+                        BooleanLine()        // transparent
                       )
   def asList(textBox: TextBox) = List((), textBox.left, textBox.top, textBox.right, textBox.bottom,
                                     textBox.display, textBox.fontSize, textBox.color, textBox.transparent)
@@ -347,7 +353,7 @@ object SwitchReader extends BaseWidgetReader {
   }
 }
 
-case class ChooserReader(val parser: api.ParserServices) extends BaseWidgetReader {
+case class ChooserReader(parser: api.ParserServices) extends BaseWidgetReader {
   type T = Chooser
 
   def definition = List(new SpecifiedLine("CHOOSER"),
@@ -361,13 +367,24 @@ case class ChooserReader(val parser: api.ParserServices) extends BaseWidgetReade
                         IntLine()   // current choice
                       )
   def asList(chooser: Chooser) = List((), chooser.left, chooser.top, chooser.right, chooser.bottom, chooser.display,
-    chooser.varName, chooser.choices.map(v => api.Dump.logoObject(v, true, false)).mkString(" "), chooser.currentChoice)
+    chooser.varName, chooser.choices.map(v => api.Dump.logoObject(v.value, true, false)).mkString(" "), chooser.currentChoice)
   def asWidget(vals: List[Any]): Chooser = {
     val List(_, left: Int, top: Int, right: Int, bottom: Int, display: String, varName: String,
-      choicesStr: String, currentChoice: Int) = vals
-    val choices = parser.readFromString("[" + choicesStr + "]").asInstanceOf[api.LogoList]
+    choicesStr: String, currentChoice: Int) = vals
 
-    Chooser(display, left, top, right, bottom, varName, choices.toList, currentChoice)
+    val choices = parser.readFromString(s"[$choicesStr]").asInstanceOf[api.LogoList].toList
+
+    def isOrContainsNobody(l: Any): Boolean = l match {
+      case Nobody => true
+      case l: List[Any] => l.exists(isOrContainsNobody)
+      case ll: LogoList => isOrContainsNobody(ll.toList)
+      case _ => false
+    }
+
+    if (isOrContainsNobody(choices)) throw new CompilerException(
+      "nobody may not appear in a chooser value", Int.MaxValue, Int.MaxValue, "")
+
+    Chooser(display, left, top, right, bottom, varName, choices.map(Chooseable(_)), currentChoice)
   }
 }
 
@@ -435,8 +452,8 @@ class InputBoxReader extends BaseWidgetReader {
 
     val List((), left: Int, top: Int, right: Int, bottom: Int, varName: String, value: String,
       multiline: Boolean, _, inputBoxTypeStr: String) = vals
-    val (inputBoxType: InputBoxType[U], widgetline: WidgetLine[U]) = inputBoxTypes.find(_._1.name == inputBoxTypeStr) match {
-      case Some(t) => t.asInstanceOf[Tuple2[InputBoxType[U], WidgetLine[U]]]
+    val (inputBoxType: InputBoxType, widgetline: WidgetLine[U]) = inputBoxTypes.find(_._1.name == inputBoxTypeStr) match {
+      case Some(t) => t.asInstanceOf[(InputBoxType, WidgetLine[U])]
       case None =>
         throw new RuntimeException(
           "Couldn't find corresponding input box type for " + inputBoxTypeStr)

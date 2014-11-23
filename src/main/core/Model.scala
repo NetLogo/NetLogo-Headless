@@ -7,7 +7,7 @@ case class Model(code: String = "", widgets: List[Widget] = List(View()), info: 
   linkShapes: List[String] = Model.defaultLinkShapes, previewCommands: List[String] = Nil) {
 
   def interfaceGlobals: List[String] = widgets.collect{case x:DeclaresGlobal => x}.map(_.varName)
-  def constraints: Map[String, List[String]] = widgets.collect{case x:DeclaresConstraint => (x.varName, x.constraint)}.toMap
+  def constraints: Map[String, ConstraintSpecification] = widgets.collect{case x:DeclaresConstraint => (x.varName, x.constraint)}.toMap
   def interfaceGlobalCommands: List[String] = widgets.collect{case x:DeclaresGlobalCommand => x}.map(_.command)
 
   if(widgets.collectFirst{case (w: View) => w}.isEmpty)
