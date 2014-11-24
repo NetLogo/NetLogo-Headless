@@ -13,12 +13,11 @@ object CompilerUtilities extends CompilerUtilitiesInterface {
 
   // well this is pretty ugly.  LiteralParser and LiteralAgentParser call each other,
   // so they're hard to instantiate, but we "tie the knot" using lazy val. - ST 5/3/13
-  def literalParser(world: api.World, extensionManager: api.ExtensionManager): LiteralParser = {
-    lazy val literalParser =
-      new LiteralParser(world, extensionManager, parseLiteralAgentOrAgentSet)
-    lazy val parseLiteralAgentOrAgentSet: Iterator[core.Token] => AnyRef =
-      new agent.LiteralAgentParser(world, literalParser.readLiteralPrefix)
-    literalParser
+  val literalParser: (api.World, api.ExtensionManager) => LiteralParser = {(world, extensionManager) =>
+    import core.Token
+    val agentParserCreator =
+      (f: (Token, Iterator[Token]) => AnyRef) => new agent.LiteralAgentParser(world, f)
+    new LiteralParser(world, extensionManager, agentParserCreator)
   }
 
   // In the following 3 methods, the initial call to NumberParser is a performance optimization.
