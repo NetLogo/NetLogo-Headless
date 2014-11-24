@@ -3,6 +3,8 @@
 package org.nlogo.core
 package prim.etc
 
+//scalastyle:off file.size.limit
+//scalastyle:off number.of.types
 case class _abs() extends Reporter {
   override def syntax =
     Syntax.reporterSyntax(
@@ -1077,3 +1079,5 @@ case class _wrapcolor() extends Reporter {
       right = List(Syntax.NumberType),
       ret = Syntax.NumberType)
 }
+//scalastyle:on number.of.types
+//scalastyle:on file.size.limit
