@@ -3,7 +3,7 @@
 package org.nlogo.parse
 
 import org.scalatest.FunSuite
-import org.nlogo.agent.{AgentSet, Patch, Turtle, World}
+import org.nlogo.agent.{AgentSet, Patch, Turtle, World, AgentParserCreator}
 import org.nlogo.api.{CompilerException, Dump, ExtensionManager, ExtensionObject, LogoList, World => APIWorld}
 import org.nlogo.util.MockSuite
 
@@ -22,18 +22,17 @@ class TestLiteralParser extends FunSuite with MockSuite {
     world
   }
 
-  //TODO: Unsightly import
-  import CompilerUtilities.agentParserCreator
+  def compilerUtilities = new CompilerUtilities(AgentParserCreator)
 
   def toLiteral(input: String,
                  world: APIWorld = defaultWorld,
                  extensionManager: ExtensionManager = null): AnyRef =
-    CompilerUtilities.literalParser(world, extensionManager, agentParserCreator(world))
+    compilerUtilities.literalParser(world, extensionManager, compilerUtilities.agentParserCreator(world))
       .getLiteralValue(FrontEnd.tokenizer.tokenizeString(input).map(Namer0))
 
   def toLiteralList(input: String, world: APIWorld = defaultWorld): LogoList = {
     val tokens = FrontEnd.tokenizer.tokenizeString(input).map(Namer0)
-    val (result, _) = CompilerUtilities.literalParser(world, null, agentParserCreator(world)).parseLiteralList(tokens.next(), tokens)
+    val (result, _) = compilerUtilities.literalParser(world, null, compilerUtilities.agentParserCreator(world)).parseLiteralList(tokens.next(), tokens)
     result
   }
 

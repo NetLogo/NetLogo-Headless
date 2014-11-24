@@ -2,9 +2,11 @@
 
 package org.nlogo.agent
 
-import org.nlogo.{ core, api },
+import org.nlogo.{api, core},
   core.{ Token, TokenType },
-  api.Fail._
+  api.{ CompilerUtilitiesInterface, Fail },
+    CompilerUtilitiesInterface.{AgentParser, AgentParserCreator},
+    Fail._
 
 // This is only used for importing worlds; the regular NetLogo language
 // doesn't have literal agents and agentsets.
@@ -214,11 +216,6 @@ extends (Iterator[Token] => AnyRef)  // returns Agent or AgentSet
 
 }
 
-object LiteralAgentParser {
-  def apply(_world: api.World,
-            readLiteralPrefix: (Token, Iterator[Token]) => AnyRef): LiteralAgentParser = {
-    new LiteralAgentParser(_world, readLiteralPrefix)
-  }
-
-  def curried = (apply(_, _)).curried
+object AgentParserCreator extends AgentParserCreator {
+  override def apply(w: api.World): AgentParser = new LiteralAgentParser(w, _)
 }
