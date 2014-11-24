@@ -114,7 +114,6 @@ doc in Compile := {
 /// plugins
 ///
 
-org.scalastyle.sbt.ScalastylePlugin.Settings
 
 ///
 /// get stuff from project/*.scala
