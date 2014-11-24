@@ -15,7 +15,9 @@ import org.nlogo.{ core, api },
 class LiteralParser(
   world: api.World,
   extensionManager: api.ExtensionManager,
-  parseLiteralAgentOrAgentSet: Iterator[Token] => AnyRef) {
+  _parseLiteralAgentOrAgentSet: ((Token, Iterator[Token]) => AnyRef) => Iterator[Token] => AnyRef) {
+
+  private lazy val parseLiteralAgentOrAgentSet = _parseLiteralAgentOrAgentSet(this.readLiteralPrefix)
 
   /// all error messages used in this class
   private val ERR_EXPECTED_CLOSEPAREN = "Expected a closing parenthesis."
