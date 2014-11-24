@@ -22,15 +22,18 @@ class TestLiteralParser extends FunSuite with MockSuite {
     world
   }
 
+  //TODO: Unsightly import
+  import CompilerUtilities.agentParserCreator
+
   def toLiteral(input: String,
                  world: APIWorld = defaultWorld,
                  extensionManager: ExtensionManager = null): AnyRef =
-    CompilerUtilities.literalParser(world, extensionManager)
+    CompilerUtilities.literalParser(world, extensionManager, agentParserCreator(world))
       .getLiteralValue(FrontEnd.tokenizer.tokenizeString(input).map(Namer0))
 
   def toLiteralList(input: String, world: APIWorld = defaultWorld): LogoList = {
     val tokens = FrontEnd.tokenizer.tokenizeString(input).map(Namer0)
-    val (result, _) = CompilerUtilities.literalParser(world, null).parseLiteralList(tokens.next(), tokens)
+    val (result, _) = CompilerUtilities.literalParser(world, null, agentParserCreator(world)).parseLiteralList(tokens.next(), tokens)
     result
   }
 

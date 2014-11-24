@@ -11,13 +11,18 @@ object CompilerUtilities extends CompilerUtilitiesInterface {
   import api.FrontEndInterface.ProceduresMap
   import FrontEnd.tokenizer
 
+  import core.Token
+  type AgentParserCreator =
+    ((Token, Iterator[Token]) => AnyRef) => Iterator[Token] => AnyRef
+
   // well this is pretty ugly.  LiteralParser and LiteralAgentParser call each other,
   // so they're hard to instantiate, but we "tie the knot" using lazy val. - ST 5/3/13
-  val literalParser: (api.World, api.ExtensionManager) => LiteralParser = {(world, extensionManager) =>
-    import core.Token
-    val agentParserCreator =
-      (f: (Token, Iterator[Token]) => AnyRef) => new agent.LiteralAgentParser(world, f)
-    new LiteralParser(world, extensionManager, agentParserCreator)
+  val literalParser: (api.World, api.ExtensionManager, AgentParserCreator) => LiteralParser = {
+    (world, extensionManager, apc) => new LiteralParser(world, extensionManager, apc)
+  }
+
+  def agentParserCreator(world: api.World): AgentParserCreator = {
+    (f: (Token, Iterator[Token]) => AnyRef) => new agent.LiteralAgentParser(world, f)
   }
 
   // In the following 3 methods, the initial call to NumberParser is a performance optimization.
@@ -33,13 +38,13 @@ object CompilerUtilities extends CompilerUtilitiesInterface {
 
   def readFromString(source: String, world: api.World, extensionManager: api.ExtensionManager): AnyRef =
     core.NumberParser.parse(source).right.getOrElse(
-      literalParser(world, extensionManager)
+      literalParser(world, extensionManager, agentParserCreator(world))
         .getLiteralValue(tokenizer.tokenizeString(source)
           .map(Namer0)))
 
   def readNumberFromString(source: String, world: api.World, extensionManager: api.ExtensionManager): java.lang.Double =
     core.NumberParser.parse(source).right.getOrElse(
-      literalParser(world, extensionManager)
+      literalParser(world, extensionManager, agentParserCreator(world))
         .getNumberValue(tokenizer.tokenizeString(source)
           .map(Namer0)))
 
@@ -49,7 +54,7 @@ object CompilerUtilities extends CompilerUtilitiesInterface {
       new TokenReader(currFile, tokenizer)
         .map(Namer0)
     val result =
-      literalParser(world, extensionManager)
+      literalParser(world, extensionManager, agentParserCreator(world))
         .getLiteralFromFile(tokens)
     // now skip whitespace, so that the model can use file-at-end? to see whether there are any
     // more values left - ST 2/18/04
