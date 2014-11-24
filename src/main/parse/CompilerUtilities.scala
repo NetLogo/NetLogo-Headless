@@ -21,9 +21,7 @@ object CompilerUtilities extends CompilerUtilitiesInterface {
     (world, extensionManager, apc) => new LiteralParser(world, extensionManager, apc)
   }
 
-  def agentParserCreator(world: api.World): AgentParserCreator = {
-    (f: (Token, Iterator[Token]) => AnyRef) => new agent.LiteralAgentParser(world, f)
-  }
+  def agentParserCreator(world: api.World): AgentParserCreator = LiteralAgentParser.curried(world)
 
   // In the following 3 methods, the initial call to NumberParser is a performance optimization.
   // During import-world, we're calling readFromString over and over again and most of the time

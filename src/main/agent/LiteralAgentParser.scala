@@ -213,3 +213,12 @@ extends (Iterator[Token] => AnyRef)  // returns Agent or AgentSet
   }
 
 }
+
+object LiteralAgentParser {
+  def apply(_world: api.World,
+            readLiteralPrefix: (Token, Iterator[Token]) => AnyRef): LiteralAgentParser = {
+    new LiteralAgentParser(_world, readLiteralPrefix)
+  }
+
+  def curried = (apply(_, _)).curried
+}
