@@ -3,6 +3,7 @@
 package org.nlogo.core
 package prim
 
+//scalastyle:off number.of.types
 case class _and() extends Reporter {
   override def syntax =
     Syntax.reporterSyntax(
@@ -417,3 +418,4 @@ case class _word() extends Reporter {
       defaultOption = Some(2),
       minimumOption = Some(0))
 }
+//scalastyle:on number.of.types

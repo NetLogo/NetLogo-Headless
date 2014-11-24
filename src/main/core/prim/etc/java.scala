@@ -3,6 +3,7 @@
 package org.nlogo.core
 package prim.etc
 
+//scalastyle:off number.of.types
 case class _all() extends Reporter {
   override def syntax =
     Syntax.reporterSyntax(
@@ -610,3 +611,4 @@ case class _xor() extends Reporter {
       ret = Syntax.BooleanType,
       precedence = Syntax.NormalPrecedence - 6)
 }
+//scalastyle:on number.of.types
