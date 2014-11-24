@@ -6,7 +6,7 @@ package org.nlogo.headless
 // AbstractWorkspace are not, so if you want to document a method for everyone, override that method
 // here and document it here.  The overriding method can simply call super(). - ST 6/1/05, 7/28/11
 
-import org.nlogo.agent.Agent
+import org.nlogo.agent.{ Agent, AgentParserCreator }
 import org.nlogo.core.{ AgentKind, WorldDimensions }
 import org.nlogo.api.{ Program, Version, RendererInterface,
                        CompilerException, LogoException, SimpleJobOwner,
@@ -45,7 +45,7 @@ object HeadlessWorkspace {
 
   def newLab: LabInterface = {
     val utilities: CompilerUtilitiesInterface =
-      Femto.scalaSingleton("org.nlogo.parse.CompilerUtilities")
+      Femto.get("org.nlogo.parse.CompilerUtilities", AgentParserCreator)
     // kludgy, use AnyRef here because ProtocolLoader doesn't implement an interface - ST 4/25/13
     val protocolLoader: AnyRef =
       Femto.get("org.nlogo.lab.ProtocolLoader",

@@ -2,26 +2,16 @@
 
 package org.nlogo.parse
 
-import org.nlogo.{ core, api, agent },
-  api.CompilerUtilitiesInterface,
-  agent.LiteralAgentParser
+import org.nlogo.{ core, api },
+  api.{ CompilerUtilitiesInterface, ExtensionManager, World},
+    CompilerUtilitiesInterface.{AgentParser, AgentParserCreator}
 
-object CompilerUtilities extends CompilerUtilitiesInterface {
-
+class CompilerUtilities(val agentParserCreator: AgentParserCreator) extends CompilerUtilitiesInterface {
   import api.FrontEndInterface.ProceduresMap
   import FrontEnd.tokenizer
 
-  import core.Token
-  type AgentParserCreator =
-    ((Token, Iterator[Token]) => AnyRef) => Iterator[Token] => AnyRef
-
-  // well this is pretty ugly.  LiteralParser and LiteralAgentParser call each other,
-  // so they're hard to instantiate, but we "tie the knot" using lazy val. - ST 5/3/13
-  val literalParser: (api.World, api.ExtensionManager, AgentParserCreator) => LiteralParser = {
-    (world, extensionManager, apc) => new LiteralParser(world, extensionManager, apc)
-  }
-
-  def agentParserCreator(world: api.World): AgentParserCreator = LiteralAgentParser.curried(world)
+  def literalParser(world: World, extensionManager: ExtensionManager, agentParserCreator: AgentParser): LiteralParser =
+    new LiteralParser(world, extensionManager, agentParserCreator)
 
   // In the following 3 methods, the initial call to NumberParser is a performance optimization.
   // During import-world, we're calling readFromString over and over again and most of the time
