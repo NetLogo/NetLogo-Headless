@@ -3,6 +3,7 @@
 package org.nlogo.workspace;
 
 import org.nlogo.api.I18N;
+import org.nlogo.nvm.ImportHandler;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -313,8 +314,9 @@ public final strictfp class DefaultFileManager
     if (eof()) {
       throw new java.io.EOFException();
     }
+    ImportHandler importHandler = new ImportHandler(world, workspace.getExtensionManager());
     return workspace.compiler().utilities().readFromFile
-        (currentFile, world, workspace.getExtensionManager());
+        (currentFile, importHandler);
   }
 
   public boolean eof()

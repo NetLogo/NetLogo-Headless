@@ -10,7 +10,7 @@ import
   agent.{ World, Agent, AbstractExporter, AgentSet },
   api.{ PlotInterface, Dump, CommandLogoThunk, ReporterLogoThunk, Femto,
     CompilerException, LogoException, JobOwner, SimpleJobOwner, ModelType, Exceptions },
-  nvm.{ FileManager, Instruction, EngineException, Context,
+  nvm.{ FileManager, ImportHandler, Instruction, EngineException, Context,
     Procedure, Job, Command, MutableLong, Workspace, Activation },
   nvm.Procedure.{ ProceduresMap, NoProcedures },
   plot.{ PlotExporter, PlotManager },
@@ -136,7 +136,7 @@ object AbstractWorkspaceTraits {
 
     override def readNumberFromString(source: String) =
       compiler.utilities.readNumberFromString(
-        source, world, getExtensionManager)
+        source, new ImportHandler(world, getExtensionManager))
 
     override def isReporter(s: String) =
       compiler.utilities.isReporter(s, world.program, procedures, getExtensionManager)
@@ -580,7 +580,7 @@ object AbstractWorkspaceTraits {
       new agent.ImporterJ.StringReader {
         @throws(classOf[agent.ImporterJ.StringReaderException])
         def readFromString(s: String): AnyRef =
-          try compiler.utilities.readFromString(s, world, getExtensionManager)
+          try compiler.utilities.readFromString(s, new ImportHandler(world, getExtensionManager))
           catch { case ex: CompilerException =>
               throw new agent.ImporterJ.StringReaderException(ex.getMessage)
           }

@@ -3,7 +3,7 @@
 package org.nlogo.parse
 
 import org.nlogo.{ core, api },
-  core.{ Token, TokenType },
+  core.{ LiteralImportHandler, Token, TokenType },
   api.Fail._
 
 /**
@@ -12,12 +12,9 @@ import org.nlogo.{ core, api },
  * from a Iterator[Token]. (It hands off all the complicated import-world stuff
  * involving literal agents and literal agentsets to LiteralAgentParser.)
  */
-class LiteralParser(
-  world: api.World,
-  extensionManager: api.ExtensionManager,
-  _parseLiteralAgentOrAgentSet: ((Token, Iterator[Token]) => AnyRef) => Iterator[Token] => AnyRef) {
+class LiteralParser(importHandler: LiteralImportHandler) {
 
-  private lazy val parseLiteralAgentOrAgentSet = _parseLiteralAgentOrAgentSet(this.readLiteralPrefix)
+  // private lazy val parseLiteralAgentOrAgentSet = _parseLiteralAgentOrAgentSet(this.readLiteralPrefix)
 
   /// all error messages used in this class
   private val ERR_EXPECTED_CLOSEPAREN = "Expected a closing parenthesis."
@@ -64,15 +61,14 @@ class LiteralParser(
   def readLiteralPrefix(token: Token, tokens: Iterator[Token]): AnyRef = {
     token.tpe match {
       case TokenType.Extension =>
-        parseExtensionLiteral(token)
+        importHandler.parseExtensionLiteral(token)
       case TokenType.Literal =>
         token.value
       case TokenType.OpenBracket =>
         val (result, _) = parseLiteralList(token, tokens)
         result
       case TokenType.OpenBrace =>
-        cAssert(world != null, ERR_ILLEGAL_AGENT_LITERAL, token)
-        parseLiteralAgentOrAgentSet(tokens)
+        importHandler.parseLiteralAgentOrAgentSet(tokens, readLiteralPrefix)
       case TokenType.OpenParen =>
         val result = readLiteralPrefix(tokens.next(), tokens)
         // if next is anything else other than ), we complain and point to the next token
@@ -106,16 +102,4 @@ class LiteralParser(
     }
     (list, closeBracket.get)
   }
-
-  def parseExtensionLiteral(token: Token): AnyRef = {
-    cAssert(world != null, ERR_ILLEGAL_AGENT_LITERAL, token)
-    val LiteralRegex = """\{\{(\S*):(\S*)\s(.*)\}\}""".r
-    token.value.asInstanceOf[String] match {
-      case LiteralRegex(extName, typeName, data) =>
-        extensionManager.readExtensionObject(extName, typeName, data)
-      case s =>
-        s
-    }
-  }
-
 }

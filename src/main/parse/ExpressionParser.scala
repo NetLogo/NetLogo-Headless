@@ -589,8 +589,10 @@ object ExpressionParser {
       // extensionManager here because we only ever use this code when we are parsing literal lists
       // while compiling code.  When we're reading lists from export files and such we go straight
       // to the LiteralParser through Compiler.readFromString ev 3/20/08
-      val (list, closeBracket) =
-        new LiteralParser(null, null, null).parseLiteralList(tokens.next(), tokens)
+
+      val (list, closeBracket) = {
+        new LiteralParser(NullImportHandler).parseLiteralList(tokens.next(), tokens)
+      }
       val tmp = new core.prim._const(list)
       tmp.token = new Token("", TokenType.Literal, null)(
         openBracket.start, closeBracket.end, closeBracket.filename)

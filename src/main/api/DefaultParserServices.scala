@@ -9,7 +9,7 @@ package org.nlogo.api
 
 class DefaultParserServices(utils: CompilerUtilitiesInterface) extends ParserServices {
   def readNumberFromString(source: String) =
-    utils.readNumberFromString(source, null, null)
+    utils.readNumberFromString(source)
   def readFromString(source: String) =
     utils.readFromString(source)
   def isReporter(s: String) =

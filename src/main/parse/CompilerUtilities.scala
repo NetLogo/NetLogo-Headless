@@ -3,46 +3,49 @@
 package org.nlogo.parse
 
 import org.nlogo.{ core, api },
-  api.{ CompilerUtilitiesInterface, ExtensionManager, World},
-    CompilerUtilitiesInterface.{AgentParser, AgentParserCreator}
+  api.{ CompilerUtilitiesInterface, ExtensionManager },
+    CompilerUtilitiesInterface.{AgentParser, AgentParserCreator},
+  core.LiteralImportHandler
 
+//FIXME: Shouldn't need AgentParserCreator injected
 class CompilerUtilities(val agentParserCreator: AgentParserCreator) extends CompilerUtilitiesInterface {
   import api.FrontEndInterface.ProceduresMap
   import FrontEnd.tokenizer
 
-  def literalParser(world: World, extensionManager: ExtensionManager, agentParserCreator: AgentParser): LiteralParser =
-    new LiteralParser(world, extensionManager, agentParserCreator)
+  def literalParser(importHandler: LiteralImportHandler): LiteralParser =
+    new LiteralParser(importHandler)
 
   // In the following 3 methods, the initial call to NumberParser is a performance optimization.
   // During import-world, we're calling readFromString over and over again and most of the time
   // the result is a number.  So we try the fast path through NumberParser first before falling
   // back to the slow path where we actually tokenize. - ST 4/7/11
-
   def readFromString(source: String): AnyRef =
-    core.NumberParser.parse(source).right.getOrElse(
-      new LiteralParser(null, null, null)
-        .getLiteralValue(tokenizer.tokenizeString(source)
-          .map(Namer0)))
+    numberOrElse[AnyRef](source, parsedLiteral(NullImportHandler)(_.getLiteralValue))
 
-  def readFromString(source: String, world: api.World, extensionManager: api.ExtensionManager): AnyRef =
-    core.NumberParser.parse(source).right.getOrElse(
-      literalParser(world, extensionManager, agentParserCreator(world))
-        .getLiteralValue(tokenizer.tokenizeString(source)
-          .map(Namer0)))
+  def readNumberFromString(source: String): AnyRef =
+    numberOrElse[AnyRef](source, parsedLiteral(NullImportHandler)(_.getNumberValue))
 
-  def readNumberFromString(source: String, world: api.World, extensionManager: api.ExtensionManager): java.lang.Double =
-    core.NumberParser.parse(source).right.getOrElse(
-      literalParser(world, extensionManager, agentParserCreator(world))
-        .getNumberValue(tokenizer.tokenizeString(source)
-          .map(Namer0)))
+  def readFromString(source: String, importHandler: LiteralImportHandler): AnyRef =
+    numberOrElse[AnyRef](source, parsedLiteral(importHandler)(_.getLiteralValue))
+
+  def readNumberFromString(source: String, importHandler: LiteralImportHandler): java.lang.Double =
+    numberOrElse[java.lang.Double](source, parsedLiteral(importHandler)(_.getNumberValue))
+
+  private def numberOrElse[A >: java.lang.Double](source: String, alternateParser: => String => A): A =
+    core.NumberParser.parse(source).right.getOrElse(alternateParser(source))
+
+  private def parsedLiteral[A](importHandler: LiteralImportHandler)
+                              (parseProcedure: LiteralParser => Iterator[core.Token] => A): String => A = {
+    s => parseProcedure(literalParser(importHandler))(tokenizer.tokenizeString(s).map(Namer0))
+  }
 
   @throws(classOf[java.io.IOException])
-  def readFromFile(currFile: api.File, world: api.World, extensionManager: api.ExtensionManager): AnyRef = {
+  def readFromFile(currFile: api.File, importHandler: LiteralImportHandler): AnyRef = {
     val tokens: Iterator[core.Token] =
       new TokenReader(currFile, tokenizer)
         .map(Namer0)
     val result =
-      literalParser(world, extensionManager, agentParserCreator(world))
+      literalParser(importHandler)
         .getLiteralFromFile(tokens)
     // now skip whitespace, so that the model can use file-at-end? to see whether there are any
     // more values left - ST 2/18/04
