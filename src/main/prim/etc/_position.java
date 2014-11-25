@@ -3,7 +3,7 @@
 package org.nlogo.prim.etc;
 
 import org.nlogo.api.Equality;
-import org.nlogo.api.LogoList;
+import org.nlogo.core.LogoList;
 import org.nlogo.core.Syntax;
 import org.nlogo.core.SyntaxJ;
 import org.nlogo.nvm.ArgumentTypeException;
@@ -13,7 +13,7 @@ import java.util.Iterator;
 
 public final strictfp class _position
     extends Reporter
-    implements org.nlogo.nvm.Pure {
+    implements org.nlogo.core.prim.Pure {
   @Override
   public Object report(final org.nlogo.nvm.Context context) {
     Object obj = args[1].report(context);

@@ -1,15 +1,11 @@
 // (C) Uri Wilensky. https://github.com/NetLogo/NetLogo
 
-package org.nlogo.api
+package org.nlogo.core
 
-import
-  scala.util.matching.Regex
+import StructureDeclarations.{Breed => DeclBreed}
+import TokenType.{Command, Reporter}
 
-import org.nlogo.{ core },
-  core.{ Token, TokenType, StructureDeclarations },
-    TokenType.{ Command, Reporter }
-
-import StructureDeclarations.{ Breed => DeclBreed }
+import scala.util.matching.Regex
 
 object BreedIdentifierHandler {
 
@@ -125,22 +121,21 @@ object BreedIdentifierHandler {
 
   }
 
-  // sigh, these are private[api] rather than just private so we can reference
+  // sigh, these are private[core] rather than just private so we can reference
   // them directly in the tests - ST 11/17/14
 
-  private[api] case class TurtlePrimitive(patternString: String, tokenType: TokenType, primClass: String) extends BreedPrimSpec {
+  private[core] case class TurtlePrimitive(patternString: String, tokenType: TokenType, primClass: String) extends BreedPrimSpec {
     override def breeds(program: Program):   Map[String, Breed] = program.breeds
     override def isValidBreed(breed: Breed): Boolean            = true
   }
 
-  private[api] case class DirectedLinkPrimitive(patternString: String, tokenType: TokenType, primClass: String) extends BreedPrimSpec {
+  private[core] case class DirectedLinkPrimitive(patternString: String, tokenType: TokenType, primClass: String) extends BreedPrimSpec {
     override def breeds(program: Program):   Map[String, Breed] = program.linkBreeds
     override def isValidBreed(breed: Breed): Boolean            = breed.isDirected
   }
 
-  private[api] case class UndirectedLinkPrimitive(patternString: String, tokenType: TokenType, primClass: String) extends BreedPrimSpec {
+  private[core] case class UndirectedLinkPrimitive(patternString: String, tokenType: TokenType, primClass: String) extends BreedPrimSpec {
     override def breeds(program: Program):   Map[String, Breed] = program.linkBreeds
     override def isValidBreed(breed: Breed): Boolean            = !breed.isDirected
   }
-
 }

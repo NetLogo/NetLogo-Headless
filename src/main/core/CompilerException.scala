@@ -1,8 +1,6 @@
 // (C) Uri Wilensky. https://github.com/NetLogo/NetLogo
 
-package org.nlogo.api
-
-import org.nlogo.core.{ Token, TokenType }
+package org.nlogo.core
 
 /**
  * Exception thrown by various methods that accept NetLogo code as input and cause that code to be

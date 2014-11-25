@@ -2,6 +2,8 @@
 
 package org.nlogo.api
 
+import org.nlogo.core.{ LogoList, Nobody }
+
 object Equality {
 
   def equals(o1: AnyRef, o2: AnyRef): Boolean =

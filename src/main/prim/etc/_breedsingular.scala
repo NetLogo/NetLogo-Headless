@@ -2,8 +2,7 @@
 
 package org.nlogo.prim.etc
 
-import org.nlogo.core.Syntax
-import org.nlogo.api.Nobody
+import org.nlogo.core.{Nobody, Syntax}
 import org.nlogo.nvm.{ Reporter, Context, EngineException }
 
 class _breedsingular(_breedName: String) extends Reporter {

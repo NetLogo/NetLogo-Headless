@@ -2,10 +2,11 @@
 
 package org.nlogo.parse
 
-import org.nlogo.{ core, api, prim },
-  api.FrontEndInterface.ProceduresMap,
-  core.{ Token, TokenType },
-  api.Fail._
+import org.nlogo.core,
+  core.{BreedIdentifierHandler, ExtensionManager, Fail, FrontEndInterface,
+    Instantiator, Primitive, PrimitiveCommand, PrimitiveReporter, Program, Token, TokenType},
+    FrontEndInterface.ProceduresMap,
+    Fail._
 
 trait NameHandler extends (Token => Option[(TokenType, core.Instruction)])
 
@@ -48,17 +49,17 @@ object ReporterHandler extends PrimitiveHandler {
 }
 
 // go thru our breed prim handlers, if one triggers, return the result
-class BreedHandler(program: api.Program) extends NameHandler {
+class BreedHandler(program: Program) extends NameHandler {
   override def apply(token: Token) =
-    api.BreedIdentifierHandler.process(token, program) map {
+    BreedIdentifierHandler.process(token, program) map {
       case (className, breedName, tokenType) =>
-        (tokenType, api.Instantiator.newInstance[core.Instruction](
+        (tokenType, Instantiator.newInstance[core.Instruction](
           Class.forName("org.nlogo.core.prim." + className), breedName))
     }
 }
 
 // replaces an identifier token with its imported implementation, if necessary
-class ExtensionPrimitiveHandler(extensionManager: api.ExtensionManager) extends NameHandler {
+class ExtensionPrimitiveHandler(extensionManager: ExtensionManager) extends NameHandler {
   override def apply(token: Token) =
     if(token.tpe != TokenType.Ident ||
        extensionManager == null || !extensionManager.anyExtensionsLoaded)
@@ -72,17 +73,17 @@ class ExtensionPrimitiveHandler(extensionManager: api.ExtensionManager) extends 
           None
         case primitive =>
           val newType =
-            if(primitive.isInstanceOf[api.Command])
+            if(primitive.isInstanceOf[PrimitiveCommand])
               TokenType.Command
             else TokenType.Reporter
           Some((newType, wrap(primitive, name)))
       }
     }
-  private def wrap(primitive: api.Primitive, name: String): core.Instruction =
+  private def wrap(primitive: Primitive, name: String): core.Instruction =
     primitive match {
-      case c: api.Command  =>
+      case c: PrimitiveCommand  =>
         new core.prim._extern(c.getSyntax)
-      case r: api.Reporter =>
+      case r: PrimitiveReporter =>
         new core.prim._externreport(r.getSyntax)
     }
 }
@@ -108,7 +109,7 @@ object TaskVariableHandler extends NameHandler {
     "variables may not begin with a question mark unless they are the special variables ?, ?1, ?2, ..."
 }
 
-class AgentVariableReporterHandler(program: api.Program) extends NameHandler {
+class AgentVariableReporterHandler(program: Program) extends NameHandler {
   override def apply(token: Token) =
     getAgentVariableReporter(token.value.asInstanceOf[String])
       .map{(TokenType.Reporter, _)}

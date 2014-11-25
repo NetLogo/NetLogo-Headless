@@ -3,8 +3,8 @@
 package org.nlogo.compile
 package middle
 
+import org.nlogo.core.Femto
 import org.scalatest.FunSuite
-import org.nlogo.api.Femto
 
 class OptimizerTests extends FunSuite {
 

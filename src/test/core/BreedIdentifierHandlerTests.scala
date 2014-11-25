@@ -1,17 +1,15 @@
 // (C) Uri Wilensky. https://github.com/NetLogo/NetLogo
 
-package org.nlogo.api
+package org.nlogo.core
 
-import org.nlogo.core.StructureDeclarations,
-  StructureDeclarations.Identifier
+import org.nlogo.core.StructureDeclarations.Identifier
 import org.scalatest.FunSuite
-import collection.immutable.ListMap
-import org.nlogo.core,
-  core.{ Token, TokenType }
+
+import scala.collection.immutable.ListMap
 
 class BreedIdentifierHandlerTests extends FunSuite {
 
-  val tokenizer: core.TokenizerInterface =
+  val tokenizer: TokenizerInterface =
     Femto.scalaSingleton("org.nlogo.lex.Tokenizer")
 
   def tester(handler: BreedIdentifierHandler.BreedPrimSpec, code: String, tokenString: String): (String, String, TokenType) = {

@@ -7,10 +7,7 @@ import ConstraintSpecification.ChoiceConstraintSpecification
 
 class WidgetTests extends FunSuite {
   test("Chooser handles choices with lists") {
-    val l = new LogoList {
-      val toList = List(1, 2, 3).map(_.toDouble).asInstanceOf[List[AnyRef]]
-      override def toString: String = toList.toString()
-    }
+    val l = LogoList(Seq(1, 2, 3).map(_.toDouble))
 
     val inputChoices = List(ChooseableList(l), ChooseableDouble(4.toDouble))
     val expectedChoices = List[AnyRef](l, 4.0.asInstanceOf[AnyRef]).asInstanceOf[List[AnyRef]]

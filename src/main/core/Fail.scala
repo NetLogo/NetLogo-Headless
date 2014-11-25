@@ -1,8 +1,6 @@
 // (C) Uri Wilensky. https://github.com/NetLogo/NetLogo
 
-package org.nlogo.api
-
-import org.nlogo.core, core.{ Token, AstNode }
+package org.nlogo.core
 
 object Fail {
 

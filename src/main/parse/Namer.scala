@@ -2,10 +2,9 @@
 
 package org.nlogo.parse
 
-import org.nlogo.{ core, api, prim },
-  api.FrontEndInterface,
-  core.{ Token, TokenType },
-  api.Fail._
+import org.nlogo.{ core, api },
+  core.{FrontEndInterface, ExtensionManager, FrontEndProcedure, Program, Token, TokenType},
+  core.Fail._
 
 /**
   * Classifies identifier tokens as commands or reporters.
@@ -19,11 +18,11 @@ import org.nlogo.{ core, api, prim },
   * where the knowledge of what names are taken resides.)
   */
 class Namer(
-  program: api.Program,
+  program: Program,
   procedures: FrontEndInterface.ProceduresMap,
-  extensionManager: api.ExtensionManager) {
+  extensionManager: ExtensionManager) {
 
-  def process(tokens: Iterator[Token], procedure: api.FrontEndProcedure): Iterator[Token] = {
+  def process(tokens: Iterator[Token], procedure: FrontEndProcedure): Iterator[Token] = {
     // the handlers are mutually exclusive (only one applies), so the order the handlers
     // appear is arbitrary, except that for checkName to work, ProcedureVariableHandler
     // and CallHandler must come last - ST 5/14/13, 5/16/13

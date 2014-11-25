@@ -3,7 +3,7 @@
 package org.nlogo.nvm
 
 import org.nlogo.{ api, core },
-  core.Let
+  core.{FrontEndProcedure, Let}
 
 import scala.collection.immutable.ListMap
 
@@ -14,7 +14,7 @@ class Procedure(
   val argTokens: Seq[core.Token],
   _displayName: Option[String] = None,
   val parent: Procedure = null,
-  val procedureDeclaration: core.StructureDeclarations.Procedure = null) extends api.FrontEndProcedure {
+  val procedureDeclaration: core.StructureDeclarations.Procedure = null) extends FrontEndProcedure {
 
   val filename = nameToken.filename; // used by cities include-file stuff
   val displayName = buildDisplayName(_displayName)

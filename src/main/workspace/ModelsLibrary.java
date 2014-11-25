@@ -9,6 +9,8 @@ import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.List;
 
+import org.nlogo.api.FileIO;
+
 public strictfp class ModelsLibrary {
 
   // this class is not instantiable
@@ -132,7 +134,7 @@ public strictfp class ModelsLibrary {
 
   public static String getInfoWindow(String filePath)
       throws java.io.IOException {
-    String file = org.nlogo.api.FileIO.file2String(filePath);
+    String file = FileIO.file2String(filePath);
     // parse out info text
     String delimiter = org.nlogo.api.model.ModelReader$.MODULE$.SEPARATOR();
     int dlength = delimiter.length();

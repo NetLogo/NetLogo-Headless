@@ -4,9 +4,8 @@ package org.nlogo.parse
 
 import org.scalatest.FunSuite
 import org.nlogo.{ core, api },
-  api.FrontEndProcedure,
-  core.{StructureDeclarations, Syntax, Token},
-  StructureDeclarations.Procedure
+org.nlogo.core._,
+    StructureDeclarations.Procedure
 
 class CompilerUtilitiesTests extends FunSuite {
 
@@ -46,11 +45,11 @@ class CompilerUtilitiesTests extends FunSuite {
   }
 
   // this null isn't ideal, but as long as this only tests .isReporter, it doesn't really affect anything
-  def compilerUtilities: api.CompilerUtilitiesInterface = new CompilerUtilities(null)
+  def compilerUtilities: CompilerUtilitiesInterface = CompilerUtilities
 
   def isReporter(s: String) =
     compilerUtilities.isReporter(s, program,
-      proceduresMap, new api.DummyExtensionManager)
+      proceduresMap, new DummyExtensionManager)
 
   /// tests for isReporter
 

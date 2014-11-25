@@ -3,10 +3,9 @@
 package org.nlogo.agent
 
 import org.nlogo.util.MockSuite
-import org.nlogo.api.{ Dump, LogoList, ExtensionManager, World => APIWorld, CompilerException }
-import org.nlogo.core.{ Token, TokenType },
+import org.nlogo.api.{ Dump, ExtensionManager, World => APIWorld }
+import org.nlogo.core.{CompilerException, LogoList, Token, TokenDSL, TokenType},
   TokenType._
-import org.nlogo.core.Token
 import org.scalatest.FunSuite
 
 class LiteralAgentParserTests extends FunSuite with MockSuite {
@@ -18,30 +17,10 @@ class LiteralAgentParserTests extends FunSuite with MockSuite {
     world
   }
 
-  object tokenDSL {
-    def `{`: Token             = Token("{", OpenBrace, null)(0, 0, "test")
-    def `}`: Token             = Token("}", CloseBrace, null)(0, 0, "test")
-    def `[`: Token             = Token("[", OpenBracket, null)(0, 0, "test")
-    def `]`: Token             = Token("]", CloseBracket, null)(0, 0, "test")
-    def id(str: String): Token = Token(str, Ident, str.toUpperCase)(0, 0, "test")
-    def lit(v: Int): Token     = Token(v.toString, Literal, Double.box(v.toDouble))(0, 0, "test")
-    def eof: Token             = Token("eof", Eof, null)(0, 0, "test")
-
-    def tokenIterator(ts: Token*): Iterator[Token] = ts.iterator ++ Iterator(eof)
-  }
-
-  def dummyLiteralParser(t: Token, i: Iterator[Token]): AnyRef = {
-    t.tpe match {
-      case Literal => t.value
-      case OpenBracket => LogoList.fromIterator(i.takeWhile(_.tpe != CloseBracket).map(_.value))
-      case _ => throw new Exception("dummyLiteralParser doesn't handle this token!")
-    }
-  }
-
   def toLiteral(toks: Iterator[Token],
                       world: APIWorld = defaultWorld,
                       extensionManager: ExtensionManager = null): AnyRef = {
-    val literalAgentParser = new LiteralAgentParser(world, dummyLiteralParser)
+    val literalAgentParser = new LiteralAgentParser(world, DummyLiteralParser)
     toks.next() // discard `{`
     literalAgentParser(toks)
   }
@@ -53,7 +32,7 @@ class LiteralAgentParserTests extends FunSuite with MockSuite {
     assertResult(error)(e.getMessage)
   }
 
-  import tokenDSL._
+  import TokenDSL._
 
   test("badAgent") {
     val input = tokenIterator(`{`, id("foobar"), `}`)

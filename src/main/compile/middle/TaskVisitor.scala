@@ -4,7 +4,7 @@ package org.nlogo.compile
 package middle
 
 import org.nlogo.{ core, api, nvm, prim },
-  api.Fail._
+  core.Fail._
 
 // This replaces _taskvariable with _letvariable everywhere.  And we need
 //   to know which Let object to connect each occurrence to.
@@ -33,7 +33,7 @@ class TaskVisitor extends DefaultAstVisitor {
         task match {
           case None =>
             cAssert(procedure.get.isTask,
-                    api.I18N.errors.get("compiler.TaskVisitor.notDefined"), expr)
+                    core.I18N.errors.get("compiler.TaskVisitor.notDefined"), expr)
             val formal: core.Let = procedure.get.getTaskFormal(lv.varNumber)
             val plv = new prim._letvariable
             expr.reporter = plv

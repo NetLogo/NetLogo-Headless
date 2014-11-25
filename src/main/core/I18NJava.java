@@ -1,6 +1,6 @@
 // (C) Uri Wilensky. https://github.com/NetLogo/NetLogo
 
-package org.nlogo.api;
+package org.nlogo.core;
 
 /**
  * The Scala compiler won't generate a Java varargs forwarder for a Scala varargs

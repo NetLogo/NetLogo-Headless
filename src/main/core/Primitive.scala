@@ -1,6 +1,6 @@
 // (C) Uri Wilensky. https://github.com/NetLogo/NetLogo
 
-package org.nlogo.api
+package org.nlogo.core
 
 import org.nlogo.core
 
@@ -22,5 +22,7 @@ trait Primitive {
    * @see Syntax
    */
   def getSyntax: core.Syntax
-
 }
+
+trait PrimitiveReporter extends Primitive // These are marker traits used by the parser
+trait PrimitiveCommand extends Primitive

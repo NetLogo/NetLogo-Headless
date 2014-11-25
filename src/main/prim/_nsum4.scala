@@ -2,8 +2,8 @@
 
 package org.nlogo.prim
 
-import org.nlogo.core.Syntax
-import org.nlogo.api.{ Dump, I18N, TypeNames }
+import org.nlogo.core.I18N
+import org.nlogo.api.{ Dump, TypeNames }
 import org.nlogo.agent.{ Patch, Turtle }
 import org.nlogo.nvm.{ Context, EngineException, Reporter }
 

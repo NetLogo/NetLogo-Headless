@@ -2,6 +2,7 @@
 
 package org.nlogo.mirror
 
+import org.nlogo.core.{Femto, Program, Breed}
 import org.nlogo.{ api, core }
 import Mirrorables._
 import Mirroring.State
@@ -28,7 +29,7 @@ class FakeWorld(state: State) extends api.World {
 
   def newRenderer: api.RendererInterface = {
     val renderer: api.RendererInterface =
-      org.nlogo.api.Femto.get("org.nlogo.render.Renderer", this)
+      Femto.get("org.nlogo.render.Renderer", this)
     renderer.resetCache(patchSize)
     renderer
   }
@@ -185,15 +186,15 @@ class FakeWorld(state: State) extends api.World {
   def program = {
     def makeBreedMap(breedsVar: Int) =
       worldVar[collection.immutable.ListMap[String, Boolean]](breedsVar).map {
-        case (breedName, isDirected) => breedName -> api.Breed(breedName, "", Seq(), isDirected)
+        case (breedName, isDirected) => breedName -> Breed(breedName, "", Seq(), isDirected)
       }
-    api.Program.empty.copy(
+    Program.empty.copy(
       breeds = makeBreedMap(TurtleBreeds.id),
       linkBreeds = makeBreedMap(LinkBreeds.id))
   }
 
   private def makeBreeds[A <: FakeAgent](
-    breeds: Iterable[api.Breed],
+    breeds: Iterable[Breed],
     allAgents: FakeAgentSet[A],
     breedVariableIndex: Int): Map[String, FakeAgentSet[_]] =
     breeds.map { breed =>

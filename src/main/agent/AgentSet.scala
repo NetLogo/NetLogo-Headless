@@ -33,7 +33,7 @@ extends api.AgentSet {
   def randomOne(precomputedCount: Int, random: Int): Agent
   def randomTwo(precomputedCount: Int, random1: Int, random2: Int): Array[Agent]
   def randomSubsetGeneral(resultSize: Int, precomputedCount: Int, rng: api.MersenneTwisterFast): Array[Agent]
-  def toLogoList: api.LogoList
+  def toLogoList: core.LogoList
 
   ///
 

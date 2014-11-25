@@ -3,6 +3,7 @@
 package org.nlogo.api
 
 import org.nlogo.core,
+  core.{ LogoList, Nobody },
   collection.JavaConverters._
 
 object Dump {

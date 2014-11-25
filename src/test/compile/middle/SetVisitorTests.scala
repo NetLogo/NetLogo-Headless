@@ -5,8 +5,7 @@ package middle
 
 import org.scalatest.FunSuite
 import org.nlogo.agent.{ Link, Patch, Turtle }
-import org.nlogo.core.Let
-import org.nlogo.api.CompilerException
+import org.nlogo.core.{CompilerException, Let}
 import org.nlogo.nvm.{ Command, Reporter }
 import org.nlogo.prim._
 

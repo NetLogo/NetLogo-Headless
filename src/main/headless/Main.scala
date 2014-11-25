@@ -3,7 +3,7 @@
 package org.nlogo.headless
 
 import org.nlogo.core.WorldDimensions
-import org.nlogo.api.{ APIVersion, Version, FileIO }
+import org.nlogo.api.{ APIVersion, FileIO, Version }
 import org.nlogo.workspace.AbstractWorkspace.setHeadlessProperty
 import org.nlogo.nvm.LabInterface.Settings
 import org.nlogo.api.model.ModelReader

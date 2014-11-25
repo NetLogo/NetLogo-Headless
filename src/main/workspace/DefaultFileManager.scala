@@ -9,10 +9,11 @@ import
     net.URL
 
 import
-  org.nlogo.{ agent, api, nvm },
+  org.nlogo.{ agent, api, core, nvm },
     agent.{ OutputObject, World },
-    api.{ File, FileMode, I18N, LocalFile },
-    nvm.FileManager
+    core.{ File, FileMode, I18N },
+    api.LocalFile,
+    nvm.{ FileManager, ImportHandler }
 
 private[workspace] final class DefaultFileManager(private val workspace: AbstractWorkspace) extends FileManager {
 
@@ -158,7 +159,8 @@ private[workspace] final class DefaultFileManager(private val workspace: Abstrac
   }
 
   def read(world: World): AnyRef = {
-    val readLiteral = (file: File) => workspace.compiler.utilities.readFromFile(file, world, workspace.getExtensionManager)
+    val importHandler = new ImportHandler(world, workspace.getExtensionManager)
+    val readLiteral = (file: File) => workspace.compiler.utilities.readFromFile(file, importHandler)
     currentFile.map(asReadableFile _ andThen asFileNotAtEof andThen readLiteral).getOrElse(throwNoOpenFile())
   }
 

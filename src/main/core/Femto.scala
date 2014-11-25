@@ -1,6 +1,6 @@
 // (C) Uri Wilensky. https://github.com/NetLogo/NetLogo
 
-package org.nlogo.api
+package org.nlogo.core
 
 // For doing "dependency injection" (here, taken merely as "using reflection to avoid
 // a compile-time dependency")

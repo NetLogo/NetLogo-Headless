@@ -2,12 +2,13 @@
 
 package org.nlogo.compile
 
+import org.nlogo.core.{StructureResults, Program}
 import org.nlogo.{ core, api, nvm },
   nvm.Procedure.ProceduresMap
 
 trait FrontMiddleBridgeInterface {
   def apply(
-    structureResults: api.StructureResults,
+    structureResults: StructureResults,
     extensionManager: api.ExtensionManager,
     oldProcedures: ProceduresMap,
     topLevelDefs: Seq[core.ProcedureDefinition]
@@ -19,6 +20,6 @@ trait MiddleEndInterface {
 }
 
 trait BackEndInterface {
-  def backEnd(defs: Seq[ProcedureDefinition], program: api.Program, source: String,
+  def backEnd(defs: Seq[ProcedureDefinition], program: Program, source: String,
       profilingEnabled: Boolean, flags: nvm.CompilerFlags): nvm.CompilerResults
 }

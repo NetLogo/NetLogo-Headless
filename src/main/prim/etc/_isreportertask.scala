@@ -2,8 +2,8 @@
 
 package org.nlogo.prim.etc
 
-import org.nlogo.core.Syntax
-import org.nlogo.nvm.{ Context, Pure, Reporter, ReporterTask }
+import org.nlogo.core.prim.Pure
+import org.nlogo.nvm.{ Context, Reporter, ReporterTask }
 
 class _isreportertask extends Reporter with Pure {
   override def report(context: Context): java.lang.Boolean =
