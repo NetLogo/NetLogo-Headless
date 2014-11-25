@@ -1,8 +1,6 @@
 // (C) Uri Wilensky. https://github.com/NetLogo/NetLogo
 
-package org.nlogo.nvm
-
-import org.nlogo.api.{CompilerUtilitiesInterface, FrontEndInterface, Program, ParserServices}
+package org.nlogo.api
 
 // We use this in contexts where we want to do compiler stuff (not full compilation) like
 // colorization but it's OK to assume that we are 2D not 3D and no extensions are loaded.  The
@@ -15,6 +13,7 @@ class DefaultParserServices(utils: CompilerUtilitiesInterface) extends ParserSer
   def readFromString(source: String) =
     utils.readFromString(source)
   def isReporter(s: String) =
-    utils.isReporter(s, Program.empty(), FrontEndInterface.NoProcedures,
-      new org.nlogo.api.DummyExtensionManager)
+    utils.isReporter(s, Program.empty(),
+      FrontEndInterface.NoProcedures,
+      new DummyExtensionManager)
 }
