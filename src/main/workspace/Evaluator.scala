@@ -3,7 +3,7 @@
 package org.nlogo.workspace
 
 import java.util.ArrayList
-import org.nlogo.core.AgentKind
+import org.nlogo.core.{ AgentKind, SourceWrapping }
 import org.nlogo.api.{CompilerException, JobOwner, LogoException, ReporterLogoThunk, CommandLogoThunk}
 import org.nlogo.agent.{Agent, AgentSet, Turtle, Patch, Link}
 import org.nlogo.nvm.{ExclusiveJob, Activation, CompilerFlags, Context, Procedure, Reporter}
@@ -154,7 +154,7 @@ class Evaluator(workspace: AbstractWorkspace) {
     val vars =
       if (callingProcedure == null) Vector()
       else callingProcedure.args
-    val agentKindHint = Evaluator.agentKindHint(kind)
+    val agentKindHint = SourceWrapping.agentKindHint(kind)
 
     val wrappedSource = if(reporter)
       // we put parens around what comes after "report", because we want to make
@@ -177,7 +177,7 @@ class Evaluator(workspace: AbstractWorkspace) {
 
 
   private def invokeCompiler(source: String, displayName: Option[String], commands: Boolean, kind: AgentKind, flags: CompilerFlags = workspace.flags) = {
-    val wrappedSource = Evaluator.getHeader(kind, commands) + source + Evaluator.getFooter(commands)
+    val wrappedSource = SourceWrapping.getHeader(kind, commands) + source + SourceWrapping.getFooter(commands)
     val results =
       workspace.compiler.compileMoreCode(wrappedSource, displayName, workspace.world.program,
         workspace.procedures, workspace.getExtensionManager, flags)
@@ -188,31 +188,4 @@ class Evaluator(workspace: AbstractWorkspace) {
   def readFromString(string: String) =
     workspace.compiler.utilities.readFromString(
       string, workspace.world, workspace.getExtensionManager)
-}
-
-
-object Evaluator {
-
-  val agentKindHint = Map[AgentKind, String](
-    AgentKind.Observer -> "__observercode",
-    AgentKind.Turtle -> "__turtlecode",
-    AgentKind.Patch -> "__patchcode",
-    AgentKind.Link -> "__linkcode")
-
-  def getHeader(kind: AgentKind, commands: Boolean) = {
-    val hint = agentKindHint(kind)
-    if(commands) "to __evaluator [] " + hint + " "
-    else
-      // we put parens around what comes after "report", because we want to make
-      // sure we don't let a malformed reporter like "3 die" past the compiler, since
-      // "to-report foo report 3 die end" is syntactically valid but
-      // "to-report foo report (3 die) end" isn't. - ST 11/12/09
-      "to-report __evaluator [] " + hint + " report ( "
-  }
-
-  def getFooter(commands: Boolean) =
-    if(commands) "\n__done end" else "\n) __done end"
-
-  def sourceOffset(kind: AgentKind, commands: Boolean): Int =
-    getHeader(kind, commands).length
 }
