@@ -13,7 +13,7 @@ class ReferenceVisitor extends DefaultAstVisitor {
     if(index != -1) {
       stmt.args(index).asInstanceOf[ReporterApp].coreReporter match {
         case referenceable: core.Referenceable =>
-          stmt.nvmCommand.reference = referenceable.makeReference
+          stmt.command.reference = referenceable.makeReference
           stmt.removeArgument(index)
         case _ =>
           exception("Expected a patch variable here.", stmt.args(index))

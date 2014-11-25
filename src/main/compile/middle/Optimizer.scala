@@ -14,16 +14,16 @@ object Optimizer extends DefaultAstVisitor {
 
   override def visitStatement(stmt: Statement) {
     super.visitStatement(stmt)
-    val oldCommand = stmt.nvmCommand
+    val oldCommand = stmt.command
     commandMungers.filter(_.clazz eq oldCommand.getClass)
-      .find{munger => munger.munge(stmt); stmt.nvmCommand != oldCommand}
+      .find{munger => munger.munge(stmt); stmt.command != oldCommand}
   }
 
   override def visitReporterApp(app: ReporterApp) {
     super.visitReporterApp(app)
-    val oldReporter = app.nvmReporter
+    val oldReporter = app.reporter
     reporterMungers.filter(_.clazz eq oldReporter.getClass)
-      .find{munger => munger.munge(app); app.nvmReporter != oldReporter}
+      .find{munger => munger.munge(app); app.reporter != oldReporter}
   }
 
   private val commandMungers =
@@ -56,18 +56,18 @@ object Optimizer extends DefaultAstVisitor {
   private class Match(val node: AstNode) {
     def matchit(theClass: Class[_ <: Instruction]) =
       node match {
-        case app: ReporterApp if theClass.isInstance(app.nvmReporter) => this
-        case stmt: Statement if theClass.isInstance(stmt.nvmCommand) => this
+        case app: ReporterApp if theClass.isInstance(app.reporter) => this
+        case stmt: Statement if theClass.isInstance(stmt.command) => this
         case _ => throw new MatchFailedException
       }
     def command =
       node match {
-        case stmt: Statement => stmt.nvmCommand
+        case stmt: Statement => stmt.command
         case _ => throw new MatchFailedException
       }
     def reporter =
       node match {
-        case app: ReporterApp => app.nvmReporter
+        case app: ReporterApp => app.reporter
         case _ => throw new MatchFailedException
       }
     def matchEmptyCommandBlockIsLastArg =
@@ -105,7 +105,7 @@ object Optimizer extends DefaultAstVisitor {
                  }
       if(index >= args.size) throw new MatchFailedException
       args(index) match {
-        case app: ReporterApp if classes.exists(_.isInstance(app.nvmReporter)) => new Match(app)
+        case app: ReporterApp if classes.exists(_.isInstance(app.reporter)) => new Match(app)
         case _ => throw new MatchFailedException
       }
     }
@@ -129,7 +129,7 @@ object Optimizer extends DefaultAstVisitor {
       else result
     }
     def report =
-      try node.asInstanceOf[ReporterApp].nvmReporter.report(null)
+      try node.asInstanceOf[ReporterApp].reporter.report(null)
       catch { case ex: LogoException =>
           throw new IllegalStateException(ex) }
     def strip() {
@@ -157,32 +157,32 @@ object Optimizer extends DefaultAstVisitor {
     def replace(newGuy: Instruction) {
       node match {
         case app: ReporterApp =>
-          newGuy.token = app.nvmReporter.token
-          newGuy.agentClassString = app.nvmReporter.agentClassString
-          app.nvmReporter = newGuy.asInstanceOf[Reporter]
+          newGuy.token = app.reporter.token
+          newGuy.agentClassString = app.reporter.agentClassString
+          app.reporter = newGuy.asInstanceOf[Reporter]
         case stmt: Statement =>
-          newGuy.token = stmt.nvmCommand.token
-          newGuy.agentClassString = stmt.nvmCommand.agentClassString
-          stmt.nvmCommand = newGuy.asInstanceOf[Command]
+          newGuy.token = stmt.command.token
+          newGuy.agentClassString = stmt.command.agentClassString
+          stmt.command = newGuy.asInstanceOf[Command]
       }
     }
     def replace(theClass: Class[_ <: Instruction], constructorArgs: Any*) {
       val newGuy = Instantiator.newInstance[Instruction](theClass, constructorArgs: _*)
       node match {
         case app: ReporterApp =>
-          newGuy.token = app.nvmReporter.token
-          newGuy.agentClassString = app.nvmReporter.agentClassString
-          app.nvmReporter = newGuy.asInstanceOf[Reporter]
+          newGuy.token = app.reporter.token
+          newGuy.agentClassString = app.reporter.agentClassString
+          app.reporter = newGuy.asInstanceOf[Reporter]
         case stmt: Statement =>
-          newGuy.token = stmt.nvmCommand.token
-          newGuy.agentClassString = stmt.nvmCommand.agentClassString
-          stmt.nvmCommand = newGuy.asInstanceOf[Command]
+          newGuy.token = stmt.command.token
+          newGuy.agentClassString = stmt.command.agentClassString
+          stmt.command = newGuy.asInstanceOf[Command]
       }
     }
     def addArg(theClass: Class[_ <: Reporter], original: ReporterApp): Match = {
       val newGuy = Instantiator.newInstance[Reporter](theClass)
-      newGuy.token = original.nvmReporter.token
-      newGuy.agentClassString = original.nvmReporter.agentClassString
+      newGuy.token = original.reporter.token
+      newGuy.agentClassString = original.reporter.agentClassString
       val result = new Match(new ReporterApp(original.coreReporter,
         newGuy, original.start, original.end, original.file))
       graftArg(result)

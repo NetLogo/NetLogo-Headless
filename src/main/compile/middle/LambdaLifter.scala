@@ -17,7 +17,7 @@ class LambdaLifter(taskNumbers: Iterator[Int]) extends DefaultAstVisitor {
     super.visitProcedureDefinition(procdef)
   }
   override def visitReporterApp(expr: ReporterApp) {
-    expr.nvmReporter match {
+    expr.reporter match {
       case c: prim._commandtask =>
         for(p <- procedure) {
           c.proc = new nvm.Procedure(

@@ -117,14 +117,14 @@ class Statements(val file: String) extends AstNode {
  * represents a NetLogo statement. Statements only have one form: command
  * application.
  */
-class Statement(var coreCommand: core.Command, var nvmCommand: nvm.Command, var start: Int, var end: Int, val file: String)
+class Statement(var coreCommand: core.Command, var command: nvm.Command, var start: Int, var end: Int, val file: String)
     extends Application {
   private val _args = collection.mutable.Buffer[Expression]()
   override def args: Seq[Expression] = _args
-  def nvmInstruction = nvmCommand // for Application
+  def nvmInstruction = command // for Application
   def coreInstruction = coreCommand // for Application
   def addArgument(arg: Expression) { _args.append(arg) }
-  override def toString = nvmCommand.toString + "[" + args.mkString(", ") + "]"
+  override def toString = command.toString + "[" + args.mkString(", ") + "]"
   def accept(v: AstVisitor) { v.visitStatement(this) }
   def replaceArg(index: Int, expr: Expression) { _args(index) = expr }
 
@@ -179,7 +179,7 @@ class ReporterBlock(val app: ReporterApp, var start: Int, var end: Int, val file
  * represents things like constants, which are converted into no-arg reporter
  * applications as they're parsed.
  */
-class ReporterApp(var coreReporter: core.Reporter, var nvmReporter: nvm.Reporter, var start: Int, var end: Int, val file: String)
+class ReporterApp(var coreReporter: core.Reporter, var reporter: nvm.Reporter, var start: Int, var end: Int, val file: String)
 extends Expression with Application {
   /**
    * the args for this application.
@@ -187,12 +187,12 @@ extends Expression with Application {
   private val _args = collection.mutable.Buffer[Expression]()
   override def args: Seq[Expression] = _args
   def coreInstruction = coreReporter // for Application
-  def nvmInstruction = nvmReporter // for Application
+  def nvmInstruction = reporter // for Application
   def addArgument(arg: Expression) { _args.append(arg) }
   def reportedType() = coreReporter.syntax.ret
   def accept(v: AstVisitor) { v.visitReporterApp(this) }
   def removeArgument(index: Int) { _args.remove(index) }
   def replaceArg(index: Int, expr: Expression) { _args(index) = expr }
   def clearArgs() { _args.clear() }
-  override def toString = nvmReporter.toString + "[" + args.mkString(", ") + "]"
+  override def toString = reporter.toString + "[" + args.mkString(", ") + "]"
 }

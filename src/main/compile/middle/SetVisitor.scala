@@ -19,15 +19,15 @@ class SetVisitor extends DefaultAstVisitor {
     api.I18N.errors.get("compiler.SetVisitor.notSettable")
   override def visitStatement(stmt: Statement) {
     super.visitStatement(stmt)
-    if(stmt.nvmCommand.isInstanceOf[_set]) {
+    if(stmt.command.isInstanceOf[_set]) {
       val rApp = stmt.args(0).asInstanceOf[ReporterApp]
-      val newCommandClass = SetVisitor.classes.get(rApp.nvmReporter.getClass)
+      val newCommandClass = SetVisitor.classes.get(rApp.reporter.getClass)
         .getOrElse(exception(INVALID_SET, stmt))
       val newCommand =
         Instantiator.newInstance[nvm.Command](
-          newCommandClass, rApp.nvmReporter)
-      newCommand.token = stmt.nvmCommand.token
-      stmt.nvmCommand = newCommand
+          newCommandClass, rApp.reporter)
+      newCommand.token = stmt.command.token
+      stmt.command = newCommand
       stmt.removeArgument(0)
     }
   }
