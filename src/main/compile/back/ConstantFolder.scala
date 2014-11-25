@@ -28,23 +28,23 @@ import org.nlogo.api.Fail._
 private class ConstantFolder extends DefaultAstVisitor {
   override def visitReporterApp(app: ReporterApp) {
     super.visitReporterApp(app)
-    if (app.nvmReporter.isInstanceOf[Pure] && !app.args.isEmpty && app.args.forall(isConstant)) {
+    if (app.reporter.isInstanceOf[Pure] && !app.args.isEmpty && app.args.forall(isConstant)) {
       val newReporter = Literals.makeLiteralReporter(applyReporter(app))
-      newReporter.storedSourceStartPosition = app.nvmReporter.sourceStartPosition
-      newReporter.storedSourceEndPosition = app.nvmReporter.sourceEndPosition
-      app.nvmReporter = newReporter
+      newReporter.storedSourceStartPosition = app.reporter.sourceStartPosition
+      newReporter.storedSourceEndPosition = app.reporter.sourceEndPosition
+      app.reporter = newReporter
       app.clearArgs
     }
   }
   private def isConstant(e: Expression) =
     e match {
       case app: ReporterApp =>
-        app.nvmReporter.isInstanceOf[Pure] && app.args.isEmpty
+        app.reporter.isInstanceOf[Pure] && app.args.isEmpty
       case _ =>
         false
     }
   private def applyReporter(app: ReporterApp): AnyRef = {
-    val r = app.nvmReporter
+    val r = app.reporter
     app.accept(new ArgumentStuffer) // fill args array
     r.init(null)  // copy args array to arg0, arg1, etc.
     try r.report(null)

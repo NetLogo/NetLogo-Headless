@@ -97,7 +97,7 @@ class AgentTypeChecker(defs: Seq[ProcedureDefinition]) {
     // visitStatement and visitReporterApp are clones of each other
 
     override def visitStatement(stmt: Statement) {
-      val c = stmt.nvmCommand
+      val c = stmt.command
       agentClassString = typeCheck(currentProcedure, stmt.coreCommand, c, agentClassString)
       if(stmt.coreCommand.syntax.blockAgentClassString != null)
         chooseVisitorAndContinue(stmt.coreCommand.syntax.blockAgentClassString, stmt.args)
@@ -108,7 +108,7 @@ class AgentTypeChecker(defs: Seq[ProcedureDefinition]) {
 
     // visitStatement and visitReporterApp are clones of each other
     override def visitReporterApp(app: ReporterApp) {
-      val r = app.nvmReporter
+      val r = app.reporter
       agentClassString = typeCheck(currentProcedure, app.coreReporter, r, agentClassString)
       if(r.isInstanceOf[_task])
         app.args.head.accept(new AgentTypeCheckerVisitor(currentProcedure, "OTPL"))
