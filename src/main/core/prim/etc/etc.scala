@@ -3,27 +3,29 @@
 package org.nlogo.core
 package prim.etc
 
+import org.nlogo.core.prim.Pure
+
 //scalastyle:off file.size.limit
 //scalastyle:off number.of.types
-case class _abs() extends Reporter {
+case class _abs() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(Syntax.NumberType),
       ret = Syntax.NumberType)
 }
-case class _acos() extends Reporter {
+case class _acos() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(Syntax.NumberType),
       ret = Syntax.NumberType)
 }
-case class _asin() extends Reporter {
+case class _asin() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(Syntax.NumberType),
       ret = Syntax.NumberType)
 }
-case class _atan() extends Reporter {
+case class _atan() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(Syntax.NumberType, Syntax.NumberType),
@@ -60,7 +62,7 @@ case class _bothends() extends Reporter {
       ret = Syntax.AgentsetType,
       agentClassString = "---L")
 }
-case class _ceil() extends Reporter {
+case class _ceil() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(Syntax.NumberType),
@@ -121,7 +123,7 @@ case class _clearturtles() extends Command {
     Syntax.commandSyntax(
       agentClassString = "O---")
 }
-case class _cos() extends Reporter {
+case class _cos() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(Syntax.NumberType),
@@ -210,7 +212,7 @@ case class _every() extends Command {
     Syntax.commandSyntax(
       right = List(Syntax.NumberType, Syntax.CommandBlockType))
 }
-case class _exp() extends Reporter {
+case class _exp() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(Syntax.NumberType),
@@ -313,7 +315,7 @@ case class _filter() extends Reporter {
       right = List(Syntax.ReporterTaskType, Syntax.ListType),
       ret = Syntax.ListType)
 }
-case class _floor() extends Reporter {
+case class _floor() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(Syntax.NumberType),
@@ -336,7 +338,7 @@ case class _foreverbuttonend() extends Command {
   override def syntax =
     Syntax.commandSyntax()
 }
-case class _fput() extends Reporter {
+case class _fput() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(Syntax.WildcardType, Syntax.ListType),
@@ -370,7 +372,7 @@ case class _ifelse() extends Command {
         Syntax.CommandBlockType,
         Syntax.CommandBlockType))
 }
-case class _ifelsevalue() extends Reporter {
+case class _ifelsevalue() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(
@@ -395,103 +397,103 @@ case class _inspect() extends Command {
     Syntax.commandSyntax(
       right = List(Syntax.AgentType))
 }
-case class _int() extends Reporter {
+case class _int() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(Syntax.NumberType),
       ret = Syntax.NumberType)
 }
-case class _isagent() extends Reporter {
+case class _isagent() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(Syntax.WildcardType),
       ret = Syntax.BooleanType)
 }
-case class _isagentset() extends Reporter {
+case class _isagentset() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(Syntax.WildcardType),
       ret = Syntax.BooleanType)
 }
-case class _isboolean() extends Reporter {
+case class _isboolean() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(Syntax.WildcardType),
       ret = Syntax.BooleanType)
 }
-case class _iscommandtask() extends Reporter {
+case class _iscommandtask() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(Syntax.WildcardType),
       ret = Syntax.BooleanType)
 }
-case class _isdirectedlink() extends Reporter {
+case class _isdirectedlink() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(Syntax.WildcardType),
       ret = Syntax.BooleanType)
 }
-case class _islink() extends Reporter {
+case class _islink() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(Syntax.WildcardType),
       ret = Syntax.BooleanType)
 }
-case class _islinkset() extends Reporter {
+case class _islinkset() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(Syntax.WildcardType),
       ret = Syntax.BooleanType)
 }
-case class _islist() extends Reporter {
+case class _islist() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(Syntax.WildcardType),
       ret = Syntax.BooleanType)
 }
-case class _isnumber() extends Reporter {
+case class _isnumber() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(Syntax.WildcardType),
       ret = Syntax.BooleanType)
 }
-case class _ispatch() extends Reporter {
+case class _ispatch() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(Syntax.WildcardType),
       ret = Syntax.BooleanType)
 }
-case class _ispatchset() extends Reporter {
+case class _ispatchset() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(Syntax.WildcardType),
       ret = Syntax.BooleanType)
 }
-case class _isreportertask() extends Reporter {
+case class _isreportertask() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(Syntax.WildcardType),
       ret = Syntax.BooleanType)
 }
-case class _isstring() extends Reporter {
+case class _isstring() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(Syntax.WildcardType),
       ret = Syntax.BooleanType)
 }
-case class _isturtle() extends Reporter {
+case class _isturtle() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(Syntax.WildcardType),
       ret = Syntax.BooleanType)
 }
-case class _isturtleset() extends Reporter {
+case class _isturtleset() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(Syntax.WildcardType),
       ret = Syntax.BooleanType)
 }
-case class _isundirectedlink() extends Reporter {
+case class _isundirectedlink() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(Syntax.WildcardType),
@@ -535,7 +537,7 @@ case class _loop() extends Command {
     Syntax.commandSyntax(
       right = List(Syntax.CommandBlockType))
 }
-case class _lput() extends Reporter {
+case class _lput() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(Syntax.WildcardType, Syntax.ListType),
@@ -593,7 +595,7 @@ case class _mouseycor() extends Reporter {
     Syntax.reporterSyntax(
       ret = Syntax.NumberType)
 }
-case class _mult() extends Reporter {
+case class _mult() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       left = Syntax.NumberType,
@@ -702,7 +704,7 @@ case class _penup() extends Command {
     Syntax.commandSyntax(
       agentClassString = "-T--")
 }
-case class _plus() extends Reporter {
+case class _plus() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       left = Syntax.NumberType,
@@ -710,7 +712,7 @@ case class _plus() extends Reporter {
       ret = Syntax.NumberType,
       precedence = Syntax.NormalPrecedence - 3)
 }
-case class _pow() extends Reporter {
+case class _pow() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       left = Syntax.NumberType,
@@ -718,7 +720,7 @@ case class _pow() extends Reporter {
       ret = Syntax.NumberType,
       precedence = Syntax.NormalPrecedence - 1)
 }
-case class _precision() extends Reporter {
+case class _precision() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(Syntax.NumberType, Syntax.NumberType),
@@ -830,7 +832,7 @@ case class _right() extends Command {
       right = List(Syntax.NumberType),
       agentClassString = "-T--")
 }
-case class _round() extends Reporter {
+case class _round() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(Syntax.NumberType),
@@ -894,7 +896,7 @@ case class _showturtle() extends Command {
     Syntax.commandSyntax(
       agentClassString = "-T--")
 }
-case class _sin() extends Reporter {
+case class _sin() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(Syntax.NumberType),
@@ -944,13 +946,13 @@ case class _subject() extends Reporter {
     Syntax.reporterSyntax(
       ret = Syntax.AgentType)
 }
-case class _subtractheadings() extends Reporter {
+case class _subtractheadings() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(Syntax.NumberType, Syntax.NumberType),
       ret = Syntax.NumberType)
 }
-case class _tan() extends Reporter {
+case class _tan() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(Syntax.NumberType),
@@ -981,7 +983,7 @@ case class _timer() extends Reporter {
     Syntax.reporterSyntax(
       ret = Syntax.NumberType)
 }
-case class _tostring() extends Reporter {
+case class _tostring() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(Syntax.WildcardType),
@@ -1073,7 +1075,7 @@ case class _worldwidth() extends Reporter {
     Syntax.reporterSyntax(
       ret = Syntax.NumberType)
 }
-case class _wrapcolor() extends Reporter {
+case class _wrapcolor() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(Syntax.NumberType),

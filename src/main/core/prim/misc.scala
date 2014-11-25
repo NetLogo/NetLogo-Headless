@@ -4,7 +4,7 @@ package org.nlogo.core
 package prim
 
 //scalastyle:off number.of.types
-case class _and() extends Reporter {
+case class _and() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       left = Syntax.BooleanType,
@@ -67,7 +67,7 @@ case class _commandtask() extends Reporter {
     Syntax.reporterSyntax(
       ret = Syntax.CommandTaskType)
 }
-case class _const(value: AnyRef) extends Reporter {
+case class _const(value: AnyRef) extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       ret = value match {
@@ -103,7 +103,7 @@ case class _createturtles(breedName: String) extends Command {
 case class _done() extends Command {
   override def syntax = Syntax.commandSyntax()
 }
-case class _equal() extends Reporter {
+case class _equal() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       left = Syntax.WildcardType,
@@ -130,7 +130,7 @@ case class _fd() extends Command {
       right = List(Syntax.NumberType),
       agentClassString = "-T--")
 }
-case class _greaterthan() extends Reporter {
+case class _greaterthan() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       left = Syntax.NumberType | Syntax.StringType | Syntax.AgentType,
@@ -161,7 +161,7 @@ case class _jump() extends Command {
       right = List(Syntax.NumberType),
       agentClassString = "-T--")
 }
-case class _lessthan() extends Reporter {
+case class _lessthan() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       left = Syntax.NumberType | Syntax.StringType | Syntax.AgentType,
@@ -197,7 +197,7 @@ case class _linkvariable(vn: Int) extends Reporter {
       ret = Syntax.WildcardType | Syntax.ReferenceType,
       agentClassString = "---L")
 }
-case class _list() extends Reporter {
+case class _list() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(Syntax.RepeatableType | Syntax.WildcardType),
@@ -205,7 +205,7 @@ case class _list() extends Reporter {
       defaultOption = Some(2),
       minimumOption = Some(0))
 }
-case class _minus() extends Reporter {
+case class _minus() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       left = Syntax.NumberType,
@@ -225,18 +225,18 @@ case class _neighbors4() extends Reporter {
       ret = Syntax.PatchsetType,
       agentClassString = "-TP-")
 }
-case class _nobody() extends Reporter {
+case class _nobody() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       ret = Syntax.NobodyType)
 }
-case class _not() extends Reporter {
+case class _not() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(Syntax.BooleanType),
       ret = Syntax.BooleanType)
 }
-case class _notequal() extends Reporter {
+case class _notequal() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       left = Syntax.WildcardType,
@@ -268,7 +268,7 @@ case class _oneof() extends Reporter {
       right = List(Syntax.AgentsetType | Syntax.ListType),
       ret = Syntax.WildcardType)
 }
-case class _or() extends Reporter {
+case class _or() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       left = Syntax.BooleanType,
@@ -330,7 +330,7 @@ case class _return() extends Command {
   override def displayName =
     "END"
 }
-case class _sentence() extends Reporter {
+case class _sentence() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(Syntax.RepeatableType | Syntax.WildcardType),
@@ -351,7 +351,7 @@ case class _sprout(breedName: String) extends Command {
       agentClassString = "--P-",
       blockAgentClassString = "-T--")
 }
-case class _sum() extends Reporter {
+case class _sum() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(Syntax.ListType),
@@ -393,7 +393,7 @@ case class _turtlevariable(vn: Int) extends Reporter {
       ret = Syntax.WildcardType | Syntax.ReferenceType,
       agentClassString = "-T--")
 }
-case class _unaryminus() extends Reporter {
+case class _unaryminus() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(Syntax.NumberType),
@@ -410,7 +410,7 @@ case class _with() extends Reporter {
       agentClassString = "OTPL",
       blockAgentClassString = "?")
 }
-case class _word() extends Reporter {
+case class _word() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(Syntax.RepeatableType | Syntax.WildcardType),
