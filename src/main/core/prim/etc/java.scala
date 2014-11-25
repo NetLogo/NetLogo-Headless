@@ -3,6 +3,8 @@
 package org.nlogo.core
 package prim.etc
 
+import org.nlogo.core.prim.Pure
+
 //scalastyle:off number.of.types
 case class _all() extends Reporter {
   override def syntax =
@@ -12,13 +14,13 @@ case class _all() extends Reporter {
       agentClassString = "OTPL",
       blockAgentClassString = "?")
 }
-case class _approximatehsb() extends Reporter {
+case class _approximatehsb() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(Syntax.NumberType, Syntax.NumberType, Syntax.NumberType),
       ret = Syntax.NumberType)
 }
-case class _approximatergb() extends Reporter {
+case class _approximatergb() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(Syntax.NumberType, Syntax.NumberType, Syntax.NumberType),
@@ -69,7 +71,7 @@ case class _distance() extends Reporter {
       ret = Syntax.NumberType,
       agentClassString = "-TP-")
 }
-case class _div() extends Reporter {
+case class _div() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       left = Syntax.NumberType,
@@ -133,7 +135,7 @@ case class _git() extends Command {
       right = List(Syntax.StringType),
       agentClassString = "O---")
 }
-case class _greaterorequal() extends Reporter {
+case class _greaterorequal() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       left = Syntax.NumberType | Syntax.StringType | Syntax.AgentType,
@@ -207,13 +209,13 @@ case class _layouttutte() extends Command {
     Syntax.commandSyntax(
       right = List(Syntax.TurtlesetType, Syntax.LinksetType, Syntax.NumberType))
 }
-case class _length() extends Reporter {
+case class _length() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(Syntax.ListType | Syntax.StringType),
       ret = Syntax.NumberType)
 }
-case class _lessorequal() extends Reporter {
+case class _lessorequal() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       left = Syntax.NumberType | Syntax.StringType | Syntax.AgentType,
@@ -236,13 +238,13 @@ case class _linkset() extends Reporter {
       defaultOption = Some(1),
       minimumOption = Some(0))
 }
-case class _ln() extends Reporter {
+case class _ln() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(Syntax.NumberType),
       ret = Syntax.NumberType)
 }
-case class _log() extends Reporter {
+case class _log() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(Syntax.NumberType, Syntax.NumberType),
@@ -253,7 +255,7 @@ case class _makepreview() extends Command {
     Syntax.commandSyntax(
       agentClassString = "O---")
 }
-case class _max() extends Reporter {
+case class _max() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(Syntax.ListType),
@@ -275,7 +277,7 @@ case class _maxoneof() extends Reporter {
       agentClassString = "OTPL",
       blockAgentClassString = "?")
 }
-case class _mean() extends Reporter {
+case class _mean() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(Syntax.ListType),
@@ -293,7 +295,7 @@ case class _member() extends Reporter {
       right = List(Syntax.WildcardType, Syntax.ListType | Syntax.StringType | Syntax.AgentsetType),
       ret = Syntax.BooleanType)
 }
-case class _min() extends Reporter {
+case class _min() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(Syntax.ListType),
@@ -315,7 +317,7 @@ case class _minoneof() extends Reporter {
       agentClassString = "OTPL",
       blockAgentClassString = "?")
 }
-case class _mod() extends Reporter {
+case class _mod() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       left = Syntax.NumberType,
@@ -323,7 +325,7 @@ case class _mod() extends Reporter {
       ret = Syntax.NumberType,
       precedence = Syntax.NormalPrecedence - 2)
 }
-case class _modes() extends Reporter {
+case class _modes() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(Syntax.ListType),
@@ -387,7 +389,7 @@ case class _randomgamma() extends Reporter {
       right = List(Syntax.NumberType, Syntax.NumberType),
       ret = Syntax.NumberType)
 }
-case class _remainder() extends Reporter {
+case class _remainder() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(Syntax.NumberType, Syntax.NumberType),
@@ -446,7 +448,7 @@ case class _ride() extends Command {
       right = List(Syntax.TurtleType),
       agentClassString = "O---")
 }
-case class _scalecolor() extends Reporter {
+case class _scalecolor() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(Syntax.NumberType, Syntax.NumberType, Syntax.NumberType, Syntax.NumberType),
@@ -476,19 +478,19 @@ case class _shuffle() extends Reporter {
       right = List(Syntax.ListType),
       ret = Syntax.ListType)
 }
-case class _sort() extends Reporter {
+case class _sort() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(Syntax.ListType | Syntax.AgentsetType),
       ret = Syntax.ListType)
 }
-case class _sqrt() extends Reporter {
+case class _sqrt() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(Syntax.NumberType),
       ret = Syntax.NumberType)
 }
-case class _standarddeviation() extends Reporter {
+case class _standarddeviation() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(Syntax.ListType),
@@ -556,7 +558,7 @@ case class _turtleson() extends Reporter {
       right = List(Syntax.AgentType | Syntax.AgentsetType),
       ret = Syntax.TurtlesetType)
 }
-case class _variance() extends Reporter {
+case class _variance() extends Reporter with Pure {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(Syntax.ListType),
