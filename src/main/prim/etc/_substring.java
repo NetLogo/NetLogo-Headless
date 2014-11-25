@@ -11,7 +11,7 @@ import org.nlogo.nvm.Reporter;
 
 public final strictfp class _substring
     extends Reporter
-    implements org.nlogo.nvm.Pure {
+    implements org.nlogo.core.prim.Pure {
   @Override
   public Object report(final org.nlogo.nvm.Context context) {
     String string = argEvalString(context, 0);

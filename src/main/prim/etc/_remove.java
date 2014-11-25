@@ -14,7 +14,7 @@ import java.util.Iterator;
 
 public final strictfp class _remove
     extends Reporter
-    implements org.nlogo.nvm.Pure {
+    implements org.nlogo.core.prim.Pure {
   @Override
   public Object report(final org.nlogo.nvm.Context context) {
     Object value = args[0].report(context);

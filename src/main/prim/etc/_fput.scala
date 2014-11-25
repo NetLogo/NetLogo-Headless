@@ -2,9 +2,9 @@
 
 package org.nlogo.prim.etc
 
-import org.nlogo.core.Syntax
+import org.nlogo.core.prim.Pure
 import org.nlogo.api.LogoList
-import org.nlogo.nvm.{ Context, Pure, Reporter }
+import org.nlogo.nvm.{ Context, Reporter }
 
 class _fput extends Reporter with Pure {
   override def report(context: Context): LogoList =

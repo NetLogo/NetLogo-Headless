@@ -2,9 +2,10 @@
 
 package org.nlogo.prim
 
-import org.nlogo.core.Syntax
+import org.nlogo.core.{ Syntax, prim },
+  prim.Pure
 import org.nlogo.api.{ LogoException, LogoList, LogoListBuilder }
-import org.nlogo.nvm.{ Reporter, Context, Pure, CustomGenerated }
+import org.nlogo.nvm.{ Reporter, Context, CustomGenerated }
 
 class _list extends Reporter with Pure with CustomGenerated {
   override def returnType =

@@ -2,9 +2,9 @@
 
 package org.nlogo.prim
 
-import org.nlogo.core.Syntax
+import org.nlogo.core.prim.Pure
 import org.nlogo.api.{ LogoList, LogoListBuilder }
-import org.nlogo.nvm.{ Context, Reporter, Pure }
+import org.nlogo.nvm.{ Context, Reporter }
 
 class _sentence extends Reporter with Pure {
 

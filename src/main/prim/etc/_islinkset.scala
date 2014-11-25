@@ -2,9 +2,10 @@
 
 package org.nlogo.prim.etc
 
-import org.nlogo.core.{ AgentKind, Syntax }
+import org.nlogo.core.{ AgentKind, prim },
+  prim.Pure
 import org.nlogo.agent.{ AgentSet, Link }
-import org.nlogo.nvm.{ Context, Pure, Reporter }
+import org.nlogo.nvm.{ Context, Reporter }
 
 class _islinkset extends Reporter with Pure {
   override def report(context: Context): java.lang.Boolean =

@@ -22,7 +22,7 @@ package back
 
 import org.nlogo.api.CompilerException
 import org.nlogo.api.LogoException
-import org.nlogo.nvm.Pure
+import org.nlogo.core.prim.Pure
 import org.nlogo.api.Fail._
 
 private class ConstantFolder extends DefaultAstVisitor {

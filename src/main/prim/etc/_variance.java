@@ -9,7 +9,7 @@ import org.nlogo.core.Syntax;
 import org.nlogo.core.SyntaxJ;
 import org.nlogo.nvm.Context;
 import org.nlogo.nvm.EngineException;
-import org.nlogo.nvm.Pure;
+import org.nlogo.core.prim.Pure;
 import org.nlogo.nvm.Reporter;
 
 import java.util.Iterator;
