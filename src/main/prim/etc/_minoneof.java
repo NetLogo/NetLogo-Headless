@@ -5,8 +5,7 @@ package org.nlogo.prim.etc;
 import org.nlogo.agent.Agent;
 import org.nlogo.agent.AgentIterator;
 import org.nlogo.agent.AgentSet;
-import org.nlogo.core.Syntax;
-import org.nlogo.core.SyntaxJ;
+import org.nlogo.core.Nobody$;
 import org.nlogo.nvm.Context;
 import org.nlogo.nvm.Reporter;
 
@@ -42,7 +41,7 @@ public final strictfp class _minoneof
       }
     }
     if (winners.isEmpty()) {
-      return org.nlogo.api.Nobody$.MODULE$;
+      return Nobody$.MODULE$;
     } else {
       return winners.get(context.job.random.nextInt(winners.size()));
     }

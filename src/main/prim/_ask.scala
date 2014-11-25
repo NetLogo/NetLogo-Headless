@@ -3,7 +3,7 @@
 package org.nlogo.prim
 
 import org.nlogo.core.Syntax
-import org.nlogo.api.I18N
+import org.nlogo.core.I18N
 import org.nlogo.nvm.{ Command, Context, CustomAssembled, AssemblerAssistant,
                        EngineException, ArgumentTypeException }
 import org.nlogo.agent.{ Agent, AgentSet, Observer }

@@ -2,8 +2,8 @@
 
 package org.nlogo.prim.etc
 
-import org.nlogo.core.{ Syntax }
-import org.nlogo.api.{ LogoList, LogoListBuilder }
+import org.nlogo.core.{ LogoList, Syntax }
+import org.nlogo.api.LogoListBuilder
 import org.nlogo.nvm.{ Context, Reporter }
 
 class _shapes extends Reporter {

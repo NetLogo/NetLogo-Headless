@@ -67,7 +67,7 @@ package middle
 import org.nlogo.core, core.Syntax
 import org.nlogo.nvm, nvm.{ Instruction, Procedure }
 import org.nlogo.prim.{ _call, _callreport, _task }
-import org.nlogo.api.Fail._
+import org.nlogo.core.Fail._
 
 // As a result of the recent compiler refactorings, there is now some
 // gross stuff below where the code sometimes uses the core package stuff,

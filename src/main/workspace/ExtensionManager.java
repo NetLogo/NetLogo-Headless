@@ -4,9 +4,10 @@ package org.nlogo.workspace;
 
 import org.nlogo.api.ClassManager;
 import org.nlogo.api.Dump;
-import org.nlogo.api.ErrorSource;
+import org.nlogo.core.ErrorSource;
 import org.nlogo.api.ExtensionException;
-import org.nlogo.api.Primitive;
+import org.nlogo.core.File;
+import org.nlogo.core.Primitive;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -98,7 +99,7 @@ public strictfp class ExtensionManager
     return result;
   }
 
-  public org.nlogo.api.File getFile(String path)
+  public File getFile(String path)
       throws ExtensionException {
     org.nlogo.nvm.FileManager fm = workspace().fileManager();
     return fm.getFile(getFullPath(path));

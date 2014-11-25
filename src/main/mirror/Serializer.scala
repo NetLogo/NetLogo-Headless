@@ -59,7 +59,7 @@ object Serializer {
         case xs: Seq[_] =>
           data.writeByte(SeqType)
           writeSeq(xs.asInstanceOf[Seq[AnyRef]])
-        case xs: api.LogoList =>
+        case xs: core.LogoList =>
           data.writeByte(LogoListType)
           writeSeq(xs.toVector)
         case xs: ListMap[_, _] =>
@@ -145,7 +145,7 @@ object Serializer {
         case SeqType =>
           readValues()
         case LogoListType =>
-          api.LogoList.fromVector(readValues())
+          core.LogoList.fromVector(readValues())
         case ListMapType =>
           ListMap(readValues().asInstanceOf[Seq[(_, _)]]: _*)
         case ByteArrayType =>

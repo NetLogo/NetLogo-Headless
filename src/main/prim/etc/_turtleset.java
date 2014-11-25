@@ -7,10 +7,10 @@ import org.nlogo.agent.AgentSet;
 import org.nlogo.agent.Turtle;
 import org.nlogo.core.AgentKindJ;
 import org.nlogo.api.Dump;
-import org.nlogo.api.I18N;
-import org.nlogo.api.LogoList;
+import org.nlogo.core.I18N;
+import org.nlogo.core.LogoList;
+import org.nlogo.core.Nobody$;
 import org.nlogo.core.Syntax;
-import org.nlogo.core.SyntaxJ;
 import org.nlogo.nvm.ArgumentTypeException;
 import org.nlogo.nvm.Context;
 import org.nlogo.nvm.EngineException;
@@ -43,7 +43,7 @@ public final strictfp class _turtleset
         descendList(context, (LogoList) elt, resultSet);
       } else if (elt instanceof Turtle) {
         resultSet.add((Turtle) elt);
-      } else if (elt != org.nlogo.api.Nobody$.MODULE$) {
+      } else if (elt != Nobody$.MODULE$) {
         throw new ArgumentTypeException
             (context, this, i, Syntax.TurtleType() | Syntax.TurtlesetType(), elt);
       }
@@ -73,7 +73,7 @@ public final strictfp class _turtleset
         }
       } else if (obj instanceof LogoList) {
         descendList(context, (LogoList) obj, result);
-      } else if (obj != org.nlogo.api.Nobody$.MODULE$) {
+      } else if (obj != Nobody$.MODULE$) {
         throw new EngineException(context, this,
             I18N.errorsJ().getN("org.nlogo.prim.etc._turtleset.incorrectInputType",
                 this.displayName(), Dump.logoObject(tempList, true, false), Dump.logoObject(obj, true, false)));

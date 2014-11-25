@@ -2,8 +2,8 @@
 
 package org.nlogo.prim.etc
 
-import org.nlogo.core.Syntax
-import org.nlogo.api.{ LogoList, LogoListBuilder, TypeNames }
+import org.nlogo.core.{ Syntax, LogoList }
+import org.nlogo.api.{ LogoListBuilder, TypeNames }
 import org.nlogo.agent.Agent
 import org.nlogo.nvm.{ Context, EngineException, Reporter }
 

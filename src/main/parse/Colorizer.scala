@@ -5,7 +5,7 @@ package org.nlogo.parse
 import
   java.awt.Color,
   org.nlogo.{ core, api },
-    core.{ Token, TokenType }
+    core.{Program, Token, TokenType}
 
 // code in, HTML out!
 
@@ -42,7 +42,7 @@ object Colorizer {
     import org.nlogo.parse.Namer0
     val handlers: Seq[NameHandler] =
       Seq(CommandHandler, ReporterHandler,
-        new AgentVariableReporterHandler(api.Program.empty()))
+        new AgentVariableReporterHandler(Program.empty()))
     def apply(token: Token): Token =
       if (token.tpe != TokenType.Ident)
         token

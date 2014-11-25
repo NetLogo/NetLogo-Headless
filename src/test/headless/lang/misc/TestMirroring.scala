@@ -5,7 +5,7 @@ package lang
 package misc
 
 import org.scalatest.exceptions.TestFailedException
-import org.nlogo.api, api.{ AgentVariables, AgentVariableNumbers }
+import org.nlogo.api, api.AgentVariableNumbers
 import org.nlogo.core._
 import org.nlogo.mirror._, Mirroring._, Mirrorables._
 

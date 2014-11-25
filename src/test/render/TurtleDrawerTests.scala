@@ -2,7 +2,7 @@
 
 package org.nlogo.render
 
-import org.nlogo.core.AgentKind
+import org.nlogo.core.{ AgentKind, ColorConstants }
 import org.nlogo.api.{ AgentSet, Color, GraphicsInterface, ShapeList, Turtle, World }
 import org.nlogo.util.MockSuite
 
@@ -87,7 +87,7 @@ class TurtleTestsDrawer extends MockSuite {
 
   ///
   def color(name: String): java.lang.Double =
-    Double.box(Color.getColorNumberByIndex(Color.getColorNamesArray.indexOf(name)))
+    Double.box(ColorConstants.getColorNumberByIndex(ColorConstants.getColorNamesArray.indexOf(name)))
   def withAlpha(boxedColor: java.lang.Double, alpha: Int) =
     Color.getRGBListByARGB(Color.getRGBInt(boxedColor)).lput(Double.box(alpha))
 

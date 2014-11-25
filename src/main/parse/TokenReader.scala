@@ -2,13 +2,14 @@
 
 package org.nlogo.parse
 
-import org.nlogo.{ core, api }
+import org.nlogo.{ core, api },
+org.nlogo.core.{CompilerException, File, FileMode}
 
 // This exists to support the file-read primitive, which uses LiteralParser.  During normal
 // compilation we just slurp all of the code into memory before doing any parsing, but it
 // wouldn't be OK for file-read to slurp a whole data file, so LiteralParser uses Iterator[Token].
 
-class TokenReader(file: api.File, tokenizer: core.TokenizerInterface)
+class TokenReader(file: File, tokenizer: core.TokenizerInterface)
 extends Iterator[core.Token] {
 
   // code elsewhere is expected to detect eof for us
@@ -37,7 +38,7 @@ extends Iterator[core.Token] {
     reader.mark(65536)
     val t = tokenizer.tokenize(reader).next()
     if (t.tpe == core.TokenType.Bad)
-      throw new api.CompilerException(t)
+      throw new CompilerException(t)
     // after Tokenizer has done its thing, we no longer know what relationship holds between
     // the BufferedReader's position and file.pos, so the following code makes sure they are
     // both correct and in sync with each other.  Above we called reader.mark() so we could
@@ -51,7 +52,7 @@ extends Iterator[core.Token] {
     catch {
       case ex: java.io.IOException => // token too big to mark; close and reopen file to get back where we were
         file.close(true)
-        file.open(api.FileMode.Read)
+        file.open(FileMode.Read)
         reader.skip(pos)
         file.pos = pos
     }

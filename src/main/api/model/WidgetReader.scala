@@ -2,8 +2,7 @@
 
 package org.nlogo.api.model
 
-import org.nlogo.api,
-  api.{CompilerException, Nobody}
+import org.nlogo.api
 import org.nlogo.core.StringEscaper.unescapeString
 import org.nlogo.core.StringEscaper.escapeString
 import org.nlogo.core._
@@ -372,7 +371,7 @@ case class ChooserReader(parser: api.ParserServices) extends BaseWidgetReader {
     val List(_, left: Int, top: Int, right: Int, bottom: Int, display: String, varName: String,
     choicesStr: String, currentChoice: Int) = vals
 
-    val choices = parser.readFromString(s"[$choicesStr]").asInstanceOf[api.LogoList].toList
+    val choices = parser.readFromString(s"[$choicesStr]").asInstanceOf[LogoList].toList
 
     def isOrContainsNobody(l: Any): Boolean = l match {
       case Nobody => true

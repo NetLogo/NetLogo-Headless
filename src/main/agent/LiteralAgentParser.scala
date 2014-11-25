@@ -4,9 +4,7 @@ package org.nlogo.agent
 
 import org.nlogo.{api, core},
   core.{ Token, TokenType },
-  api.{ CompilerUtilitiesInterface, Fail },
-    CompilerUtilitiesInterface.{AgentParser, AgentParserCreator},
-    Fail._
+  core.Fail._
 
 // This is only used for importing worlds; the regular NetLogo language
 // doesn't have literal agents and agentsets.
@@ -124,7 +122,7 @@ extends (Iterator[Token] => AnyRef)  // returns Agent or AgentSet
       var token = tokens.next()
       while(token.tpe != TokenType.CloseBrace) {
         cAssert(token.tpe == TokenType.OpenBracket, ERR_BAD_LINK_SET_ARGS, token)
-        val listVal = readLiteralPrefix(token, tokens).asInstanceOf[api.LogoList]
+        val listVal = readLiteralPrefix(token, tokens).asInstanceOf[core.LogoList]
         cAssert(listVal.size == 3 &&
                 listVal.get(0).isInstanceOf[java.lang.Double] &&
                 listVal.get(1).isInstanceOf[java.lang.Double] &&
@@ -144,7 +142,7 @@ extends (Iterator[Token] => AnyRef)  // returns Agent or AgentSet
       var token = tokens.next()
       while(token.tpe != TokenType.CloseBrace) {
         cAssert(token.tpe == TokenType.OpenBracket, ERR_BAD_PATCH_SET_ARGS, token)
-        val listVal = readLiteralPrefix(token, tokens).asInstanceOf[api.LogoList]
+        val listVal = readLiteralPrefix(token, tokens).asInstanceOf[core.LogoList]
         cAssert(listVal.size == 2 && listVal.scalaIterator.forall(_.isInstanceOf[java.lang.Double]),
                 ERR_BAD_PATCH_SET_ARGS, token)
         builder.add(
@@ -216,6 +214,7 @@ extends (Iterator[Token] => AnyRef)  // returns Agent or AgentSet
 
 }
 
-object AgentParserCreator extends AgentParserCreator {
-  override def apply(w: api.World): AgentParser = new LiteralAgentParser(w, _)
+object AgentParserCreator {
+  type AgentParser = ((Token, Iterator[Token]) => AnyRef) => Iterator[Token] => AnyRef
+  def apply(w: api.World): AgentParser = new LiteralAgentParser(w, _)
 }

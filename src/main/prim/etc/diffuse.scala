@@ -2,8 +2,8 @@
 
 package org.nlogo.prim.etc
 
-import org.nlogo.{ api, nvm },
-  org.nlogo.core.Syntax,
+import org.nlogo.{ api, nvm, core },
+  core.{Nobody, Syntax},
   org.nlogo.agent.PatchException
 
 class _diffuse extends DiffuseCommand {
@@ -32,7 +32,7 @@ abstract class DiffuseCommand extends nvm.Command {
     val amount = argEvalDoubleValue(context, 0)
     if (amount < 0.0 || amount > 1.0)
       throw new nvm.EngineException(
-        context, this, api.I18N.errors.getN(
+        context, this, core.I18N.errors.getN(
           "org.nlogo.prim.$common.paramOutOfBounds", Double.box(amount)))
     try diffuse(amount)
     catch {
@@ -41,7 +41,7 @@ abstract class DiffuseCommand extends nvm.Command {
       case ex: PatchException =>
         val value: AnyRef = ex.patch.getPatchVariable(reference.vn)
         val bad =
-          if (value == api.Nobody)
+          if (value == Nobody)
             "NOBODY"
           else
             "the " + api.TypeNames.name(value) + " " + api.Dump.logoObject(value)

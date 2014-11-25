@@ -3,8 +3,8 @@
 package org.nlogo.nvm
 
 import org.nlogo.{ core, api },
-  core.{ Syntax, TypeNames },
-  api.{ Dump, Nobody }
+  core.{Nobody, TypeNames},
+  api.Dump
 
 class ArgumentTypeException(context: Context, problemInstr: Instruction, badArgIndex: Int, wantedType: Int, badValue: AnyRef)
 extends EngineException(context, problemInstr, "") { // message will be built later

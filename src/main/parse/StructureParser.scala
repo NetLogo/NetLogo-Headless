@@ -18,11 +18,13 @@ package org.nlogo.parse
 // will be discovered as we parse, through __include declarations.  (Included files might themselves
 // include further files.)
 
-import org.nlogo.{ core, api },
-  core.{ Token, StructureDeclarations },
-  api.{ StructureResults, FrontEndInterface},
-    FrontEndInterface.ProceduresMap,
-  api.Fail._
+import
+  org.nlogo.{ api, core },
+    api.FileIO,
+    core.{ErrorSource, ExtensionManager, BreedIdentifierHandler,
+          FrontEndInterface, Program, Token, StructureDeclarations, StructureResults},
+      FrontEndInterface.ProceduresMap,
+    core.Fail._
 
 object StructureParser {
 
@@ -30,8 +32,8 @@ object StructureParser {
 
   def parseAll(
                 tokenizer: core.TokenizerInterface,
-                source: String, displayName: Option[String], program: api.Program, subprogram: Boolean,
-                oldProcedures: ProceduresMap, extensionManager: api.ExtensionManager): StructureResults = {
+                source: String, displayName: Option[String], program: Program, subprogram: Boolean,
+                oldProcedures: ProceduresMap, extensionManager: ExtensionManager): StructureResults = {
     if (!subprogram)
       extensionManager.startFullCompilation()
     val sources = Seq((source, ""))
@@ -57,13 +59,13 @@ object StructureParser {
           "Included files must end with .nls",
           results.includes.head)
         val newResults =
-          parseOne(api.FileIO.file2String(path), path, results)
+          parseOne(FileIO.file2String(path), path, results)
         newResults.copy(includes = newResults.includes.filterNot(_ == results.includes.head))
       }.dropWhile(_.includes.nonEmpty).next
     if (!subprogram) {
       for (token <- results.extensions)
         extensionManager.importExtension(
-          token.text.toLowerCase, new api.ErrorSource(token))
+          token.text.toLowerCase, new ErrorSource(token))
       extensionManager.finishFullCompilation()
     }
     results
@@ -73,7 +75,7 @@ object StructureParser {
     FrontEnd.tokenMapper.allCommandNames.map(_ -> "primitive command") ++
       FrontEnd.tokenMapper.allReporterNames.map(_ -> "primitive reporter")
 
-  def usedNames(program: api.Program, procedures: ProceduresMap, declarations: Seq[StructureDeclarations.Declaration] = Seq()): Map[String, String] = {
+  def usedNames(program: Program, procedures: ProceduresMap, declarations: Seq[StructureDeclarations.Declaration] = Seq()): Map[String, String] = {
     program.usedNames ++
       breedPrimitives(declarations) ++
       procedures.keys.map(_ -> "procedure") ++
@@ -81,7 +83,7 @@ object StructureParser {
   }
 
   private def breedPrimitives(declarations: Seq[StructureDeclarations.Declaration]): Map[String, String] = {
-    import api.BreedIdentifierHandler._
+    import BreedIdentifierHandler._
     import org.nlogo.core.StructureDeclarations.Breed
 
     declarations.flatMap {
