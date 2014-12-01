@@ -3,7 +3,7 @@
 package org.nlogo.parse
 
 import org.nlogo.{ core, api },
-  api.{ FrontEndProcedure, Fail },
+api.Fail,
     Fail.{ cAssert, exception },
   core.{ StructureDeclarations, Syntax, Token, TokenType },
     Syntax.compatible,

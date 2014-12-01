@@ -4,10 +4,10 @@ package org.nlogo.parse
 
 import org.nlogo.{ core, api },
   api.{ CompilerUtilitiesInterface, ExtensionManager },
-  core.{StructureResults, Program, LiteralImportHandler}
+  core.{FrontEndInterface, StructureResults, Program, LiteralImportHandler}
 
 object CompilerUtilities extends CompilerUtilitiesInterface {
-  import api.FrontEndInterface.ProceduresMap
+  import FrontEndInterface.ProceduresMap
   import FrontEnd.tokenizer
 
   def literalParser(importHandler: LiteralImportHandler): LiteralParser =

@@ -2,7 +2,7 @@
 
 package org.nlogo.core
 
-import org.nlogo.api.FrontEndInterface._
+import FrontEndInterface._
 
 case class StructureResults(program: Program,
                         procedures: ProceduresMap = NoProcedures,

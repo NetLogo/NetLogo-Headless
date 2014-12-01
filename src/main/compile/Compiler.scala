@@ -2,7 +2,7 @@
 
 package org.nlogo.compile
 
-import org.nlogo.core.Program
+import org.nlogo.core.{FrontEndInterface, Program}
 import org.nlogo.{ api, nvm },
   api.{ Femto, CompilerUtilitiesInterface},
   nvm.Procedure.{ ProceduresMap, NoProcedures }
@@ -14,7 +14,7 @@ import org.nlogo.{ api, nvm },
 
 object Compiler extends nvm.CompilerInterface {
 
-  val frontEnd = Femto.scalaSingleton[api.FrontEndInterface](
+  val frontEnd = Femto.scalaSingleton[FrontEndInterface](
     "org.nlogo.parse.FrontEnd")
   val utilities = Femto.scalaSingleton[CompilerUtilitiesInterface](
     "org.nlogo.parse.CompilerUtilities")

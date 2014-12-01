@@ -4,9 +4,8 @@ package org.nlogo.parse
 
 import org.scalatest.FunSuite
 import org.nlogo.{ core, api },
-  api.FrontEndProcedure,
-  core.{StructureDeclarations, Syntax, Token},
-  StructureDeclarations.Procedure
+  core.{FrontEndProcedure, StructureDeclarations, Syntax, Token},
+    StructureDeclarations.Procedure
 
 class CompilerUtilitiesTests extends FunSuite {
 

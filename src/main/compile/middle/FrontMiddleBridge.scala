@@ -3,7 +3,7 @@
 package org.nlogo.compile
 package middle
 
-import org.nlogo.core.StructureResults
+import org.nlogo.core.{FrontEndProcedure, StructureResults}
 import org.nlogo.{ core, api, nvm },
   nvm.Procedure.ProceduresMap
 
@@ -27,7 +27,7 @@ object FrontMiddleBridge extends FrontMiddleBridgeInterface {
       .map(astBackifier.backify)
       .toSeq
   }
-  private def fromApiProcedure(p: api.FrontEndProcedure): nvm.Procedure = {
+  private def fromApiProcedure(p: FrontEndProcedure): nvm.Procedure = {
     val proc = new nvm.Procedure(
       isReporter = p.isReporter,
       name = p.name,

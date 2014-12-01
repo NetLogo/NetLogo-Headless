@@ -2,12 +2,13 @@
 
 package org.nlogo.compile
 
+import org.nlogo.core.FrontEndInterface
 import org.nlogo.{ api, nvm },
   api.Femto
 
 object Scaffold {
 
-  val frontEnd = Femto.scalaSingleton[api.FrontEndInterface](
+  val frontEnd = Femto.scalaSingleton[FrontEndInterface](
     "org.nlogo.parse.FrontEnd")
   val bridge = Femto.scalaSingleton[FrontMiddleBridgeInterface](
     "org.nlogo.compile.middle.FrontMiddleBridge")

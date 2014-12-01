@@ -2,6 +2,7 @@
 
 package org.nlogo.api
 
+import org.nlogo.core.{FrontEndInterface, Program, LiteralImportHandler, Token}
 import FrontEndInterface.ProceduresMap
 
 import org.nlogo.core.{Program, LiteralImportHandler, Token}

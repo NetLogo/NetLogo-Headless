@@ -3,8 +3,7 @@
 package org.nlogo.parse
 
 import org.nlogo.{core, api},
-  core.{StructureResults, Program, Token},
-  api.FrontEndProcedure
+  core.{FrontEndProcedure, StructureResults, Program, Token}
 
 /// Stage #3 of StructureParser
 
@@ -42,7 +41,7 @@ object StructureConverter {
         }.flatten)
   }
 
-  def buildProcedure(p: Procedure, displayName: Option[String]): (api.FrontEndProcedure, Iterable[Token]) = {
+  def buildProcedure(p: Procedure, displayName: Option[String]): (FrontEndProcedure, Iterable[Token]) = {
     val proc = new RawProcedure(p, displayName)
     (proc, p.tokens.drop(2).init :+ Token.Eof)
   }

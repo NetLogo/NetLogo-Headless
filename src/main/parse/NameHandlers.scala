@@ -2,9 +2,10 @@
 
 package org.nlogo.parse
 
+import org.nlogo.core._
 import org.nlogo.{ core, api },
   api.Fail._,
-  api.FrontEndInterface.ProceduresMap,
+  FrontEndInterface.ProceduresMap,
   core.{BreedIdentifierHandler, Instantiator, Program, Token, TokenType}
 
 trait NameHandler extends (Token => Option[(TokenType, core.Instruction)])
