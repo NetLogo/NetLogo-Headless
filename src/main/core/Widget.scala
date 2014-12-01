@@ -95,10 +95,9 @@ case class Slider(display: String, left: Int = 0, top: Int = 0, right: Int = 0, 
              extends Widget with DeclaresGlobal with DeclaresGlobalCommand with DeclaresConstraint {
   override def constraint = NumericConstraintSpecification(default)
 }
-case class Monitor(rawDisplay: Option[String], left: Int, top: Int, right: Int, bottom: Int,
-             source: String, precision: Int, fontSize: Int) extends Widget {
-  def display = rawDisplay getOrElse source
-}
+case class Monitor(display: Option[String], left: Int, top: Int, right: Int, bottom: Int,
+             source: String, precision: Int, fontSize: Int) extends Widget
+
 case class Output(left: Int, top: Int, right: Int, bottom: Int, fontSize: Int) extends Widget
 
 sealed abstract class InputBoxType(val name:String)

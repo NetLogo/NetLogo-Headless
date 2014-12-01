@@ -402,7 +402,7 @@ object MonitorReader extends BaseWidgetReader {
                         ReservedLine(),
                         IntLine()    // font size
                       )
-  def asList(monitor: Monitor) = List((), monitor.left, monitor.top, monitor.right, monitor.bottom, monitor.rawDisplay,
+  def asList(monitor: Monitor) = List((), monitor.left, monitor.top, monitor.right, monitor.bottom, monitor.display,
     monitor.source, monitor.precision, (), monitor.fontSize)
   def asWidget(vals: List[Any]): Monitor = {
     val List(_, left: Int, top: Int, right: Int, bottom: Int, rawDisplay: Option[String] @unchecked,
