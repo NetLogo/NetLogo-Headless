@@ -1,9 +1,7 @@
 // (C) Uri Wilensky. https://github.com/NetLogo/NetLogo
 
-package org.nlogo.api
+package org.nlogo.core
 
-import org.nlogo.core.{ExtensionManager => CoreExtensionManager,
-                        File, FrontEndInterface, Program, LiteralImportHandler, Token}
 import FrontEndInterface.ProceduresMap
 
 trait CompilerUtilitiesInterface {
@@ -21,5 +19,5 @@ trait CompilerUtilitiesInterface {
   def isReporter(s: String,
                  program: Program,
                  procedures: ProceduresMap,
-                 extensionManager: CoreExtensionManager): Boolean
+                 extensionManager: ExtensionManager): Boolean
 }

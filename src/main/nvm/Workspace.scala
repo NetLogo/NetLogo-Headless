@@ -3,7 +3,7 @@
 package org.nlogo.nvm
 
 import org.nlogo.{ api, core },
-api.CompilerUtilitiesInterface
+  core.CompilerUtilitiesInterface
 import org.nlogo.agent.{ Agent, AgentSet }
 import collection.mutable.WeakHashMap
 

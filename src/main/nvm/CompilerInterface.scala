@@ -3,8 +3,8 @@
 package org.nlogo.nvm
 
 import org.nlogo.{ api, core },
-  api.{CompilerUtilitiesInterface, ExtensionManager},
-  core.{FrontEndInterface, Program}
+  api.ExtensionManager,
+  core.{CompilerUtilitiesInterface, FrontEndInterface, Program}
 
 // ought to be in the api package, except oops, it depends on nvm.Procedure - ST 2/23/09
 
