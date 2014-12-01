@@ -1,12 +1,13 @@
 // (C) Uri Wilensky. https://github.com/NetLogo/NetLogo
 
-package org.nlogo.api
+package org.nlogo.core
 
-import org.nlogo.core.{ Breed, Program, StructureDeclarations, Token, TokenType },
-  StructureDeclarations.Identifier
-import org.scalatest.FunSuite
-import collection.immutable.ListMap
+import org.nlogo.api.Femto
 import org.nlogo.core
+import org.nlogo.core.StructureDeclarations.Identifier
+import org.scalatest.FunSuite
+
+import scala.collection.immutable.ListMap
 
 class BreedIdentifierHandlerTests extends FunSuite {
 

@@ -4,7 +4,7 @@ package org.nlogo.parse
 
 import org.nlogo.{ core, api },
   api.FrontEndInterface.ProceduresMap,
-  core.{Program, Token, TokenType},
+  core.{BreedIdentifierHandler, Program, Token, TokenType},
   api.Fail._
 
 trait NameHandler extends (Token => Option[(TokenType, core.Instruction)])
@@ -50,7 +50,7 @@ object ReporterHandler extends PrimitiveHandler {
 // go thru our breed prim handlers, if one triggers, return the result
 class BreedHandler(program: Program) extends NameHandler {
   override def apply(token: Token) =
-    api.BreedIdentifierHandler.process(token, program) map {
+    BreedIdentifierHandler.process(token, program) map {
       case (className, breedName, tokenType) =>
         (tokenType, api.Instantiator.newInstance[core.Instruction](
           Class.forName("org.nlogo.core.prim." + className), breedName))

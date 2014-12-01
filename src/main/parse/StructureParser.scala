@@ -19,7 +19,7 @@ package org.nlogo.parse
 // include further files.)
 
 import org.nlogo.{ core, api },
-  core.{Program, Token, StructureDeclarations},
+  core.{BreedIdentifierHandler, Program, Token, StructureDeclarations},
   api.{ StructureResults, FrontEndInterface},
     FrontEndInterface.ProceduresMap,
   api.Fail._
@@ -81,7 +81,7 @@ object StructureParser {
   }
 
   private def breedPrimitives(declarations: Seq[StructureDeclarations.Declaration]): Map[String, String] = {
-    import api.BreedIdentifierHandler._
+    import BreedIdentifierHandler._
     import org.nlogo.core.StructureDeclarations.Breed
 
     declarations.flatMap {
