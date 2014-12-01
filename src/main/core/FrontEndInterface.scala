@@ -2,7 +2,6 @@
 
 package org.nlogo.core
 
-import org.nlogo.api.{DummyExtensionManager, ExtensionManager}
 import org.nlogo.core.FrontEndInterface.{NoProcedures, ProceduresMap}
 
 trait FrontEndProcedure {

@@ -2,7 +2,8 @@
 
 package org.nlogo.api
 
-import org.nlogo.core.{FrontEndInterface, Program, LiteralImportHandler, Token}
+import org.nlogo.core.{FrontEndInterface, Program, LiteralImportHandler, Token,
+                       ExtensionManager => CoreExtensionManager}
 import FrontEndInterface.ProceduresMap
 
 import org.nlogo.core.{Program, LiteralImportHandler, Token}
@@ -19,5 +20,8 @@ trait CompilerUtilitiesInterface {
   @throws(classOf[java.io.IOException])
   def readFromFile(currFile: File, importHandler: LiteralImportHandler): AnyRef
 
-  def isReporter(s: String, program: Program, procedures: ProceduresMap, extensionManager: ExtensionManager): Boolean
+  def isReporter(s: String,
+                 program: Program,
+                 procedures: ProceduresMap,
+                 extensionManager: CoreExtensionManager): Boolean
 }

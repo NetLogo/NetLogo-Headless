@@ -4,8 +4,7 @@ package org.nlogo.parse
 
 import org.scalatest.FunSuite
 import org.nlogo.{ core, api, parse },
-  core.{StructureResults, Program, Token, TokenType},
-api.DummyExtensionManager
+org.nlogo.core._
 
 class NamerTests extends FunSuite {
 

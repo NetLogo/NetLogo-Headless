@@ -3,7 +3,7 @@
 package org.nlogo.parse
 
 import org.nlogo.{ core, api },
-  core.{FrontEndInterface, FrontEndProcedure, Program, Token, TokenType},
+  core.{FrontEndInterface, ExtensionManager, FrontEndProcedure, Program, Token, TokenType},
   api.Fail._
 
 /**
@@ -20,7 +20,7 @@ import org.nlogo.{ core, api },
 class Namer(
   program: Program,
   procedures: FrontEndInterface.ProceduresMap,
-  extensionManager: api.ExtensionManager) {
+  extensionManager: ExtensionManager) {
 
   def process(tokens: Iterator[Token], procedure: FrontEndProcedure): Iterator[Token] = {
     // the handlers are mutually exclusive (only one applies), so the order the handlers

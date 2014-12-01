@@ -3,8 +3,8 @@
 package org.nlogo.compile
 
 import org.scalatest.FunSuite
-import org.nlogo.api.DummyExtensionManager
 import org.nlogo.api.Version.useGenerator
+import org.nlogo.api.DummyExtensionManager
 import org.nlogo.core.Program
 import org.nlogo.nvm.Procedure.NoProcedures
 

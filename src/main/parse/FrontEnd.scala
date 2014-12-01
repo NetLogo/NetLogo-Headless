@@ -4,7 +4,7 @@ package org.nlogo.parse
 
 import org.nlogo.{core, api},
   api.Femto,
-  core.{FrontEndInterface, FrontEndProcedure, Program}
+  core.{ExtensionManager, DummyExtensionManager, FrontEndInterface, FrontEndProcedure, Program}
 
 object FrontEnd extends FrontEnd {
   val tokenizer: core.TokenizerInterface =
@@ -29,7 +29,7 @@ trait FrontEndMain {
         program: Program = core.Program.empty(),
         subprogram: Boolean = true,
         oldProcedures: FrontEndInterface.ProceduresMap = core.FrontEndInterface.NoProcedures,
-        extensionManager: api.ExtensionManager = new api.DummyExtensionManager)
+        extensionManager: ExtensionManager = new DummyExtensionManager)
       : FrontEndInterface.FrontEndResults = {
     val structureResults = StructureParser.parseAll(
       tokenizer, source, displayName, program, subprogram, oldProcedures, extensionManager)

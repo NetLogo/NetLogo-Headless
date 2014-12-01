@@ -4,7 +4,7 @@ package org.nlogo.compile
 
 import org.nlogo.core.FrontEndInterface
 import org.nlogo.{ api, nvm },
-  api.Femto
+  api.{ DummyExtensionManager, Femto }
 
 object Scaffold {
 
@@ -17,7 +17,7 @@ object Scaffold {
     val (coreDefs, results) = frontEnd.frontEnd(source)
     bridge(
       results,
-      new api.DummyExtensionManager,
+      new DummyExtensionManager,
       nvm.Procedure.NoProcedures,
       coreDefs
     )

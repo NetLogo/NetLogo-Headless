@@ -4,7 +4,7 @@ package org.nlogo.parse
 
 import org.scalatest.FunSuite
 import org.nlogo.{ core, api },
-  core.{FrontEndProcedure, StructureDeclarations, Syntax, Token},
+org.nlogo.core._,
     StructureDeclarations.Procedure
 
 class CompilerUtilitiesTests extends FunSuite {
@@ -49,7 +49,7 @@ class CompilerUtilitiesTests extends FunSuite {
 
   def isReporter(s: String) =
     compilerUtilities.isReporter(s, program,
-      proceduresMap, new api.DummyExtensionManager)
+      proceduresMap, new DummyExtensionManager)
 
   /// tests for isReporter
 

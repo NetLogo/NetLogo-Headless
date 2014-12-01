@@ -19,7 +19,8 @@ package org.nlogo.parse
 // include further files.)
 
 import org.nlogo.{ core, api },
-  core.{BreedIdentifierHandler, FrontEndInterface, Program, Token, StructureDeclarations, StructureResults},
+  core.{ErrorSource, ExtensionManager, BreedIdentifierHandler,
+        FrontEndInterface, Program, Token, StructureDeclarations, StructureResults},
     FrontEndInterface.ProceduresMap,
   api.Fail._
 
@@ -30,7 +31,7 @@ object StructureParser {
   def parseAll(
                 tokenizer: core.TokenizerInterface,
                 source: String, displayName: Option[String], program: Program, subprogram: Boolean,
-                oldProcedures: ProceduresMap, extensionManager: api.ExtensionManager): StructureResults = {
+                oldProcedures: ProceduresMap, extensionManager: ExtensionManager): StructureResults = {
     if (!subprogram)
       extensionManager.startFullCompilation()
     val sources = Seq((source, ""))
@@ -62,7 +63,7 @@ object StructureParser {
     if (!subprogram) {
       for (token <- results.extensions)
         extensionManager.importExtension(
-          token.text.toLowerCase, new api.ErrorSource(token))
+          token.text.toLowerCase, new ErrorSource(token))
       extensionManager.finishFullCompilation()
     }
     results

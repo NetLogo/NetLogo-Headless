@@ -6,7 +6,7 @@ import org.nlogo.core._
 import org.nlogo.{ core, api },
   api.Fail._,
   FrontEndInterface.ProceduresMap,
-  core.{BreedIdentifierHandler, Instantiator, Program, Token, TokenType}
+  core.{BreedIdentifierHandler, ExtensionManager, Instantiator, Program, Token, TokenType}
 
 trait NameHandler extends (Token => Option[(TokenType, core.Instruction)])
 
@@ -59,7 +59,7 @@ class BreedHandler(program: Program) extends NameHandler {
 }
 
 // replaces an identifier token with its imported implementation, if necessary
-class ExtensionPrimitiveHandler(extensionManager: api.ExtensionManager) extends NameHandler {
+class ExtensionPrimitiveHandler(extensionManager: ExtensionManager) extends NameHandler {
   override def apply(token: Token) =
     if(token.tpe != TokenType.Ident ||
        extensionManager == null || !extensionManager.anyExtensionsLoaded)
@@ -79,7 +79,7 @@ class ExtensionPrimitiveHandler(extensionManager: api.ExtensionManager) extends 
           Some((newType, wrap(primitive, name)))
       }
     }
-  private def wrap(primitive: api.Primitive, name: String): core.Instruction =
+  private def wrap(primitive: Primitive, name: String): core.Instruction =
     primitive match {
       case c: api.Command  =>
         new core.prim._extern(c.getSyntax)

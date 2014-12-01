@@ -4,9 +4,9 @@ package org.nlogo.workspace;
 
 import org.nlogo.api.ClassManager;
 import org.nlogo.api.Dump;
-import org.nlogo.api.ErrorSource;
+import org.nlogo.core.ErrorSource;
 import org.nlogo.api.ExtensionException;
-import org.nlogo.api.Primitive;
+import org.nlogo.core.Primitive;
 
 import java.util.ArrayList;
 import java.util.HashMap;
