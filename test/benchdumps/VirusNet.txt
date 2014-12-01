@@ -960,7 +960,7 @@ procedure SETUP-SPATIALLY-CLUSTERED-NETWORK:[NUM-LINKS _repeatlocal:1]{OTPL}:
           ILOAD 3
           ICONST_0
           IF_ICMPNE L2
-          GETSTATIC org/nlogo/api/Nobody$.MODULE$ : Lorg/nlogo/api/Nobody$;
+          GETSTATIC org/nlogo/core/Nobody$.MODULE$ : Lorg/nlogo/core/Nobody$;
           GOTO L3
          L2
          FRAME APPEND [org/nlogo/agent/AgentSet I]
@@ -1442,7 +1442,7 @@ procedure SETUP-SPATIALLY-CLUSTERED-NETWORK:[NUM-LINKS _repeatlocal:1]{OTPL}:
           GETFIELD org/nlogo/prim/_asm_proceduresetupspatiallyclusterednetwork_if_7.kept3__let : Lorg/nlogo/core/Let;
           INVOKEVIRTUAL org/nlogo/nvm/Context.getLet (Lorg/nlogo/core/Let;)Ljava/lang/Object;
          L1
-          GETSTATIC org/nlogo/api/Nobody$.MODULE$ : Lorg/nlogo/api/Nobody$;
+          GETSTATIC org/nlogo/core/Nobody$.MODULE$ : Lorg/nlogo/core/Nobody$;
          L2
           ASTORE 3
           ASTORE 2
@@ -1454,7 +1454,7 @@ procedure SETUP-SPATIALLY-CLUSTERED-NETWORK:[NUM-LINKS _repeatlocal:1]{OTPL}:
           ICONST_0
           GOTO L4
          L3
-         FRAME APPEND [java/lang/Object org/nlogo/api/Nobody$]
+         FRAME APPEND [java/lang/Object org/nlogo/core/Nobody$]
           ICONST_1
          L4
          FRAME SAME1 I
@@ -1465,10 +1465,10 @@ procedure SETUP-SPATIALLY-CLUSTERED-NETWORK:[NUM-LINKS _repeatlocal:1]{OTPL}:
           ICONST_5
           GOTO L6
          L5
-         FRAME FULL [org/nlogo/prim/_asm_proceduresetupspatiallyclusterednetwork_if_7 org/nlogo/nvm/Context I org/nlogo/api/Nobody$] [org/nlogo/nvm/Context]
+         FRAME FULL [org/nlogo/prim/_asm_proceduresetupspatiallyclusterednetwork_if_7 org/nlogo/nvm/Context I org/nlogo/core/Nobody$] [org/nlogo/nvm/Context]
           BIPUSH 7
          L6
-         FRAME FULL [org/nlogo/prim/_asm_proceduresetupspatiallyclusterednetwork_if_7 org/nlogo/nvm/Context I org/nlogo/api/Nobody$] [org/nlogo/nvm/Context I]
+         FRAME FULL [org/nlogo/prim/_asm_proceduresetupspatiallyclusterednetwork_if_7 org/nlogo/nvm/Context I org/nlogo/core/Nobody$] [org/nlogo/nvm/Context I]
           PUTFIELD org/nlogo/nvm/Context.ip : I
          L7
           RETURN

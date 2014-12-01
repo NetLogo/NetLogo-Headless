@@ -546,7 +546,7 @@ procedure SETUP:[]{O---}:
       _nobody => Nobody$
           TRYCATCHBLOCK L0 L1 L2 org/nlogo/api/AgentException
          L3
-          GETSTATIC org/nlogo/api/Nobody$.MODULE$ : Lorg/nlogo/api/Nobody$;
+          GETSTATIC org/nlogo/core/Nobody$.MODULE$ : Lorg/nlogo/core/Nobody$;
          L4
           ASTORE 2
          L0
@@ -562,7 +562,7 @@ procedure SETUP:[]{O---}:
           PUTFIELD org/nlogo/nvm/Context.ip : I
           GOTO L5
          L2
-         FRAME FULL [org/nlogo/prim/_asm_proceduresetup_setobservervariable_10 org/nlogo/nvm/Context org/nlogo/api/Nobody$] [org/nlogo/api/AgentException]
+         FRAME FULL [org/nlogo/prim/_asm_proceduresetup_setobservervariable_10 org/nlogo/nvm/Context org/nlogo/core/Nobody$] [org/nlogo/api/AgentException]
           ASTORE 3
           NEW org/nlogo/nvm/EngineException
           DUP
@@ -579,7 +579,7 @@ procedure SETUP:[]{O---}:
       _nobody => Nobody$
           TRYCATCHBLOCK L0 L1 L2 org/nlogo/api/AgentException
          L3
-          GETSTATIC org/nlogo/api/Nobody$.MODULE$ : Lorg/nlogo/api/Nobody$;
+          GETSTATIC org/nlogo/core/Nobody$.MODULE$ : Lorg/nlogo/core/Nobody$;
          L4
           ASTORE 2
          L0
@@ -595,7 +595,7 @@ procedure SETUP:[]{O---}:
           PUTFIELD org/nlogo/nvm/Context.ip : I
           GOTO L5
          L2
-         FRAME FULL [org/nlogo/prim/_asm_proceduresetup_setobservervariable_11 org/nlogo/nvm/Context org/nlogo/api/Nobody$] [org/nlogo/api/AgentException]
+         FRAME FULL [org/nlogo/prim/_asm_proceduresetup_setobservervariable_11 org/nlogo/nvm/Context org/nlogo/core/Nobody$] [org/nlogo/api/AgentException]
           ASTORE 3
           NEW org/nlogo/nvm/EngineException
           DUP
@@ -1621,7 +1621,7 @@ procedure GO:[]{O---}:
           BIPUSH 9
           INVOKEVIRTUAL org/nlogo/agent/Observer.getVariable (I)Ljava/lang/Object;
          L1
-          GETSTATIC org/nlogo/api/Nobody$.MODULE$ : Lorg/nlogo/api/Nobody$;
+          GETSTATIC org/nlogo/core/Nobody$.MODULE$ : Lorg/nlogo/core/Nobody$;
          L2
           ASTORE 3
           ASTORE 2
@@ -1633,7 +1633,7 @@ procedure GO:[]{O---}:
           ICONST_0
           GOTO L4
          L3
-         FRAME APPEND [java/lang/Object org/nlogo/api/Nobody$]
+         FRAME APPEND [java/lang/Object org/nlogo/core/Nobody$]
           ICONST_1
          L4
          FRAME SAME1 I
@@ -1644,10 +1644,10 @@ procedure GO:[]{O---}:
           BIPUSH 11
           GOTO L6
          L5
-         FRAME FULL [org/nlogo/prim/_asm_procedurego_if_27 org/nlogo/nvm/Context I org/nlogo/api/Nobody$] [org/nlogo/nvm/Context]
+         FRAME FULL [org/nlogo/prim/_asm_procedurego_if_27 org/nlogo/nvm/Context I org/nlogo/core/Nobody$] [org/nlogo/nvm/Context]
           BIPUSH 14
          L6
-         FRAME FULL [org/nlogo/prim/_asm_procedurego_if_27 org/nlogo/nvm/Context I org/nlogo/api/Nobody$] [org/nlogo/nvm/Context I]
+         FRAME FULL [org/nlogo/prim/_asm_procedurego_if_27 org/nlogo/nvm/Context I org/nlogo/core/Nobody$] [org/nlogo/nvm/Context I]
           PUTFIELD org/nlogo/nvm/Context.ip : I
          L7
           RETURN
@@ -1814,7 +1814,7 @@ procedure GO:[]{O---}:
           BIPUSH 9
           INVOKEVIRTUAL org/nlogo/agent/Observer.getVariable (I)Ljava/lang/Object;
          L1
-          GETSTATIC org/nlogo/api/Nobody$.MODULE$ : Lorg/nlogo/api/Nobody$;
+          GETSTATIC org/nlogo/core/Nobody$.MODULE$ : Lorg/nlogo/core/Nobody$;
          L2
           ASTORE 3
           ASTORE 2
@@ -1826,7 +1826,7 @@ procedure GO:[]{O---}:
           ICONST_0
           GOTO L4
          L3
-         FRAME APPEND [java/lang/Object org/nlogo/api/Nobody$]
+         FRAME APPEND [java/lang/Object org/nlogo/core/Nobody$]
           ICONST_1
          L4
          FRAME SAME1 I
@@ -1837,10 +1837,10 @@ procedure GO:[]{O---}:
           BIPUSH 15
           GOTO L6
          L5
-         FRAME FULL [org/nlogo/prim/_asm_procedurego_if_31 org/nlogo/nvm/Context I org/nlogo/api/Nobody$] [org/nlogo/nvm/Context]
+         FRAME FULL [org/nlogo/prim/_asm_procedurego_if_31 org/nlogo/nvm/Context I org/nlogo/core/Nobody$] [org/nlogo/nvm/Context]
           BIPUSH 18
          L6
-         FRAME FULL [org/nlogo/prim/_asm_procedurego_if_31 org/nlogo/nvm/Context I org/nlogo/api/Nobody$] [org/nlogo/nvm/Context I]
+         FRAME FULL [org/nlogo/prim/_asm_procedurego_if_31 org/nlogo/nvm/Context I org/nlogo/core/Nobody$] [org/nlogo/nvm/Context I]
           PUTFIELD org/nlogo/nvm/Context.ip : I
          L7
           RETURN
@@ -7777,7 +7777,7 @@ procedure SORT-COLLISIONS:[WINNER DT]{OTPL}:
       _nobody => Nobody$
           TRYCATCHBLOCK L0 L1 L2 org/nlogo/api/AgentException
          L3
-          GETSTATIC org/nlogo/api/Nobody$.MODULE$ : Lorg/nlogo/api/Nobody$;
+          GETSTATIC org/nlogo/core/Nobody$.MODULE$ : Lorg/nlogo/core/Nobody$;
          L4
           ASTORE 2
          L0
@@ -7793,7 +7793,7 @@ procedure SORT-COLLISIONS:[WINNER DT]{OTPL}:
           PUTFIELD org/nlogo/nvm/Context.ip : I
           GOTO L5
          L2
-         FRAME FULL [org/nlogo/prim/_asm_proceduresortcollisions_setobservervariable_7 org/nlogo/nvm/Context org/nlogo/api/Nobody$] [org/nlogo/api/AgentException]
+         FRAME FULL [org/nlogo/prim/_asm_proceduresortcollisions_setobservervariable_7 org/nlogo/nvm/Context org/nlogo/core/Nobody$] [org/nlogo/api/AgentException]
           ASTORE 3
           NEW org/nlogo/nvm/EngineException
           DUP
@@ -7810,7 +7810,7 @@ procedure SORT-COLLISIONS:[WINNER DT]{OTPL}:
       _nobody => Nobody$
           TRYCATCHBLOCK L0 L1 L2 org/nlogo/api/AgentException
          L3
-          GETSTATIC org/nlogo/api/Nobody$.MODULE$ : Lorg/nlogo/api/Nobody$;
+          GETSTATIC org/nlogo/core/Nobody$.MODULE$ : Lorg/nlogo/core/Nobody$;
          L4
           ASTORE 2
          L0
@@ -7826,7 +7826,7 @@ procedure SORT-COLLISIONS:[WINNER DT]{OTPL}:
           PUTFIELD org/nlogo/nvm/Context.ip : I
           GOTO L5
          L2
-         FRAME FULL [org/nlogo/prim/_asm_proceduresortcollisions_setobservervariable_8 org/nlogo/nvm/Context org/nlogo/api/Nobody$] [org/nlogo/api/AgentException]
+         FRAME FULL [org/nlogo/prim/_asm_proceduresortcollisions_setobservervariable_8 org/nlogo/nvm/Context org/nlogo/core/Nobody$] [org/nlogo/api/AgentException]
           ASTORE 3
           NEW org/nlogo/nvm/EngineException
           DUP
@@ -8825,7 +8825,7 @@ procedure COLLIDE-WINNERS:[]{OTPL}:
           BIPUSH 9
           INVOKEVIRTUAL org/nlogo/agent/Observer.getVariable (I)Ljava/lang/Object;
          L1
-          GETSTATIC org/nlogo/api/Nobody$.MODULE$ : Lorg/nlogo/api/Nobody$;
+          GETSTATIC org/nlogo/core/Nobody$.MODULE$ : Lorg/nlogo/core/Nobody$;
          L2
           ASTORE 3
           ASTORE 2
@@ -8841,10 +8841,10 @@ procedure COLLIDE-WINNERS:[]{OTPL}:
           ICONST_1
           GOTO L5
          L4
-         FRAME FULL [org/nlogo/prim/_asm_procedurecollidewinners_if_0 org/nlogo/nvm/Context I org/nlogo/api/Nobody$] [org/nlogo/nvm/Context]
+         FRAME FULL [org/nlogo/prim/_asm_procedurecollidewinners_if_0 org/nlogo/nvm/Context I org/nlogo/core/Nobody$] [org/nlogo/nvm/Context]
           ICONST_2
          L5
-         FRAME FULL [org/nlogo/prim/_asm_procedurecollidewinners_if_0 org/nlogo/nvm/Context I org/nlogo/api/Nobody$] [org/nlogo/nvm/Context I]
+         FRAME FULL [org/nlogo/prim/_asm_procedurecollidewinners_if_0 org/nlogo/nvm/Context I org/nlogo/core/Nobody$] [org/nlogo/nvm/Context I]
           PUTFIELD org/nlogo/nvm/Context.ip : I
          L6
           RETURN

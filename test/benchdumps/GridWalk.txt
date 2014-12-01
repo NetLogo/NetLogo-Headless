@@ -223,7 +223,7 @@ procedure SETUP:[]{O---}:
             ILOAD 3
             ICONST_0
             IF_ICMPNE L2
-            GETSTATIC org/nlogo/api/Nobody$.MODULE$ : Lorg/nlogo/api/Nobody$;
+            GETSTATIC org/nlogo/core/Nobody$.MODULE$ : Lorg/nlogo/core/Nobody$;
             GOTO L3
            L2
            FRAME APPEND [org/nlogo/agent/AgentSet I]
@@ -287,7 +287,7 @@ procedure SETUP:[]{O---}:
           ILOAD 3
           ICONST_0
           IF_ICMPNE L7
-          GETSTATIC org/nlogo/api/Nobody$.MODULE$ : Lorg/nlogo/api/Nobody$;
+          GETSTATIC org/nlogo/core/Nobody$.MODULE$ : Lorg/nlogo/core/Nobody$;
           GOTO L8
          L7
          FRAME FULL [org/nlogo/prim/_asm_proceduresetup_face_2 org/nlogo/nvm/Context org/nlogo/agent/AgentSet I org/nlogo/agent/Patch] []
@@ -495,7 +495,7 @@ procedure GO:[]{O---}:
           ILOAD 3
           ICONST_0
           IF_ICMPNE L7
-          GETSTATIC org/nlogo/api/Nobody$.MODULE$ : Lorg/nlogo/api/Nobody$;
+          GETSTATIC org/nlogo/core/Nobody$.MODULE$ : Lorg/nlogo/core/Nobody$;
           GOTO L8
          L7
          FRAME FULL [org/nlogo/prim/_asm_procedurego_face_1 org/nlogo/nvm/Context org/nlogo/agent/AgentSet I org/nlogo/agent/Patch] []

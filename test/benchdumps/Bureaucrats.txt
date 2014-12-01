@@ -397,7 +397,7 @@ procedure GO:[ACTIVE-PATCHES OVERLOADED-PATCHES]{O---}:
               ILOAD 3
               ICONST_0
               IF_ICMPNE L2
-              GETSTATIC org/nlogo/api/Nobody$.MODULE$ : Lorg/nlogo/api/Nobody$;
+              GETSTATIC org/nlogo/core/Nobody$.MODULE$ : Lorg/nlogo/core/Nobody$;
               GOTO L3
              L2
              FRAME APPEND [org/nlogo/agent/AgentSet I]

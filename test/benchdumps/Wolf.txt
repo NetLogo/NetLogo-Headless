@@ -3165,7 +3165,7 @@ procedure CATCH-SHEEP:[]{-T--}:
           ILOAD 3
           ICONST_0
           IF_ICMPNE L10
-          GETSTATIC org/nlogo/api/Nobody$.MODULE$ : Lorg/nlogo/api/Nobody$;
+          GETSTATIC org/nlogo/core/Nobody$.MODULE$ : Lorg/nlogo/core/Nobody$;
           GOTO L11
          L10
          FRAME FULL [org/nlogo/prim/_asm_procedurecatchsheep_setturtlevariable_0 org/nlogo/nvm/Context org/nlogo/agent/AgentSet I T org/nlogo/agent/Patch T org/nlogo/agent/AgentSetBuilder org/nlogo/agent/AgentSet java/util/Iterator] []
@@ -3230,7 +3230,7 @@ procedure CATCH-SHEEP:[]{-T--}:
           ATHROW
          L3
          FRAME SAME1 java/lang/Object
-          GETSTATIC org/nlogo/api/Nobody$.MODULE$ : Lorg/nlogo/api/Nobody$;
+          GETSTATIC org/nlogo/core/Nobody$.MODULE$ : Lorg/nlogo/core/Nobody$;
          L4
           ASTORE 3
           ASTORE 2
@@ -3242,7 +3242,7 @@ procedure CATCH-SHEEP:[]{-T--}:
           ICONST_0
           GOTO L6
          L5
-         FRAME APPEND [java/lang/Object org/nlogo/api/Nobody$]
+         FRAME APPEND [java/lang/Object org/nlogo/core/Nobody$]
           ICONST_1
          L6
          FRAME SAME1 I
@@ -3253,10 +3253,10 @@ procedure CATCH-SHEEP:[]{-T--}:
           ICONST_2
           GOTO L8
          L7
-         FRAME FULL [org/nlogo/prim/_asm_procedurecatchsheep_if_1 org/nlogo/nvm/Context I org/nlogo/api/Nobody$] [org/nlogo/nvm/Context]
+         FRAME FULL [org/nlogo/prim/_asm_procedurecatchsheep_if_1 org/nlogo/nvm/Context I org/nlogo/core/Nobody$] [org/nlogo/nvm/Context]
           BIPUSH 6
          L8
-         FRAME FULL [org/nlogo/prim/_asm_procedurecatchsheep_if_1 org/nlogo/nvm/Context I org/nlogo/api/Nobody$] [org/nlogo/nvm/Context I]
+         FRAME FULL [org/nlogo/prim/_asm_procedurecatchsheep_if_1 org/nlogo/nvm/Context I org/nlogo/core/Nobody$] [org/nlogo/nvm/Context I]
           PUTFIELD org/nlogo/nvm/Context.ip : I
          L9
           RETURN

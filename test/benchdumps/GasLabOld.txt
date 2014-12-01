@@ -632,7 +632,7 @@ procedure SETUP:[]{O---}:
           ASTORE 6
           ALOAD 6
           IFNONNULL L4
-          GETSTATIC org/nlogo/api/Nobody$.MODULE$ : Lorg/nlogo/api/Nobody$;
+          GETSTATIC org/nlogo/core/Nobody$.MODULE$ : Lorg/nlogo/core/Nobody$;
           GOTO L5
          L4
          FRAME FULL [org/nlogo/prim/_asm_proceduresetup_call_10 org/nlogo/nvm/Context D J org/nlogo/agent/Turtle] [org/nlogo/nvm/Activation [Ljava/lang/Object; I]
@@ -3965,7 +3965,7 @@ procedure CHECK-FOR-COLLISION:[]{-T--}:
           ILOAD 3
           ICONST_0
           IF_ICMPNE L10
-          GETSTATIC org/nlogo/api/Nobody$.MODULE$ : Lorg/nlogo/api/Nobody$;
+          GETSTATIC org/nlogo/core/Nobody$.MODULE$ : Lorg/nlogo/core/Nobody$;
           GOTO L11
          L10
          FRAME FULL [org/nlogo/prim/_asm_procedurecheckforcollision_setturtlevariable_1 org/nlogo/nvm/Context org/nlogo/agent/AgentSet I org/nlogo/agent/AgentIterator] []
@@ -4357,7 +4357,7 @@ procedure CHECK-FOR-COLLISION:[]{-T--}:
           ASTORE 6
           ALOAD 6
           IFNONNULL L4
-          GETSTATIC org/nlogo/api/Nobody$.MODULE$ : Lorg/nlogo/api/Nobody$;
+          GETSTATIC org/nlogo/core/Nobody$.MODULE$ : Lorg/nlogo/core/Nobody$;
           GOTO L5
          L4
          FRAME FULL [org/nlogo/prim/_asm_procedurecheckforcollision_call_4 org/nlogo/nvm/Context D J org/nlogo/agent/Turtle] [org/nlogo/nvm/Activation [Ljava/lang/Object; I]

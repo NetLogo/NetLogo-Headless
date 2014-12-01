@@ -2028,7 +2028,7 @@ procedure GO:[OLD-CLOCK]{O---}:
           ASTORE 6
           ALOAD 6
           IFNONNULL L3
-          GETSTATIC org/nlogo/api/Nobody$.MODULE$ : Lorg/nlogo/api/Nobody$;
+          GETSTATIC org/nlogo/core/Nobody$.MODULE$ : Lorg/nlogo/core/Nobody$;
           GOTO L4
          L3
          FRAME APPEND [org/nlogo/agent/Turtle]
@@ -6271,7 +6271,7 @@ procedure MOVE:[OLD-PATCH]{-T--}:
 [3]_setbreedvariable:LAST-COLLISION
       _asm_proceduremove_nobody_3 "nobody" => Nobody$
            L0
-            GETSTATIC org/nlogo/api/Nobody$.MODULE$ : Lorg/nlogo/api/Nobody$;
+            GETSTATIC org/nlogo/core/Nobody$.MODULE$ : Lorg/nlogo/core/Nobody$;
            L1
             ARETURN
 [4]_asm_proceduremove_return_4 "" => void
@@ -6833,7 +6833,7 @@ procedure CHECK-FOR-COLLISION:[CANDIDATE]{-T--}:
           ILOAD 3
           ICONST_0
           IF_ICMPNE L15
-          GETSTATIC org/nlogo/api/Nobody$.MODULE$ : Lorg/nlogo/api/Nobody$;
+          GETSTATIC org/nlogo/core/Nobody$.MODULE$ : Lorg/nlogo/core/Nobody$;
           GOTO L16
          L15
          FRAME FULL [org/nlogo/prim/_asm_procedurecheckforcollision_setprocedurevariable_1 org/nlogo/nvm/Context org/nlogo/agent/AgentSet I org/nlogo/nvm/Context scala/collection/mutable/ArrayBuffer org/nlogo/agent/AgentIterator java/lang/Object java/lang/Object java/lang/Object] []
@@ -6888,7 +6888,7 @@ procedure CHECK-FOR-COLLISION:[CANDIDATE]{-T--}:
           ICONST_0
           AALOAD
          L4
-          GETSTATIC org/nlogo/api/Nobody$.MODULE$ : Lorg/nlogo/api/Nobody$;
+          GETSTATIC org/nlogo/core/Nobody$.MODULE$ : Lorg/nlogo/core/Nobody$;
          L5
           ASTORE 3
           ASTORE 2
@@ -6900,7 +6900,7 @@ procedure CHECK-FOR-COLLISION:[CANDIDATE]{-T--}:
           ICONST_0
           GOTO L7
          L6
-         FRAME APPEND [java/lang/Object org/nlogo/api/Nobody$]
+         FRAME APPEND [java/lang/Object org/nlogo/core/Nobody$]
           ICONST_1
          L7
          FRAME SAME1 I
@@ -7055,7 +7055,7 @@ procedure CHECK-FOR-COLLISION:[CANDIDATE]{-T--}:
          FRAME SAME1 I
           GOTO L23
          L8
-         FRAME FULL [org/nlogo/prim/_asm_procedurecheckforcollision_if_3 org/nlogo/nvm/Context java/lang/Object org/nlogo/api/Nobody$] []
+         FRAME FULL [org/nlogo/prim/_asm_procedurecheckforcollision_if_3 org/nlogo/nvm/Context java/lang/Object org/nlogo/core/Nobody$] []
           ICONST_0
          L23
          FRAME FULL [org/nlogo/prim/_asm_procedurecheckforcollision_if_3 org/nlogo/nvm/Context java/lang/Object] [I]
@@ -12287,7 +12287,7 @@ procedure SETUP-PARTICLE:[]{-T--}:
 [3]_setbreedvariable:LAST-COLLISION
       _asm_proceduresetupparticle_nobody_3 "nobody" => Nobody$
            L0
-            GETSTATIC org/nlogo/api/Nobody$.MODULE$ : Lorg/nlogo/api/Nobody$;
+            GETSTATIC org/nlogo/core/Nobody$.MODULE$ : Lorg/nlogo/core/Nobody$;
            L1
             ARETURN
 [4]_setbreedvariable:WALL-HITS

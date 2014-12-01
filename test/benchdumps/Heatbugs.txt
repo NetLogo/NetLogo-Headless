@@ -2991,7 +2991,7 @@ procedure BUG-MOVE:[TARGET TRIES]{-T--}:
           ILOAD 3
           ICONST_0
           IF_ICMPNE L5
-          GETSTATIC org/nlogo/api/Nobody$.MODULE$ : Lorg/nlogo/api/Nobody$;
+          GETSTATIC org/nlogo/core/Nobody$.MODULE$ : Lorg/nlogo/core/Nobody$;
           GOTO L6
          L5
          FRAME FULL [org/nlogo/prim/_asm_procedurebugmove_setprocedurevariable_7 org/nlogo/nvm/Context org/nlogo/agent/AgentSet I org/nlogo/agent/Patch] []

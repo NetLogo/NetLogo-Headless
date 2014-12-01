@@ -229,7 +229,7 @@ procedure SETUP:[]{O---}:
           INVOKEVIRTUAL org/nlogo/nvm/Activation.args ()[Ljava/lang/Object;
           ICONST_0
          L1
-          GETSTATIC org/nlogo/api/Nobody$.MODULE$ : Lorg/nlogo/api/Nobody$;
+          GETSTATIC org/nlogo/core/Nobody$.MODULE$ : Lorg/nlogo/core/Nobody$;
          L2
           AASTORE
           ALOAD 1
@@ -291,7 +291,7 @@ procedure SETUP:[]{O---}:
           ASTORE 6
           ALOAD 6
           IFNONNULL L4
-          GETSTATIC org/nlogo/api/Nobody$.MODULE$ : Lorg/nlogo/api/Nobody$;
+          GETSTATIC org/nlogo/core/Nobody$.MODULE$ : Lorg/nlogo/core/Nobody$;
           GOTO L5
          L4
          FRAME FULL [org/nlogo/prim/_asm_proceduresetup_call_3 org/nlogo/nvm/Context D J org/nlogo/agent/Turtle] [org/nlogo/nvm/Activation [Ljava/lang/Object; I]
@@ -522,7 +522,7 @@ procedure MAKE-NODE:[OLD-NODE]{O---}:
           ICONST_0
           AALOAD
          L1
-          GETSTATIC org/nlogo/api/Nobody$.MODULE$ : Lorg/nlogo/api/Nobody$;
+          GETSTATIC org/nlogo/core/Nobody$.MODULE$ : Lorg/nlogo/core/Nobody$;
          L2
           ASTORE 3
           ASTORE 2
@@ -534,7 +534,7 @@ procedure MAKE-NODE:[OLD-NODE]{O---}:
           ICONST_0
           GOTO L4
          L3
-         FRAME APPEND [java/lang/Object org/nlogo/api/Nobody$]
+         FRAME APPEND [java/lang/Object org/nlogo/core/Nobody$]
           ICONST_1
          L4
          FRAME SAME1 I
@@ -545,10 +545,10 @@ procedure MAKE-NODE:[OLD-NODE]{O---}:
           ICONST_3
           GOTO L6
          L5
-         FRAME FULL [org/nlogo/prim/_asm_proceduremakenode_if_2 org/nlogo/nvm/Context I org/nlogo/api/Nobody$] [org/nlogo/nvm/Context]
+         FRAME FULL [org/nlogo/prim/_asm_proceduremakenode_if_2 org/nlogo/nvm/Context I org/nlogo/core/Nobody$] [org/nlogo/nvm/Context]
           BIPUSH 10
          L6
-         FRAME FULL [org/nlogo/prim/_asm_proceduremakenode_if_2 org/nlogo/nvm/Context I org/nlogo/api/Nobody$] [org/nlogo/nvm/Context I]
+         FRAME FULL [org/nlogo/prim/_asm_proceduremakenode_if_2 org/nlogo/nvm/Context I org/nlogo/core/Nobody$] [org/nlogo/nvm/Context I]
           PUTFIELD org/nlogo/nvm/Context.ip : I
          L7
           RETURN
@@ -920,7 +920,7 @@ reporter procedure FIND-PARTNER:[TOTAL PARTNER]{OTPL}:
 [1]_asm_procedurefindpartner_setprocedurevariable_3 "" Object => void
       _nobody => Nobody$
          L0
-          GETSTATIC org/nlogo/api/Nobody$.MODULE$ : Lorg/nlogo/api/Nobody$;
+          GETSTATIC org/nlogo/core/Nobody$.MODULE$ : Lorg/nlogo/core/Nobody$;
          L1
           ASTORE 2
           ALOAD 1
@@ -1070,7 +1070,7 @@ reporter procedure FIND-PARTNER:[TOTAL PARTNER]{OTPL}:
           ICONST_1
           AALOAD
          L1
-          GETSTATIC org/nlogo/api/Nobody$.MODULE$ : Lorg/nlogo/api/Nobody$;
+          GETSTATIC org/nlogo/core/Nobody$.MODULE$ : Lorg/nlogo/core/Nobody$;
          L2
           ASTORE 3
           ASTORE 2
@@ -1086,10 +1086,10 @@ reporter procedure FIND-PARTNER:[TOTAL PARTNER]{OTPL}:
           ICONST_5
           GOTO L5
          L4
-         FRAME FULL [org/nlogo/prim/_asm_procedurefindpartner_if_7 org/nlogo/nvm/Context I org/nlogo/api/Nobody$] [org/nlogo/nvm/Context]
+         FRAME FULL [org/nlogo/prim/_asm_procedurefindpartner_if_7 org/nlogo/nvm/Context I org/nlogo/core/Nobody$] [org/nlogo/nvm/Context]
           BIPUSH 9
          L5
-         FRAME FULL [org/nlogo/prim/_asm_procedurefindpartner_if_7 org/nlogo/nvm/Context I org/nlogo/api/Nobody$] [org/nlogo/nvm/Context I]
+         FRAME FULL [org/nlogo/prim/_asm_procedurefindpartner_if_7 org/nlogo/nvm/Context I org/nlogo/core/Nobody$] [org/nlogo/nvm/Context I]
           PUTFIELD org/nlogo/nvm/Context.ip : I
          L6
           RETURN

@@ -1852,7 +1852,7 @@ procedure PICK-TEAM-MEMBERS:[NEW-TEAM-MEMBER _repeatlocal:1]{O---}:
 [0]_asm_procedurepickteammembers_setprocedurevariable_0 "" Object => void
       _nobody => Nobody$
          L0
-          GETSTATIC org/nlogo/api/Nobody$.MODULE$ : Lorg/nlogo/api/Nobody$;
+          GETSTATIC org/nlogo/core/Nobody$.MODULE$ : Lorg/nlogo/core/Nobody$;
          L1
           ASTORE 2
           ALOAD 1
@@ -2792,7 +2792,7 @@ procedure PICK-TEAM-MEMBERS:[NEW-TEAM-MEMBER _repeatlocal:1]{O---}:
           ATHROW
          L3
          FRAME CHOP 2
-          GETSTATIC org/nlogo/api/Nobody$.MODULE$ : Lorg/nlogo/api/Nobody$;
+          GETSTATIC org/nlogo/core/Nobody$.MODULE$ : Lorg/nlogo/core/Nobody$;
          L6
          FRAME SAME1 java/lang/Object
           ASTORE 2
@@ -2965,7 +2965,7 @@ procedure PICK-TEAM-MEMBERS:[NEW-TEAM-MEMBER _repeatlocal:1]{O---}:
           ATHROW
          L3
          FRAME CHOP 2
-          GETSTATIC org/nlogo/api/Nobody$.MODULE$ : Lorg/nlogo/api/Nobody$;
+          GETSTATIC org/nlogo/core/Nobody$.MODULE$ : Lorg/nlogo/core/Nobody$;
          L6
          FRAME SAME1 java/lang/Object
           ASTORE 2
@@ -7049,7 +7049,7 @@ procedure FIND-ALL-COMPONENTS:[START]{OTPL}:
           ATHROW
          L3
          FRAME CHOP 2
-          GETSTATIC org/nlogo/api/Nobody$.MODULE$ : Lorg/nlogo/api/Nobody$;
+          GETSTATIC org/nlogo/core/Nobody$.MODULE$ : Lorg/nlogo/core/Nobody$;
          L6
          FRAME SAME1 java/lang/Object
           ASTORE 2
@@ -7075,7 +7075,7 @@ procedure FIND-ALL-COMPONENTS:[START]{OTPL}:
           ICONST_0
           AALOAD
          L1
-          GETSTATIC org/nlogo/api/Nobody$.MODULE$ : Lorg/nlogo/api/Nobody$;
+          GETSTATIC org/nlogo/core/Nobody$.MODULE$ : Lorg/nlogo/core/Nobody$;
          L2
           ASTORE 3
           ASTORE 2
@@ -7091,10 +7091,10 @@ procedure FIND-ALL-COMPONENTS:[START]{OTPL}:
           BIPUSH 7
           GOTO L5
          L4
-         FRAME FULL [org/nlogo/prim/_asm_procedurefindallcomponents_if_7 org/nlogo/nvm/Context I org/nlogo/api/Nobody$] [org/nlogo/nvm/Context]
+         FRAME FULL [org/nlogo/prim/_asm_procedurefindallcomponents_if_7 org/nlogo/nvm/Context I org/nlogo/core/Nobody$] [org/nlogo/nvm/Context]
           BIPUSH 8
          L5
-         FRAME FULL [org/nlogo/prim/_asm_procedurefindallcomponents_if_7 org/nlogo/nvm/Context I org/nlogo/api/Nobody$] [org/nlogo/nvm/Context I]
+         FRAME FULL [org/nlogo/prim/_asm_procedurefindallcomponents_if_7 org/nlogo/nvm/Context I org/nlogo/core/Nobody$] [org/nlogo/nvm/Context I]
           PUTFIELD org/nlogo/nvm/Context.ip : I
          L6
           RETURN
