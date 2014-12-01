@@ -20,8 +20,8 @@ package back
 // it needs to actually execute code in order to do its job, and for that it uses
 // ArgumentStuffer, which is definitely back end stuff. - ST 8/27/13
 
-import org.nlogo.api.CompilerException
 import org.nlogo.api.LogoException
+import org.nlogo.core.CompilerException
 import org.nlogo.core.prim.Pure
 import org.nlogo.api.Fail._
 

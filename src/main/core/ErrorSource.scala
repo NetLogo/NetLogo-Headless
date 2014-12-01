@@ -2,8 +2,6 @@
 
 package org.nlogo.core
 
-import org.nlogo.api.CompilerException
-
 class ErrorSource(token: Token) {
   /**
    * Throws a CompilerException with the given message.

@@ -2,8 +2,7 @@
 
 package org.nlogo.api.model
 
-import org.nlogo.api,
-  api.CompilerException
+import org.nlogo.api
 import org.nlogo.core.StringEscaper.unescapeString
 import org.nlogo.core.StringEscaper.escapeString
 import org.nlogo.core._

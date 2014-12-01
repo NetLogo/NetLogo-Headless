@@ -3,6 +3,7 @@
 package org.nlogo.compile
 package back
 
+import org.nlogo.core.CompilerException
 import org.scalatest.FunSuite
 import org.nlogo.api
 import org.nlogo.api.Femto
@@ -31,10 +32,10 @@ class ConstantFolderTests extends FunSuite {
   /// runtime errors
   test("Error") {
     // hmm, is there an easier way in ScalaTest to check the message in an exception? - ST 4/2/11
-    intercept[api.CompilerException] {
+    intercept[CompilerException] {
       try compile("1 / 0")
       catch {
-        case ex: api.CompilerException =>
+        case ex: CompilerException =>
           assertResult("Runtime error: Division by zero.")(ex.getMessage)
           throw ex
       }

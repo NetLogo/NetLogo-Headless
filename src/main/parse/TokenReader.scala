@@ -2,6 +2,7 @@
 
 package org.nlogo.parse
 
+import org.nlogo.core.CompilerException
 import org.nlogo.{ core, api }
 
 // This exists to support the file-read primitive, which uses LiteralParser.  During normal
@@ -37,7 +38,7 @@ extends Iterator[core.Token] {
     reader.mark(65536)
     val t = tokenizer.tokenize(reader).next()
     if (t.tpe == core.TokenType.Bad)
-      throw new api.CompilerException(t)
+      throw new CompilerException(t)
     // after Tokenizer has done its thing, we no longer know what relationship holds between
     // the BufferedReader's position and file.pos, so the following code makes sure they are
     // both correct and in sync with each other.  Above we called reader.mark() so we could

@@ -7,16 +7,14 @@ package org.nlogo.headless
 // here and document it here.  The overriding method can simply call super(). - ST 6/1/05, 7/28/11
 
 import org.nlogo.agent.{ Agent, AgentParserCreator }
-import org.nlogo.core.{ AgentKind, WorldDimensions }
-import org.nlogo.api.{ Version, RendererInterface,
-                       CompilerException, LogoException, SimpleJobOwner,
+import org.nlogo.core._
+import org.nlogo.api.{ Version, RendererInterface, LogoException, SimpleJobOwner,
                        CommandRunnable, ReporterRunnable, Femto, CompilerUtilitiesInterface,
                        DefaultParserServices }
-import org.nlogo.core.{ Model, UpdateMode }
 import org.nlogo.api.model.ModelReader
 
 import org.nlogo.agent.World
-import org.nlogo.nvm, nvm.{ LabInterface, Context, CompilerInterface }
+import org.nlogo.{core, nvm}, nvm.{ LabInterface, Context, CompilerInterface }
 import org.nlogo.workspace.AbstractWorkspace
 import org.nlogo.drawing.DrawingActionBroker
 
@@ -398,7 +396,7 @@ with org.nlogo.workspace.WorldLoaderInterface {
    * Runs NetLogo commands and waits for them to complete.
    *
    * @param source The command or commands to run
-   * @throws org.nlogo.api.CompilerException
+   * @throws CompilerException
    *                       if the code fails to compile
    * @throws LogoException if the code fails to run
    */
@@ -418,7 +416,7 @@ with org.nlogo.workspace.WorldLoaderInterface {
    * @return the result reported; may be of type java.lang.Integer, java.lang.Double,
    *         java.lang.Boolean, java.lang.String, {@link org.nlogo.api.LogoList},
    *         {@link org.nlogo.api.Agent}, AgentSet, or Nobody
-   * @throws org.nlogo.api.CompilerException
+   * @throws core.CompilerException
    *                       if the code fails to compile
    * @throws LogoException if the code fails to run
    */

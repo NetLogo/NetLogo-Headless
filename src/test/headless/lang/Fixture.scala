@@ -5,8 +5,8 @@ package lang
 
 import org.scalatest, scalatest.Assertions
 import org.nlogo.{ api, agent, core }
-import org.nlogo.core.{ Model, View }
-import api.CompilerException.{RuntimeErrorAtCompileTimePrefix => runtimePrefix}
+import org.nlogo.core.{CompilerException, Model, View}
+import CompilerException.{RuntimeErrorAtCompileTimePrefix => runtimePrefix}
 import org.nlogo.nvm.CompilerInterface
 import org.nlogo.api.Femto
 
@@ -139,7 +139,7 @@ class Fixture(name: String) extends AbstractFixture {
   // compile-time errors.  Furthermore in RunMode the compile-time error again
   // becomes a runtime error, but with "Runtime error: " tacked onto the front.
   private def catcher(clue: String, result: Result): PartialFunction[Throwable, Unit] = {
-    case ex @ (_: api.LogoException | _: api.CompilerException) =>
+    case ex @ (_: api.LogoException | _: CompilerException) =>
       withClue(clue) {
         result match {
           case CompileError(expected) =>

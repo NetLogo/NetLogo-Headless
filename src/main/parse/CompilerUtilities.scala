@@ -4,7 +4,8 @@ package org.nlogo.parse
 
 import org.nlogo.{ core, api },
   api.{ CompilerUtilitiesInterface },
-  core.{FrontEndInterface, ExtensionManager, StructureResults, Program, LiteralImportHandler}
+  core.{ FrontEndInterface, ExtensionManager, StructureResults,
+         Program, LiteralImportHandler, CompilerException }
 
 object CompilerUtilities extends CompilerUtilitiesInterface {
   import FrontEndInterface.ProceduresMap
@@ -78,7 +79,7 @@ object CompilerUtilities extends CompilerUtilitiesInterface {
         .headOption
         .exists(isReporterToken)
     }
-    catch { case _: api.CompilerException => false }
+    catch { case _: CompilerException => false }
 
   private def isReporterToken(token: core.Token): Boolean = {
     import core.TokenType._
