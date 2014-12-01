@@ -2,8 +2,9 @@
 
 package org.nlogo.parse
 
-import org.nlogo.{ core, api },
-  api.{ Femto, FrontEndInterface }
+import org.nlogo.{core, api},
+  api.{ Femto, FrontEndInterface },
+  core.Program
 
 object FrontEnd extends FrontEnd {
   val tokenizer: core.TokenizerInterface =
@@ -25,7 +26,7 @@ trait FrontEndMain {
   def frontEnd(
         source: String,
         displayName: Option[String] = None,
-        program: api.Program = api.Program.empty(),
+        program: Program = core.Program.empty(),
         subprogram: Boolean = true,
         oldProcedures: api.FrontEndInterface.ProceduresMap = api.FrontEndInterface.NoProcedures,
         extensionManager: api.ExtensionManager = new api.DummyExtensionManager)

@@ -2,7 +2,7 @@
 
 package org.nlogo.mirror
 
-import org.nlogo.core.Breed
+import org.nlogo.core.{Program, Breed}
 import org.nlogo.{ api, core }
 import Mirrorables._
 import Mirroring.State
@@ -188,7 +188,7 @@ class FakeWorld(state: State) extends api.World {
       worldVar[collection.immutable.ListMap[String, Boolean]](breedsVar).map {
         case (breedName, isDirected) => breedName -> Breed(breedName, "", Seq(), isDirected)
       }
-    api.Program.empty.copy(
+    Program.empty.copy(
       breeds = makeBreedMap(TurtleBreeds.id),
       linkBreeds = makeBreedMap(LinkBreeds.id))
   }

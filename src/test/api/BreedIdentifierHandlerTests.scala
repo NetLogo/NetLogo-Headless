@@ -2,7 +2,7 @@
 
 package org.nlogo.api
 
-import org.nlogo.core.{Breed, StructureDeclarations, Token, TokenType},
+import org.nlogo.core.{ Breed, Program, StructureDeclarations, Token, TokenType },
   StructureDeclarations.Identifier
 import org.scalatest.FunSuite
 import collection.immutable.ListMap

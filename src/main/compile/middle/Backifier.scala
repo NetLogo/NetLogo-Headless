@@ -3,6 +3,7 @@
 package org.nlogo.compile
 package middle
 
+import org.nlogo.core.Program
 import org.nlogo.{ api, core, nvm, prim },
   api.Instantiator,
   nvm.Procedure.ProceduresMap
@@ -10,7 +11,7 @@ import org.nlogo.{ api, core, nvm, prim },
 // This is seriously gross and horrible. - ST 4/11/14
 
 class Backifier(
-  program: api.Program,
+  program: Program,
   extensionManager: api.ExtensionManager,
   procedures: ProceduresMap) {
 

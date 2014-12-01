@@ -2,9 +2,9 @@
 
 package org.nlogo.parse
 
-import org.nlogo.{ core, api, prim },
+import org.nlogo.{ core, api },
   api.FrontEndInterface,
-  core.{ Token, TokenType },
+  core.{Program, Token, TokenType},
   api.Fail._
 
 /**
@@ -19,7 +19,7 @@ import org.nlogo.{ core, api, prim },
   * where the knowledge of what names are taken resides.)
   */
 class Namer(
-  program: api.Program,
+  program: Program,
   procedures: FrontEndInterface.ProceduresMap,
   extensionManager: api.ExtensionManager) {
 

@@ -3,7 +3,7 @@
 package org.nlogo.parse
 
 import org.nlogo.{core, api},
-  core.Token,
+  core.{Program, Token},
   api.{ FrontEndProcedure, StructureResults }
 
 /// Stage #3 of StructureParser
@@ -47,8 +47,8 @@ object StructureConverter {
     (proc, p.tokens.drop(2).init :+ Token.Eof)
   }
 
-  def updateProgram(program: api.Program, declarations: Seq[Declaration]): api.Program = {
-    def updateVariables(program: api.Program): api.Program =
+  def updateProgram(program: Program, declarations: Seq[Declaration]): Program = {
+    def updateVariables(program: Program): Program =
       declarations.foldLeft(program) {
         case (program, Variables(Identifier("GLOBALS", _), identifiers)) =>
           program.copy(userGlobals = program.userGlobals ++ identifiers.map(_.name))
@@ -63,7 +63,7 @@ object StructureConverter {
         case (program, _) =>
           program
       }
-    def updateBreeds(program: api.Program): api.Program =
+    def updateBreeds(program: Program): Program =
       declarations.foldLeft(program) {
         case (program, Breed(plural, singular, isLinkBreed, isDirected)) =>
           val breed = core.Breed(plural.name, singular.name,
@@ -80,7 +80,7 @@ object StructureConverter {
     updateVariables(updateBreeds(program))
   }
 
-  def updateBreedVariables(program: api.Program, breedName: String, newOwns: Seq[String]): api.Program = {
+  def updateBreedVariables(program: Program, breedName: String, newOwns: Seq[String]): Program = {
     import collection.immutable.ListMap
     type BreedMap = ListMap[String, core.Breed]
     // a bit of unpleasantness here is that (as I only belatedly discovered) ListMap.updated

@@ -4,7 +4,7 @@ package org.nlogo.api
 
 import FrontEndInterface.ProceduresMap
 
-import org.nlogo.core.{ LiteralImportHandler, Token }
+import org.nlogo.core.{Program, LiteralImportHandler, Token}
 
 trait CompilerUtilitiesInterface {
   def readFromString(source: String): AnyRef

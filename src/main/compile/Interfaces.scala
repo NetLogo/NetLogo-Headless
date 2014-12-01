@@ -2,6 +2,7 @@
 
 package org.nlogo.compile
 
+import org.nlogo.core.Program
 import org.nlogo.{ core, api, nvm },
   nvm.Procedure.ProceduresMap
 
@@ -19,6 +20,6 @@ trait MiddleEndInterface {
 }
 
 trait BackEndInterface {
-  def backEnd(defs: Seq[ProcedureDefinition], program: api.Program, source: String,
+  def backEnd(defs: Seq[ProcedureDefinition], program: Program, source: String,
       profilingEnabled: Boolean, flags: nvm.CompilerFlags): nvm.CompilerResults
 }

@@ -4,7 +4,7 @@ package org.nlogo.parse
 
 import org.nlogo.{ core, api },
   api.{ CompilerUtilitiesInterface, ExtensionManager },
-  core.LiteralImportHandler
+org.nlogo.core.{Program, LiteralImportHandler}
 
 object CompilerUtilities extends CompilerUtilitiesInterface {
   import api.FrontEndInterface.ProceduresMap
@@ -61,7 +61,7 @@ object CompilerUtilities extends CompilerUtilitiesInterface {
   }
 
   // used by CommandLine
-  def isReporter(s: String, program: api.Program, procedures: ProceduresMap, extensionManager: api.ExtensionManager) =
+  def isReporter(s: String, program: Program, procedures: ProceduresMap, extensionManager: api.ExtensionManager) =
     try {
       val sp = new StructureParser(
         tokenizer.tokenizeString("to __is-reporter? report " + s + "\nend")

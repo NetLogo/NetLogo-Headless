@@ -2,6 +2,8 @@
 
 package org.nlogo.api
 
+import org.nlogo.core.Program
+
 // We use this in contexts where we want to do compiler stuff (not full compilation) like
 // colorization but it's OK to assume that we are 2D not 3D and no extensions are loaded.  The
 // HubNet client is one such context; also various testing contexts; also when reading

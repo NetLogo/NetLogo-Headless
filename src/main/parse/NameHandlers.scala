@@ -2,9 +2,9 @@
 
 package org.nlogo.parse
 
-import org.nlogo.{ core, api, prim },
+import org.nlogo.{ core, api },
   api.FrontEndInterface.ProceduresMap,
-  core.{ Token, TokenType },
+  core.{Program, Token, TokenType},
   api.Fail._
 
 trait NameHandler extends (Token => Option[(TokenType, core.Instruction)])
@@ -48,7 +48,7 @@ object ReporterHandler extends PrimitiveHandler {
 }
 
 // go thru our breed prim handlers, if one triggers, return the result
-class BreedHandler(program: api.Program) extends NameHandler {
+class BreedHandler(program: Program) extends NameHandler {
   override def apply(token: Token) =
     api.BreedIdentifierHandler.process(token, program) map {
       case (className, breedName, tokenType) =>
@@ -108,7 +108,7 @@ object TaskVariableHandler extends NameHandler {
     "variables may not begin with a question mark unless they are the special variables ?, ?1, ?2, ..."
 }
 
-class AgentVariableReporterHandler(program: api.Program) extends NameHandler {
+class AgentVariableReporterHandler(program: Program) extends NameHandler {
   override def apply(token: Token) =
     getAgentVariableReporter(token.value.asInstanceOf[String])
       .map{(TokenType.Reporter, _)}

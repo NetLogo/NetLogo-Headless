@@ -10,7 +10,7 @@ import org.nlogo.api.ParserServices;
 import org.nlogo.api.ImporterUser;
 import org.nlogo.api.LogoException;
 import org.nlogo.api.Nobody$;
-import org.nlogo.api.Program;
+import org.nlogo.core.Program;
 import org.nlogo.api.Shape;
 import org.nlogo.api.ShapeList;
 import org.nlogo.api.Timer;

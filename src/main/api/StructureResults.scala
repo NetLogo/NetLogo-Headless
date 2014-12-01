@@ -2,7 +2,7 @@
 
 package org.nlogo.api
 
-import org.nlogo.core.Token,
+import org.nlogo.core.{Program, Token},
   FrontEndInterface.{ ProceduresMap, NoProcedures }
 
 case class StructureResults(program: Program,

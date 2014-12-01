@@ -2,6 +2,7 @@
 
 package org.nlogo.compile
 
+import org.nlogo.core.Program
 import org.nlogo.{ api, nvm },
   api.{ Femto, CompilerUtilitiesInterface},
   nvm.Procedure.{ ProceduresMap, NoProcedures }
@@ -25,17 +26,17 @@ object Compiler extends nvm.CompilerInterface {
     "org.nlogo.compile.back.BackEnd")
 
   // used to compile the Code tab, including declarations
-  def compileProgram(source: String, program: api.Program,
+  def compileProgram(source: String, program: Program,
       extensionManager: api.ExtensionManager, flags: nvm.CompilerFlags): nvm.CompilerResults =
     compile(source, None, program, false, NoProcedures, extensionManager, flags)
 
   // used to compile a single procedures only, from outside the Code tab
-  def compileMoreCode(source: String, displayName: Option[String], program: api.Program,
+  def compileMoreCode(source: String, displayName: Option[String], program: Program,
       oldProcedures: ProceduresMap, extensionManager: api.ExtensionManager,
       flags: nvm.CompilerFlags): nvm.CompilerResults =
     compile(source, displayName, program, true, oldProcedures, extensionManager, flags)
 
-  private def compile(source: String, displayName: Option[String], oldProgram: api.Program, subprogram: Boolean,
+  private def compile(source: String, displayName: Option[String], oldProgram: Program, subprogram: Boolean,
       oldProcedures: ProceduresMap, extensionManager: api.ExtensionManager,
       flags: nvm.CompilerFlags): nvm.CompilerResults = {
     val (topLevelDefs, structureResults) =

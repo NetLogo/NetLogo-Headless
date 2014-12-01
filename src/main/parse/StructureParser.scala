@@ -19,7 +19,7 @@ package org.nlogo.parse
 // include further files.)
 
 import org.nlogo.{ core, api },
-  core.{ Token, StructureDeclarations },
+  core.{Program, Token, StructureDeclarations},
   api.{ StructureResults, FrontEndInterface},
     FrontEndInterface.ProceduresMap,
   api.Fail._
@@ -30,7 +30,7 @@ object StructureParser {
 
   def parseAll(
                 tokenizer: core.TokenizerInterface,
-                source: String, displayName: Option[String], program: api.Program, subprogram: Boolean,
+                source: String, displayName: Option[String], program: Program, subprogram: Boolean,
                 oldProcedures: ProceduresMap, extensionManager: api.ExtensionManager): StructureResults = {
     if (!subprogram)
       extensionManager.startFullCompilation()
@@ -73,7 +73,7 @@ object StructureParser {
     FrontEnd.tokenMapper.allCommandNames.map(_ -> "primitive command") ++
       FrontEnd.tokenMapper.allReporterNames.map(_ -> "primitive reporter")
 
-  def usedNames(program: api.Program, procedures: ProceduresMap, declarations: Seq[StructureDeclarations.Declaration] = Seq()): Map[String, String] = {
+  def usedNames(program: Program, procedures: ProceduresMap, declarations: Seq[StructureDeclarations.Declaration] = Seq()): Map[String, String] = {
     program.usedNames ++
       breedPrimitives(declarations) ++
       procedures.keys.map(_ -> "procedure") ++

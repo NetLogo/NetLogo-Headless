@@ -2,7 +2,7 @@
 
 package org.nlogo.api
 
-import org.nlogo.core.{ Syntax, Token, ProcedureDefinition, StructureDeclarations }
+import org.nlogo.core._
 import FrontEndInterface.{ ProceduresMap, NoProcedures }
 
 trait FrontEndProcedure {

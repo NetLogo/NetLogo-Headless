@@ -8,7 +8,7 @@ package org.nlogo.headless
 
 import org.nlogo.agent.{ Agent, AgentParserCreator }
 import org.nlogo.core.{ AgentKind, WorldDimensions }
-import org.nlogo.api.{ Program, Version, RendererInterface,
+import org.nlogo.api.{ Version, RendererInterface,
                        CompilerException, LogoException, SimpleJobOwner,
                        CommandRunnable, ReporterRunnable, Femto, CompilerUtilitiesInterface,
                        DefaultParserServices }
