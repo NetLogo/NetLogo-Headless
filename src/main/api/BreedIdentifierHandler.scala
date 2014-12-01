@@ -5,11 +5,10 @@ package org.nlogo.api
 import
   scala.util.matching.Regex
 
-import org.nlogo.{ core },
-  core.{ Token, TokenType, StructureDeclarations },
-    TokenType.{ Command, Reporter }
-
-import StructureDeclarations.{ Breed => DeclBreed }
+import
+  org.nlogo.core.{ Breed, Token, TokenType, StructureDeclarations},
+    TokenType.{ Command, Reporter },
+    StructureDeclarations.{ Breed => DeclBreed }
 
 object BreedIdentifierHandler {
 

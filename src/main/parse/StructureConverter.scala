@@ -2,7 +2,7 @@
 
 package org.nlogo.parse
 
-import org.nlogo.{ core, api },
+import org.nlogo.{core, api},
   core.Token,
   api.{ FrontEndProcedure, StructureResults }
 
@@ -66,7 +66,7 @@ object StructureConverter {
     def updateBreeds(program: api.Program): api.Program =
       declarations.foldLeft(program) {
         case (program, Breed(plural, singular, isLinkBreed, isDirected)) =>
-          val breed = api.Breed(plural.name, singular.name,
+          val breed = core.Breed(plural.name, singular.name,
             isLinkBreed = isLinkBreed, isDirected = isDirected)
           if (isLinkBreed)
             program.copy(
@@ -82,14 +82,14 @@ object StructureConverter {
 
   def updateBreedVariables(program: api.Program, breedName: String, newOwns: Seq[String]): api.Program = {
     import collection.immutable.ListMap
-    type BreedMap = ListMap[String, api.Breed]
+    type BreedMap = ListMap[String, core.Breed]
     // a bit of unpleasantness here is that (as I only belatedly discovered) ListMap.updated
     // doesn't preserve the ordering of existing keys, which is bad for us because we need
     // to preserve the declaration order of breeds because later in Renderer it's going to
     // determine the z-ordering of turtles in the view.  so we resort to a bit of ugliness
     // here: remember the order the keys were in, then after we've updated the map, restore
     // the original order. - ST 7/14/12
-    def orderPreservingUpdate(breedMap: BreedMap, breed: api.Breed): BreedMap = {
+    def orderPreservingUpdate(breedMap: BreedMap, breed: core.Breed): BreedMap = {
       val keys = breedMap.keys.toSeq
       val newMapInWrongOrder = breedMap.updated(breed.name, breed)
       val result = ListMap(keys.map { k => (k, newMapInWrongOrder(k))}.toSeq: _*)

@@ -2,6 +2,8 @@
 
 package org.nlogo.api
 
+import org.nlogo.core.Breed
+
 import collection.immutable.ListMap
 
 object Program {

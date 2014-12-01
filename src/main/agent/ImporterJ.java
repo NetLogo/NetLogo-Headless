@@ -7,7 +7,7 @@ import org.nlogo.core.AgentKindJ;
 import org.nlogo.core.WorldDimensions;
 import org.nlogo.api.AgentException;
 import org.nlogo.api.AgentVariables;
-import org.nlogo.api.Breed;
+import org.nlogo.core.Breed;
 import org.nlogo.api.ImporterUser;
 import org.nlogo.api.Perspective;
 

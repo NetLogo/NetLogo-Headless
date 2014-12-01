@@ -16,7 +16,7 @@ import org.nlogo.api.ShapeList;
 import org.nlogo.api.Timer;
 import org.nlogo.api.TrailDrawerInterface;
 import org.nlogo.api.ValueConstraint;
-import org.nlogo.api.WorldDimensionException;
+import org.nlogo.core.Breed;
 import org.nlogo.core.WorldDimensions;
 import org.nlogo.api.MersenneTwisterFast;
 
@@ -894,7 +894,7 @@ public strictfp class World
   }
 
   public int breedsOwnIndexOf(AgentSet breed, String name) {
-    org.nlogo.api.Breed found = orNull(_program.breeds().get(breed.printName()));
+    Breed found = orNull(_program.breeds().get(breed.printName()));
     if (found == null) {
       return -1;
     }
@@ -913,7 +913,7 @@ public strictfp class World
   }
 
   public int linkBreedsOwnIndexOf(AgentSet breed, String name) {
-    org.nlogo.api.Breed found = orNull(_program.linkBreeds().get(breed.printName()));
+    Breed found = orNull(_program.linkBreeds().get(breed.printName()));
     if (found == null) {
       return -1;
     }
@@ -928,7 +928,7 @@ public strictfp class World
    * used by Turtle.realloc()
    */
   int oldBreedsOwnIndexOf(AgentSet breed, String name) {
-    org.nlogo.api.Breed found = orNull(oldProgram.breeds().get(breed.printName()));
+    Breed found = orNull(oldProgram.breeds().get(breed.printName()));
     if (found == null) {
       return -1;
     }
@@ -943,7 +943,7 @@ public strictfp class World
    * used by Link.realloc()
    */
   int oldLinkBreedsOwnIndexOf(AgentSet breed, String name) {
-    org.nlogo.api.Breed found = orNull(oldProgram.linkBreeds().get(breed.printName()));
+    Breed found = orNull(oldProgram.linkBreeds().get(breed.printName()));
     if (found == null) {
       return -1;
     }
