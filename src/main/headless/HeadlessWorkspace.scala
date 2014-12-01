@@ -7,12 +7,11 @@ package org.nlogo.headless
 // here and document it here.  The overriding method can simply call super(). - ST 6/1/05, 7/28/11
 
 import org.nlogo.agent.{ Agent, AgentParserCreator }
-import org.nlogo.core.{ AgentKind, WorldDimensions }
+import org.nlogo.core.{ AgentKind, WorldDimensions, Model, UpdateMode, File, FileMode }
 import org.nlogo.api.{ Version, RendererInterface,
                        CompilerException, LogoException, SimpleJobOwner,
                        CommandRunnable, ReporterRunnable, Femto, CompilerUtilitiesInterface,
                        DefaultParserServices }
-import org.nlogo.core.{ Model, UpdateMode }
 import org.nlogo.api.model.ModelReader
 
 import org.nlogo.agent.World
@@ -201,7 +200,7 @@ with org.nlogo.workspace.WorldLoaderInterface {
   }
   override def getAndCreateDrawing =
     drawingActionBroker.getAndCreateDrawing(true)
-  override def importDrawing(file: org.nlogo.api.File) {
+  override def importDrawing(file: File) {
     drawingActionBroker.importDrawing(file)
   }
   override def clearDrawing() {
@@ -219,9 +218,9 @@ with org.nlogo.workspace.WorldLoaderInterface {
   }
 
   def exportOutput(filename: String) {
-    val file: org.nlogo.api.File = new org.nlogo.api.LocalFile(filename)
+    val file: File = new org.nlogo.api.LocalFile(filename)
     try {
-      file.open(org.nlogo.api.FileMode.Write)
+      file.open(FileMode.Write)
       val lines =
           new java.util.StringTokenizer(outputAreaBuffer.toString, "\n")
       while (lines.hasMoreTokens) {

@@ -4,6 +4,7 @@ package org.nlogo.agent;
 
 import org.nlogo.api.AgentException;
 import org.nlogo.api.I18N;
+import org.nlogo.core.File;
 
 import javax.imageio.ImageIO;
 import java.awt.geom.AffineTransform;
@@ -16,7 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public strictfp class ImportPatchColors {
-  public static void importPatchColors(org.nlogo.api.File imageFile, World world,
+  public static void importPatchColors(File imageFile, World world,
                                        boolean asNetLogoColors)
       throws java.io.IOException {
 

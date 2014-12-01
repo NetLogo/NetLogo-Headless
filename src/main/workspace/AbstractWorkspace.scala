@@ -6,7 +6,7 @@ package org.nlogo.workspace
 
 import
   org.nlogo.{ agent, api, core, nvm, plot },
-  core.{ AgentKind, Token },
+  core.{File, FileMode, AgentKind, Token},
   agent.{ World, Agent, AbstractExporter, AgentSet },
   api.{ PlotInterface, Dump, CommandLogoThunk, ReporterLogoThunk, Femto,
     CompilerException, LogoException, JobOwner, SimpleJobOwner, ModelType, Exceptions },
@@ -264,9 +264,9 @@ object AbstractWorkspaceTraits {
     }
 
     @throws(classOf[java.io.IOException])
-    def exportBehaviors(filename: String, experimentName: String, includeHeader: Boolean): api.File = {
+    def exportBehaviors(filename: String, experimentName: String, includeHeader: Boolean): File = {
       val file = new api.LocalFile(filename)
-      file.open(api.FileMode.Write)
+      file.open(FileMode.Write)
       if (includeHeader) {
         agent.AbstractExporter.exportHeader(
           file.getPrintWriter, "BehaviorSpace", getModelFileName, experimentName)
@@ -547,7 +547,7 @@ object AbstractWorkspaceTraits {
 
     abstract class FileImporter(val filename: String) {
       @throws(classOf[java.io.IOException])
-      def doImport(reader: api.File)
+      def doImport(reader: File)
     }
 
     def importerErrorHandler: agent.ImporterJ.ErrorHandler
@@ -591,20 +591,20 @@ object AbstractWorkspaceTraits {
       doImport(
         new FileImporter(filename) {
           @throws(classOf[java.io.IOException])
-          override def doImport(file: api.File) {
+          override def doImport(file: File) {
             importDrawing(file)
           }
         })
     }
 
     @throws(classOf[java.io.IOException])
-    def importDrawing(file: api.File)
+    def importDrawing(file: File)
 
     @throws(classOf[java.io.IOException])
     def doImport(importer: BufferedReaderImporter) {
       val file = new api.LocalFile(importer.filename)
       try {
-        file.open(org.nlogo.api.FileMode.Read)
+        file.open(FileMode.Read)
         importer.doImport(file.reader)
       }
       finally

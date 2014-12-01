@@ -4,7 +4,7 @@ package org.nlogo.api
 
 import java.util.{ List => JList }
 
-import org.nlogo.core.{ ExtensionManager => CoreManager }
+import org.nlogo.core.{ExtensionManager => CoreManager, File}
 
 /**
  * <code>ExtensionManager</code> provides some methods that can be used in runOnce

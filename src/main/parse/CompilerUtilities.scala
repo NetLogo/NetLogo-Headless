@@ -4,7 +4,7 @@ package org.nlogo.parse
 
 import org.nlogo.{ core, api },
   api.{ CompilerUtilitiesInterface },
-  core.{FrontEndInterface, ExtensionManager, StructureResults, Program, LiteralImportHandler}
+  core.{File, FrontEndInterface, ExtensionManager, StructureResults, Program, LiteralImportHandler}
 
 object CompilerUtilities extends CompilerUtilitiesInterface {
   import FrontEndInterface.ProceduresMap
@@ -36,7 +36,7 @@ object CompilerUtilities extends CompilerUtilitiesInterface {
         tokenizer.tokenizeString(source).map(Namer0)))
 
   @throws(classOf[java.io.IOException])
-  def readFromFile(currFile: api.File, importHandler: LiteralImportHandler): AnyRef = {
+  def readFromFile(currFile: File, importHandler: LiteralImportHandler): AnyRef = {
     val tokens: Iterator[core.Token] =
       new TokenReader(currFile, tokenizer)
         .map(Namer0)

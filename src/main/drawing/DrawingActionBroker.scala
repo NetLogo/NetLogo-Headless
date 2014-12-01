@@ -5,6 +5,7 @@ package org.nlogo.drawing
 import org.nlogo.api
 import DrawingAction._
 import org.nlogo.api.ActionBroker
+import org.nlogo.core.File
 
 class DrawingActionBroker(
   val trailDrawer: api.TrailDrawerInterface)
@@ -46,7 +47,7 @@ class DrawingActionBroker(
     getDrawing.asInstanceOf[java.awt.image.BufferedImage]
   }
 
-  override def importDrawing(file: org.nlogo.api.File): Unit =
+  override def importDrawing(file: File): Unit =
     publish(ImportDrawing(file.getPath))
 
   override def importDrawing(is: java.io.InputStream): Unit =
