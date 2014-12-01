@@ -13,7 +13,7 @@ object CompilerUtilities extends CompilerUtilitiesInterface {
   def literalParser(importHandler: LiteralImportHandler): LiteralParser =
     new LiteralParser(importHandler)
 
-  // In the following 3 methods, the initial call to NumberParser is a performance optimization.
+  // In the following methods, the initial call to NumberParser is a performance optimization.
   // During import-world, we're calling readFromString over and over again and most of the time
   // the result is a number.  So we try the fast path through NumberParser first before falling
   // back to the slow path where we actually tokenize. - ST 4/7/11

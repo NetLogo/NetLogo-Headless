@@ -4,7 +4,6 @@ package org.nlogo.compile
 
 import org.nlogo.{ api, nvm },
   api.{ Femto, CompilerUtilitiesInterface},
-    CompilerUtilitiesInterface.AgentParserCreator,
   nvm.Procedure.{ ProceduresMap, NoProcedures }
 
 // One design principle here is that calling the compiler shouldn't have any side effects that are
