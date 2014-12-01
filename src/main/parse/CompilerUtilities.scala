@@ -4,7 +4,7 @@ package org.nlogo.parse
 
 import org.nlogo.{ core, api },
   api.{ CompilerUtilitiesInterface, ExtensionManager },
-org.nlogo.core.{Program, LiteralImportHandler}
+  core.{StructureResults, Program, LiteralImportHandler}
 
 object CompilerUtilities extends CompilerUtilitiesInterface {
   import api.FrontEndInterface.ProceduresMap
@@ -66,7 +66,7 @@ object CompilerUtilities extends CompilerUtilitiesInterface {
       val sp = new StructureParser(
         tokenizer.tokenizeString("to __is-reporter? report " + s + "\nend")
           .map(Namer0),
-        None, api.StructureResults(program, procedures))
+        None, StructureResults(program, procedures))
       val results = sp.parse(subprogram = true)
       val namer =
         new Namer(program, procedures ++ results.procedures, extensionManager)

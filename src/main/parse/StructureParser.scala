@@ -19,8 +19,8 @@ package org.nlogo.parse
 // include further files.)
 
 import org.nlogo.{ core, api },
-  core.{BreedIdentifierHandler, Program, Token, StructureDeclarations},
-  api.{ StructureResults, FrontEndInterface},
+  core.{BreedIdentifierHandler, Program, Token, StructureDeclarations, StructureResults},
+  api.FrontEndInterface,
     FrontEndInterface.ProceduresMap,
   api.Fail._
 

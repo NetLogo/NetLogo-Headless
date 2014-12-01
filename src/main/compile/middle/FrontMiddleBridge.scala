@@ -3,12 +3,13 @@
 package org.nlogo.compile
 package middle
 
+import org.nlogo.core.StructureResults
 import org.nlogo.{ core, api, nvm },
   nvm.Procedure.ProceduresMap
 
 object FrontMiddleBridge extends FrontMiddleBridgeInterface {
   def apply(
-    structureResults: api.StructureResults,
+    structureResults: StructureResults,
     extensionManager: api.ExtensionManager,
     oldProcedures: ProceduresMap,
     topLevelDefs: Seq[core.ProcedureDefinition]

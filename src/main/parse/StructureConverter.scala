@@ -3,8 +3,8 @@
 package org.nlogo.parse
 
 import org.nlogo.{core, api},
-  core.{Program, Token},
-  api.{ FrontEndProcedure, StructureResults }
+  core.{StructureResults, Program, Token},
+  api.FrontEndProcedure
 
 /// Stage #3 of StructureParser
 

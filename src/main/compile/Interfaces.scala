@@ -2,13 +2,13 @@
 
 package org.nlogo.compile
 
-import org.nlogo.core.Program
+import org.nlogo.core.{StructureResults, Program}
 import org.nlogo.{ core, api, nvm },
   nvm.Procedure.ProceduresMap
 
 trait FrontMiddleBridgeInterface {
   def apply(
-    structureResults: api.StructureResults,
+    structureResults: StructureResults,
     extensionManager: api.ExtensionManager,
     oldProcedures: ProceduresMap,
     topLevelDefs: Seq[core.ProcedureDefinition]

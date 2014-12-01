@@ -1,9 +1,8 @@
 // (C) Uri Wilensky. https://github.com/NetLogo/NetLogo
 
-package org.nlogo.api
+package org.nlogo.core
 
-import org.nlogo.core.{Program, Token},
-  FrontEndInterface.{ ProceduresMap, NoProcedures }
+import org.nlogo.api.FrontEndInterface._
 
 case class StructureResults(program: Program,
                         procedures: ProceduresMap = NoProcedures,

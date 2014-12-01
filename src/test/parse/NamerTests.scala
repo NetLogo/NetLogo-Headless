@@ -4,7 +4,7 @@ package org.nlogo.parse
 
 import org.scalatest.FunSuite
 import org.nlogo.{ core, api, parse },
-  core.{Program, Token, TokenType},
+  core.{StructureResults, Program, Token, TokenType},
   api.{ DummyExtensionManager, FrontEndInterface }
 
 class NamerTests extends FunSuite {
@@ -14,7 +14,7 @@ class NamerTests extends FunSuite {
     val program = Program.empty().copy(interfaceGlobals = Seq("X"))
     val results = new StructureParser(
         FrontEnd.tokenizer.tokenizeString(wrappedSource).map(parse.Namer0),
-        None, api.StructureResults(program))
+        None, StructureResults(program))
       .parse(false)
     assertResult(1)(results.procedures.size)
     val procedure = results.procedures.values.iterator.next()
