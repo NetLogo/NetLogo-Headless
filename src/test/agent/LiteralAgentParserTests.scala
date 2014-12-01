@@ -3,9 +3,10 @@
 package org.nlogo.agent
 
 import org.nlogo.util.MockSuite
-import org.nlogo.api.{ Dump, LogoList, ExtensionManager, World => APIWorld }
-import org.nlogo.core._,
+import org.nlogo.api.{ Dump, LogoList, ExtensionManager, World => APIWorld, CompilerException }
+import org.nlogo.core.{ Token, TokenDSL, TokenType },
   TokenType._
+import org.nlogo.core.Token
 import org.scalatest.FunSuite
 
 class LiteralAgentParserTests extends FunSuite with MockSuite {

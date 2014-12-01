@@ -2,10 +2,8 @@
 
 package org.nlogo.plot
 
-import org.nlogo.core.CompilerException
-
 import scala.collection.mutable
-import org.nlogo.api.{LogoThunkFactory, CommandLogoThunk}
+import org.nlogo.api.{CompilerException, LogoThunkFactory, CommandLogoThunk}
 import org.nlogo.api.{ PlotAction, ActionBroker }
 
 // handles compilation and execution of plot code

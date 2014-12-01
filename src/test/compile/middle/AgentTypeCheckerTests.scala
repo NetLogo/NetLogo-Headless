@@ -3,7 +3,6 @@
 package org.nlogo.compile
 package middle
 
-import org.nlogo.core.CompilerException
 import org.scalatest.FunSuite
 import org.nlogo.{ api, nvm }
 import org.nlogo.api.Femto
@@ -31,7 +30,7 @@ class AgentTypeCheckerTests extends FunSuite {
     doTestError(source, error)
   }
   def doTestError(source: String, error: String) {
-    val e = intercept[CompilerException] {
+    val e = intercept[api.CompilerException] {
       compile(source)
     }
     assertResult(error)(e.getMessage)

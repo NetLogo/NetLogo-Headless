@@ -2,7 +2,7 @@
 
 package org.nlogo.api
 
-import org.nlogo.core, org.nlogo.core.{CompilerException, Token, AstNode}
+import org.nlogo.core, core.{ Token, AstNode }
 
 object Fail {
 

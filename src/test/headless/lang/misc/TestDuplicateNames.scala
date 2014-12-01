@@ -4,7 +4,6 @@ package org.nlogo.headless
 package lang
 package misc
 
-import org.nlogo.core.CompilerException
 import org.nlogo.{ api, nvm }
 import org.nlogo.util.SlowTest  // depends on array extension
 
@@ -18,7 +17,7 @@ class TestDuplicateNames extends FixtureSuite with SlowTest {
     def check(source: String, note: String) {
       test(s"$name - $note") { fixture =>
         import fixture._
-        val ex = intercept[CompilerException] {
+        val ex = intercept[api.CompilerException] {
           declare(source)
         }
         assertResult(error)(ex.getMessage)

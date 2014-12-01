@@ -2,11 +2,11 @@
 
 package org.nlogo.parse
 
-import org.nlogo.core.{CompilerException, StructureResults}
+import org.nlogo.core.StructureResults
 import org.scalatest.FunSuite
 
 import org.nlogo._,
-org.nlogo.api.Femto
+  org.nlogo.api.{CompilerException, Femto}
 
 class StructureParserTests extends FunSuite {
 

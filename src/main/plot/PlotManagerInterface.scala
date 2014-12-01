@@ -2,8 +2,7 @@
 
 package org.nlogo.plot
 
-import org.nlogo.api
-import org.nlogo.core.CompilerException
+import org.nlogo.api, api.CompilerException
 
 trait PlotManagerInterface extends api.PlotManagerInterface {
   def newPlot(name: String): Plot
