@@ -3,9 +3,9 @@
 package org.nlogo.compile
 package middle
 
+import org.nlogo.core.Instantiator
 import org.nlogo.{ api, nvm, prim },
-  api.{ Instantiator, Fail },
-    Fail._,
+  api.Fail._,
   prim._
 
 /**

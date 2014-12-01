@@ -3,9 +3,9 @@
 package org.nlogo.parse
 
 import org.nlogo.{ core, api },
+  api.Fail._,
   api.FrontEndInterface.ProceduresMap,
-  core.{BreedIdentifierHandler, Program, Token, TokenType},
-  api.Fail._
+  core.{BreedIdentifierHandler, Instantiator, Program, Token, TokenType}
 
 trait NameHandler extends (Token => Option[(TokenType, core.Instruction)])
 
@@ -52,7 +52,7 @@ class BreedHandler(program: Program) extends NameHandler {
   override def apply(token: Token) =
     BreedIdentifierHandler.process(token, program) map {
       case (className, breedName, tokenType) =>
-        (tokenType, api.Instantiator.newInstance[core.Instruction](
+        (tokenType, Instantiator.newInstance[core.Instruction](
           Class.forName("org.nlogo.core.prim." + className), breedName))
     }
 }

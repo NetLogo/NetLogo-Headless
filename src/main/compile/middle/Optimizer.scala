@@ -3,8 +3,9 @@
 package org.nlogo.compile
 package middle
 
-import org.nlogo.api, api.{ LogoException, Instantiator }
+import org.nlogo.api, api.LogoException
 import org.nlogo.agent.Patch
+import org.nlogo.core.Instantiator
 import org.nlogo.nvm.{ Command, Instruction, Reporter }
 import org.nlogo.prim._
 

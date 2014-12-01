@@ -3,9 +3,9 @@
 package org.nlogo.compile
 package middle
 
-import org.nlogo.core.{BreedIdentifierHandler, Program}
+import org.nlogo.core.{Instantiator, BreedIdentifierHandler, Program}
 import org.nlogo.{ api, core, nvm, prim },
-  api.Instantiator,
+
   nvm.Procedure.ProceduresMap
 
 // This is seriously gross and horrible. - ST 4/11/14
