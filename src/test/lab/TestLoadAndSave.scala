@@ -11,7 +11,7 @@ import java.io.{ File, FileNotFoundException }
 class TestLoadAndSave extends FunSuite {
   val loader = new ProtocolLoader(
     new DefaultParserServices(
-      Femto.get("org.nlogo.parse.CompilerUtilities", AgentParserCreator)))
+      Femto.scalaSingleton("org.nlogo.parse.CompilerUtilities")))
   test("bad XML 1") {
     val xml = org.nlogo.api.FileIO.file2String("test/lab/protocols.xml")
       .replaceFirst("^<\\?xml.*\\n", "")

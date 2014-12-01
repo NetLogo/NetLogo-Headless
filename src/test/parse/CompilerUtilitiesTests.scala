@@ -46,7 +46,7 @@ class CompilerUtilitiesTests extends FunSuite {
   }
 
   // this null isn't ideal, but as long as this only tests .isReporter, it doesn't really affect anything
-  def compilerUtilities: api.CompilerUtilitiesInterface = new CompilerUtilities(null)
+  def compilerUtilities: api.CompilerUtilitiesInterface = CompilerUtilities
 
   def isReporter(s: String) =
     compilerUtilities.isReporter(s, program,

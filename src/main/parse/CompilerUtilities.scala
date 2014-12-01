@@ -4,11 +4,9 @@ package org.nlogo.parse
 
 import org.nlogo.{ core, api },
   api.{ CompilerUtilitiesInterface, ExtensionManager },
-    CompilerUtilitiesInterface.{AgentParser, AgentParserCreator},
   core.LiteralImportHandler
 
-//FIXME: Shouldn't need AgentParserCreator injected
-class CompilerUtilities(val agentParserCreator: AgentParserCreator) extends CompilerUtilitiesInterface {
+object CompilerUtilities extends CompilerUtilitiesInterface {
   import api.FrontEndInterface.ProceduresMap
   import FrontEnd.tokenizer
 
@@ -20,24 +18,22 @@ class CompilerUtilities(val agentParserCreator: AgentParserCreator) extends Comp
   // the result is a number.  So we try the fast path through NumberParser first before falling
   // back to the slow path where we actually tokenize. - ST 4/7/11
   def readFromString(source: String): AnyRef =
-    numberOrElse[AnyRef](source, parsedLiteral(NullImportHandler)(_.getLiteralValue))
+    numberOrElse[AnyRef](source, NullImportHandler, _.getLiteralValue)
 
   def readNumberFromString(source: String): AnyRef =
-    numberOrElse[AnyRef](source, parsedLiteral(NullImportHandler)(_.getNumberValue))
+    numberOrElse[AnyRef](source, NullImportHandler, _.getNumberValue)
 
   def readFromString(source: String, importHandler: LiteralImportHandler): AnyRef =
-    numberOrElse[AnyRef](source, parsedLiteral(importHandler)(_.getLiteralValue))
+    numberOrElse[AnyRef](source, importHandler, _.getLiteralValue)
 
   def readNumberFromString(source: String, importHandler: LiteralImportHandler): java.lang.Double =
-    numberOrElse[java.lang.Double](source, parsedLiteral(importHandler)(_.getNumberValue))
+    numberOrElse[java.lang.Double](source, importHandler, _.getNumberValue)
 
-  private def numberOrElse[A >: java.lang.Double](source: String, alternateParser: => String => A): A =
-    core.NumberParser.parse(source).right.getOrElse(alternateParser(source))
-
-  private def parsedLiteral[A](importHandler: LiteralImportHandler)
-                              (parseProcedure: LiteralParser => Iterator[core.Token] => A): String => A = {
-    s => parseProcedure(literalParser(importHandler))(tokenizer.tokenizeString(s).map(Namer0))
-  }
+  private def numberOrElse[A >: java.lang.Double](source: String, importHandler: LiteralImportHandler,
+                                                  parseProcedure: => LiteralParser => Iterator[core.Token] => A): A =
+    core.NumberParser.parse(source).right.getOrElse(
+      parseProcedure(literalParser(importHandler))(
+        tokenizer.tokenizeString(source).map(Namer0)))
 
   @throws(classOf[java.io.IOException])
   def readFromFile(currFile: api.File, importHandler: LiteralImportHandler): AnyRef = {
