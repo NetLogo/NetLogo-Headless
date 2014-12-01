@@ -2,7 +2,8 @@
 
 package org.nlogo.parse
 
-import org.nlogo.api.{ Color, Nobody }
+import org.nlogo.api.Color
+import org.nlogo.core.Nobody
 
 object Constants {
   val colorConstants: Map[String, AnyRef] =

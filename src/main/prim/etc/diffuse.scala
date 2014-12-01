@@ -2,8 +2,8 @@
 
 package org.nlogo.prim.etc
 
-import org.nlogo.{ api, nvm },
-  org.nlogo.core.Syntax,
+import org.nlogo.{ api, nvm, core },
+  core.{Nobody, Syntax},
   org.nlogo.agent.PatchException
 
 class _diffuse extends DiffuseCommand {
@@ -41,7 +41,7 @@ abstract class DiffuseCommand extends nvm.Command {
       case ex: PatchException =>
         val value: AnyRef = ex.patch.getPatchVariable(reference.vn)
         val bad =
-          if (value == api.Nobody)
+          if (value == Nobody)
             "NOBODY"
           else
             "the " + api.TypeNames.name(value) + " " + api.Dump.logoObject(value)

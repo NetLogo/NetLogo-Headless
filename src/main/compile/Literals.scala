@@ -2,9 +2,10 @@
 
 package org.nlogo.compile
 
+import org.nlogo.core.Nobody
 import org.nlogo.nvm.Reporter
 import org.nlogo.prim._
-import org.nlogo.api.{ LogoList, Nobody }
+import org.nlogo.api.LogoList
 
 object Literals {
   def makeLiteralReporter(value: AnyRef): Reporter =

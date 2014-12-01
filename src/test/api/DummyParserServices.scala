@@ -2,6 +2,8 @@
 
 package org.nlogo.api
 
+import org.nlogo.core.Nobody
+
 // just enough functionality to make the tests pass
 
 class DummyParserServices extends ParserServices {

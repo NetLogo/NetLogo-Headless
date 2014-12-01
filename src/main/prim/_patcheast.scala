@@ -2,8 +2,7 @@
 
 package org.nlogo.prim
 
-import org.nlogo.core.Syntax
-import org.nlogo.api.Nobody
+import org.nlogo.core.{Nobody, Syntax}
 import org.nlogo.agent.{ Turtle, Patch }
 import org.nlogo.nvm.{ Reporter, Context }
 

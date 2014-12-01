@@ -2,8 +2,8 @@
 
 package org.nlogo.prim
 
-import org.nlogo.core.Syntax
-import org.nlogo.api.{ LogoList, Nobody, I18N }
+import org.nlogo.core.{Nobody, Syntax}
+import org.nlogo.api.{ LogoList, I18N }
 import org.nlogo.agent.AgentSet
 import org.nlogo.nvm.{ Reporter, Context, EngineException, ArgumentTypeException }
 
