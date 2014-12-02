@@ -1,8 +1,8 @@
 // (C) Uri Wilensky. https://github.com/NetLogo/NetLogo
 
-package org.nlogo.api
+package org.nlogo.core
 
-import org.nlogo.core, core.{ Token, AstNode }
+import org.nlogo.api.CompilerException
 
 object Fail {
 

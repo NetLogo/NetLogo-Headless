@@ -5,7 +5,7 @@ package middle
 
 import org.nlogo.core.Instantiator
 import org.nlogo.{ api, core, nvm, prim },
-  api.Fail._,
+  core.Fail._,
   prim._
 
 /**

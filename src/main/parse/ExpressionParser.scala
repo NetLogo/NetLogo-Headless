@@ -3,9 +3,8 @@
 package org.nlogo.parse
 
 import org.nlogo.{ core, api },
-api.Fail,
+  core.{ Fail, StructureDeclarations, Syntax, Token, TokenType },
     Fail.{ cAssert, exception },
-  core.{ StructureDeclarations, Syntax, Token, TokenType },
     Syntax.compatible,
     StructureDeclarations.Procedure
 

@@ -4,7 +4,7 @@ package org.nlogo.parse
 
 import org.nlogo.core._
 import org.nlogo.{ core, api },
-  api.Fail._,
+  core.Fail._,
   FrontEndInterface.ProceduresMap,
   core.{BreedIdentifierHandler, ExtensionManager, Instantiator, Program, Token, TokenType}
 

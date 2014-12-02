@@ -4,7 +4,7 @@ package org.nlogo.agent
 
 import org.nlogo.{api, core},
   core.{ Token, TokenType },
-  api.Fail._
+  core.Fail._
 
 // This is only used for importing worlds; the regular NetLogo language
 // doesn't have literal agents and agentsets.

@@ -3,9 +3,9 @@
 package org.nlogo.nvm
 
 import org.nlogo.{ api, agent, core },
-  core.{ LiteralImportHandler, Token },
-  api.{ ExtensionManager, Fail, World },
+  core.{ Fail, LiteralImportHandler, Token },
     Fail._,
+  api.{ ExtensionManager, World },
   agent.AgentParserCreator
 
 class ImportHandler(world: World, extensionManager: ExtensionManager) extends LiteralImportHandler {

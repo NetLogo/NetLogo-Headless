@@ -4,7 +4,7 @@ package org.nlogo.parse
 
 import org.nlogo.{ core, api },
   core.{FrontEndInterface, ExtensionManager, FrontEndProcedure, Program, Token, TokenType},
-  api.Fail._
+  core.Fail._
 
 /**
   * Classifies identifier tokens as commands or reporters.

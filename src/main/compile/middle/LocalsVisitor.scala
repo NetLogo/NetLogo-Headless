@@ -5,7 +5,7 @@ package middle
 
 import org.nlogo.core.Let
 import org.nlogo.core.I18N
-import org.nlogo.api.Fail._
+import org.nlogo.core.Fail._
 import org.nlogo.nvm.Procedure
 import org.nlogo.prim._
 

@@ -22,7 +22,7 @@ import org.nlogo.{ core, api },
   core.{ErrorSource, ExtensionManager, BreedIdentifierHandler, FileIO,
         FrontEndInterface, Program, Token, StructureDeclarations, StructureResults},
     FrontEndInterface.ProceduresMap,
-  api.Fail._
+  core.Fail._
 
 object StructureParser {
 

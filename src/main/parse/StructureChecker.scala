@@ -12,7 +12,7 @@ import
   org.nlogo.{ core, api },
     core.{ Token, StructureDeclarations },
       StructureDeclarations.{ Breed, Declaration, Extensions, Identifier, Includes, Procedure, Variables },
-    api.Fail._
+    core.Fail._
 
 object StructureChecker {
 

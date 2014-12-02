@@ -4,7 +4,7 @@ package org.nlogo.compile
 package middle
 
 import org.nlogo.{ core, api, nvm, prim },
-  api.Fail._
+  core.Fail._
 
 // This replaces _taskvariable with _letvariable everywhere.  And we need
 //   to know which Let object to connect each occurrence to.

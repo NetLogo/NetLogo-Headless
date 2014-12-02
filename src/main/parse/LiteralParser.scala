@@ -4,7 +4,7 @@ package org.nlogo.parse
 
 import org.nlogo.{ core, api },
   core.{ LiteralImportHandler, Token, TokenType },
-  api.Fail._
+  core.Fail._
 
 /**
  * The literal parser.

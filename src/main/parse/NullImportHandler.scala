@@ -4,7 +4,7 @@ package org.nlogo.parse
 
 import org.nlogo.{ api, agent, core },
   core.{ LiteralImportHandler, Token },
-  api.Fail._
+  core.Fail._
 
 object NullImportHandler extends LiteralImportHandler {
   private val ERR_ILLEGAL_AGENT_LITERAL = "Can only have literal agents and agentsets if importing."

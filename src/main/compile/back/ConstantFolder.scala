@@ -23,7 +23,7 @@ package back
 import org.nlogo.api.CompilerException
 import org.nlogo.api.LogoException
 import org.nlogo.core.prim.Pure
-import org.nlogo.api.Fail._
+import org.nlogo.core.Fail._
 
 private class ConstantFolder extends DefaultAstVisitor {
   override def visitReporterApp(app: ReporterApp) {
