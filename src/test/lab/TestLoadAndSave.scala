@@ -2,6 +2,8 @@
 
 package org.nlogo.lab
 
+import org.nlogo.core
+import org.nlogo.core.FileIO
 import org.scalatest.FunSuite
 import org.nlogo.api.{ Femto, DefaultParserServices }
 import org.nlogo.agent.AgentParserCreator
@@ -13,7 +15,7 @@ class TestLoadAndSave extends FunSuite {
     new DefaultParserServices(
       Femto.scalaSingleton("org.nlogo.parse.CompilerUtilities")))
   test("bad XML 1") {
-    val xml = org.nlogo.api.FileIO.file2String("test/lab/protocols.xml")
+    val xml = FileIO.file2String("test/lab/protocols.xml")
       .replaceFirst("^<\\?xml.*\\n", "")
       .replaceFirst("<!DOCTYPE.*\\n", "")
     val badXml = xml.replaceFirst("</metric>", "</mertic>")
@@ -29,7 +31,7 @@ class TestLoadAndSave extends FunSuite {
            .contains(ex.getMessage))
   }
   test("bad XML 2") {
-    val xml = org.nlogo.api.FileIO.file2String("test/lab/protocols.xml")
+    val xml = core.FileIO.file2String("test/lab/protocols.xml")
       .replaceFirst("^<\\?xml.*\\n", "")
       .replaceFirst("<!DOCTYPE.*\\n", "")
     val badXml = xml.replaceAll("metric", "mertic")

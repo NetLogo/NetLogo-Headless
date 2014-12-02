@@ -5,7 +5,7 @@ import org.nlogo.workspace
 import workspace.WorldLoader
 import org.nlogo.plot.PlotLoader
 import org.nlogo.agent.{BooleanConstraint, ChooserConstraint, InputBoxConstraint, NumericConstraint}
-import org.nlogo.api.{CompilerException, FileIO, LogoList, ValueConstraint, Version}
+import org.nlogo.api.{CompilerException, LogoList, ValueConstraint, Version}
 import org.nlogo.api.model.ModelReader
 import org.nlogo.core.{Program, ConstraintSpecification, Model},
   ConstraintSpecification._

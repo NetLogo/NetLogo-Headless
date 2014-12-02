@@ -4,7 +4,8 @@ package org.nlogo.headless
 package lang
 
 import java.io.File
-import org.nlogo.api.FileIO.file2String
+import org.nlogo.core.{FileIO, Model, Resource}
+import FileIO.file2String
 import org.scalatest.{ FunSuite, Tag }
 import org.nlogo.api
 import org.nlogo.core, core.{ Model, Resource }

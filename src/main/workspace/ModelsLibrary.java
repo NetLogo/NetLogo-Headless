@@ -132,7 +132,7 @@ public strictfp class ModelsLibrary {
 
   public static String getInfoWindow(String filePath)
       throws java.io.IOException {
-    String file = org.nlogo.api.FileIO.file2String(filePath);
+    String file = org.nlogo.core.FileIO.file2String(filePath);
     // parse out info text
     String delimiter = org.nlogo.api.model.ModelReader$.MODULE$.SEPARATOR();
     int dlength = delimiter.length();

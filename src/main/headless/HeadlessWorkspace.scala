@@ -7,7 +7,7 @@ package org.nlogo.headless
 // here and document it here.  The overriding method can simply call super(). - ST 6/1/05, 7/28/11
 
 import org.nlogo.agent.{ Agent, AgentParserCreator }
-import org.nlogo.core.{ AgentKind, WorldDimensions, Model, UpdateMode, File,
+import org.nlogo.core.{ AgentKind, WorldDimensions, Model, UpdateMode, File, FileIO,
                         FileMode, CompilerUtilitiesInterface }
 import org.nlogo.api.{ Version, RendererInterface,
                        CompilerException, LogoException, SimpleJobOwner,
@@ -372,7 +372,7 @@ with org.nlogo.workspace.WorldLoaderInterface {
   @throws(classOf[java.io.IOException])
   override def open(path: String) {
     setModelPath(path)
-    val modelContents = org.nlogo.api.FileIO.file2String(path)
+    val modelContents = FileIO.file2String(path)
     try openModel(ModelReader.parseModel(modelContents, this))
     catch {
       case ex: CompilerException =>

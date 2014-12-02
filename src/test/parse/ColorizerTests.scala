@@ -2,6 +2,7 @@
 
 package org.nlogo.parse
 
+import org.nlogo.core.FileIO
 import org.scalatest.FunSuite
 import org.nlogo.api.Femto
 import org.nlogo.api
@@ -60,7 +61,7 @@ class ColorizerTests2 extends FunSuite with SlowTest {
   // very long Code tabs shouldn't blow the stack.
   // slow, hence SlowTest
   test("don't blow stack") {
-    import org.nlogo.api.FileIO.file2String
+    import FileIO.file2String
     val path = "models/test/Really Long Code.nls"
     assertResult(1010916)(
       Colorizer.toHtml(file2String(path)).size)

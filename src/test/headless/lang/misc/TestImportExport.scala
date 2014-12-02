@@ -4,7 +4,7 @@ package org.nlogo.headless
 package lang
 package misc
 
-import org.nlogo.api
+import org.nlogo.{core, api}
 import org.nlogo.core._
 import org.nlogo.util.SlowTest
 import org.nlogo.workspace.Checksummer
@@ -34,7 +34,7 @@ class TestImportExport extends FixtureSuite with SlowTest {
     // run the setup commands, run export-world, and slurp the resulting export into a string
     testCommand(setup)
     testCommand("export-world \"" + filename + "\"")
-    val export1 = org.nlogo.api.FileIO.file2String(filename)
+    val export1 = core.FileIO.file2String(filename)
 
     // alter the state of the random number generator
     testCommand("repeat 500 [ __ignore random 100 ]")
@@ -48,7 +48,7 @@ class TestImportExport extends FixtureSuite with SlowTest {
     testCommand("export-world \"" + filename + "\"")
 
     // new slurp the second export into a string
-    val export2 = org.nlogo.api.FileIO.file2String(filename)
+    val export2 = core.FileIO.file2String(filename)
     assert(delete(filename))
 
     // the two strings exports be equal except for the date
@@ -299,10 +299,10 @@ class TestImportExport extends FixtureSuite with SlowTest {
     val filename = getUniqueFilename()
     workspace.open("test/import/plot-custom-color.nlogo")
     testCommand("export-world \"../../" + filename + "\"")
-    val export1 = org.nlogo.api.FileIO.file2String(filename)
+    val export1 = core.FileIO.file2String(filename)
     testCommand("ca import-world \"../../" + filename + "\"")
     testCommand("export-world \"../../" + filename + "\"")
-    val export2 = org.nlogo.api.FileIO.file2String(filename)
+    val export2 = core.FileIO.file2String(filename)
     assertResult(dropLines(export1, 3))(
       dropLines(export2, 3))
   }
@@ -422,7 +422,7 @@ class TestImportExport extends FixtureSuite with SlowTest {
 
   test("TrailingCommas") { implicit fixture =>
     import fixture._
-    workspace.openModel(Model(code = org.nlogo.api.FileIO.file2String("test/import/trailing-commas.nlogo")))
+    workspace.openModel(Model(code = core.FileIO.file2String("test/import/trailing-commas.nlogo")))
     testCommand("import-world \"test/import/trailing-commas.csv\"")
   }
 
@@ -451,7 +451,7 @@ class TestImportExport extends FixtureSuite with SlowTest {
 
   test("ExtraFieldValue") { implicit fixture =>
     import fixture._
-    workspace.openModel(Model(code = org.nlogo.api.FileIO.file2String("test/import/trailing-commas.nlogo")))
+    workspace.openModel(Model(code = core.FileIO.file2String("test/import/trailing-commas.nlogo")))
     val errorNumber = Array(0)
     workspace.importerErrorHandler =
       new org.nlogo.agent.ImporterJ.ErrorHandler() {

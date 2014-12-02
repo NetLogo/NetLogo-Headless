@@ -5,7 +5,7 @@ package misc
 
 import org.scalatest.{ FunSuite, OneInstancePerTest, BeforeAndAfterEach }
 import org.nlogo.api
-import org.nlogo.core.{Model, View}
+import org.nlogo.core.{FileIO, Model, View}
 import org.nlogo.nvm.{ LabInterface, Workspace }
 import org.nlogo.workspace.AbstractWorkspace
 import org.nlogo.util.SlowTest
@@ -30,7 +30,7 @@ with OneInstancePerTest with BeforeAndAfterEach {
   def withoutFirst6Lines(s: String) =
     s.split("\n").drop(6).mkString("", "\n", "\n")
   def slurp(path: String) =
-    stripLineFeeds(api.FileIO.file2String(path))
+    stripLineFeeds(FileIO.file2String(path))
   def stripLineFeeds(s: String) =
     s.replaceAll("\r\n", "\n")
 

@@ -3,7 +3,8 @@
 package org.nlogo.headless
 package misc
 
-import org.nlogo.api.{ Version, FileIO }
+import org.nlogo.api.Version
+import org.nlogo.core.FileIO
 import org.nlogo.workspace.ModelsLibrary
 import org.scalatest.FunSuite
 import org.nlogo.util.SlowTest
@@ -51,7 +52,7 @@ class TestCompileAll extends FunSuite with SlowTest {
   def readWriteRead(path: String) {
     val workspace = HeadlessWorkspace.newInstance
     try {
-      val modelContents = org.nlogo.api.FileIO.file2String(path)
+      val modelContents = FileIO.file2String(path)
       val model = ModelReader.parseModel(modelContents, workspace)
       val newModel = ModelReader.parseModel(ModelReader.formatModel(model, workspace), workspace)
       assertResult(model.code)(newModel.code)
