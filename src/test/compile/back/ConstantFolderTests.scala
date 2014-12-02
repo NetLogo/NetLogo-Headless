@@ -3,9 +3,9 @@
 package org.nlogo.compile
 package back
 
+import org.nlogo.core.Femto
 import org.scalatest.FunSuite
 import org.nlogo.api
-import org.nlogo.api.Femto
 
 class ConstantFolderTests extends FunSuite {
 

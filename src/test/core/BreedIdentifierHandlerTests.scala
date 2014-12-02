@@ -2,8 +2,6 @@
 
 package org.nlogo.core
 
-import org.nlogo.api.Femto
-import org.nlogo.core
 import org.nlogo.core.StructureDeclarations.Identifier
 import org.scalatest.FunSuite
 
@@ -11,7 +9,7 @@ import scala.collection.immutable.ListMap
 
 class BreedIdentifierHandlerTests extends FunSuite {
 
-  val tokenizer: core.TokenizerInterface =
+  val tokenizer: TokenizerInterface =
     Femto.scalaSingleton("org.nlogo.lex.Tokenizer")
 
   def tester(handler: BreedIdentifierHandler.BreedPrimSpec, code: String, tokenString: String): (String, String, TokenType) = {

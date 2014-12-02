@@ -2,9 +2,9 @@
 
 package org.nlogo.compile
 
-import org.nlogo.core.FrontEndInterface
+import org.nlogo.core.{Femto, FrontEndInterface}
 import org.nlogo.{ api, nvm },
-  api.{ DummyExtensionManager, Femto }
+api.DummyExtensionManager
 
 object Scaffold {
 

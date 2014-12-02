@@ -3,9 +3,9 @@
 package org.nlogo.lab
 
 import org.nlogo.core
-import org.nlogo.core.FileIO
+import org.nlogo.core.{Femto, FileIO}
 import org.scalatest.FunSuite
-import org.nlogo.api.{ Femto, DefaultParserServices }
+import org.nlogo.api.DefaultParserServices
 import org.nlogo.agent.AgentParserCreator
 import org.xml.sax.SAXException
 import java.io.{ File, FileNotFoundException }

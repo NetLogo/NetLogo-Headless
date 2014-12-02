@@ -5,10 +5,9 @@ package lang
 
 import org.scalatest, scalatest.Assertions
 import org.nlogo.{ api, agent, core }
-import org.nlogo.core.{ Model, View }
+import org.nlogo.core.{Femto, Model, View}
 import api.CompilerException.{RuntimeErrorAtCompileTimePrefix => runtimePrefix}
 import org.nlogo.nvm.CompilerInterface
-import org.nlogo.api.Femto
 
 trait FixtureSuite extends scalatest.fixture.FunSuite {
   type FixtureParam = Fixture

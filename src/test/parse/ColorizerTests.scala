@@ -2,9 +2,8 @@
 
 package org.nlogo.parse
 
-import org.nlogo.core.FileIO
+import org.nlogo.core.{Femto, FileIO}
 import org.scalatest.FunSuite
-import org.nlogo.api.Femto
 import org.nlogo.api
 import java.awt.Color
 

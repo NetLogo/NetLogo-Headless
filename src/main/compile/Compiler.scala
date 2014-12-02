@@ -3,8 +3,7 @@
 package org.nlogo.compile
 
 import org.nlogo.{ api, core, nvm },
-  api.Femto,
-  core.{CompilerUtilitiesInterface, FrontEndInterface, Program},
+  core.{Femto, CompilerUtilitiesInterface, FrontEndInterface, Program},
   nvm.Procedure.{ ProceduresMap, NoProcedures }
 
 // One design principle here is that calling the compiler shouldn't have any side effects that are

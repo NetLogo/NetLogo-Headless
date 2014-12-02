@@ -2,7 +2,7 @@
 
 package org.nlogo.mirror
 
-import org.nlogo.core.{Program, Breed}
+import org.nlogo.core.{Femto, Program, Breed}
 import org.nlogo.{ api, core }
 import Mirrorables._
 import Mirroring.State
@@ -29,7 +29,7 @@ class FakeWorld(state: State) extends api.World {
 
   def newRenderer: api.RendererInterface = {
     val renderer: api.RendererInterface =
-      org.nlogo.api.Femto.get("org.nlogo.render.Renderer", this)
+      Femto.get("org.nlogo.render.Renderer", this)
     renderer.resetCache(patchSize)
     renderer
   }
