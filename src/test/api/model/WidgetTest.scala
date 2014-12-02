@@ -233,7 +233,7 @@ class WidgetTest extends FunSuite {
     assert(MonitorReader.validate(MonitorReader.format(MonitorReader.parse(monitor)).split("\n").toList))
     assert(Monitor(None, 74, 214, 152, 259, "count sheep", 3, 11) ==
       MonitorReader.parse(MonitorReader.format(MonitorReader.parse(monitor)).split("\n").toList))
-    assert("count sheep" == MonitorReader.parse(monitor).display)
+    assert(None == MonitorReader.parse(monitor).display)
   }
 
   test("switch") {
