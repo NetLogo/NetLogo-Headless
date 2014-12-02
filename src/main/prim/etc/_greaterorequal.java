@@ -6,7 +6,7 @@ import org.nlogo.agent.Agent;
 import org.nlogo.agent.Link;
 import org.nlogo.agent.Patch;
 import org.nlogo.agent.Turtle;
-import org.nlogo.api.I18N;
+import org.nlogo.core.I18N;
 import org.nlogo.core.Syntax;
 import org.nlogo.core.SyntaxJ;
 import org.nlogo.api.TypeNames;

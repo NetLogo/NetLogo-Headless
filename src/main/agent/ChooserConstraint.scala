@@ -2,7 +2,8 @@
 
 package org.nlogo.agent
 
-import org.nlogo.api.{ I18N, Dump, LogoList, Equality, ValueConstraint }
+import org.nlogo.core.I18N
+import org.nlogo.api.{ Dump, LogoList, Equality, ValueConstraint }
 
 class ChooserConstraint(private var _acceptedValues: LogoList = LogoList(),
                         var defaultIndex: Int = 0)

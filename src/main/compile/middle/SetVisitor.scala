@@ -4,7 +4,7 @@ package org.nlogo.compile
 package middle
 
 import org.nlogo.core.Instantiator
-import org.nlogo.{ api, nvm, prim },
+import org.nlogo.{ api, core, nvm, prim },
   api.Fail._,
   prim._
 
@@ -16,7 +16,7 @@ import org.nlogo.{ api, nvm, prim },
  */
 class SetVisitor extends DefaultAstVisitor {
   private lazy val INVALID_SET =
-    api.I18N.errors.get("compiler.SetVisitor.notSettable")
+    core.I18N.errors.get("compiler.SetVisitor.notSettable")
   override def visitStatement(stmt: Statement) {
     super.visitStatement(stmt)
     if(stmt.command.isInstanceOf[_set]) {

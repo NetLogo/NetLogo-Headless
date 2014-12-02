@@ -32,7 +32,7 @@ abstract class DiffuseCommand extends nvm.Command {
     val amount = argEvalDoubleValue(context, 0)
     if (amount < 0.0 || amount > 1.0)
       throw new nvm.EngineException(
-        context, this, api.I18N.errors.getN(
+        context, this, core.I18N.errors.getN(
           "org.nlogo.prim.$common.paramOutOfBounds", Double.box(amount)))
     try diffuse(amount)
     catch {

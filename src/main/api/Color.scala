@@ -5,6 +5,8 @@ package org.nlogo.api
 import java.text.DecimalFormat
 import java.awt.{ Color => JColor }
 
+import org.nlogo.core.I18N
+
 object Color {
 
   // these define the structure of NetLogo's color space, namely,

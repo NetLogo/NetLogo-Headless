@@ -20,7 +20,7 @@ trait PlotHelpers extends Instruction {
     plotManager.currentPlot.getOrElse(
       throw new EngineException(
         context, this,
-          api.I18N.errors.get("org.nlogo.plot.noPlotSelected")))
+          core.I18N.errors.get("org.nlogo.plot.noPlotSelected")))
   def currentPen(context: Context): api.PlotPenInterface = {
     val plot = currentPlot(context)
     plot.currentPen.getOrElse(

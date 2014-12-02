@@ -3,7 +3,7 @@
 package org.nlogo.prim.etc
 
 import org.nlogo.core.Syntax
-import org.nlogo.api.I18N
+import org.nlogo.core.I18N
 import org.nlogo.nvm.{ EngineException, Context, Reporter }
 
 class _reduce extends Reporter {

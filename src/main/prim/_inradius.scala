@@ -11,7 +11,7 @@ import
 import
   org.nlogo.{ agent, api, core, nvm },
     agent.{ Agent, AgentSet },
-    api.I18N,
+    core.I18N,
     core.AgentKind,
     nvm.{ Context, EngineException, Instruction, Reporter }
 

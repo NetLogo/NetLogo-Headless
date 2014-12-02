@@ -3,7 +3,7 @@
 package org.nlogo.prim.etc
 
 import org.nlogo.core.prim.Pure
-import org.nlogo.api.I18N
+import org.nlogo.core.I18N
 import org.nlogo.nvm.{ Context, Reporter, EngineException }
 
 class _atan extends Reporter with Pure {

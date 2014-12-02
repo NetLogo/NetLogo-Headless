@@ -3,7 +3,8 @@
 package org.nlogo.nvm
 
 import org.nlogo.core.{ AgentKind, Syntax, Token, TokenHolder }
-import org.nlogo.api.{ I18N, LogoList }
+import org.nlogo.core.I18N
+import org.nlogo.api.LogoList
 import org.nlogo.agent.{ Agent, AgentSet, AgentBit, Turtle, Patch, Link, World }
 
 object Instruction {
