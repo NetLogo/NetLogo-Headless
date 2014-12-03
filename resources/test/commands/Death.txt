@@ -84,3 +84,12 @@ DeadLinks1
   (word g) => "(link 0 1)"
   L> die
   (word g) => "nobody"
+
+TurtleDiesWhileIteratingOverItsSet
+  globals [ glob1 glob2 ]
+  O> random-seed 0
+  O> set glob1 [] set glob2 []
+  O> crt 3
+  O> ask turtles [ set glob1 (fput who glob1) let t one-of other turtles if (t != nobody) [ set glob2 (fput [who] of t glob2) ask t [ die ] ] ]
+  glob1 => [2 0]
+  glob2 => [0 1]
