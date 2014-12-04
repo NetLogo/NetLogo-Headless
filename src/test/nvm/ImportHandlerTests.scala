@@ -8,7 +8,7 @@ import org.scalatest.FunSuite
 
 import org.nlogo.{ api, agent, core },
   agent.{ AgentSet, World, DummyLiteralParser },
-  api.{ CompilerException, Dump, ExtensionObject, ExtensionManager, ClassManager },
+  api.{ Dump, ExtensionObject, ExtensionManager, ClassManager },
   core.{File, ErrorSource, Primitive, TokenDSL}
 
 class ImportHandlerTests extends FunSuite {

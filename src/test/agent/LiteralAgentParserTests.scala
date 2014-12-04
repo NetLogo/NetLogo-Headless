@@ -3,8 +3,8 @@
 package org.nlogo.agent
 
 import org.nlogo.util.MockSuite
-import org.nlogo.api.{ Dump, ExtensionManager, World => APIWorld, CompilerException }
-import org.nlogo.core.{ LogoList, Token, TokenDSL, TokenType },
+import org.nlogo.api.{ Dump, ExtensionManager, World => APIWorld }
+import org.nlogo.core.{CompilerException, LogoList, Token, TokenDSL, TokenType},
   TokenType._
 import org.scalatest.FunSuite
 

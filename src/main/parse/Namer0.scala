@@ -3,12 +3,12 @@
 package org.nlogo.parse
 
 import org.nlogo.{ core, api },
-  core.{Keywords, Token, TokenType}
+org.nlogo.core.{CompilerException, Keywords, Token, TokenType}
 
 object Namer0 extends (Token => Token) {
   override def apply(token: Token) =
     if (token.tpe == TokenType.Bad)
-      throw new api.CompilerException(token)
+      throw new CompilerException(token)
     else if (Keywords.isKeyword(token.text))
       token.copy(tpe = TokenType.Keyword)
     else Constants.get(token.text) match {

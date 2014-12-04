@@ -2,7 +2,7 @@
 
 package org.nlogo.api
 
-import org.nlogo.core.{ LogoList, Nobody }
+import org.nlogo.core.{CompilerException, LogoList, Nobody}
 
 // just enough functionality to make the tests pass
 

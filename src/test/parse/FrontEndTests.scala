@@ -2,9 +2,9 @@
 
 package org.nlogo.parse
 
+import org.nlogo.core.CompilerException
 import org.scalatest.FunSuite
-import org.nlogo.{ core, api, nvm },
-api.CompilerException
+import org.nlogo.{ core, api, nvm }
 
 // This is where ExpressionParser gets most of its testing.  (It's a lot easier to test it as part
 // of the overall front end than it would be to test in strict isolation.)
@@ -284,7 +284,7 @@ class FrontEndTests extends FunSuite {
   /// duplicate name tests
 
   def duplicateName(s: String, err: String) = {
-    val e = intercept[api.CompilerException] {
+    val e = intercept[CompilerException] {
       FrontEnd.frontEnd(s)
     }
     assertResult(err)(e.getMessage)

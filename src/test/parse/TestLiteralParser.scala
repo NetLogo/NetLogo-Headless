@@ -3,9 +3,9 @@
 package org.nlogo.parse
 
 import org.scalatest.FunSuite
-import org.nlogo.api.{Dump, CompilerException}
+import org.nlogo.api.Dump
 
-import org.nlogo.core.{ LogoList, Token, LiteralImportHandler },
+import org.nlogo.core.{CompilerException, LogoList, Token, LiteralImportHandler},
   LiteralImportHandler.Parser
 
 class TestLiteralParser extends FunSuite {

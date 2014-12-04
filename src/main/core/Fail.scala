@@ -2,8 +2,6 @@
 
 package org.nlogo.core
 
-import org.nlogo.api.CompilerException
-
 object Fail {
 
   // "desc" is by-name so we don't retrieve error messages from i18n bundles unless the error is
