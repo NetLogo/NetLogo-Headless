@@ -2,13 +2,13 @@
 
 package org.nlogo.api
 
-import org.nlogo.core.Primitive
+import org.nlogo.core.PrimitiveCommand
 
 /**
  * Interface for NetLogo extension commands. Commands are primitives that
  * do not return a value.  All new commands must implement this interface.
  */
-trait Command extends Primitive {
+trait Command extends PrimitiveCommand {
 
   /**
    * Executes this <code>Command</code>. Called by NetLogo when this <code>Command</code> is called at run-time.

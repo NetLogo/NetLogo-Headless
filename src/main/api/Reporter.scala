@@ -2,13 +2,13 @@
 
 package org.nlogo.api
 
-import org.nlogo.core.Primitive
+import org.nlogo.core.PrimitiveReporter
 
 /**
  * Interface for NetLogo reporters. Reporters are primitives that
  * return a value.  All new reporters must implement this interface.
  */
-trait Reporter extends Primitive {
+trait Reporter extends PrimitiveReporter {
 
   /**
    * Executes this <code>Reporter</code>. Called by NetLogo when this <code>Reporter</code> is

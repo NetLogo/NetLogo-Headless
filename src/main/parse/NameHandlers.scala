@@ -2,11 +2,11 @@
 
 package org.nlogo.parse
 
-import org.nlogo.core._
-import org.nlogo.{ core, api },
-  core.Fail._,
-  FrontEndInterface.ProceduresMap,
-  core.{BreedIdentifierHandler, ExtensionManager, Instantiator, Program, Token, TokenType}
+import org.nlogo.core,
+  core.{BreedIdentifierHandler, ExtensionManager, Fail, FrontEndInterface,
+    Instantiator, Primitive, PrimitiveCommand, PrimitiveReporter, Program, Token, TokenType},
+    FrontEndInterface.ProceduresMap,
+    Fail._
 
 trait NameHandler extends (Token => Option[(TokenType, core.Instruction)])
 
@@ -73,7 +73,7 @@ class ExtensionPrimitiveHandler(extensionManager: ExtensionManager) extends Name
           None
         case primitive =>
           val newType =
-            if(primitive.isInstanceOf[api.Command])
+            if(primitive.isInstanceOf[PrimitiveCommand])
               TokenType.Command
             else TokenType.Reporter
           Some((newType, wrap(primitive, name)))
@@ -81,9 +81,9 @@ class ExtensionPrimitiveHandler(extensionManager: ExtensionManager) extends Name
     }
   private def wrap(primitive: Primitive, name: String): core.Instruction =
     primitive match {
-      case c: api.Command  =>
+      case c: PrimitiveCommand  =>
         new core.prim._extern(c.getSyntax)
-      case r: api.Reporter =>
+      case r: PrimitiveReporter =>
         new core.prim._externreport(r.getSyntax)
     }
 }
