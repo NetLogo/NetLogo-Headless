@@ -26,7 +26,7 @@ resolvers += Resolver.url(
     url("http://dl.bintray.com/content/sbt/sbt-plugin-releases"))(
         Resolver.ivyStylePatterns)
 
-addSbtPlugin("me.lessis" % "bintray-sbt" % "0.1.1")
+addSbtPlugin("me.lessis" % "bintray-sbt" % "0.1.2")
 
 // prevents noise from bintray stuff
 libraryDependencies +=
@@ -37,4 +37,4 @@ resolvers += Resolver.url(
     url("http://dl.bintray.com/content/netlogo/publish-versioned"))(
         Resolver.ivyStylePatterns)
 
-addSbtPlugin("org.nlogo" % "publish-versioned-plugin" % "1.0")
+addSbtPlugin("org.nlogo" % "publish-versioned-plugin" % "1.1")
