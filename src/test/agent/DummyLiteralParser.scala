@@ -2,9 +2,8 @@
 
 package org.nlogo.agent
 
-import org.nlogo.core.Token
+import org.nlogo.core.{ Token, LogoList }
 import org.nlogo.core.TokenType._
-import org.nlogo.api.LogoList
 
 object DummyLiteralParser extends ((Token, Iterator[Token]) => AnyRef) {
   def apply(t: Token, i: Iterator[Token]): AnyRef = {

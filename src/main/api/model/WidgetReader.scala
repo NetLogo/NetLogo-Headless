@@ -372,7 +372,7 @@ case class ChooserReader(parser: api.ParserServices) extends BaseWidgetReader {
     val List(_, left: Int, top: Int, right: Int, bottom: Int, display: String, varName: String,
     choicesStr: String, currentChoice: Int) = vals
 
-    val choices = parser.readFromString(s"[$choicesStr]").asInstanceOf[api.LogoList].toList
+    val choices = parser.readFromString(s"[$choicesStr]").asInstanceOf[LogoList].toList
 
     def isOrContainsNobody(l: Any): Boolean = l match {
       case Nobody => true

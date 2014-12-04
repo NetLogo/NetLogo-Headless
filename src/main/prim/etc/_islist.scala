@@ -3,7 +3,7 @@
 package org.nlogo.prim.etc
 
 import org.nlogo.core.prim.Pure
-import org.nlogo.api.LogoList
+import org.nlogo.core.LogoList
 import org.nlogo.nvm.{ Context, Reporter }
 
 class _islist extends Reporter with Pure {

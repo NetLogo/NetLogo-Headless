@@ -2,7 +2,7 @@
 
 package org.nlogo.api
 
-import org.nlogo.core.Nobody
+import org.nlogo.core.{ LogoList, Nobody }
 
 /* The "general contract" between Object.hashCode() and Object.equals(..) is for any Objects a & b,
    a.hashCode() == b.hashCode() must be true when a.equals(b)/b.equals(a) and vice versa.

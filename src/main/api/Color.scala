@@ -5,7 +5,7 @@ package org.nlogo.api
 import java.text.DecimalFormat
 import java.awt.{ Color => JColor }
 
-import org.nlogo.core.I18N
+import org.nlogo.core.{ LogoList, I18N }
 
 object Color {
 

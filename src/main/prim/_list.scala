@@ -2,9 +2,9 @@
 
 package org.nlogo.prim
 
-import org.nlogo.core.{ Syntax, prim },
+import org.nlogo.core.{ LogoList, Syntax, prim },
   prim.Pure
-import org.nlogo.api.{ LogoException, LogoList, LogoListBuilder }
+import org.nlogo.api.{ LogoException, LogoListBuilder }
 import org.nlogo.nvm.{ Reporter, Context, CustomGenerated }
 
 class _list extends Reporter with Pure with CustomGenerated {

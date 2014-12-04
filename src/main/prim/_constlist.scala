@@ -3,7 +3,8 @@
 package org.nlogo.prim
 
 import org.nlogo.core.prim.Pure
-import org.nlogo.api.{ Dump, LogoList }
+import org.nlogo.core.LogoList
+import org.nlogo.api.Dump
 import org.nlogo.nvm.{ Reporter, Context }
 
 class _constlist(value: LogoList) extends Reporter with Pure {

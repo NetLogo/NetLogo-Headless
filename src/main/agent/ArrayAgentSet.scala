@@ -31,7 +31,7 @@ extends AgentSet(kind, printName, false, false, false) {
         buf.toArray
       }
     java.util.Arrays.sort(freshArray.asInstanceOf[Array[AnyRef]])
-    api.LogoList.fromIterator(freshArray.iterator)
+    core.LogoList.fromIterator(freshArray.iterator)
   }
 
   /// counting

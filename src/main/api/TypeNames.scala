@@ -2,7 +2,9 @@
 
 package org.nlogo.api
 
-import org.nlogo.core, org.nlogo.core.{Nobody, Syntax}, Syntax._
+import org.nlogo.core,
+  core.{LogoList, Nobody, Syntax},
+  Syntax._
 
 object TypeNames {
 

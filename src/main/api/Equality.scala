@@ -2,7 +2,7 @@
 
 package org.nlogo.api
 
-import org.nlogo.core.Nobody
+import org.nlogo.core.{ LogoList, Nobody }
 
 object Equality {
 

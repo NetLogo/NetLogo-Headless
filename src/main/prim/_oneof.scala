@@ -3,7 +3,7 @@
 package org.nlogo.prim
 
 import org.nlogo.core.{I18N, Nobody, Syntax}
-import org.nlogo.api.LogoList
+import org.nlogo.core.LogoList
 import org.nlogo.agent.AgentSet
 import org.nlogo.nvm.{ Reporter, Context, EngineException, ArgumentTypeException }
 

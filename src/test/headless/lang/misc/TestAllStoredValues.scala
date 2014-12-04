@@ -4,8 +4,9 @@ package org.nlogo.headless
 package lang
 package misc
 
-import org.nlogo.api,
-  api.{ Observer, Turtle, Patch, Link, LogoList }
+import org.nlogo.{ api, core },
+  api.{ Observer, Turtle, Patch, Link },
+  core.LogoList
 
 class TestAllStoredValues extends FixtureSuite {
   test("all agents included") { implicit fixture =>

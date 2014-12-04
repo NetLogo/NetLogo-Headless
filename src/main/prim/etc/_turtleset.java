@@ -8,7 +8,7 @@ import org.nlogo.agent.Turtle;
 import org.nlogo.core.AgentKindJ;
 import org.nlogo.api.Dump;
 import org.nlogo.core.I18N;
-import org.nlogo.api.LogoList;
+import org.nlogo.core.LogoList;
 import org.nlogo.core.Nobody$;
 import org.nlogo.core.Syntax;
 import org.nlogo.nvm.ArgumentTypeException;

@@ -2,6 +2,8 @@
 
 package org.nlogo.api
 
+import org.nlogo.core.LogoList
+
 /**
  * Interface provides access to arguments passed to the <code>perform</code> or <code>report</code>
  * methods of a primitive at run-time.
@@ -79,7 +81,7 @@ trait Argument {
   def getDoubleValue: Double
 
   /**
-   * Returns the argument as a <code>org.nlogo.api.LogoList</code>
+   * Returns the argument as a <code>org.nlogo.core.LogoList</code>
    *
    * @throws ExtensionException if the argument is not a <code>LogoList</code>
    * @throws LogoException      if a LogoException occurred while evaluating this argument

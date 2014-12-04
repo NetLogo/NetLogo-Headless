@@ -79,9 +79,9 @@ class Argument(context: Context, arg: Reporter) extends api.Argument {
     }
 
   @throws(classOf[ExtensionException])
-  def getList: api.LogoList =
+  def getList: core.LogoList =
     get match {
-      case l: api.LogoList => l
+      case l: core.LogoList => l
       case x =>
         throw new ExtensionException(
           getExceptionMessage(Syntax.ListType, x))

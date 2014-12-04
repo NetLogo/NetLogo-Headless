@@ -89,8 +89,8 @@ class LiteralParser(importHandler: LiteralImportHandler) {
   * parses a literal list. Assumes the open bracket was already eaten.  Eats the list
   * contents and the close bracket; returns a LogoList and the close bracket token.
   */
-  def parseLiteralList(openBracket: Token, tokens: Iterator[Token]): (api.LogoList, Token) = {
-    var list = api.LogoList()
+  def parseLiteralList(openBracket: Token, tokens: Iterator[Token]): (core.LogoList, Token) = {
+    var list = core.LogoList()
     var closeBracket: Option[Token] = None
     while(!closeBracket.isDefined) {
       val token = tokens.next()

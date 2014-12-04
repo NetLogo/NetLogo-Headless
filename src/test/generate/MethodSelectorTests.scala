@@ -6,7 +6,7 @@ import org.scalatest.FunSuite
 import java.lang.reflect.Method
 import org.nlogo.agent.{ AgentSet, Agent, Turtle }
 import org.nlogo.prim._
-import org.nlogo.api.LogoList
+import org.nlogo.core.LogoList
 import org.nlogo.nvm.Reporter
 
 class MethodSelectorTests extends FunSuite {
