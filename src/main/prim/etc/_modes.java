@@ -6,7 +6,7 @@ import org.nlogo.api.LogoHashObject;
 import org.nlogo.core.LogoList;
 import org.nlogo.api.LogoListBuilder;
 import org.nlogo.nvm.MutableInteger;
-import org.nlogo.core.prim.Pure;
+import org.nlogo.core.Pure;
 import org.nlogo.nvm.Reporter;
 
 import java.util.Iterator;

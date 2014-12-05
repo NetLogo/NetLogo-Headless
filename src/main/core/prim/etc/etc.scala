@@ -3,7 +3,7 @@
 package org.nlogo.core
 package prim.etc
 
-import org.nlogo.core.prim.Pure
+import org.nlogo.core.Pure
 
 //scalastyle:off file.size.limit
 //scalastyle:off number.of.types
