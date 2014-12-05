@@ -54,7 +54,7 @@ extends AbstractWorkspace(new World)
   override def breathe(context: nvm.Context): Unit = unsupported
   override def periodicUpdate(): Unit = unsupported
   override def addJobFromJobThread(job: nvm.Job) = unsupported
-  override def compiler = unsupported
+  override def compiler: CompilerInterface = unsupported
   override def parser = unsupported
   override def renderer = unsupported
   override def command(source: String) = unsupported
