@@ -77,6 +77,8 @@ import org.nlogo.{ core, api },
   core.I18N,
   core.Fail._
 
+import scala.annotation.tailrec
+
 class LetScoper(usedNames: Map[String, String]) {
 
   // Environment encapsulates state, namely, what variables are currently in scope.
@@ -106,16 +108,12 @@ class LetScoper(usedNames: Map[String, String]) {
   Environment.push()
 
   // We require a BufferedIterator so we can peek ahead one token
-  def apply(tokens: BufferedIterator[Token]): Iterator[Token] = {
-    // The recursion here seems unnecessarily tricky. Can this be improved?
-    // - ST 9/29/14
-    val result =
-      if (tokens.hasNext)
-        Iterator(next(tokens)) ++ apply(tokens)
-      else
-        Iterator()
-    result
-  }
+  // the tailrec annotation prevents StackOverflowErrors, when compiling the "Continental Divide" Model
+  @tailrec final def apply(tokens: BufferedIterator[Token], accTokens: Seq[Token]=Seq()): Iterator[Token] =
+    if (tokens.hasNext)
+      apply(tokens, accTokens :+ next(tokens))
+    else
+      accTokens.iterator
 
   // we look for this in the input:
   //   Command(_let) Reporter(_letname) ...
