@@ -4,14 +4,13 @@ package org.nlogo.prim.etc;
 
 import org.nlogo.api.Dump;
 import org.nlogo.core.I18N;
-import org.nlogo.core.Syntax;
-import org.nlogo.core.SyntaxJ;
+import org.nlogo.core.Pure;
 import org.nlogo.nvm.EngineException;
 import org.nlogo.nvm.Reporter;
 
 public final strictfp class _substring
     extends Reporter
-    implements org.nlogo.core.prim.Pure {
+    implements Pure {
   @Override
   public Object report(final org.nlogo.nvm.Context context) {
     String string = argEvalString(context, 0);

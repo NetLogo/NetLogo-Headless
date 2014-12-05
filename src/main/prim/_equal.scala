@@ -2,9 +2,9 @@
 
 package org.nlogo.prim
 
-import org.nlogo.core.prim.Pure
 import org.nlogo.api.Equality
 import org.nlogo.agent.{ Turtle, Patch, Link }
+import org.nlogo.core.Pure
 import org.nlogo.nvm.{ Reporter, Context }
 
 class _equal extends Reporter with Pure {

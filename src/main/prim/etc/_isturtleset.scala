@@ -2,8 +2,7 @@
 
 package org.nlogo.prim.etc
 
-import org.nlogo.core.{ AgentKind, prim },
-  prim.Pure
+import org.nlogo.core.{Pure, AgentKind, prim}
 import org.nlogo.agent.{ AgentSet, Turtle }
 import org.nlogo.nvm.{ Context, Reporter }
 

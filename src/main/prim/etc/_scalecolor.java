@@ -2,10 +2,8 @@
 
 package org.nlogo.prim.etc;
 
-import org.nlogo.core.Syntax;
-import org.nlogo.core.SyntaxJ;
 import org.nlogo.nvm.Context;
-import org.nlogo.core.prim.Pure;
+import org.nlogo.core.Pure;
 import org.nlogo.nvm.Reporter;
 
 public final strictfp class _scalecolor extends Reporter implements Pure {

@@ -2,8 +2,7 @@
 
 package org.nlogo.prim
 
-import org.nlogo.core.prim.Pure
-import org.nlogo.core.I18N
+import org.nlogo.core.{Pure, I18N}
 import org.nlogo.api.TypeNames
 import org.nlogo.nvm.{ Reporter, Context, EngineException }
 import org.nlogo.agent.{ Agent, Turtle, Patch, Link }

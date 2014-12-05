@@ -2,7 +2,7 @@
 
 package org.nlogo.prim
 
-import org.nlogo.core.prim.Pure
+import org.nlogo.core.Pure
 import org.nlogo.nvm.{ Reporter, Context }
 
 class _constdouble(_primitiveValue: Double) extends Reporter with Pure {

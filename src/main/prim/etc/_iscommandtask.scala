@@ -2,7 +2,7 @@
 
 package org.nlogo.prim.etc
 
-import org.nlogo.core.prim.Pure
+import org.nlogo.core.Pure
 import org.nlogo.nvm.{ CommandTask, Context, Reporter }
 
 class _iscommandtask extends Reporter with Pure {

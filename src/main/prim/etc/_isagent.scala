@@ -3,7 +3,7 @@
 package org.nlogo.prim.etc
 
 import org.nlogo.agent.Agent
-import org.nlogo.core.prim.Pure
+import org.nlogo.core.Pure
 import org.nlogo.nvm.{ Context, Reporter }
 
 class _isagent extends Reporter with Pure {

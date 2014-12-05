@@ -2,8 +2,7 @@
 
 package org.nlogo.prim
 
-import org.nlogo.core.{ LogoList, Syntax, prim },
-  prim.Pure
+import org.nlogo.core.{Pure, LogoList, Syntax, prim}
 import org.nlogo.api.{ LogoException, LogoListBuilder }
 import org.nlogo.nvm.{ Reporter, Context, CustomGenerated }
 
