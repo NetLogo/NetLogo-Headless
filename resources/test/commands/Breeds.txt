@@ -51,3 +51,9 @@ HatchWithBreedsOwn
   T> hatch 1
   [energy] of turtle 0 => 10
   [energy] of turtle 1 => 10
+
+SetBreedOfUnbreededTurtleWithVar
+  turtles-own [apples]
+  breed [wolves wolf]
+  O> crt 1 [ set apples 10 set breed wolves set apples 20 ]
+  [apples] of wolf 0 => 20
