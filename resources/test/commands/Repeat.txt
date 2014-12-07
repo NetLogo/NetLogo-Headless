@@ -39,3 +39,8 @@ RepeatInsideAskConcurrent1
   [list xcor ycor] of turtle 2 => [0 -4]
   [list xcor ycor] of turtle 3 => [-4 0]
 
+NonIntegerCount
+  O> repeat 2.3 [ crt 1 ]
+  count turtles => 2
+  O> ca repeat 14.9 [ crt 1 ]
+  count turtles => 14
