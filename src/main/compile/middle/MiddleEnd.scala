@@ -26,17 +26,10 @@ object MiddleEnd extends MiddleEndInterface {
     val alteredLets =
       collection.mutable.Map[nvm.Procedure, collection.mutable.Map[core.Let, Int]]()
 
-    // It's a bit sad that we do ReferenceVisitor before AgentTypeChecker.  We always
-    // want to push AgentTypeChecker earlier, with the hopes of eventually using it
-    // in Tortoise. But AgentTypeChecker doesn't know about ReferenceType, so we
-    // need ReferenceVisitor to get rid of it first. A better future fix would be
-    // to give AgentTypeChecker knowledge of ReferenceType. - ST 9/29/14
-    for(procdef <- allDefs)
-      procdef.accept(new ReferenceVisitor)  // handle ReferenceType
-
     new AgentTypeChecker(allDefs).check()  // catch agent type inconsistencies
 
     for(procdef <- allDefs) {
+      procdef.accept(new ReferenceVisitor)  // handle ReferenceType
       // SimpleOfVisitor performs an optimization, but also sets up for SetVisitor - ST 2/21/08
       procdef.accept(new SimpleOfVisitor)  // convert _of(_*variable) => _*variableof
       procdef.accept(new TaskVisitor)  // handle _taskvariable
