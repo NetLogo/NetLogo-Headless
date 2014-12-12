@@ -2,8 +2,8 @@
 
 package org.nlogo.prim
 
-import org.nlogo.core.Syntax
-import org.nlogo.nvm.{ Reporter, Pure, Context }
+import org.nlogo.core.Pure
+import org.nlogo.nvm.{ Reporter, Context }
 
 class _constboolean(_primitiveValue: Boolean) extends Reporter with Pure {
 

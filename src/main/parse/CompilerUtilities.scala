@@ -3,46 +3,44 @@
 package org.nlogo.parse
 
 import org.nlogo.{ core, api },
-  api.{ CompilerUtilitiesInterface, ExtensionManager, World},
-    CompilerUtilitiesInterface.{AgentParser, AgentParserCreator}
+org.nlogo.core.{CompilerException, CompilerUtilitiesInterface, File, FrontEndInterface, ExtensionManager, StructureResults, Program, LiteralImportHandler}
 
-class CompilerUtilities(val agentParserCreator: AgentParserCreator) extends CompilerUtilitiesInterface {
-  import api.FrontEndInterface.ProceduresMap
+object CompilerUtilities extends CompilerUtilitiesInterface {
+  import FrontEndInterface.ProceduresMap
   import FrontEnd.tokenizer
 
-  def literalParser(world: World, extensionManager: ExtensionManager, agentParserCreator: AgentParser): LiteralParser =
-    new LiteralParser(world, extensionManager, agentParserCreator)
+  def literalParser(importHandler: LiteralImportHandler): LiteralParser =
+    new LiteralParser(importHandler)
 
-  // In the following 3 methods, the initial call to NumberParser is a performance optimization.
+  // In the following methods, the initial call to NumberParser is a performance optimization.
   // During import-world, we're calling readFromString over and over again and most of the time
   // the result is a number.  So we try the fast path through NumberParser first before falling
   // back to the slow path where we actually tokenize. - ST 4/7/11
-
   def readFromString(source: String): AnyRef =
-    core.NumberParser.parse(source).right.getOrElse(
-      new LiteralParser(null, null, null)
-        .getLiteralValue(tokenizer.tokenizeString(source)
-          .map(Namer0)))
+    numberOrElse[AnyRef](source, NullImportHandler, _.getLiteralValue)
 
-  def readFromString(source: String, world: api.World, extensionManager: api.ExtensionManager): AnyRef =
-    core.NumberParser.parse(source).right.getOrElse(
-      literalParser(world, extensionManager, agentParserCreator(world))
-        .getLiteralValue(tokenizer.tokenizeString(source)
-          .map(Namer0)))
+  def readNumberFromString(source: String): AnyRef =
+    numberOrElse[AnyRef](source, NullImportHandler, _.getNumberValue)
 
-  def readNumberFromString(source: String, world: api.World, extensionManager: api.ExtensionManager): java.lang.Double =
+  def readFromString(source: String, importHandler: LiteralImportHandler): AnyRef =
+    numberOrElse[AnyRef](source, importHandler, _.getLiteralValue)
+
+  def readNumberFromString(source: String, importHandler: LiteralImportHandler): java.lang.Double =
+    numberOrElse[java.lang.Double](source, importHandler, _.getNumberValue)
+
+  private def numberOrElse[A >: java.lang.Double](source: String, importHandler: LiteralImportHandler,
+                                                  parseProcedure: => LiteralParser => Iterator[core.Token] => A): A =
     core.NumberParser.parse(source).right.getOrElse(
-      literalParser(world, extensionManager, agentParserCreator(world))
-        .getNumberValue(tokenizer.tokenizeString(source)
-          .map(Namer0)))
+      parseProcedure(literalParser(importHandler))(
+        tokenizer.tokenizeString(source).map(Namer0)))
 
   @throws(classOf[java.io.IOException])
-  def readFromFile(currFile: api.File, world: api.World, extensionManager: api.ExtensionManager): AnyRef = {
+  def readFromFile(currFile: File, importHandler: LiteralImportHandler): AnyRef = {
     val tokens: Iterator[core.Token] =
       new TokenReader(currFile, tokenizer)
         .map(Namer0)
     val result =
-      literalParser(world, extensionManager, agentParserCreator(world))
+      literalParser(importHandler)
         .getLiteralFromFile(tokens)
     // now skip whitespace, so that the model can use file-at-end? to see whether there are any
     // more values left - ST 2/18/04
@@ -62,12 +60,12 @@ class CompilerUtilities(val agentParserCreator: AgentParserCreator) extends Comp
   }
 
   // used by CommandLine
-  def isReporter(s: String, program: api.Program, procedures: ProceduresMap, extensionManager: api.ExtensionManager) =
+  def isReporter(s: String, program: Program, procedures: ProceduresMap, extensionManager: ExtensionManager) =
     try {
       val sp = new StructureParser(
         tokenizer.tokenizeString("to __is-reporter? report " + s + "\nend")
           .map(Namer0),
-        None, api.StructureResults(program, procedures))
+        None, StructureResults(program, procedures))
       val results = sp.parse(subprogram = true)
       val namer =
         new Namer(program, procedures ++ results.procedures, extensionManager)
@@ -79,7 +77,7 @@ class CompilerUtilities(val agentParserCreator: AgentParserCreator) extends Comp
         .headOption
         .exists(isReporterToken)
     }
-    catch { case _: api.CompilerException => false }
+    catch { case _: CompilerException => false }
 
   private def isReporterToken(token: core.Token): Boolean = {
     import core.TokenType._

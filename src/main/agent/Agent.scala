@@ -2,7 +2,9 @@
 
 package org.nlogo.agent
 
-import org.nlogo.api, api.AgentException
+import org.nlogo.api,
+  api.AgentException
+import org.nlogo.core.I18N
 
 abstract class Agent(val world: World)
 extends api.Agent with Comparable[Agent] {
@@ -86,7 +88,7 @@ extends api.Agent with Comparable[Agent] {
 
   @throws(classOf[AgentException])
   private[agent] def wrongTypeForVariable(name: String, expectedClass: Class[_], value: AnyRef) {
-    throw new AgentException(api.I18N.errors.getN("org.nlogo.agent.Agent.wrongTypeOnSetError",
+    throw new AgentException(I18N.errors.getN("org.nlogo.agent.Agent.wrongTypeOnSetError",
         classDisplayName, name, api.Dump.typeName(expectedClass), api.Dump.logoObject(value)))
   }
 

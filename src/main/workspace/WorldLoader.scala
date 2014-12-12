@@ -2,7 +2,7 @@
 
 package org.nlogo.workspace
 
-import org.nlogo.api.I18N
+import org.nlogo.core.I18N
 import org.nlogo.core.{WorldDimensions, UpdateMode, View}
 
 object WorldLoader {

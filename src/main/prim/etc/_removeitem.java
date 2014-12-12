@@ -3,17 +3,14 @@
 package org.nlogo.prim.etc;
 
 import org.nlogo.api.Dump;
-import org.nlogo.api.I18N;
-import org.nlogo.api.LogoList;
-import org.nlogo.core.Syntax;
-import org.nlogo.core.SyntaxJ;
+import org.nlogo.core.*;
 import org.nlogo.nvm.ArgumentTypeException;
 import org.nlogo.nvm.EngineException;
 import org.nlogo.nvm.Reporter;
 
 public final strictfp class _removeitem
     extends Reporter
-    implements org.nlogo.nvm.Pure {
+    implements Pure {
   @Override
   public Object report(final org.nlogo.nvm.Context context) {
     int index = argEvalIntValue(context, 0);

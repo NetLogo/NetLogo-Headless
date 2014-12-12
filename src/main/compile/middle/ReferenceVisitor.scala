@@ -4,7 +4,7 @@ package org.nlogo.compile
 package middle
 
 import org.nlogo.core
-import org.nlogo.api.Fail._
+import org.nlogo.core.Fail._
 
 class ReferenceVisitor extends DefaultAstVisitor {
   override def visitStatement(stmt: Statement) {

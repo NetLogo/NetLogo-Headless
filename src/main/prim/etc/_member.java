@@ -7,11 +7,8 @@ import org.nlogo.agent.AgentSet;
 import org.nlogo.agent.Link;
 import org.nlogo.agent.Patch;
 import org.nlogo.agent.Turtle;
-import org.nlogo.core.AgentKindJ;
+import org.nlogo.core.*;
 import org.nlogo.api.Equality;
-import org.nlogo.api.LogoList;
-import org.nlogo.core.Syntax;
-import org.nlogo.core.SyntaxJ;
 import org.nlogo.nvm.ArgumentTypeException;
 import org.nlogo.nvm.Reporter;
 
@@ -19,7 +16,7 @@ import java.util.Iterator;
 
 public final strictfp class _member
     extends Reporter
-    implements org.nlogo.nvm.Pure {
+    implements Pure {
   @Override
   public Object report(final org.nlogo.nvm.Context context) {
     Object obj = args[1].report(context);

@@ -3,8 +3,8 @@
 package org.nlogo.nvm
 
 import org.nlogo.{ api, core },
-  core.{ Syntax, TypeNames },
-  api.{ Dump, Nobody, ExtensionException }
+  core.{Nobody, Syntax, TypeNames},
+  api.{ Dump, ExtensionException }
 
 /**
  * Passes arguments to extension primitives.
@@ -79,9 +79,9 @@ class Argument(context: Context, arg: Reporter) extends api.Argument {
     }
 
   @throws(classOf[ExtensionException])
-  def getList: api.LogoList =
+  def getList: core.LogoList =
     get match {
-      case l: api.LogoList => l
+      case l: core.LogoList => l
       case x =>
         throw new ExtensionException(
           getExceptionMessage(Syntax.ListType, x))
@@ -150,7 +150,7 @@ class Argument(context: Context, arg: Reporter) extends api.Argument {
   def getExceptionMessage(wantedType: Int, badValue: AnyRef) =
     "Expected this input to be " +
       TypeNames.aName(wantedType) + " but got " +
-       (if(badValue == api.Nobody) "NOBODY"
+       (if(badValue == Nobody) "NOBODY"
         else ("the " + api.TypeNames.name(badValue) + " " +
               Dump.logoObject(badValue)) +
               " instead.")

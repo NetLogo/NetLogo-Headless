@@ -2,12 +2,12 @@
 
 package org.nlogo.agent
 
+import org.nlogo.core.Breed
+
 // methods need to be synchronized so since they can run on both the JobManager thread and the event
 // thread without corrupting the shapes map.  we are safe from deadlock here since the methods are
 // self-contained. we don't want to synchronize on the world since other classes do that and this
 // really shouldn't affect their performance.  so we use a lock object.  --mag 10/03/03
-
-import org.nlogo.api.Breed
 
 class BreedShapes(genericBreedName: String) {
 

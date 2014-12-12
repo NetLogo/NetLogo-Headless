@@ -2,9 +2,9 @@
 
 package org.nlogo.prim
 
-import org.nlogo.core.Syntax
-import org.nlogo.api.{ I18N, TypeNames }
-import org.nlogo.nvm.{ Reporter, Pure, Context, EngineException }
+import org.nlogo.core.{Pure, I18N}
+import org.nlogo.api.TypeNames
+import org.nlogo.nvm.{ Reporter, Context, EngineException }
 import org.nlogo.agent.{ Agent, Turtle, Patch, Link }
 
 class _greaterthan extends Reporter with Pure {

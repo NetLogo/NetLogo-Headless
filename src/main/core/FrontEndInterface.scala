@@ -1,9 +1,8 @@
 // (C) Uri Wilensky. https://github.com/NetLogo/NetLogo
 
-package org.nlogo.api
+package org.nlogo.core
 
-import org.nlogo.core.{ Syntax, Token, ProcedureDefinition, StructureDeclarations }
-import FrontEndInterface.{ ProceduresMap, NoProcedures }
+import org.nlogo.core.FrontEndInterface.{NoProcedures, ProceduresMap}
 
 trait FrontEndProcedure {
   def procedureDeclaration: StructureDeclarations.Procedure

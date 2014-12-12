@@ -3,6 +3,7 @@
 package org.nlogo.api
 
 import org.nlogo.core
+import org.nlogo.core.Program
 
 trait World {
   def patchSize: Double

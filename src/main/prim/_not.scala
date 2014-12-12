@@ -2,8 +2,8 @@
 
 package org.nlogo.prim
 
-import org.nlogo.core.Syntax
-import org.nlogo.nvm.{ Context, Reporter, Pure }
+import org.nlogo.core.Pure
+import org.nlogo.nvm.{ Context, Reporter }
 
 class _not extends Reporter with Pure {
 

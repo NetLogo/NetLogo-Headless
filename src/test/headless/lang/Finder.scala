@@ -4,11 +4,13 @@ package org.nlogo.headless
 package lang
 
 import java.io.File
-import org.nlogo.api.FileIO.file2String
 import org.scalatest.{ FunSuite, Tag }
-import org.nlogo.api
-import org.nlogo.core, core.{ Model, Resource }
-import org.nlogo.util.SlowTest
+
+import
+  org.nlogo.{ api, core, util },
+    api.FileIO.file2String,
+    core.{ Model, Resource },
+    util.SlowTest
 
 /// top level entry points
 

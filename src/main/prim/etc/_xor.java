@@ -2,13 +2,12 @@
 
 package org.nlogo.prim.etc;
 
-import org.nlogo.core.Syntax;
-import org.nlogo.core.SyntaxJ;
+import org.nlogo.core.Pure;
 import org.nlogo.nvm.Reporter;
 
 public final strictfp class _xor
     extends Reporter
-    implements org.nlogo.nvm.Pure {
+    implements Pure {
   @Override
   public Object report(final org.nlogo.nvm.Context context) {
     boolean b1 = argEvalBooleanValue(context, 0);

@@ -2,8 +2,8 @@
 
 package org.nlogo.parse
 
-import org.nlogo.{ core, api },
-  api.{ Femto, FrontEndInterface }
+import org.nlogo.{core, api},
+  core.{Femto, ExtensionManager, DummyExtensionManager, FrontEndInterface, FrontEndProcedure, Program}
 
 object FrontEnd extends FrontEnd {
   val tokenizer: core.TokenizerInterface =
@@ -25,14 +25,14 @@ trait FrontEndMain {
   def frontEnd(
         source: String,
         displayName: Option[String] = None,
-        program: api.Program = api.Program.empty(),
+        program: Program = core.Program.empty(),
         subprogram: Boolean = true,
-        oldProcedures: api.FrontEndInterface.ProceduresMap = api.FrontEndInterface.NoProcedures,
-        extensionManager: api.ExtensionManager = new api.DummyExtensionManager)
-      : api.FrontEndInterface.FrontEndResults = {
+        oldProcedures: FrontEndInterface.ProceduresMap = core.FrontEndInterface.NoProcedures,
+        extensionManager: ExtensionManager = new DummyExtensionManager)
+      : FrontEndInterface.FrontEndResults = {
     val structureResults = StructureParser.parseAll(
       tokenizer, source, displayName, program, subprogram, oldProcedures, extensionManager)
-    def parseProcedure(procedure: api.FrontEndProcedure): core.ProcedureDefinition = {
+    def parseProcedure(procedure: FrontEndProcedure): core.ProcedureDefinition = {
       val rawTokens = structureResults.procedureTokens(procedure.name)
       val usedNames =
         StructureParser.usedNames(structureResults.program,
