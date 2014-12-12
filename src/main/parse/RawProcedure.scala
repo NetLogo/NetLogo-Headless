@@ -7,12 +7,15 @@ import org.nlogo.{ api, core },
 
   core.StructureDeclarations.Procedure
 
-class RawProcedure(val procedureDeclaration: Procedure, val displayNameOption: Option[String]) extends FrontEndProcedure {
-  val isReporter: Boolean = procedureDeclaration.isReporter
-  val nameToken: core.Token = procedureDeclaration.tokens.tail.head
-  val argTokens: Seq[core.Token] = procedureDeclaration.inputs.map(_.token)
+class RawProcedure(_procedureDeclaration: Procedure, val displayNameOption: Option[String]) extends
+  Procedure(_procedureDeclaration.ident, _procedureDeclaration.isReporter, _procedureDeclaration.inputs, _procedureDeclaration.tokens) with FrontEndProcedure {
 
-  args = procedureDeclaration.inputs.map(_.name).toVector
+  override def procedureDeclaration: Procedure = this
+
+  val nameToken: core.Token = _procedureDeclaration.tokens.tail.head
+  val argTokens: Seq[core.Token] = _procedureDeclaration.inputs.map(_.token)
+
+  args = _procedureDeclaration.inputs.map(_.name).toVector
 
   def displayName: String = displayNameOption.getOrElse("")
 

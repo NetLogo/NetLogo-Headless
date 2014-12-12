@@ -3,7 +3,7 @@
 package org.nlogo.parse
 
 import org.nlogo.{ core, api },
-  core.{ Fail, StructureDeclarations, Syntax, Token, TokenType },
+org.nlogo.core.{FrontEndProcedure, Fail, StructureDeclarations, Syntax, Token, TokenType},
     Fail.{ cAssert, exception },
     Syntax.compatible,
     StructureDeclarations.Procedure
@@ -22,7 +22,7 @@ object ExpressionParser {
   /**
    * parses a procedure. Procedures are a bunch of statements (not a block of statements, that's
    * something else), and so are parsed as such. */
-  def apply(procedureDeclaration: Procedure, tokens: Iterator[Token]): core.ProcedureDefinition = {
+  def apply(procedureDeclaration: Procedure with FrontEndProcedure, tokens: Iterator[Token]): core.ProcedureDefinition = {
     val buffered = tokens.buffered
     val stmts = new core.Statements(buffered.head.filename)
     while (buffered.head.tpe != TokenType.Eof)

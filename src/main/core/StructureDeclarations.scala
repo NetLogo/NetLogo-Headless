@@ -14,7 +14,7 @@ object StructureDeclarations {
       extends Declaration
   case class Variables(kind: Identifier, names: Seq[Identifier])
       extends Declaration
-  case class Procedure(name: Identifier, isReporter: Boolean, inputs: Seq[Identifier], tokens: Seq[Token])
+  case class Procedure(ident: Identifier, isReporter: Boolean, inputs: Seq[Identifier], tokens: Seq[Token])
       extends Declaration
   case class Identifier(name: String, token: Token)
 }

@@ -22,16 +22,16 @@ class CompilerUtilitiesTests extends FunSuite {
       new FrontEndProcedure {
         override def procedureDeclaration: Procedure = null
         override def dump: String = ""
-        override def nameToken: Token = p.procedure.name.token
+        override def nameToken: Token = p.procedure.ident.token
         override def syntax: Syntax =
           core.Syntax.reporterSyntax(
             right = List.fill(argTokens.size)(core.Syntax.WildcardType),
             ret = core.Syntax.WildcardType
           )
-        override def displayName: String = p.procedure.name.name
+        override def displayName: String = p.procedure.ident.name
         override def isReporter: Boolean = p.procedure.isReporter
         override def filename: String = "FrontEndExtrasTests.scala"
-        override def name: String = p.procedure.name.name
+        override def name: String = p.procedure.ident.name
         override def argTokens: Seq[Token] = p.procedure.inputs.map(_.token)
       }
     val (procedures, structureResults) = FrontEnd.frontEnd(src)

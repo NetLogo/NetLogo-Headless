@@ -5,6 +5,8 @@ package org.nlogo.parse
 import org.nlogo.{core, api},
   core.{FrontEndProcedure, StructureResults, Program, Token}
 
+import scala.collection.immutable.ListMap
+
 /// Stage #3 of StructureParser
 
 object StructureConverter {
@@ -24,12 +26,12 @@ object StructureConverter {
         buildProcedure(p, displayName)
     }
     ps.foreach(_._1.topLevel = subprogram)
+    val newProcedures: ListMap[String, FrontEndProcedure with Procedure] = ListMap(ps.map { case (pp, _) => pp.name -> pp }: _*)
     StructureResults(
       program =
         updateProgram(oldResults.program, declarations),
       procedures =
-        oldResults.procedures ++
-          ps.map { case (pp, _) => pp.name -> pp},
+        oldResults.procedures ++ newProcedures,
       procedureTokens = oldResults.procedureTokens ++ ps.map {
         case (p, toks) => p.name -> toks
       },
@@ -38,10 +40,11 @@ object StructureConverter {
         declarations.collect {
           case e: Extensions =>
             e.names.map(_.token)
-        }.flatten)
+        }.flatten,
+      proceduresUnderCompilation = newProcedures)
   }
 
-  def buildProcedure(p: Procedure, displayName: Option[String]): (FrontEndProcedure, Iterable[Token]) = {
+  def buildProcedure(p: Procedure, displayName: Option[String]): (FrontEndProcedure with Procedure, Iterable[Token]) = {
     val proc = new RawProcedure(p, displayName)
     (proc, p.tokens.drop(2).init :+ Token.Eof)
   }

@@ -21,10 +21,10 @@ package org.nlogo.parse
 import
   org.nlogo.{ api, core },
     api.FileIO,
-    core.{ErrorSource, ExtensionManager, BreedIdentifierHandler,
-          FrontEndInterface, Program, Token, StructureDeclarations, StructureResults},
+org.nlogo.core.{FrontEndProcedure, ErrorSource, ExtensionManager, BreedIdentifierHandler, FrontEndInterface, Program, Token, StructureDeclarations, StructureResults},
       FrontEndInterface.ProceduresMap,
     core.Fail._
+import org.nlogo.core.StructureDeclarations.Procedure
 
 object StructureParser {
 

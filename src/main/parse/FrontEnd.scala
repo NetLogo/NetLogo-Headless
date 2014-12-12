@@ -2,6 +2,7 @@
 
 package org.nlogo.parse
 
+import org.nlogo.core.StructureDeclarations.Procedure
 import org.nlogo.{core, api},
   core.{Femto, ExtensionManager, DummyExtensionManager, FrontEndInterface, FrontEndProcedure, Program}
 
@@ -32,7 +33,7 @@ trait FrontEndMain {
       : FrontEndInterface.FrontEndResults = {
     val structureResults = StructureParser.parseAll(
       tokenizer, source, displayName, program, subprogram, oldProcedures, extensionManager)
-    def parseProcedure(procedure: FrontEndProcedure): core.ProcedureDefinition = {
+    def parseProcedure(procedure: Procedure with FrontEndProcedure): core.ProcedureDefinition = {
       val rawTokens = structureResults.procedureTokens(procedure.name)
       val usedNames =
         StructureParser.usedNames(structureResults.program,
@@ -49,8 +50,8 @@ trait FrontEndMain {
         val letScoper = new LetScoper(usedNames)
         letScoper(namedTokens.buffered)
       }
-      ExpressionParser(procedure.procedureDeclaration, namedTokens)
+      ExpressionParser(procedure, namedTokens)
     }
-    (structureResults.procedures.values.map(parseProcedure).toSeq, structureResults)
+    (structureResults.proceduresUnderCompilation.values.map(parseProcedure).toSeq, structureResults)
   }
 }
