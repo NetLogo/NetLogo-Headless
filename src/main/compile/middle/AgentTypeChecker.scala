@@ -64,7 +64,7 @@ package middle
 //
 // Whew!  Got all that?
 
-import org.nlogo.core, core.Syntax
+import org.nlogo.core, org.nlogo.core.{Referenceable, Syntax}
 import org.nlogo.nvm, nvm.{ Instruction, Procedure }
 import org.nlogo.prim.{ _call, _callreport, _task }
 import org.nlogo.core.Fail._
@@ -98,11 +98,17 @@ class AgentTypeChecker(defs: Seq[ProcedureDefinition]) {
 
     override def visitStatement(stmt: Statement) {
       val c = stmt.command
-      agentClassString = typeCheck(currentProcedure, stmt.coreCommand, c, agentClassString)
-      if(stmt.coreCommand.syntax.blockAgentClassString != null)
-        chooseVisitorAndContinue(stmt.coreCommand.syntax.blockAgentClassString, stmt.args)
+      val coreCommand = stmt.coreCommand
+      agentClassString = typeCheck(currentProcedure, coreCommand, c, agentClassString)
+
+      val nonReferentialArgs = (stmt.args zip coreCommand.syntax.right).collect {
+        case (arg, argType) if ! core.Syntax.compatible(core.Syntax.ReferenceType, argType) => arg
+      }
+      stmt.args
+      if(coreCommand.syntax.blockAgentClassString != null)
+        chooseVisitorAndContinue(coreCommand.syntax.blockAgentClassString, nonReferentialArgs)
       else
-        super.visitStatement(stmt)
+        nonReferentialArgs.foreach(_.accept(this))
       c.agentClassString = agentClassString
     }
 
@@ -120,7 +126,7 @@ class AgentTypeChecker(defs: Seq[ProcedureDefinition]) {
     }
 
     private def chooseVisitorAndContinue(blockAgentClassString: String, exps: Seq[Expression]) {
-      for(exp <- exps) {
+      exps.foreach { exp =>
         exp.accept(
           exp match {
             case _: CommandBlock | _: ReporterBlock =>
@@ -137,13 +143,13 @@ class AgentTypeChecker(defs: Seq[ProcedureDefinition]) {
     def getReportedAgentType(app: ReporterApp): String = {
       app.coreReporter.syntax.ret match {
         case Syntax.TurtleType | Syntax.TurtlesetType => "-T--"
-        case Syntax.PatchType  | Syntax.PatchsetType  => "--P-"
-        case Syntax.LinkType   | Syntax.LinksetType   => "---L"
+        case Syntax.PatchType | Syntax.PatchsetType => "--P-"
+        case Syntax.LinkType | Syntax.LinksetType => "---L"
         // This is kludgy.  We assume the agent type is the same as that
         // reported by the first argument to the command. ("with" and "at-points"
         // are examples of this, also "one-of".)   Careful, this assumption
         // could break someday. - ST 12/8/02, 12/15/05, 2/21/08
-        case Syntax.AgentType  | Syntax.AgentsetType  =>
+        case Syntax.AgentType | Syntax.AgentsetType =>
           app.args match {
             case Seq(app: ReporterApp, _*) => getReportedAgentType(app)
             case _ => "-TPL"
