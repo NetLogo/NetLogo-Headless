@@ -23,14 +23,14 @@ case class _ask() extends Command {
     Syntax.commandSyntax(
       right = List(Syntax.AgentsetType | Syntax.AgentType, Syntax.CommandBlockType),
       agentClassString = "OTPL",
-      blockAgentClassString = "?")
+      blockAgentClassString = Some("?"))
 }
 case class _askconcurrent() extends Command {
   override def syntax =
     Syntax.commandSyntax(
       right = List(Syntax.AgentsetType, Syntax.CommandBlockType),
       agentClassString = "OTPL",
-      blockAgentClassString = "?")
+      blockAgentClassString = Some("?"))
 }
 case class _bk() extends Command {
   override def syntax =
@@ -90,7 +90,7 @@ case class _createorderedturtles(breedName: String) extends Command {
     Syntax.commandSyntax(
       right = List(Syntax.NumberType, Syntax.CommandBlockType | Syntax.OptionalType),
       agentClassString = "O---",
-      blockAgentClassString = "-T--")
+      blockAgentClassString = Some("-T--"))
 }
 case class _createturtles(breedName: String) extends Command {
   def this() = this("")
@@ -98,7 +98,7 @@ case class _createturtles(breedName: String) extends Command {
     Syntax.commandSyntax(
       right = List(Syntax.NumberType, Syntax.CommandBlockType | Syntax.OptionalType),
       agentClassString = "O---",
-      blockAgentClassString = "-T--")
+      blockAgentClassString = Some("-T--"))
 }
 case class _done() extends Command {
   override def syntax = Syntax.commandSyntax()
@@ -144,7 +144,7 @@ case class _hatch(breedName: String) extends Command {
     Syntax.commandSyntax(
       right = List(Syntax.NumberType, Syntax.CommandBlockType | Syntax.OptionalType),
       agentClassString = "-T--",
-      blockAgentClassString = "-T--")
+      blockAgentClassString = Some("-T--"))
 }
 case class _inradius() extends Reporter {
   override def syntax =
@@ -260,7 +260,7 @@ case class _of() extends Reporter {
       precedence = Syntax.NormalPrecedence + 1,
       isRightAssociative = true,
       agentClassString = "OTPL",
-      blockAgentClassString = "?")
+      blockAgentClassString = Some("?"))
 }
 case class _oneof() extends Reporter {
   override def syntax =
@@ -349,7 +349,7 @@ case class _sprout(breedName: String) extends Command {
     Syntax.commandSyntax(
       right = List(Syntax.NumberType, Syntax.CommandBlockType | Syntax.OptionalType),
       agentClassString = "--P-",
-      blockAgentClassString = "-T--")
+      blockAgentClassString = Some("-T--"))
 }
 case class _sum() extends Reporter with Pure {
   override def syntax =
@@ -408,7 +408,7 @@ case class _with() extends Reporter {
       precedence = Syntax.NormalPrecedence + 2,
       isRightAssociative = false,
       agentClassString = "OTPL",
-      blockAgentClassString = "?")
+      blockAgentClassString = Some("?"))
 }
 case class _word() extends Reporter with Pure {
   override def syntax =
