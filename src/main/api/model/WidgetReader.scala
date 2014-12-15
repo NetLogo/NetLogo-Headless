@@ -167,7 +167,7 @@ object ButtonReader extends BaseWidgetReader {
                         IntLine(),  // right
                         IntLine(),  // bottom
                         OptionLine[String]("NIL", StringLine()),   // rawDisplay
-                        StringLine(),   // code to execute
+                        EscapedStringLine(),   // code to execute
                         TNilBooleanLine(),  // forever?
                         ReservedLine(),
                         ReservedLine(),
@@ -397,7 +397,7 @@ object MonitorReader extends BaseWidgetReader {
                         IntLine(),  // right
                         IntLine(),  // bottom
                         OptionLine[String]("NIL", StringLine()),   // rawDisplay
-                        StringLine(),   // source
+                        EscapedStringLine(),   // source
                         IntLine(),   // precision
                         ReservedLine(),
                         IntLine()    // font size
