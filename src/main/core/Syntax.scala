@@ -45,16 +45,14 @@ case class Syntax private(
   minimumOption: Option[Int], // minimum number of args might be different than the default
   isRightAssociative: Boolean, // only relevant if infix
   agentClassString: String,
-  blockAgentClassString: String)
+  blockAgentClassString: Option[String])
 {
 
   import Syntax._
 
   require(agentClassString == null ||
           agentClassString.size == 4)
-  require(blockAgentClassString == null ||
-          blockAgentClassString.size == 4 ||
-          blockAgentClassString == "?")
+  require(blockAgentClassString.forall(s => s.size == 4 || s == "?"))
 
   /**
    * indicates whether this instruction should be parsed as infix. Infix
@@ -137,7 +135,7 @@ object Syntax {
     defaultOption: Option[Int] = None,
     minimumOption: Option[Int] = None, // minimum number of args might be different than the default
     agentClassString: String = "OTPL",
-    blockAgentClassString: String = null
+    blockAgentClassString: Option[String] = None
   ) = new Syntax(
     precedence = CommandPrecedence,
     left = Syntax.VoidType,
@@ -159,7 +157,7 @@ object Syntax {
     minimumOption: Option[Int] = None,
     isRightAssociative: Boolean = false,
     agentClassString: String = "OTPL",
-    blockAgentClassString: String = null
+    blockAgentClassString: Option[String] = None
   ) = new Syntax(
     precedence = precedence,
     left = left,

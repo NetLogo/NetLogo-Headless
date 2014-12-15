@@ -12,7 +12,7 @@ case class _all() extends Reporter {
       right = List(Syntax.AgentsetType, Syntax.BooleanBlockType),
       ret = Syntax.BooleanType,
       agentClassString = "OTPL",
-      blockAgentClassString = "?")
+      blockAgentClassString = Option("?"))
 }
 case class _approximatehsb() extends Reporter with Pure {
   override def syntax =
@@ -267,7 +267,7 @@ case class _maxnof() extends Reporter {
       right = List(Syntax.NumberType, Syntax.AgentsetType, Syntax.NumberBlockType),
       ret = Syntax.AgentsetType,
       agentClassString = "OTPL",
-      blockAgentClassString = "?")
+      blockAgentClassString = Option("?"))
 }
 case class _maxoneof() extends Reporter {
   override def syntax =
@@ -275,7 +275,7 @@ case class _maxoneof() extends Reporter {
       right = List(Syntax.AgentsetType, Syntax.NumberBlockType),
       ret = Syntax.AgentType,
       agentClassString = "OTPL",
-      blockAgentClassString = "?")
+      blockAgentClassString = Option("?"))
 }
 case class _mean() extends Reporter with Pure {
   override def syntax =
@@ -307,7 +307,7 @@ case class _minnof() extends Reporter {
       right = List(Syntax.NumberType, Syntax.AgentsetType, Syntax.NumberBlockType),
       ret = Syntax.AgentsetType,
       agentClassString = "OTPL",
-      blockAgentClassString = "?")
+      blockAgentClassString = Option("?"))
 }
 case class _minoneof() extends Reporter {
   override def syntax =
@@ -315,7 +315,7 @@ case class _minoneof() extends Reporter {
       right = List(Syntax.AgentsetType, Syntax.NumberBlockType),
       ret = Syntax.AgentType,
       agentClassString = "OTPL",
-      blockAgentClassString = "?")
+      blockAgentClassString = Option("?"))
 }
 case class _mod() extends Reporter with Pure {
   override def syntax =
@@ -588,7 +588,7 @@ case class _withmax() extends Reporter {
       ret = Syntax.AgentsetType,
       precedence = Syntax.NormalPrecedence + 2,
       agentClassString = "OTPL",
-      blockAgentClassString = "?")
+      blockAgentClassString = Option("?"))
 }
 case class _withmin() extends Reporter {
   override def syntax =
@@ -598,7 +598,7 @@ case class _withmin() extends Reporter {
       ret = Syntax.AgentsetType,
       precedence = Syntax.NormalPrecedence + 2,
       agentClassString = "OTPL",
-      blockAgentClassString = "?")
+      blockAgentClassString = Option("?"))
 }
 case class _withoutinterruption() extends Command {
   override def syntax =
