@@ -5,6 +5,7 @@ package org.nlogo.core
 import org.nlogo.core.FrontEndInterface.{NoProcedures, ProceduresMap}
 
 trait FrontEndProcedure {
+  var agentClassString = "OTPL"
   def procedureDeclaration: StructureDeclarations.Procedure
   def syntax: Syntax
   def name: String

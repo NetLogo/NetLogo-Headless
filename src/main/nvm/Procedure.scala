@@ -20,7 +20,6 @@ class Procedure(
   val displayName = buildDisplayName(_displayName)
   var pos: Int = 0
   var end: Int = 0
-  var agentClassString = "OTPL"
   var localsCount = 0
   private var _owner: api.SourceOwner = null
   val children = collection.mutable.Buffer[Procedure]()

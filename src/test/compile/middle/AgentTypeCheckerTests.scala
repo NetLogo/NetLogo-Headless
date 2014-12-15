@@ -3,16 +3,21 @@
 package org.nlogo.compile
 package middle
 
-import org.nlogo.core.{CompilerException, Femto}
+import org.nlogo.core.{FrontEndInterface, CompilerException, Femto}
 import org.scalatest.FunSuite
-import org.nlogo.{ api, nvm }
+
+import scala.collection.immutable.ListMap
 
 class AgentTypeCheckerTests extends FunSuite {
 
   /// first some helpers
   def compile(source: String): Seq[ProcedureDefinition] = {
+    val frontEnd = Femto.scalaSingleton[FrontEndInterface](
+      "org.nlogo.parse.FrontEnd")
+
+    val (coreDefs, _) = frontEnd.frontEnd(source)
     val defs = Scaffold(source)
-    new AgentTypeChecker(defs).check()
+    new AgentTypeChecker(coreDefs, ListMap()).check()
     defs
   }
 
