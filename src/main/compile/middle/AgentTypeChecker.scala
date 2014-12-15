@@ -105,8 +105,8 @@ class AgentTypeChecker(defs: Seq[ProcedureDefinition]) {
         case (arg, argType) if ! core.Syntax.compatible(core.Syntax.ReferenceType, argType) => arg
       }
       stmt.args
-      if(coreCommand.syntax.blockAgentClassString != null)
-        chooseVisitorAndContinue(coreCommand.syntax.blockAgentClassString, nonReferentialArgs)
+      if(coreCommand.syntax.blockAgentClassString.isDefined)
+        chooseVisitorAndContinue(coreCommand.syntax.blockAgentClassString.get, nonReferentialArgs)
       else
         nonReferentialArgs.foreach(_.accept(this))
       c.agentClassString = agentClassString
@@ -118,8 +118,8 @@ class AgentTypeChecker(defs: Seq[ProcedureDefinition]) {
       agentClassString = typeCheck(currentProcedure, app.coreReporter, r, agentClassString)
       if(r.isInstanceOf[_task])
         app.args.head.accept(new AgentTypeCheckerVisitor(currentProcedure, "OTPL"))
-      else if(app.coreReporter.syntax.blockAgentClassString != null)
-        chooseVisitorAndContinue(app.coreReporter.syntax.blockAgentClassString, app.args)
+      else if(app.coreReporter.syntax.blockAgentClassString.isDefined)
+        chooseVisitorAndContinue(app.coreReporter.syntax.blockAgentClassString.get, app.args)
       else
         super.visitReporterApp(app)
       r.agentClassString = agentClassString
