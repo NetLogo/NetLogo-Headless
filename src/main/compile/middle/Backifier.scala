@@ -44,6 +44,7 @@ class Backifier(
         fallback[core.Command, nvm.Command](c)
     }
     result.token = c.token
+    result.agentClassString = c.agentClassString
     result
   }
 
@@ -102,6 +103,7 @@ class Backifier(
 
     }
     result.token = r.token
+    result.agentClassString = r.agentClassString
     result
   }
 
