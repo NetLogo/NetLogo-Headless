@@ -5,6 +5,7 @@ package org.nlogo.core
 trait Instruction extends TokenHolder {
   def syntax: Syntax
   var token: Token = null
+  var agentClassString = syntax.agentClassString
   def displayName = token.text.toUpperCase
 }
 
