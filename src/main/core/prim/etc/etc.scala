@@ -907,14 +907,14 @@ case class _sortby() extends Reporter {
     Syntax.reporterSyntax(
       right = List(Syntax.ReporterTaskType, Syntax.ListType | Syntax.AgentsetType),
       ret = Syntax.ListType,
-      blockAgentClassString = "?")
+      blockAgentClassString = Some("?"))
 }
 case class _sorton() extends Reporter {
   override def syntax =
     Syntax.reporterSyntax(
       right = List(Syntax.ReporterBlockType, Syntax.AgentsetType),
       ret = Syntax.ListType,
-      blockAgentClassString = "?")
+      blockAgentClassString = Some("?"))
 }
 case class _stacktrace() extends Reporter {
   override def syntax =
