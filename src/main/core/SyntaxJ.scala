@@ -58,7 +58,7 @@ object SyntaxJ {
     Syntax.reporterSyntax(right = right.toList,
       ret = ret,
       agentClassString = agentClassString,
-      blockAgentClassString = blockAgentClassString)
+      blockAgentClassString = Option(blockAgentClassString))
 
   // for use by prefix reporters
   def reporterSyntax(right: Array[Int], ret: Int, agentClassString: String) =
@@ -82,7 +82,7 @@ object SyntaxJ {
       precedence = precedence,
       isRightAssociative = isRightAssociative,
       agentClassString = agentClassString,
-      blockAgentClassString = blockAgentClassString)
+      blockAgentClassString = Option(blockAgentClassString))
 
   /**
    * Returns a <code>Syntax</code> for reporters with no arguments
@@ -128,5 +128,4 @@ object SyntaxJ {
     Syntax.reporterSyntax(right = right.toList,
       ret = ret,
       defaultOption = Some(dfault))
-
 }

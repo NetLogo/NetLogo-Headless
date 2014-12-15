@@ -10,7 +10,7 @@ trait LinkCreationCommand extends Command {
     Syntax.commandSyntax(
       right = List(inputType, Syntax.CommandBlockType | Syntax.OptionalType),
       agentClassString = "-T--",
-      blockAgentClassString = "---L")
+      blockAgentClassString = Some("---L"))
 }
 
 trait Single extends LinkCreationCommand {
