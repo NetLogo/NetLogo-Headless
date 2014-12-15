@@ -140,6 +140,32 @@ class WidgetTest extends FunSuite {
       ButtonReader.parse(ButtonReader.format(ButtonReader.parse(button)).split("\n").toList))
     assert(None == ButtonReader.parse(button).display)
   }
+
+  test("button escaped source") {
+    val button = """|BUTTON
+                    |202
+                    |101
+                    |271
+                    |134
+                    |NIL
+                    |\"bar\"
+                    |T
+                    |1
+                    |T
+                    |OBSERVER
+                    |NIL
+                    |NIL
+                    |NIL
+                    |NIL
+                    |1""".stripMargin.split("\n").toList
+    assert(ButtonReader.validate(button))
+    assert(Button(None,202,101,271,134,"\"bar\"",true) == ButtonReader.parse(button))
+    assert(ButtonReader.validate(ButtonReader.format(ButtonReader.parse(button)).split("\n").toList))
+    assert(Button(None,202,101,271,134,"\"bar\"",true) ==
+      ButtonReader.parse(ButtonReader.format(ButtonReader.parse(button)).split("\n").toList))
+    assert(None == ButtonReader.parse(button).display)
+  }
+
   test("slider") {
      val slider = """|SLIDER
                      |20
@@ -232,6 +258,25 @@ class WidgetTest extends FunSuite {
     assert(Monitor(None, 74, 214, 152, 259, "count sheep", 3, 11) == MonitorReader.parse(monitor))
     assert(MonitorReader.validate(MonitorReader.format(MonitorReader.parse(monitor)).split("\n").toList))
     assert(Monitor(None, 74, 214, 152, 259, "count sheep", 3, 11) ==
+      MonitorReader.parse(MonitorReader.format(MonitorReader.parse(monitor)).split("\n").toList))
+    assert(None == MonitorReader.parse(monitor).display)
+  }
+
+  test("monitor nil display escaped source") {
+    val monitor = """|MONITOR
+                     |74
+                     |214
+                     |152
+                     |259
+                     |NIL
+                     |\"foo\"
+                     |3
+                     |1
+                     |11""".stripMargin.split("\n").toList
+    assert(MonitorReader.validate(monitor))
+    assert(Monitor(None, 74, 214, 152, 259, "\"foo\"", 3, 11) == MonitorReader.parse(monitor))
+    assert(MonitorReader.validate(MonitorReader.format(MonitorReader.parse(monitor)).split("\n").toList))
+    assert(Monitor(None, 74, 214, 152, 259, "\"foo\"", 3, 11) ==
       MonitorReader.parse(MonitorReader.format(MonitorReader.parse(monitor)).split("\n").toList))
     assert(None == MonitorReader.parse(monitor).display)
   }
