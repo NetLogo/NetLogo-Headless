@@ -66,7 +66,7 @@ trait Application extends AstNode {
  * represents a single procedure definition.  really just a container
  * for the procedure body, which is a Statements object.
  */
-class ProcedureDefinition(val procedure: StructureDeclarations.Procedure, val statements: Statements) extends AstNode {
+class ProcedureDefinition(val procedure: FrontEndProcedure, val statements: Statements) extends AstNode {
   def start = throw new UnsupportedOperationException
   def end = throw new UnsupportedOperationException
   def file = throw new UnsupportedOperationException
