@@ -2,7 +2,7 @@
 
 package org.nlogo.parse
 
-import org.nlogo.{core, api},
+import org.nlogo.core,
   core.{FrontEndProcedure, StructureResults, Program, Token}
 
 /// Stage #3 of StructureParser
@@ -27,9 +27,8 @@ object StructureConverter {
     StructureResults(
       program =
         updateProgram(oldResults.program, declarations),
-      procedures =
-        oldResults.procedures ++
-          ps.map { case (pp, _) => pp.name -> pp},
+      procedures = oldResults.procedures ++
+        ps.map { case (pp, _) => pp.name -> pp},
       procedureTokens = oldResults.procedureTokens ++ ps.map {
         case (p, toks) => p.name -> toks
       },

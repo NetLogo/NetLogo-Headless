@@ -2,7 +2,7 @@
 
 package org.nlogo.parse
 
-import org.nlogo.{core, api},
+import org.nlogo.core,
   core.{Femto, ExtensionManager, DummyExtensionManager, FrontEndInterface, FrontEndProcedure, Program}
 
 object FrontEnd extends FrontEnd {
@@ -49,7 +49,7 @@ trait FrontEndMain {
         val letScoper = new LetScoper(usedNames)
         letScoper(namedTokens.buffered)
       }
-      ExpressionParser(procedure.procedureDeclaration, namedTokens)
+      ExpressionParser(procedure, namedTokens)
     }
     (structureResults.procedures.values.map(parseProcedure).toSeq, structureResults)
   }
