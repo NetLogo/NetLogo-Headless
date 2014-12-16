@@ -36,6 +36,7 @@ object FrontMiddleBridge extends FrontMiddleBridgeInterface {
       _displayName = if (p.displayName == "") None else Some(p.displayName),
       procedureDeclaration = p.procedureDeclaration
     )
+    proc.agentClassString = p.agentClassString
     proc.topLevel = p.topLevel
     proc.args = p.args
     proc

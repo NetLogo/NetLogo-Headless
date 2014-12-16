@@ -1,18 +1,20 @@
 // (C) Uri Wilensky. https://github.com/NetLogo/NetLogo
 
-package org.nlogo.compile
-package middle
+package org.nlogo.parse
 
-import org.nlogo.core.{CompilerException, Femto}
+import org.nlogo.compile.{ProcedureDefinition, Scaffold}
+import org.nlogo.core.{CompilerException, Femto, FrontEndInterface}
 import org.scalatest.FunSuite
-import org.nlogo.{ api, nvm }
+
+import scala.collection.immutable.ListMap
 
 class AgentTypeCheckerTests extends FunSuite {
 
   /// first some helpers
   def compile(source: String): Seq[ProcedureDefinition] = {
+    val (coreDefs, _) = FrontEnd.frontEnd(source)
     val defs = Scaffold(source)
-    new AgentTypeChecker(defs).check()
+    new AgentTypeChecker(coreDefs).check()
     defs
   }
 
@@ -43,6 +45,8 @@ class AgentTypeCheckerTests extends FunSuite {
   test("easy4") { testBoth("to foo print link-length end", "FOO:---L") }
   test("easy5") { testBoth("to foo crt 1 end", "FOO:O---") }
   test("easy6") { testBoth("to foo set pcolor red end", "FOO:-TP-") }
+  test("recursive1") { testBoth("to foo set pcolor red foo end", "FOO:-TP-") }
+  test("recursive2") { testBoth("to foo set pcolor red foo2 end to foo2 set color blue foo end", "FOO:-T-- FOO2:-T--") }
   test("oneProcedure1") {
     testError("to foo fd 1 sprout 1 end",
       "You can't use SPROUT in a turtle context, because SPROUT is patch-only.")
