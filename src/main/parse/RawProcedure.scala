@@ -19,14 +19,6 @@ class RawProcedure(val procedureDeclaration: Procedure, val displayNameOption: O
 
   def displayName: String = displayNameOption.getOrElse("")
 
-  def syntax: core.Syntax = {
-    val right = List.fill(argTokens.size)(core.Syntax.WildcardType)
-    if (isReporter)
-      core.Syntax.reporterSyntax(right = right, ret = core.Syntax.WildcardType)
-    else
-      core.Syntax.commandSyntax(right = right)
-  }
-
   val name = nameToken.value.asInstanceOf[String]
 
   def dump: String = {

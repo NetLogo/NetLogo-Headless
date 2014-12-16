@@ -20,7 +20,6 @@ class Procedure(
   val displayName = buildDisplayName(_displayName)
   var pos: Int = 0
   var end: Int = 0
-  var agentClassString = "OTPL"
   var localsCount = 0
   private var _owner: api.SourceOwner = null
   val children = collection.mutable.Buffer[Procedure]()
@@ -52,14 +51,6 @@ class Procedure(
           .getOrElse(name)
       displayName.getOrElse("procedure " + nameAndFile)
     }
-
-  def syntax: core.Syntax = {
-    val right = List.fill(args.size - localsCount)(core.Syntax.WildcardType)
-    if (isReporter)
-      core.Syntax.reporterSyntax(right = right, ret = core.Syntax.WildcardType)
-    else
-      core.Syntax.commandSyntax(right = right)
-  }
 
   override def toString =
     super.toString + "[" + name + ":" + args.mkString("[", " ", "]") +
