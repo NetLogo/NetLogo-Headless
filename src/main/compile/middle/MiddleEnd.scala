@@ -11,7 +11,6 @@ object MiddleEnd extends MiddleEndInterface {
   // finds command tasks and makes Procedures out of them, too.  the remaining
   // phases handle all ProcedureDefinitions from both sources. - ST 2/4/11
   def middleEnd(defs: Seq[ProcedureDefinition], flags: nvm.CompilerFlags): Seq[ProcedureDefinition] = {
-
     // lambda-lift
     val allDefs = {
       val taskNumbers = Iterator.from(1)
@@ -25,8 +24,6 @@ object MiddleEnd extends MiddleEndInterface {
     // each Int is the position of that variable in the procedure's args list
     val alteredLets =
       collection.mutable.Map[nvm.Procedure, collection.mutable.Map[core.Let, Int]]()
-
-    new AgentTypeChecker(allDefs).check()  // catch agent type inconsistencies
 
     for(procdef <- allDefs) {
       procdef.accept(new ReferenceVisitor)  // handle ReferenceType

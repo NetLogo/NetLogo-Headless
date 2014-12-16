@@ -26,9 +26,9 @@ class CallHandler(procedures: ProceduresMap) extends NameHandler {
       .flatMap{procedures.get}
       .map{callproc =>
         if (callproc.isReporter)
-          (TokenType.Reporter, new core.prim._callreport(name, callproc.syntax))
+          (TokenType.Reporter, new core.prim._callreport(callproc))
         else
-          (TokenType.Command, new core.prim._call(name, callproc.syntax))}
+          (TokenType.Command, new core.prim._call(callproc))}
   }
 }
 
