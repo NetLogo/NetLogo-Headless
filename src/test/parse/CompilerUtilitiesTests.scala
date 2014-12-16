@@ -14,33 +14,11 @@ class CompilerUtilitiesTests extends FunSuite {
   val src = "globals [glob1] " +
     "to foo end to-report bar [] report 5 end"
 
-  // It's a bit depressing we have to go through the rigmarole of making
-  // dummy Procedure objects, but isReporter requires us to supply a
-  // ProceduresMap. - ST 7/17/13
   val (proceduresMap, program) = {
-    def dummyProcedure(p: core.ProcedureDefinition): FrontEndProcedure =
-      new FrontEndProcedure {
-        override def procedureDeclaration: Procedure = null
-        override def dump: String = ""
-        override def nameToken: Token = p.procedure.name.token
-        override def syntax: Syntax =
-          core.Syntax.reporterSyntax(
-            right = List.fill(argTokens.size)(core.Syntax.WildcardType),
-            ret = core.Syntax.WildcardType
-          )
-        override def displayName: String = p.procedure.name.name
-        override def isReporter: Boolean = p.procedure.isReporter
-        override def filename: String = "FrontEndExtrasTests.scala"
-        override def name: String = p.procedure.name.name
-        override def argTokens: Seq[Token] = p.procedure.inputs.map(_.token)
-      }
     val (procedures, structureResults) = FrontEnd.frontEnd(src)
     val proceduresMap =
       collection.immutable.ListMap(
-        procedures.map { p =>
-          val prc = dummyProcedure(p)
-          prc.name -> prc
-        }: _*)
+        procedures.map { p => p.procedure.name -> p.procedure }: _*)
     (proceduresMap, structureResults.program)
   }
 

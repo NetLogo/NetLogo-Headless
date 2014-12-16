@@ -21,8 +21,7 @@ package org.nlogo.parse
 import
   org.nlogo.{ api, core },
     api.FileIO,
-    core.{ErrorSource, ExtensionManager, BreedIdentifierHandler,
-          FrontEndInterface, Program, Token, StructureDeclarations, StructureResults},
+    core.{ErrorSource, ExtensionManager, BreedIdentifierHandler, FrontEndInterface, Program, Token, StructureDeclarations, StructureResults},
       FrontEndInterface.ProceduresMap,
     core.Fail._
 
