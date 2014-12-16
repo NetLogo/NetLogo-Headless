@@ -34,8 +34,8 @@ class Backifier(
         new prim._extern(
           extensionManager.replaceIdentifier(c.token.text.toUpperCase)
             .asInstanceOf[api.Command])
-      case core.prim._call(name, _) =>
-        new prim._call(procedures(name))
+      case core.prim._call(proc) =>
+        new prim._call(procedures(proc.name))
       case core.prim._let(let) =>
         val result = new prim._let
         result.let = let
@@ -89,8 +89,8 @@ class Backifier(
       case core.prim._turtleorlinkvariable(varName) =>
         new prim._turtleorlinkvariable(varName)
 
-      case core.prim._callreport(name, _) =>
-        new prim._callreport(procedures(name))
+      case core.prim._callreport(proc) =>
+        new prim._callreport(procedures(proc.name))
 
       // diabolical special case: if we have e.g. `breed [fish]` with no singular,
       // then the singular defaults to `turtle`, which will cause BreedIdentifierHandler

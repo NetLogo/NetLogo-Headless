@@ -49,11 +49,19 @@ case class _breedvariable(name: String) extends Reporter {
       ret = Syntax.WildcardType | Syntax.ReferenceType,
       agentClassString = "-T--")
 }
-case class _call(name: String, syntax: Syntax) extends Command {
+case class _call(proc: FrontEndProcedure) extends Command {
+  agentClassString = proc.agentClassString
+
+  def name: String = proc.name
+  override def syntax = proc.syntax
   override def toString =
     s"_call($name)"
 }
-case class _callreport(name: String, syntax: Syntax) extends Reporter {
+case class _callreport(proc: FrontEndProcedure) extends Reporter {
+  agentClassString = proc.agentClassString
+
+  def name: String = proc.name
+  override def syntax = proc.syntax
   override def toString =
     s"_call($name)"
 }
