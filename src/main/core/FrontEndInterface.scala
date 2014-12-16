@@ -5,8 +5,8 @@ package org.nlogo.core
 import org.nlogo.core.FrontEndInterface.{NoProcedures, ProceduresMap}
 
 trait FrontEndProcedure {
+  var agentClassString = "OTPL"
   def procedureDeclaration: StructureDeclarations.Procedure
-  def syntax: Syntax
   def name: String
   def isReporter: Boolean
   def displayName: String
@@ -16,6 +16,14 @@ trait FrontEndProcedure {
   var args = Vector[String]()
   var topLevel = false
   def dump: String
+
+  def syntax: Syntax = {
+    val right = List.fill(argTokens.size)(Syntax.WildcardType)
+    if (isReporter)
+      Syntax.reporterSyntax(right = right, ret = Syntax.WildcardType)
+    else
+      Syntax.commandSyntax(right = right)
+  }
 }
 
 object FrontEndInterface {
