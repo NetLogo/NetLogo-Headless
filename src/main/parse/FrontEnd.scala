@@ -51,6 +51,8 @@ trait FrontEndMain {
       }
       ExpressionParser(procedure, namedTokens)
     }
-    (structureResults.procedures.values.map(parseProcedure).toSeq, structureResults)
+    val topLevelDefs = structureResults.procedures.values.map(parseProcedure).toSeq
+    new AgentTypeChecker(topLevelDefs).check()  // catch agent type inconsistencies
+    (topLevelDefs, structureResults)
   }
 }

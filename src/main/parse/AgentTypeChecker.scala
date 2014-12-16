@@ -1,7 +1,6 @@
 // (C) Uri Wilensky. https://github.com/NetLogo/NetLogo
 
-package org.nlogo.compile
-package middle
+package org.nlogo.parse
 
 // The purpose of this class is to determine which portions of the
 // code are usable by which agent types.  For example "fd 1" is
@@ -64,26 +63,25 @@ package middle
 //
 // Whew!  Got all that?
 
-import org.nlogo.core, org.nlogo.core.{Referenceable, Syntax}
-import org.nlogo.nvm, nvm.{ Instruction, Procedure }
-import org.nlogo.prim.{ _call, _callreport, _task }
-import org.nlogo.core.Fail._
-
-// As a result of the recent compiler refactorings, there is now some
-// gross stuff below where the code sometimes uses the core package stuff,
-// sometimes the nvm package stuff. Could probably be improved. - ST 9/29/14
+import org.nlogo.core,
+  core.{AstVisitor, Fail, FrontEndInterface, FrontEndProcedure, Instruction,
+        ProcedureDefinition, ReporterApp, Statement, Syntax,
+        prim, CommandBlock, Expression, ReporterBlock, StructureDeclarations},
+    prim.{_call, _callreport, _task},
+    Fail._,
+    FrontEndInterface.ProceduresMap,
+    StructureDeclarations.Procedure
 
 class AgentTypeChecker(defs: Seq[ProcedureDefinition]) {
-
-  def check() {
+  def check(): Unit = {
     def usables = defs.map(_.procedure.agentClassString).toList
     val oldUsables = usables
     for(procdef <- defs)
-      procdef.accept(new AgentTypeCheckerVisitor(procdef.procedure, "OTPL"))
+      new AgentTypeCheckerVisitor("OTPL").visitProcedureDefinition(procdef)
     if(usables != oldUsables) check()
   }
 
-  class AgentTypeCheckerVisitor(currentProcedure: Procedure, var agentClassString: String) extends DefaultAstVisitor {
+  class AgentTypeCheckerVisitor(var agentClassString: String) extends AstVisitor {
     // agentClassString is "var" because it's where we accumulate our result.
     // it starts out as OTPL and the more code we see the more restricted
     // it may grow.  The use of mutable state in this way is characteristic
@@ -94,32 +92,31 @@ class AgentTypeChecker(defs: Seq[ProcedureDefinition]) {
       // after we've seen the whole procedure, store the result there
       procdef.procedure.agentClassString = agentClassString
     }
-    // visitStatement and visitReporterApp are clones of each other
 
+    // visitStatement and visitReporterApp are clones of each other
     override def visitStatement(stmt: Statement) {
       val c = stmt.command
-      val coreCommand = stmt.coreCommand
-      agentClassString = typeCheck(currentProcedure, coreCommand, c, agentClassString)
+      agentClassString = typeCheck(c, agentClassString)
 
-      val nonReferentialArgs = (stmt.args zip coreCommand.syntax.right).collect {
-        case (arg, argType) if ! core.Syntax.compatible(core.Syntax.ReferenceType, argType) => arg
+      val nonReferentialArgs = (stmt.args zip c.syntax.right).collect {
+        case (arg, argType) if ! Syntax.compatible(Syntax.ReferenceType, argType) => arg
       }
-      stmt.args
-      if(coreCommand.syntax.blockAgentClassString.isDefined)
-        chooseVisitorAndContinue(coreCommand.syntax.blockAgentClassString.get, nonReferentialArgs)
+      if(c.syntax.blockAgentClassString.isDefined)
+        chooseVisitorAndContinue(c.syntax.blockAgentClassString.get, nonReferentialArgs)
       else
-        nonReferentialArgs.foreach(_.accept(this))
+        nonReferentialArgs.foreach(visitExpression)
       c.agentClassString = agentClassString
     }
 
     // visitStatement and visitReporterApp are clones of each other
     override def visitReporterApp(app: ReporterApp) {
       val r = app.reporter
-      agentClassString = typeCheck(currentProcedure, app.coreReporter, r, agentClassString)
+      agentClassString = typeCheck(r, agentClassString)
+
       if(r.isInstanceOf[_task])
-        app.args.head.accept(new AgentTypeCheckerVisitor(currentProcedure, "OTPL"))
-      else if(app.coreReporter.syntax.blockAgentClassString.isDefined)
-        chooseVisitorAndContinue(app.coreReporter.syntax.blockAgentClassString.get, app.args)
+        new AgentTypeCheckerVisitor("OTPL").visitExpression(app.args.head)
+      else if(r.syntax.blockAgentClassString.isDefined)
+        chooseVisitorAndContinue(r.syntax.blockAgentClassString.get, app.args)
       else
         super.visitReporterApp(app)
       r.agentClassString = agentClassString
@@ -127,21 +124,23 @@ class AgentTypeChecker(defs: Seq[ProcedureDefinition]) {
 
     private def chooseVisitorAndContinue(blockAgentClassString: String, exps: Seq[Expression]) {
       exps.foreach { exp =>
-        exp.accept(
-          exp match {
-            case _: CommandBlock | _: ReporterBlock =>
-              val argsAgentClassString =
-                if(blockAgentClassString != "?") blockAgentClassString
-                else exps match {
-                  case Seq(app: ReporterApp, _*) => getReportedAgentType(app)
-                  case _ => "-TPL"
-                }
-              new AgentTypeCheckerVisitor(currentProcedure, argsAgentClassString)
-            case _ => this } ) }
+        val visitor = exp match {
+          case _: CommandBlock | _: ReporterBlock =>
+            val argsAgentClassString =
+              if (blockAgentClassString != "?") blockAgentClassString
+              else exps match {
+                case Seq(app: ReporterApp, _*) => getReportedAgentType(app)
+                case _ => "-TPL"
+              }
+            new AgentTypeCheckerVisitor(argsAgentClassString)
+          case _ => this
+        }
+        visitor.visitExpression(exp)
+      }
     }
 
-    def getReportedAgentType(app: ReporterApp): String = {
-      app.coreReporter.syntax.ret match {
+    private def getReportedAgentType(app: ReporterApp): String = {
+      app.reporter.syntax.ret match {
         case Syntax.TurtleType | Syntax.TurtlesetType => "-T--"
         case Syntax.PatchType | Syntax.PatchsetType => "--P-"
         case Syntax.LinkType | Syntax.LinksetType => "---L"
@@ -158,51 +157,48 @@ class AgentTypeChecker(defs: Seq[ProcedureDefinition]) {
       }
     }
 
-    def typeCheck(currentProcedure: Procedure, coreInstruction: core.Instruction, nvmInstruction: nvm.Instruction, agentClassString: String): String = {
+    private def typeCheck(coreInstruction: Instruction, agentClassString: String): String = {
       // Check if dealing with a procedure or a primitive
-      val calledProcedure: Option[Procedure] =
-        nvmInstruction match {
-          case c: _call => Some(c.procedure)
-          case cr: _callreport => Some(cr.procedure)
-          case _ => None
-        }
-      if(calledProcedure.isDefined &&
-         (calledProcedure.get.agentClassString == null ||
-          (calledProcedure.get.agentClassString.indexOf('?') != -1 && calledProcedure.get != currentProcedure)))
-        agentClassString + "?"
-      else {
-        val instructionUsableBy =
-          if(calledProcedure.isDefined) calledProcedure.get.agentClassString
-          else coreInstruction.syntax.agentClassString
-        val result = combineRestrictions(agentClassString, instructionUsableBy)
-        if(result == "----") {
-          val name = nvmInstruction.token.text.toUpperCase
-          exception(
-            "You can't use " + name + " in " + agentClassStringToEnglish(agentClassString, true) +
-              " context, because " + name + " is " + agentClassStringToEnglish(instructionUsableBy, false) +
-              "-only.", nvmInstruction.token)
-        }
-        result
+      coreInstruction match {
+        case _call(proc) =>
+          checkSatisfiable(coreInstruction, agentClassString, proc.agentClassString)
+        case _callreport(proc) =>
+          checkSatisfiable(coreInstruction, agentClassString, proc.agentClassString)
+        case _ =>
+          checkSatisfiable(coreInstruction, agentClassString, coreInstruction.agentClassString)
       }
+    }
+
+    private def checkSatisfiable(coreInstruction: Instruction, agentClassString: String, instructionClassString: String): String = {
+      val classString = combineRestrictions(agentClassString, instructionClassString)
+      if (classString == "----") {
+        val name = coreInstruction.token.text.toUpperCase
+        exception(
+          s"""|You can't use $name in ${aOrAn(agentName(agentClassString))} context,
+              | because $name is ${agentName(instructionClassString)}-only.""".stripMargin.replaceAll("\n", ""),
+          coreInstruction.token)
+      }
+      classString
     }
 
     // This is basically an "and" operation:
     //   OTP- and -TPL equals -TP-
     //   OT-- and --PL equals ----
     // and so on.
-    def combineRestrictions(agentClassString1: String, agentClassString2: String): String =
+    private def combineRestrictions(agentClassString1: String, agentClassString2: String): String =
       agentClassString1.map(c => if(c != '-' && agentClassString2.indexOf(c) != -1) c
                          else '-')
 
-    // for error message generation
-    def agentClassStringToEnglish(agentClassString: String, addAOrAn: Boolean): String = {
-      val abbreviations = Map('O' -> "observer", 'T' -> "turtle",
-                              'P' -> "patch", 'L' -> "link")
-      val english = agentClassString.filter(_ != '-').map(abbreviations(_)).mkString("/")
-      if(!addAOrAn) english
-      else if(english.charAt(0) == 'o') "an " + english
-      else "a " + english
+    private def aOrAn(s: String): String = {
+      if (s.charAt(0) == 'o') s"an $s"
+      else s"a $s"
     }
 
+    // for error message generation
+    private def agentName(agentClassString: String): String = {
+      val abbreviations = Map('O' -> "observer", 'T' -> "turtle",
+                              'P' -> "patch", 'L' -> "link")
+      agentClassString.filter(_ != '-').map(abbreviations(_)).mkString("/")
+    }
   }
 }
