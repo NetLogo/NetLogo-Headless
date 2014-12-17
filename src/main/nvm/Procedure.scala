@@ -14,7 +14,8 @@ class Procedure(
   val argTokens: Seq[core.Token],
   _displayName: Option[String] = None,
   val parent: Procedure = null,
-  val procedureDeclaration: core.StructureDeclarations.Procedure = null) extends FrontEndProcedure {
+  val procedureDeclaration: core.StructureDeclarations.Procedure = null,
+  val taskFormals: Array[Let] = Array()) extends FrontEndProcedure {
 
   val filename = nameToken.filename; // used by cities include-file stuff
   val displayName = buildDisplayName(_displayName)
@@ -28,15 +29,7 @@ class Procedure(
   // cache args.size() for efficiency with making Activations
   var size = 0
 
-  // ExpressionParser doesn't know how many parameters the task is going to take;
-  // that's determined by TaskVisitor. so for now this is mutable - ST 2/4/11
-  val taskFormals = collection.mutable.Buffer[Let]()
-
-  def getTaskFormal(n: Int): Let = {
-    while (taskFormals.size < n)
-      taskFormals += Let("?" + n)
-    taskFormals.last
-  }
+  def getTaskFormal(n: Int): Let = taskFormals(n - 1)
 
   var code = Array[Command]()
 

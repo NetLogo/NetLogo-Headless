@@ -5,7 +5,7 @@ package org.nlogo.prim
 import org.nlogo.core.Syntax
 import org.nlogo.nvm.{ CommandTask, Context, Procedure, Reporter }
 
-class _commandtask(var proc: Procedure) extends Reporter {
+class _commandtask(val argCount: Int, var proc: Procedure) extends Reporter {
 
   override def toString =
     super.toString +

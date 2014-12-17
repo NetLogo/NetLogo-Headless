@@ -67,7 +67,7 @@ import org.nlogo.core,
   core.{AstVisitor, Fail, Instruction,
         ProcedureDefinition, ReporterApp, Statement, Syntax,
         prim, CommandBlock, Expression, ReporterBlock},
-    prim.{_call, _callreport, _task},
+    prim.{_reportertask, _commandtask, _call, _callreport},
     Fail._
 
 class AgentTypeChecker(defs: Seq[ProcedureDefinition]) {
@@ -111,7 +111,7 @@ class AgentTypeChecker(defs: Seq[ProcedureDefinition]) {
       val r = app.reporter
       agentClassString = typeCheck(r, agentClassString)
 
-      if(r.isInstanceOf[_task])
+      if(r.isInstanceOf[_commandtask] || r.isInstanceOf[_reportertask])
         new AgentTypeCheckerVisitor("OTPL").visitExpression(app.args.head)
       else if(r.syntax.blockAgentClassString.isDefined)
         chooseVisitorAndContinue(r.syntax.blockAgentClassString.get, app.args)

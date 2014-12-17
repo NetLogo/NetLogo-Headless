@@ -70,6 +70,11 @@ class ProcedureDefinition(val procedure: FrontEndProcedure, val statements: Stat
   def start = throw new UnsupportedOperationException
   def end = throw new UnsupportedOperationException
   def file = throw new UnsupportedOperationException
+
+  def copy(procedure: FrontEndProcedure = procedure,
+            statements: Statements = statements): ProcedureDefinition = {
+    new ProcedureDefinition(procedure, statements)
+  }
 }
 
 /**
@@ -79,6 +84,12 @@ class ProcedureDefinition(val procedure: FrontEndProcedure, val statements: Stat
  * groups of statements as well, for instance procedure bodies.
  */
 class Statements(val file: String) extends AstNode {
+  def this(file: String, stmts: Seq[Statement]) = {
+    this(file)
+    _stmts.appendAll(stmts)
+    recomputeStartAndEnd()
+  }
+
   var start: Int = _
   var end: Int = _
   /**
@@ -95,6 +106,10 @@ class Statements(val file: String) extends AstNode {
     else { start = stmts(0).start; end = stmts(stmts.size - 1).end }
   }
   override def toString = stmts.mkString(" ")
+
+  def copy(file: String = file, stmts: Seq[Statement] = stmts): Statements = {
+    new Statements(file, stmts)
+  }
 }
 
 /**
@@ -103,6 +118,11 @@ class Statements(val file: String) extends AstNode {
  */
 class Statement(var command: Command, var start: Int, var end: Int, val file: String)
     extends Application {
+  def this(command: Command, start: Int, end: Int, file: String, args: Seq[Expression]) = {
+    this(command, start, end, file)
+    _args.appendAll(args)
+  }
+
   private val _args = collection.mutable.Buffer[Expression]()
   override def args: Seq[Expression] = _args
   def instruction = command // for Application
@@ -110,6 +130,14 @@ class Statement(var command: Command, var start: Int, var end: Int, val file: St
   override def toString = command.toString + "[" + args.mkString(", ") + "]"
   def replaceArg(index: Int, expr: Expression) { _args(index) = expr }
   def removeArgument(index: Int) { _args.remove(index) }
+
+  def copy(command: Command = command,
+           start: Int = start,
+           end: Int = end,
+           file: String = file,
+           args: Seq[Expression] = args): Statement = {
+    new Statement(command, start, end, file, args)
+  }
 }
 
 /**
@@ -121,6 +149,13 @@ class Statement(var command: Command, var start: Int, var end: Int, val file: St
 class CommandBlock(val statements: Statements, var start: Int, var end: Int, val file: String) extends Expression {
   def reportedType() = Syntax.CommandBlockType
   override def toString = "[" + statements.toString + "]"
+
+  def copy(statements: Statements = statements,
+           start: Int = start,
+           end: Int = end,
+           file: String = file): CommandBlock = {
+    new CommandBlock(statements, start, end, file)
+  }
 }
 
 /**
@@ -150,6 +185,10 @@ class ReporterBlock(val app: ReporterApp, var start: Int, var end: Int, val file
         else OtherBlockType
     }
   }
+
+  def copy(app: ReporterApp = app, start: Int = start, end: Int = end, file: String = file): ReporterBlock = {
+    new ReporterBlock(app, start, end, file)
+  }
 }
 
 /**
@@ -160,6 +199,11 @@ class ReporterBlock(val app: ReporterApp, var start: Int, var end: Int, val file
  */
 class ReporterApp(var reporter: Reporter, var start: Int, var end: Int, val file: String)
 extends Expression with Application {
+
+  def this(reporter: Reporter, start: Int, end: Int, file: String, args: Seq[Expression]) = {
+    this(reporter, start, end, file)
+    _args.appendAll(args)
+  }
   /**
    * the args for this application.
    */
@@ -172,4 +216,12 @@ extends Expression with Application {
   def replaceArg(index: Int, expr: Expression) { _args(index) = expr }
   def clearArgs() { _args.clear() }
   override def toString = reporter.toString + "[" + args.mkString(", ") + "]"
+
+  def copy(reporter: Reporter = reporter,
+           start: Int = start,
+           end: Int = end,
+           file: String = file,
+           args: Seq[Expression] = args): ReporterApp = {
+    new ReporterApp(reporter, start, end, file, args)
+  }
 }

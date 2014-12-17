@@ -3,7 +3,8 @@
 package org.nlogo.compile
 package middle
 
-import org.nlogo.{ nvm, prim }
+import org.nlogo.{ core, nvm, prim },
+  core.Let
 
 /**
  * Removes the bodies of command tasks and makes them into separate "child" procedures.
@@ -20,8 +21,9 @@ class LambdaLifter(taskNumbers: Iterator[Int]) extends DefaultAstVisitor {
     expr.reporter match {
       case c: prim._commandtask =>
         for(p <- procedure) {
+          val formals = Array.range(1, c.argCount + 1).map(i => Let(s"?$i"))
           c.proc = new nvm.Procedure(
-            false, "__task-" + taskNumbers.next(), c.token, Seq(), parent = p)
+            false, "__task-" + taskNumbers.next(), c.token, Seq(), parent = p, taskFormals = formals)
           c.proc.pos = expr.start
           c.proc.end = expr.end
           p.children += c.proc

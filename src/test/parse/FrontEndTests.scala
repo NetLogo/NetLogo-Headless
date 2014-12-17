@@ -115,15 +115,15 @@ class FrontEndTests extends FunSuite {
   }
   test("DoParseMap") {
     runTest("__ignore map [round ?] [1.2 1.7 3.2]",
-      "_ignore()[_map()[_reportertask()[_round()[_taskvariable(1)[]]], _const([1.2, 1.7, 3.2])[]]]")
+      "_ignore()[_map()[_reportertask(1)[_round()[_taskvariable(1)[]]], _const([1.2, 1.7, 3.2])[]]]")
   }
   test("DoParseMapShortSyntax") {
     runTest("__ignore map round [1.2 1.7 3.2]",
-      "_ignore()[_map()[_reportertask()[_round()[_taskvariable(1)[]]], _const([1.2, 1.7, 3.2])[]]]")
+      "_ignore()[_map()[_reportertask(1)[_round()[_taskvariable(1)[]]], _const([1.2, 1.7, 3.2])[]]]")
   }
   test("DoParseForeach") {
     runTest("foreach [1 2 3] [__ignore ?]",
-      "_foreach()[_const([1.0, 2.0, 3.0])[], _commandtask()[[_ignore()[_taskvariable(1)[]]]]]")
+      "_foreach()[_const([1.0, 2.0, 3.0])[], _commandtask(1)[[_ignore()[_taskvariable(1)[]]]]]")
   }
   test("DoParseParenthesizedCommand") {
     runTest("(__ignore 5)",
@@ -165,25 +165,25 @@ class FrontEndTests extends FunSuite {
   }
   test("ParseConstantListInsideTask1") {
     runTest("__ignore n-values 10 [[]]",
-      "_ignore()[_nvalues()[_const(10.0)[], _reportertask()[_const([])[]]]]")
+      "_ignore()[_nvalues()[_const(10.0)[], _reportertask(0)[_const([])[]]]]")
   }
   test("ParseConstantListInsideTask2") {
     runTest("__ignore n-values 10 [[5]]",
-      "_ignore()[_nvalues()[_const(10.0)[], _reportertask()[_const([5.0])[]]]]")
+      "_ignore()[_nvalues()[_const(10.0)[], _reportertask(0)[_const([5.0])[]]]]")
   }
   test("ParseCommandTask1") {
     runTest("__ignore task [print ?]",
-      "_ignore()[_task()[_commandtask()[[_print()[_taskvariable(1)[]]]]]]")
+      "_ignore()[_commandtask(1)[[_print()[_taskvariable(1)[]]]]]")
   }
   test("ParseCommandTask2") {
     runTest("__ignore task [print 5]",
-      "_ignore()[_task()[_commandtask()[[_print()[_const(5.0)[]]]]]]")
+      "_ignore()[_commandtask(0)[[_print()[_const(5.0)[]]]]]")
   }
   test("ParseCommandTask3") {
     // it would be nice if this resulted in a CompilerException instead
     // of failing at runtime - ST 2/6/11
     runTest("__ignore runresult task [__ignore 5]",
-      "_ignore()[_runresult()[_task()[_commandtask()[[_ignore()[_const(5.0)[]]]]]]]")
+      "_ignore()[_runresult()[_commandtask(0)[[_ignore()[_const(5.0)[]]]]]]")
   }
   test("ParseDiffuse") {
     runTest("diffuse pcolor 1",
