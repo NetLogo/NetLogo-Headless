@@ -3,7 +3,7 @@
 package org.nlogo.parse
 
 import org.nlogo.core,
-  core.{Femto, ExtensionManager, DummyExtensionManager, FrontEndInterface, FrontEndProcedure, Program}
+org.nlogo.core.{AstTransformer, Femto, ExtensionManager, DummyExtensionManager, FrontEndInterface, FrontEndProcedure, Program}
 
 object FrontEnd extends FrontEnd {
   val tokenizer: core.TokenizerInterface =
@@ -51,8 +51,24 @@ trait FrontEndMain {
       }
       ExpressionParser(procedure, namedTokens)
     }
-    val topLevelDefs = structureResults.procedures.values.map(parseProcedure).toSeq
+    var topLevelDefs = structureResults.procedures.values.map(parseProcedure).toSeq
+
+    topLevelDefs = transformers.foldLeft(topLevelDefs) {
+      case (defs, transform) => defs.map(transform.visitProcedureDefinition)
+    }
+
     new AgentTypeChecker(topLevelDefs).check()  // catch agent type inconsistencies
+
+    val verifier = new TaskVariableVerifier
+    topLevelDefs.foreach(verifier.visitProcedureDefinition)
+
     (topLevelDefs, structureResults)
+  }
+
+  private def transformers: Seq[AstTransformer] = {
+    Seq(
+      new TaskSpecializer,
+      new TaskVariableVerifier
+    )
   }
 }

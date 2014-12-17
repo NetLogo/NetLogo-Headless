@@ -32,8 +32,6 @@ class TaskVisitor extends DefaultAstVisitor {
       case lv: prim._taskvariable =>
         task match {
           case None =>
-            cAssert(procedure.get.isTask,
-                    core.I18N.errors.get("compiler.TaskVisitor.notDefined"), expr)
             val formal: core.Let = procedure.get.getTaskFormal(lv.varNumber)
             val plv = new prim._letvariable
             expr.reporter = plv

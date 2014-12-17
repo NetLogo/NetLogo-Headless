@@ -70,10 +70,17 @@ case class _carefully() extends Command {
     Syntax.commandSyntax(
       right = List(Syntax.CommandBlockType, Syntax.CommandBlockType))
 }
-case class _commandtask() extends Reporter {
+case class _commandtask(minArgCount: Int = 0) extends Reporter {
   override def syntax =
     Syntax.reporterSyntax(
       ret = Syntax.CommandTaskType)
+
+  def copy(minArgCount: Int = minArgCount): _commandtask = {
+    val ct = new _commandtask(minArgCount)
+    ct.agentClassString = agentClassString
+    ct.token = token
+    ct
+  }
 }
 case class _const(value: AnyRef) extends Reporter with Pure {
   override def syntax =
@@ -326,10 +333,17 @@ case class _repeat() extends Command {
     Syntax.commandSyntax(
       right = List(Syntax.NumberType, Syntax.CommandBlockType))
 }
-case class _reportertask() extends Reporter {
+case class _reportertask(minArgCount: Int = 0) extends Reporter {
   override def syntax =
     Syntax.reporterSyntax(
       ret = Syntax.ReporterTaskType)
+
+  def copy(minArgCount: Int = minArgCount): _reportertask = {
+    val rt = new _reportertask(minArgCount)
+    rt.agentClassString = agentClassString
+    rt.token = token
+    rt
+  }
 }
 case class _return() extends Command {
   override def syntax =
@@ -365,6 +379,7 @@ case class _sum() extends Reporter with Pure {
       right = List(Syntax.ListType),
       ret = Syntax.NumberType)
 }
+// This is used only for parsing and removed from the AST before compilation
 case class _task() extends Reporter {
   override def syntax = {
     val anyTask = Syntax.CommandTaskType | Syntax.ReporterTaskType
