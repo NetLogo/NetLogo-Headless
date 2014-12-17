@@ -8,6 +8,8 @@ package org.nlogo.parse
 // FrontEnd.parseProcedure calls LetNamer, then Namer, then LetScoper.  All three
 // classes (yes, including Namer!) do something special with "let".  All of this
 // happens before ExpressionParser (the class that actually makes ASTs).
+// After ExpressionParser, there are two more passes on let's, LetReducer and LetVerifier,
+// which are covered at the end.
 //
 // WHAT HAPPENS:
 //
@@ -71,6 +73,16 @@ package org.nlogo.parse
 //
 // A: Almost certainly not, but we need to move on since we only have 4 hours/
 //    week to work on this. #pragmatism
+//
+// Q: What's the deal with LetVerifier and LetReducer?
+//
+// A: LetNamer, Namer, and LetScoper allow let to be parsed, but don't really deal
+//    with the semantics of let. That's LetVerifier and LetReducer. LetVerifier
+//    checks that no `let x x` is allowed. LetReducer pulls the (at that point) redundant
+//    _letname prim out of the AST, which makes life easier for the rest of the Compiler.
+//    These operations are easiest to do on ASTs. The reduction step *could* be moved into
+//    LetScoper, but it would result in having to change the syntax of the _let primitive,
+//    seems awkward and confusing.
 
 import org.nlogo.{ core, api },
   core.{ Token, TokenType, Let },

@@ -49,9 +49,6 @@ class Backifier(
   def apply(r: core.Reporter): nvm.Reporter = {
     val result = r match {
 
-      case core.prim._letname() =>
-        new prim._letvariable(null)
-
       case core.prim._letvariable(let) =>
         new prim._letvariable(let)
 

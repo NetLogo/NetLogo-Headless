@@ -23,7 +23,6 @@ class LocalsVisitor(alteredLets: collection.mutable.Map[Procedure, collection.mu
 extends DefaultAstVisitor {
 
   private var procedure: Procedure = null
-  private var currentLet: _let = null  // for forbidding "let x x" and the like
   private var askNestingLevel = 0
   private var vn = 0   // used when converting _repeat to _repeatlocal
 
@@ -40,20 +39,17 @@ extends DefaultAstVisitor {
         super.visitStatement(stmt)
         askNestingLevel -= 1
       case l: _let =>
-        currentLet = l
         // Using "__let" instead of "let" to indicates that this is a let we don't want converted
         // to a local. This can be useful for testing. - ST 11/3/10, 2/6/11
         val exempt = l.token.text.equalsIgnoreCase("__LET")
         if(!procedure.isTask && askNestingLevel == 0 && !exempt) {
           stmt.command = new _setprocedurevariable(new _procedurevariable(procedure.args.size, l.let.name))
           stmt.command.token = stmt.command.token
-          stmt.removeArgument(0)
           alteredLets(procedure).put(l.let, procedure.args.size)
           procedure.localsCount += 1
           procedure.args :+= l.let.name
         }
         super.visitStatement(stmt)
-        currentLet = null
       case r: _repeat =>
         if(!procedure.isTask && askNestingLevel == 0) {
           vn = procedure.args.size

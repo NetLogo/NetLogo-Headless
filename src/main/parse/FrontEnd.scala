@@ -71,7 +71,8 @@ trait FrontEndMain {
   private def transformers: Seq[AstTransformer] = {
     Seq(
       new TaskSpecializer,
-      new TaskVariableVerifier
+      new TaskVariableVerifier,
+      new LetReducer
     )
   }
 }

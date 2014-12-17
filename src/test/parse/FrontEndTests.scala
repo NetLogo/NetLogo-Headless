@@ -125,6 +125,10 @@ class FrontEndTests extends FunSuite {
     runTest("foreach [1 2 3] [__ignore ?]",
       "_foreach()[_const([1.0, 2.0, 3.0])[], _commandtask(1)[[_ignore()[_taskvariable(1)[]]]]]")
   }
+  test("DoParselet") {
+    runTest("let x 5 __ignore x",
+      "_let(Let(X))[_const(5.0)[]] _ignore()[_letvariable(Let(X))[]]")
+  }
   test("DoParseParenthesizedCommand") {
     runTest("(__ignore 5)",
       "_ignore()[_const(5.0)[]]")
