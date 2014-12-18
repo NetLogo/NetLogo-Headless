@@ -2,20 +2,15 @@
 
 package org.nlogo.parse
 
-import org.nlogo.compile.{ProcedureDefinition, Scaffold}
-import org.nlogo.core.{CompilerException, Femto, FrontEndInterface}
+import org.nlogo.core.{CompilerException, ProcedureDefinition}
 import org.scalatest.FunSuite
-
-import scala.collection.immutable.ListMap
 
 class AgentTypeCheckerTests extends FunSuite {
 
   /// first some helpers
   def compile(source: String): Seq[ProcedureDefinition] = {
     val (coreDefs, _) = FrontEnd.frontEnd(source)
-    val defs = Scaffold(source)
-    new AgentTypeChecker(coreDefs).check()
-    defs
+    coreDefs
   }
 
   def testBoth(source: String, expected: String) {
