@@ -57,6 +57,9 @@ trait FrontEndMain {
       case (defs, transform) => defs.map(transform.visitProcedureDefinition)
     }
 
+    val letVerifier = new LetVerifier
+    topLevelDefs.foreach(letVerifier.visitProcedureDefinition)
+
     new AgentTypeChecker(topLevelDefs).check()  // catch agent type inconsistencies
 
     val verifier = new TaskVariableVerifier

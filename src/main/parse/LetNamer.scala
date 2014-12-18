@@ -17,6 +17,9 @@ object LetNamer {
       case t @ Token(_, TokenType.Ident, "LET") =>
         lastTokenWasLet = true
         t
+      case t @ Token(_, TokenType.Ident, "__LET") =>
+        lastTokenWasLet = true
+        t
       case t =>
         lastTokenWasLet = false
         t

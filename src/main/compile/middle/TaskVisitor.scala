@@ -33,15 +33,11 @@ class TaskVisitor extends DefaultAstVisitor {
         task match {
           case None =>
             val formal: core.Let = procedure.get.getTaskFormal(lv.varNumber)
-            val plv = new prim._letvariable
-            expr.reporter = plv
-            plv.let = formal
+            expr.reporter = new prim._letvariable(formal)
             expr.reporter.token = lv.token
           case Some(l: prim._reportertask) =>
             val formal: core.Let = l.getFormal(lv.varNumber)
-            val plv = new prim._letvariable
-            expr.reporter = plv
-            plv.let = formal
+            expr.reporter = new prim._letvariable(formal)
             expr.reporter.token = lv.token
         }
       case _ =>
