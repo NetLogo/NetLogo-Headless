@@ -37,9 +37,7 @@ class Backifier(
       case core.prim._call(proc) =>
         new prim._call(procedures(proc.name))
       case core.prim._let(let) =>
-        val result = new prim._let
-        result.let = let
-        result
+        new prim._let(let)
       case _ =>
         fallback[core.Command, nvm.Command](c)
     }

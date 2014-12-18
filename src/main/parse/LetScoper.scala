@@ -146,7 +146,7 @@ class LetScoper(usedNames: Map[String, String]) {
             t.refine(l.copy(let = let))
           case None =>
             val msg = I18N.errors.getN(
-              "compiler.LocalsVisitor.notDefined", t.text.toUpperCase)
+              "compiler.LetVariable.notDefined", t.text.toUpperCase)
             exception(msg, t)
         }
       case t =>
