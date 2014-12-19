@@ -66,6 +66,7 @@ case class _callreport(proc: FrontEndProcedure) extends Reporter {
     s"_call($name)"
 }
 case class _carefully() extends Command {
+  val let: Let = Let()
   override def syntax =
     Syntax.commandSyntax(
       right = List(Syntax.CommandBlockType, Syntax.CommandBlockType))
@@ -126,10 +127,22 @@ case class _equal() extends Reporter with Pure {
       ret = Syntax.BooleanType,
       precedence = Syntax.NormalPrecedence - 5)
 }
-case class _errormessage() extends Reporter {
+case class _errormessage(let: Option[Let]) extends Reporter {
+  def this() = this(None)
+
   override def syntax =
     Syntax.reporterSyntax(
       ret = Syntax.StringType)
+
+  override def toString =
+    "_errormessage()"
+
+  def copy(let: Option[Let] = let): _errormessage = {
+    val em = new _errormessage(let)
+    em.agentClassString = agentClassString
+    em.token = token
+    em
+  }
 }
 case class _extern(syntax: Syntax) extends Command {
   override def toString =

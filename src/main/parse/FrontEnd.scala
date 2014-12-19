@@ -72,7 +72,8 @@ trait FrontEndMain {
     Seq(
       new TaskSpecializer,
       new TaskVariableVerifier,
-      new LetReducer
+      new LetReducer,
+      new CarefullyVisitor
     )
   }
 }
