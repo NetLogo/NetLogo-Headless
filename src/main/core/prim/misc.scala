@@ -78,9 +78,7 @@ case class _commandtask(minArgCount: Int = 0) extends Reporter {
 
   def copy(minArgCount: Int = minArgCount): _commandtask = {
     val ct = new _commandtask(minArgCount)
-    ct.agentClassString = agentClassString
-    ct.token = token
-    ct
+    copyInstruction(ct)
   }
 }
 case class _const(value: AnyRef) extends Reporter with Pure {
@@ -139,9 +137,7 @@ case class _errormessage(let: Option[Let]) extends Reporter {
 
   def copy(let: Option[Let] = let): _errormessage = {
     val em = new _errormessage(let)
-    em.agentClassString = agentClassString
-    em.token = token
-    em
+    copyInstruction(em)
   }
 }
 case class _extern(syntax: Syntax) extends Command {
@@ -353,9 +349,7 @@ case class _reportertask(minArgCount: Int = 0) extends Reporter {
 
   def copy(minArgCount: Int = minArgCount): _reportertask = {
     val rt = new _reportertask(minArgCount)
-    rt.agentClassString = agentClassString
-    rt.token = token
-    rt
+    copyInstruction(rt)
   }
 }
 case class _return() extends Command {
