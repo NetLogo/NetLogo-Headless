@@ -2,9 +2,9 @@
 
 package org.nlogo.prim
 
-import org.nlogo.core.{Pure, LogoList}
 import org.nlogo.api.Dump
-import org.nlogo.nvm.{ Reporter, Context }
+import org.nlogo.core.Pure
+import org.nlogo.nvm.{ Context, Reporter }
 
 class _const(_value: AnyRef) extends Reporter with Pure {
 

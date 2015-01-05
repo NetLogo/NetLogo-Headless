@@ -2,10 +2,10 @@
 
 package org.nlogo.prim
 
+import org.nlogo.agent.{ Link, Patch, Turtle }
 import org.nlogo.api.Equality
-import org.nlogo.agent.{ Turtle, Patch, Link }
 import org.nlogo.core.Pure
-import org.nlogo.nvm.{ Reporter, Context }
+import org.nlogo.nvm.{ Context, Reporter }
 
 class _notequal extends Reporter with Pure {
 

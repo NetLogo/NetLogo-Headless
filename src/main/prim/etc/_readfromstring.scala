@@ -2,7 +2,7 @@
 
 package org.nlogo.prim.etc
 
-import org.nlogo.core.{CompilerException, Syntax}
+import org.nlogo.core.CompilerException
 import org.nlogo.nvm.{ Context, EngineException, Reporter }
 
 class _readfromstring extends Reporter {

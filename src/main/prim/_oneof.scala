@@ -2,10 +2,9 @@
 
 package org.nlogo.prim
 
-import org.nlogo.core.{I18N, Nobody, Syntax}
-import org.nlogo.core.LogoList
 import org.nlogo.agent.AgentSet
-import org.nlogo.nvm.{ Reporter, Context, EngineException, ArgumentTypeException }
+import org.nlogo.core.{ I18N, LogoList, Nobody, Syntax }
+import org.nlogo.nvm.{ ArgumentTypeException, Context, EngineException, Reporter }
 
 class _oneof extends Reporter {
 

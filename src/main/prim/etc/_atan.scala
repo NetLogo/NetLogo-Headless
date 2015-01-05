@@ -2,8 +2,8 @@
 
 package org.nlogo.prim.etc
 
-import org.nlogo.core.{Pure, I18N}
-import org.nlogo.nvm.{ Context, Reporter, EngineException }
+import org.nlogo.core.{ I18N, Pure }
+import org.nlogo.nvm.{ Context, EngineException, Reporter }
 
 class _atan extends Reporter with Pure {
   override def report(context: Context): java.lang.Double =

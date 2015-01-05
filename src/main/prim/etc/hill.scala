@@ -2,9 +2,8 @@
 
 package org.nlogo.prim.etc
 
-import org.nlogo.nvm,
-  org.nlogo.core.Syntax,
-  org.nlogo.agent.{ Turtle, Patch, AgentSet }
+import org.nlogo.agent.{ AgentSet, Patch, Turtle }
+import org.nlogo.nvm
 
 class _uphill extends HillCommand(sign = 1) {
   override def neighbors(p: Patch) = p.getNeighbors }

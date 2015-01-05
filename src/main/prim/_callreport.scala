@@ -2,9 +2,7 @@
 
 package org.nlogo.prim
 
-import org.nlogo.core.Syntax
-import org.nlogo.nvm.{ Reporter, CustomGenerated, Context, Procedure,
-                       Activation, EngineException }
+import org.nlogo.nvm.{ Activation, Context, CustomGenerated, EngineException, Procedure, Reporter }
 
 // Note that _callreport is "CustomGenerated".  That means that the bytecode generator generates
 // custom bytecode for _callreport, instead of using the report() method below.  The body of the

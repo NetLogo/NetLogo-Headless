@@ -2,9 +2,8 @@
 
 package org.nlogo.prim
 
-import org.nlogo.agent.{ AgentSet, Turtle, Patch }
-import org.nlogo.core.Syntax
-import org.nlogo.nvm.{ Reporter, Context }
+import org.nlogo.agent.{ AgentSet, Patch, Turtle }
+import org.nlogo.nvm.{ Context, Reporter }
 
 class _neighbors4 extends Reporter {
   override def report(context: Context): AgentSet =

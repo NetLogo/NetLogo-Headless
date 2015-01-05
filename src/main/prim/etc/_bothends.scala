@@ -2,7 +2,6 @@
 
 package org.nlogo.prim.etc
 
-import org.nlogo.core.Syntax
 import org.nlogo.agent.{ AgentSet, Link }
 import org.nlogo.nvm.{ Context, Reporter }
 

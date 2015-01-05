@@ -2,8 +2,8 @@
 
 package org.nlogo.prim
 
-import org.nlogo.core.{Pure, LogoList}
 import org.nlogo.api.LogoListBuilder
+import org.nlogo.core.{ LogoList, Pure }
 import org.nlogo.nvm.{ Context, Reporter }
 
 class _sentence extends Reporter with Pure {

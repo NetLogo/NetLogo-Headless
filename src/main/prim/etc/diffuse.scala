@@ -2,9 +2,9 @@
 
 package org.nlogo.prim.etc
 
-import org.nlogo.{ api, nvm, core },
-  core.{Nobody, Syntax},
-  org.nlogo.agent.PatchException
+import org.nlogo.agent.PatchException
+import org.nlogo.core.Nobody
+import org.nlogo.{ api, core, nvm }
 
 class _diffuse extends DiffuseCommand {
   override def diffuse(amount: Double) =

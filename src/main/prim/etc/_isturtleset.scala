@@ -2,8 +2,8 @@
 
 package org.nlogo.prim.etc
 
-import org.nlogo.core.{Pure, AgentKind, prim}
-import org.nlogo.agent.{ AgentSet, Turtle }
+import org.nlogo.agent.AgentSet
+import org.nlogo.core.{ AgentKind, Pure }
 import org.nlogo.nvm.{ Context, Reporter }
 
 class _isturtleset extends Reporter with Pure {

@@ -2,9 +2,9 @@
 
 package org.nlogo.prim
 
-import org.nlogo.core.{Nobody, Syntax}
-import org.nlogo.agent.{ Turtle, Patch }
-import org.nlogo.nvm.{ Reporter, Context }
+import org.nlogo.agent.{ Patch, Turtle }
+import org.nlogo.core.Nobody
+import org.nlogo.nvm.{ Context, Reporter }
 
 class _patchsouth extends Reporter {
 

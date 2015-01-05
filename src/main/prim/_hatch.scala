@@ -2,9 +2,9 @@
 
 package org.nlogo.prim
 
-import org.nlogo.core.{ Syntax, AgentKind }
-import org.nlogo.agent.{ Turtle, AgentSetBuilder }
-import org.nlogo.nvm.{ Command, Context, CustomAssembled, AssemblerAssistant }
+import org.nlogo.agent.{ AgentSetBuilder, Turtle }
+import org.nlogo.core.AgentKind
+import org.nlogo.nvm.{ AssemblerAssistant, Command, Context, CustomAssembled }
 
 class _hatch(val breedName: String) extends Command with CustomAssembled {
 

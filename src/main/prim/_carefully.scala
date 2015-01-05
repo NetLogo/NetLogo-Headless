@@ -2,10 +2,10 @@
 
 package org.nlogo.prim
 
-import org.nlogo.core.{ Syntax, Let }
 import org.nlogo.agent.AgentSet
 import org.nlogo.api.LogoException
-import org.nlogo.nvm.{ Command, Context, CustomAssembled, AssemblerAssistant }
+import org.nlogo.core.Let
+import org.nlogo.nvm.{ AssemblerAssistant, Command, Context, CustomAssembled }
 
 class _carefully extends Command with CustomAssembled {
 

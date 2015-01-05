@@ -3,9 +3,9 @@
 package org.nlogo.prim.etc;
 
 import org.nlogo.core.I18N;
+import org.nlogo.core.Pure;
 import org.nlogo.nvm.Context;
 import org.nlogo.nvm.EngineException;
-import org.nlogo.core.Pure;
 import org.nlogo.nvm.Reporter;
 
 public final strictfp class _sqrt extends Reporter implements Pure {

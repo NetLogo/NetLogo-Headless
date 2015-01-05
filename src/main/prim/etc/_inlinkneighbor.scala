@@ -2,9 +2,8 @@
 
 package org.nlogo.prim.etc
 
-import org.nlogo.core.Syntax
-import org.nlogo.nvm.{ Reporter, Context, EngineException }
-import org.nlogo.agent.{ Turtle, LinkManager }
+import org.nlogo.agent.{ LinkManager, Turtle }
+import org.nlogo.nvm.{ Context, EngineException, Reporter }
 
 class _inlinkneighbor(val breedName: String) extends Reporter {
 

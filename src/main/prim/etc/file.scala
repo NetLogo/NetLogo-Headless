@@ -2,10 +2,11 @@
 
 package org.nlogo.prim.etc
 
-import org.nlogo.core.{CompilerException, FileMode, Syntax}
-import org.nlogo.api.OutputDestination
-import org.nlogo.nvm.{ Command, Context, EngineException, Reporter }
 import java.io.IOException
+
+import org.nlogo.api.OutputDestination
+import org.nlogo.core.{ CompilerException, FileMode }
+import org.nlogo.nvm.{ Command, Context, EngineException, Reporter }
 
 class _fileatend extends Reporter {
   override def report(context: Context): java.lang.Boolean =

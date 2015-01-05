@@ -2,10 +2,9 @@
 
 package org.nlogo.prim
 
-import org.nlogo.core.{Nobody, Syntax}
 import org.nlogo.api.AgentException
-import org.nlogo.agent.Patch
-import org.nlogo.nvm.{ Reporter, Context }
+import org.nlogo.core.Nobody
+import org.nlogo.nvm.{ Context, Reporter }
 
 class _patchat extends Reporter {
 

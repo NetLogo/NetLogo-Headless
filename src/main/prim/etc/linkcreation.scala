@@ -3,8 +3,8 @@
 package org.nlogo.prim.etc
 
 import
-  org.nlogo.{ api, agent, core, nvm },
-    core.{ Syntax, AgentKind },
+  org.nlogo.{ agent, core, nvm },
+    core.Syntax,
     agent.{ Turtle, Link, LinkManager, AgentSet, AgentSetBuilder },
     nvm.{ Command, Context, EngineException }
 

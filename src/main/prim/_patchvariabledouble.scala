@@ -2,10 +2,9 @@
 
 package org.nlogo.prim
 
-import org.nlogo.core.Syntax
-import org.nlogo.api.AgentException
 import org.nlogo.agent.{ Patch, Turtle }
-import org.nlogo.nvm.{ Reporter, Context, EngineException }
+import org.nlogo.api.AgentException
+import org.nlogo.nvm.{ Context, EngineException, Reporter }
 
 class _patchvariabledouble(private[this] var _vn: Int) extends Reporter {
 

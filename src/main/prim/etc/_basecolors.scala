@@ -2,8 +2,8 @@
 
 package org.nlogo.prim.etc
 
-import org.nlogo.core.{ LogoList, Syntax }
 import org.nlogo.api.Color
+import org.nlogo.core.LogoList
 import org.nlogo.nvm.{ Context, Reporter }
 
 class _basecolors extends Reporter {

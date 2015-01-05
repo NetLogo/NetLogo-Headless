@@ -2,9 +2,8 @@
 
 package org.nlogo.prim.etc
 
-import org.nlogo.core.Syntax
 import org.nlogo.core.I18N
-import org.nlogo.nvm.{ EngineException, Context, Reporter }
+import org.nlogo.nvm.{ Context, EngineException, Reporter }
 
 class _reduce extends Reporter {
 

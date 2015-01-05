@@ -2,10 +2,8 @@
 
 package org.nlogo.prim.etc
 
-import org.nlogo.core.Syntax
-import org.nlogo.api.LogoException
-import org.nlogo.nvm.{ Command, Context, EngineException }
 import org.nlogo.agent.ImportPatchColors.importPatchColors
+import org.nlogo.nvm.{ Command, Context, EngineException }
 
 class _importpatchcolors extends Command {
 

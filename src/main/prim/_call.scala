@@ -3,7 +3,7 @@
 package org.nlogo.prim
 
 import org.nlogo.core.Syntax
-import org.nlogo.nvm.{ Command, CustomGenerated, Context, Activation, Procedure }
+import org.nlogo.nvm.{ Activation, Command, Context, CustomGenerated, Procedure }
 
 // Note that _call is "CustomGenerated".  That means that the bytecode generator generates custom
 // bytecode for _call, instead of using the perform() method below.  The body of the perform()

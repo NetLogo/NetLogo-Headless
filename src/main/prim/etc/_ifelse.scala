@@ -2,8 +2,8 @@
 
 package org.nlogo.prim.etc
 
-import org.nlogo.core.Syntax
-import org.nlogo.nvm, nvm.{ Command, Context }
+import org.nlogo.nvm
+import org.nlogo.nvm.{ Command, Context }
 
 class _ifelse extends Command with nvm.CustomAssembled {
 

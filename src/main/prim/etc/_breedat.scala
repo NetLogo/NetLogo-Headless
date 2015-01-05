@@ -2,10 +2,10 @@
 
 package org.nlogo.prim.etc
 
-import org.nlogo.core.{ Syntax, AgentKind }
-import org.nlogo.api.AgentException
 import org.nlogo.agent.{ AgentSet, AgentSetBuilder }
-import org.nlogo.nvm.{ Reporter, Context }
+import org.nlogo.api.AgentException
+import org.nlogo.core.AgentKind
+import org.nlogo.nvm.{ Context, Reporter }
 
 class _breedat(breedName: String) extends Reporter {
 

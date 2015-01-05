@@ -2,9 +2,9 @@
 
 package org.nlogo.prim.etc
 
-import org.nlogo.core.{Nobody, Syntax}
-import org.nlogo.api.AgentException
 import org.nlogo.agent.Turtle
+import org.nlogo.api.AgentException
+import org.nlogo.core.Nobody
 import org.nlogo.nvm.{ Context, Reporter }
 
 @annotation.strictfp

@@ -2,9 +2,7 @@
 
 package org.nlogo.prim.etc
 
-import org.nlogo.core.{ I18N, AgentKind }
-import org.nlogo.api.LogoException
-import org.nlogo.agent.{ Turtle, Patch }
+import org.nlogo.core.{ AgentKind, I18N }
 import org.nlogo.nvm.{ Command, Context, EngineException }
 
 class _setdefaultshape extends Command {

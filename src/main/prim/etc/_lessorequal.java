@@ -6,11 +6,11 @@ import org.nlogo.agent.Agent;
 import org.nlogo.agent.Link;
 import org.nlogo.agent.Patch;
 import org.nlogo.agent.Turtle;
-import org.nlogo.core.I18N;
 import org.nlogo.api.TypeNames;
+import org.nlogo.core.I18N;
+import org.nlogo.core.Pure;
 import org.nlogo.nvm.Context;
 import org.nlogo.nvm.EngineException;
-import org.nlogo.core.Pure;
 import org.nlogo.nvm.Reporter;
 
 public final strictfp class _lessorequal

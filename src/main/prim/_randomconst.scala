@@ -2,8 +2,7 @@
 
 package org.nlogo.prim
 
-import org.nlogo.core.Syntax
-import org.nlogo.nvm.{ Context, Reporter}
+import org.nlogo.nvm.{ Context, Reporter }
 
 class _randomconst(n: Long) extends Reporter {
   override def toString =

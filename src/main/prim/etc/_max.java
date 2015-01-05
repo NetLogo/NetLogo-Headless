@@ -5,9 +5,9 @@ package org.nlogo.prim.etc;
 import org.nlogo.api.Dump;
 import org.nlogo.core.I18N;
 import org.nlogo.core.LogoList;
+import org.nlogo.core.Pure;
 import org.nlogo.nvm.Context;
 import org.nlogo.nvm.EngineException;
-import org.nlogo.core.Pure;
 import org.nlogo.nvm.Reporter;
 
 public final strictfp class _max extends Reporter implements Pure {

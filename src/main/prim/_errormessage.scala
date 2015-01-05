@@ -2,9 +2,9 @@
 
 package org.nlogo.prim
 
-import org.nlogo.core.{ Syntax, Let }
 import org.nlogo.api.LogoException
-import org.nlogo.nvm.{ Reporter, Context }
+import org.nlogo.core.Let
+import org.nlogo.nvm.{ Context, Reporter }
 
 /**
  * Gets the error message from the LetMap.

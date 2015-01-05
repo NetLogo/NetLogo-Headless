@@ -2,8 +2,8 @@
 
 package org.nlogo.prim
 
-import org.nlogo.core.{Pure, Syntax, prim}
-import org.nlogo.nvm.{ Context, Reporter, CustomGenerated }
+import org.nlogo.core.{ Pure, Syntax }
+import org.nlogo.nvm.{ Context, CustomGenerated, Reporter }
 
 class _or extends Reporter with Pure with CustomGenerated {
   override def returnType =

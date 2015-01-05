@@ -2,8 +2,8 @@
 
 package org.nlogo.prim
 
-import org.nlogo.core.{ Syntax, AgentKind, Reference, Referenceable }
-import org.nlogo.nvm.{ Reporter, Context }
+import org.nlogo.core.{ AgentKind, Reference, Referenceable }
+import org.nlogo.nvm.{ Context, Reporter }
 
 class _observervariable(_vn: Int) extends Reporter with Referenceable {
 

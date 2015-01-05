@@ -2,9 +2,8 @@
 
 package org.nlogo.prim
 
-import org.nlogo.core.Syntax
 import org.nlogo.agent.AgentSet
-import org.nlogo.nvm.{ Reporter, Context }
+import org.nlogo.nvm.{ Context, Reporter }
 
 class _anyother extends Reporter {
 

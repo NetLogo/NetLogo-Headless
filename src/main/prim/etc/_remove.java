@@ -3,8 +3,8 @@
 package org.nlogo.prim.etc;
 
 import org.nlogo.api.Equality;
-import org.nlogo.core.LogoList;
 import org.nlogo.api.LogoListBuilder;
+import org.nlogo.core.LogoList;
 import org.nlogo.core.Pure;
 import org.nlogo.core.Syntax;
 import org.nlogo.nvm.ArgumentTypeException;

@@ -2,8 +2,8 @@
 
 package org.nlogo.prim
 
-import org.nlogo.{ core, api, agent }
 import org.nlogo.nvm.{ Command, Context }
+import org.nlogo.{ agent, api }
 
 class _fd1 extends Command {
   switches = true

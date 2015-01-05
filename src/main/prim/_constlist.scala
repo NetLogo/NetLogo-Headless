@@ -2,9 +2,9 @@
 
 package org.nlogo.prim
 
-import org.nlogo.core.{Pure, LogoList}
 import org.nlogo.api.Dump
-import org.nlogo.nvm.{ Reporter, Context }
+import org.nlogo.core.{ LogoList, Pure }
+import org.nlogo.nvm.{ Context, Reporter }
 
 class _constlist(value: LogoList) extends Reporter with Pure {
   override def toString =

@@ -2,9 +2,8 @@
 
 package org.nlogo.prim.etc
 
-import org.nlogo.core.Syntax
-import org.nlogo.nvm.{ Reporter, Context }
-import org.nlogo.agent.{ Turtle, Link }
+import org.nlogo.agent.{ Link, Turtle }
+import org.nlogo.nvm.{ Context, Reporter }
 
 class _isbreed(val breedName: String) extends Reporter {
 

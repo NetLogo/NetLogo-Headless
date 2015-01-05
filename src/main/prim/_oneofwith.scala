@@ -2,11 +2,10 @@
 
 package org.nlogo.prim
 
-import org.nlogo.core.{Nobody, Syntax}
-import org.nlogo.api.Dump
-import org.nlogo.core.I18N
 import org.nlogo.agent.AgentSet
-import org.nlogo.nvm.{ Reporter, Context, EngineException }
+import org.nlogo.api.Dump
+import org.nlogo.core.{ I18N, Nobody }
+import org.nlogo.nvm.{ Context, EngineException, Reporter }
 
 class _oneofwith extends Reporter {
 

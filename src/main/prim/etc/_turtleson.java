@@ -9,7 +9,6 @@ import org.nlogo.agent.Turtle;
 import org.nlogo.core.AgentKindJ;
 import org.nlogo.core.I18N;
 import org.nlogo.core.Syntax;
-import org.nlogo.core.SyntaxJ;
 import org.nlogo.nvm.ArgumentTypeException;
 import org.nlogo.nvm.EngineException;
 import org.nlogo.nvm.Reporter;

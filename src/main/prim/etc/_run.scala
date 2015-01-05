@@ -2,9 +2,9 @@
 
 package org.nlogo.prim.etc
 
-import org.nlogo.core.{CompilerException, Syntax}
-import org.nlogo.nvm.{ Activation, ArgumentTypeException, Command, CommandTask, Context,
-                       EngineException, NonLocalExit, Procedure }
+import org.nlogo.core.{ CompilerException, Syntax }
+import org.nlogo.nvm.{ Activation, ArgumentTypeException, Command,
+                       CommandTask, Context, EngineException, NonLocalExit }
 
 class _run extends Command {
 

@@ -2,8 +2,6 @@
 
 package org.nlogo.prim.etc;
 
-import org.nlogo.core.Syntax;
-import org.nlogo.core.SyntaxJ;
 import org.nlogo.nvm.EngineException;
 
 public final strictfp class _exportview

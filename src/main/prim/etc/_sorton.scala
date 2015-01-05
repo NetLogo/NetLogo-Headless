@@ -2,9 +2,9 @@
 
 package org.nlogo.prim.etc
 
-import org.nlogo.core.{ Syntax, LogoList }
-import org.nlogo.api.{ LogoListBuilder, TypeNames }
 import org.nlogo.agent.Agent
+import org.nlogo.api.{ LogoListBuilder, TypeNames }
+import org.nlogo.core.LogoList
 import org.nlogo.nvm.{ Context, EngineException, Reporter }
 
 class _sorton extends Reporter {

@@ -2,10 +2,10 @@
 
 package org.nlogo.prim
 
-import org.nlogo.core.{ Syntax, Let }
-import org.nlogo.api.{ AgentException, Numbers }
-import org.nlogo.nvm.{ Command, Context, MutableDouble }
 import org.nlogo.agent.Turtle
+import org.nlogo.api.{ AgentException, Numbers }
+import org.nlogo.core.Let
+import org.nlogo.nvm.{ Command, Context, MutableDouble }
 
 class _fdinternal(let: Let) extends Command {
 

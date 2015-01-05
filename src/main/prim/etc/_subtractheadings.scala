@@ -2,7 +2,6 @@
 
 package org.nlogo.prim.etc
 
-import org.nlogo.api.LogoException
 import org.nlogo.agent.Turtle
 import org.nlogo.core.Pure
 import org.nlogo.nvm.{ Context, Reporter }

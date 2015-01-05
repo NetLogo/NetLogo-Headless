@@ -2,9 +2,8 @@
 
 package org.nlogo.prim
 
-import org.nlogo.core.{ Syntax, Let }
-import org.nlogo.api.LogoException
-import org.nlogo.nvm.{ Command, Context, MutableDouble, CustomAssembled, AssemblerAssistant }
+import org.nlogo.core.Let
+import org.nlogo.nvm.{ AssemblerAssistant, Command, Context, CustomAssembled, MutableDouble }
 
 // note that this and _bk are pretty much carbon copies of each other
 

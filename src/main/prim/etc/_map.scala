@@ -2,9 +2,9 @@
 
 package org.nlogo.prim.etc
 
-import org.nlogo.core.{ Syntax, LogoList }
 import org.nlogo.api.LogoListBuilder
-import org.nlogo.nvm.{ EngineException, Context, Reporter }
+import org.nlogo.core.LogoList
+import org.nlogo.nvm.{ Context, EngineException, Reporter }
 
 class _map extends Reporter {
 

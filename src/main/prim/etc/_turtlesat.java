@@ -2,11 +2,8 @@
 
 package org.nlogo.prim.etc;
 
-import org.nlogo.agent.AgentSet;
 import org.nlogo.agent.AgentSetBuilder;
 import org.nlogo.core.AgentKindJ;
-import org.nlogo.core.Syntax;
-import org.nlogo.core.SyntaxJ;
 import org.nlogo.nvm.Context;
 import org.nlogo.nvm.Reporter;
 

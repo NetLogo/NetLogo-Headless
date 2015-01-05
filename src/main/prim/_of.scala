@@ -2,10 +2,10 @@
 
 package org.nlogo.prim
 
-import org.nlogo.core.{ LogoList, I18N, Syntax }
-import org.nlogo.api.LogoListBuilder
 import org.nlogo.agent.{ Agent, AgentSet }
-import org.nlogo.nvm.{ Reporter, Context, EngineException }
+import org.nlogo.api.LogoListBuilder
+import org.nlogo.core.{ I18N, Syntax }
+import org.nlogo.nvm.{ Context, EngineException, Reporter }
 
 class _of extends Reporter {
 

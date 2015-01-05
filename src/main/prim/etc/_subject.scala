@@ -2,8 +2,8 @@
 
 package org.nlogo.prim.etc
 
-import org.nlogo.core.{Nobody, Syntax}
 import org.nlogo.api.Perspective
+import org.nlogo.core.Nobody
 import org.nlogo.nvm.{ Context, Reporter }
 
 class _subject extends Reporter {

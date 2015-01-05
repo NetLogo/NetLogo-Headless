@@ -2,9 +2,9 @@
 
 package org.nlogo.prim
 
-import org.nlogo.core.{ Syntax, AgentKind }
-import org.nlogo.agent.{ Patch, AgentSetBuilder }
-import org.nlogo.nvm.{ Reporter, Context }
+import org.nlogo.agent.AgentSetBuilder
+import org.nlogo.core.AgentKind
+import org.nlogo.nvm.{ Context, Reporter }
 
 class _patchrow extends Reporter {
 

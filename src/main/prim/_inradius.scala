@@ -9,10 +9,9 @@ import
   scala.annotation.strictfp
 
 import
-  org.nlogo.{ agent, api, core, nvm },
+  org.nlogo.{ agent, core, nvm },
     agent.{ Agent, AgentSet },
-    core.I18N,
-    core.AgentKind,
+    core.{ AgentKind, I18N },
     nvm.{ Context, EngineException, Instruction, Reporter }
 
 // These classes are purposely written to delegate, rather than inherit, for the sake of performance --JAB (6/20/14)
@@ -39,19 +38,7 @@ private object InRadiusOps {
 
   type InRadiusFinder = (Agent, AgentSet, Double, Boolean) => JList[Agent]
 
-  val syntax = {
-    import org.nlogo.core.Syntax, Syntax._
-    Syntax.reporterSyntax(
-      agentClassString = "-TP-",
-      precedence       = NormalPrecedence + 2,
-      left             = TurtlesetType | PatchsetType,
-      right            = List(NumberType),
-      ret              = TurtlesetType | PatchsetType
-    )
-  }
-
   def report(findAgentsInRadius: InRadiusFinder, instr: Instruction)(context: Context): AnyRef = {
-
     val sourceSet = instr.argEvalAgentSet(context, 0)
     val radius    = instr.argEvalDoubleValue(context, 1)
 
@@ -63,7 +50,6 @@ private object InRadiusOps {
 
     val result = findAgentsInRadius(context.agent, sourceSet, radius, true)
     AgentSet.fromArray(sourceSet.kind, result.toArray(new Array[Agent](result.size)))
-
   }
 
 }

@@ -3,7 +3,7 @@
 package org.nlogo.prim.etc
 
 import org.nlogo.core.Pure
-import org.nlogo.nvm.{ Reporter, Context }
+import org.nlogo.nvm.{ Context, Reporter }
 
 @annotation.strictfp
 class _pow extends Reporter with Pure {

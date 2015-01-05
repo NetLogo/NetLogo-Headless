@@ -2,7 +2,7 @@
 
 package org.nlogo.prim.etc
 
-import org.nlogo.core.{ Syntax, Let }
+import org.nlogo.core.Let
 import org.nlogo.nvm.{ Command, Context, MutableLong }
 
 class _waitinternal(let: Let) extends Command {

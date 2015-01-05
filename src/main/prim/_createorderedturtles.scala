@@ -2,10 +2,9 @@
 
 package org.nlogo.prim
 
-import org.nlogo.agent.{ Turtle, AgentSet, AgentSetBuilder }
-import org.nlogo.core.Syntax
+import org.nlogo.agent.AgentSetBuilder
 import org.nlogo.core.AgentKind
-import org.nlogo.nvm.{ Command, Context, CustomAssembled, AssemblerAssistant }
+import org.nlogo.nvm.{ AssemblerAssistant, Command, Context, CustomAssembled }
 
 class _createorderedturtles(val breedName: String) extends Command with CustomAssembled {
 

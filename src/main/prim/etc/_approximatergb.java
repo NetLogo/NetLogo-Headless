@@ -2,8 +2,8 @@
 
 package org.nlogo.prim.etc;
 
-import org.nlogo.nvm.Context;
 import org.nlogo.core.Pure;
+import org.nlogo.nvm.Context;
 import org.nlogo.nvm.Reporter;
 
 public final strictfp class _approximatergb extends Reporter implements Pure {

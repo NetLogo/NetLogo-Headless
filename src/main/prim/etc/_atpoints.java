@@ -8,20 +8,14 @@ import org.nlogo.agent.Patch;
 import org.nlogo.agent.Turtle;
 import org.nlogo.api.AgentException;
 import org.nlogo.api.Dump;
+import org.nlogo.core.AgentKindJ;
 import org.nlogo.core.I18N;
 import org.nlogo.core.LogoList;
-import org.nlogo.core.AgentKindJ;
-import org.nlogo.core.Syntax;
-import org.nlogo.core.SyntaxJ;
 import org.nlogo.nvm.Context;
 import org.nlogo.nvm.EngineException;
 import org.nlogo.nvm.Reporter;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public final strictfp class _atpoints
     extends Reporter {

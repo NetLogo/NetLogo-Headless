@@ -2,7 +2,7 @@
 
 package org.nlogo.prim.etc
 
-import org.nlogo.{ api, core, nvm }
+import org.nlogo.{ api, nvm }
 
 object OutputCommand {
   case class Options(

@@ -2,13 +2,12 @@
 
 package org.nlogo.prim.etc;
 
-import org.nlogo.agent.Agent;
-import org.nlogo.agent.AgentSet;
-import org.nlogo.agent.Link;
-import org.nlogo.agent.Patch;
-import org.nlogo.agent.Turtle;
-import org.nlogo.core.*;
+import org.nlogo.agent.*;
 import org.nlogo.api.Equality;
+import org.nlogo.core.AgentKindJ;
+import org.nlogo.core.LogoList;
+import org.nlogo.core.Pure;
+import org.nlogo.core.Syntax;
 import org.nlogo.nvm.ArgumentTypeException;
 import org.nlogo.nvm.Reporter;
 

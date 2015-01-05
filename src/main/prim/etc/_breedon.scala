@@ -2,10 +2,9 @@
 
 package org.nlogo.prim.etc
 
-import org.nlogo.core.{ Syntax, AgentKind }
-import org.nlogo.core.I18N
-import org.nlogo.nvm.{ Reporter, Context, EngineException, ArgumentTypeException }
-import org.nlogo.agent.{ Agent, Turtle, Patch, AgentSet }
+import org.nlogo.agent.{ Agent, AgentSet, Patch, Turtle }
+import org.nlogo.core.{ AgentKind, I18N, Syntax }
+import org.nlogo.nvm.{ ArgumentTypeException, Context, EngineException, Reporter }
 
 class _breedon(breedName: String) extends Reporter {
 
