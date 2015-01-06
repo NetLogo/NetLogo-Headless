@@ -11,7 +11,7 @@ import
 import
   org.nlogo.{ agent, api, core, nvm },
     agent.{ OutputObject, World },
-    core.{ File, FileMode, I18N },
+    core.{ CompilerException, File, FileMode, I18N },
     api.LocalFile,
     nvm.{ FileManager, ImportHandler }
 
@@ -49,7 +49,6 @@ private[workspace] final class DefaultFileManager(private val workspace: Abstrac
         closeCurrentFile()
 
         s" (line number $lineNumber, character ${charPos + 1})"
-
     }.getOrElse(throw new IOException)
 
   def getFile(filename: String): File =
@@ -160,7 +159,16 @@ private[workspace] final class DefaultFileManager(private val workspace: Abstrac
 
   def read(world: World): AnyRef = {
     val importHandler = new ImportHandler(world, workspace.getExtensionManager)
-    val readLiteral = (file: File) => workspace.compiler.utilities.readFromFile(file, importHandler)
+    val readLiteral = (file: File) => {
+      val oldPos = file.pos
+      try {
+        workspace.compiler.utilities.readFromFile(file, importHandler)
+      } catch {
+        case ex: CompilerException =>
+          file.pos = oldPos
+          throw ex
+      }
+    }
     currentFile.map(asReadableFile _ andThen asFileNotAtEof andThen readLiteral).getOrElse(throwNoOpenFile())
   }
 

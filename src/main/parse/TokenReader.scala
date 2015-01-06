@@ -24,8 +24,10 @@ extends Iterator[core.Token] {
   // complexities, but it's also possible that even within that constraint, this stuff
   // doesn't need to be so complex either.  I really don't know. - ST 12/19/08
 
+  def reader = file.reader // def not val because we close & reopen the file below
+  val tokenIterator = tokenizer.tokenizeSkippingTrailingWhitespace(reader)
+
   def next(): core.Token = {
-    def reader = file.reader // def not val because we close & reopen the file below
     val pos = file.pos
     // here we set an arbitrary ceiling on amount of buffered lookahead we let ourselves do.  we
     // have to set some ceiling. for reasons I don't understand, when we switched from JLex to
@@ -36,7 +38,7 @@ extends Iterator[core.Token] {
     // would become unreasonably slow again, but 356K is pretty big so I'm not going to worry about
     // it, at least until the day when the whole LocalFile mess gets straightened out. - ST 1/21/09
     reader.mark(65536)
-    val t = tokenizer.tokenize(reader).next()
+    val (t, ws) = tokenIterator.next()
     if (t.tpe == core.TokenType.Bad)
       throw new CompilerException(t)
     // after Tokenizer has done its thing, we no longer know what relationship holds between
@@ -60,8 +62,8 @@ extends Iterator[core.Token] {
     // not an absolute position.  so, once we've returned to our original position, before
     // the token was read, token.end the amount we need to move both pointers forward
     // in order to be in the position right after the token we read. - ST 12/18/08
-    reader.skip(t.end)
-    file.pos += t.end
+    reader.skip(t.end - t.start + ws)
+    file.pos += (t.end - t.start + ws)
     t
   }
 
