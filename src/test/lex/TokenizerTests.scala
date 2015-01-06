@@ -12,6 +12,12 @@ class TokenizerTests extends FunSuite {
     assertResult(TokenType.Eof)(result.last.tpe)
     result.dropRight(1)
   }
+  def tokenizeSkippingWhitespace(s: String) = {
+    val result = Tokenizer.tokenizeSkippingTrailingWhitespace(
+      new java.io.StringReader(s), "").toSeq
+    assertResult(TokenType.Eof)(result.last._1.tpe)
+    result.dropRight(1)
+  }
   def tokenizeRobustly(s: String) = {
     val result = Tokenizer.tokenize(new java.io.StringReader(s)).toList
     assertResult(TokenType.Eof)(result.last.tpe)
@@ -21,9 +27,10 @@ class TokenizerTests extends FunSuite {
     tokens.find(_.tpe == TokenType.Bad)
   ///
   test("TokenizeSimpleExpr") {
-    val expected = "Token(__ignore,Ident,__IGNORE)" +
-      "Token(round,Ident,ROUND)" +
-      "Token(0.5,Literal,0.5)"
+    val expected =
+      "Token(__ignore,Ident,__IGNORE)" +
+        "Token(round,Ident,ROUND)" +
+        "Token(0.5,Literal,0.5)"
     assertResult(expected)(
       tokenize("__ignore round 0.5").mkString)
   }
@@ -55,6 +62,21 @@ class TokenizerTests extends FunSuite {
         "Token(?,Ident,?)"
     assertResult(expected)(tokens.mkString)
   }
+  test("TokenizeString") {
+    val tokens = tokenize("\"foo\"")
+    val expected = "Token(\"foo\",Literal,foo)"
+    assertResult(expected)(tokens.mkString)
+  }
+  test("TokenizeEmptyString") {
+    val tokens = tokenize("""""""")
+    val expected = "Token(\"\",Literal,)"
+    assertResult(expected)(tokens.mkString)
+  }
+  test("TokenizeStringOfEmptyString") {
+    val tokens = tokenize(""""\"\""""")
+    val expected = "Token(\"\\\"\\\"\",Literal,\"\")"
+    assertResult(expected)(tokens.mkString)
+  }
   test("TokenizeUnknownEscape") {
     val tokens = tokenizeRobustly("\"\\b\"")
     assertResult(0)(firstBadToken(tokens).get.start)
@@ -68,6 +90,10 @@ class TokenizerTests extends FunSuite {
     assertResult(3)(firstBadToken(tokens).get.end)
     assertResult("Closing double quote is missing")(
       firstBadToken(tokens).get.value)
+  }
+  test("TokenizeEscapedBackslash") {
+    val tokens = tokenize("\"\\\\\"")
+    assertResult("Token(\"\\\\\",Literal,\\)")(tokens.mkString)
   }
   test("TokenizeBadNumberFormat1") {
     val tokens = tokenizeRobustly("1.2.3")
@@ -87,6 +113,17 @@ class TokenizerTests extends FunSuite {
     val tokens = tokenize("-.")
     val expected = "Token(-.,Ident,-.)"
     assertResult(expected)(tokens.mkString)
+  }
+
+  test("ListOfLiterals") {
+    val tokens = tokenize("[123 -456 \"a\"]")
+    val expected = """|Token([,OpenBracket,null)
+                      |Token(123,Literal,123.0)
+                      |Token(-456,Literal,-456.0)
+                      |Token("a",Literal,a)
+                      |Token(],CloseBracket,null)""".stripMargin.replaceAll("\n", "")
+    assertResult(expected)(tokens.mkString)
+
   }
 
   test("Empty1") {
@@ -116,8 +153,9 @@ class TokenizerTests extends FunSuite {
 
   test("ArrayOfArrays") {
     val tokens = tokenize("{{array: 2: {{array: 0}} {{array: 1}}}}")
-    assertResult("Token({{array: 2: {{array: 0}} {{array: 1}}}},Extension,{{array: 2: {{array: 0}} {{array: 1}}}})")(
-      tokens.mkString)
+    val expected = "Token({{array: 2: {{array: 0}} {{array: 1}}}},Extension," +
+      "{{array: 2: {{array: 0}} {{array: 1}}}})"
+    assertResult(expected)(tokens.mkString)
   }
 
   test("UnclosedExtensionLiteral1") {
@@ -164,4 +202,34 @@ class TokenizerTests extends FunSuite {
     assertResult(expected)(tokens.mkString)
   }
 
+  test("TokenizeWithSkipWhitespaceSkipsBeginningWhitespace") {
+    val tokens = tokenizeSkippingWhitespace("    123")
+    assertResult("Token(123,Literal,123.0)")(tokens.head._1.toString)
+    assertResult(4)(tokens.head._2)
+  }
+  test("TokenizeWithSkipWhitespaceSkipsNoWhitespace") {
+    val tokens = tokenizeSkippingWhitespace("123")
+    assertResult("Token(123,Literal,123.0)")(tokens.head._1.toString)
+    assertResult(0)(tokens.head._2)
+  }
+
+  test("TokenizeWithSkipWhitespaceSkipsEndingWhitespace") {
+    val tokens = tokenizeSkippingWhitespace("123   ")
+    assertResult("Token(123,Literal,123.0)")(tokens.head._1.toString)
+    assertResult(3)(tokens.head._2)
+  }
+
+  test("TokenizeWithSkipWhitespaceSkipsBeginningAndEndWhitespace") {
+    val tokens = tokenizeSkippingWhitespace("  123   ")
+    assertResult("Token(123,Literal,123.0)")(tokens.head._1.toString)
+    assertResult(5)(tokens.head._2)
+  }
+
+  test("TokenizeWithSkipWhitespaceOnMultipleTokens") {
+    val tokens = tokenizeSkippingWhitespace("  123  456 ")
+    assertResult("Token(123,Literal,123.0)")(tokens(0)._1.toString)
+    assertResult(4)(tokens(0)._2)
+    assertResult("Token(456,Literal,456.0)")(tokens(1)._1.toString)
+    assertResult(1)(tokens(1)._2)
+  }
 }
