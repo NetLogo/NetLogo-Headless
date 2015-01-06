@@ -44,12 +44,10 @@ sourceGenerators in Compile += Def.task[Seq[File]] {
   val cache =
     FileFunction.cached(s.cacheDirectory / "lexers", inStyle = FilesInfo.hash, outStyle = FilesInfo.hash) {
       in: Set[File] =>
-        Set(flex(s.log.info(_), base, src, "ImportLexer"),
-            flex(s.log.info(_), base, src, "TokenLexer"))
+        Set(flex(s.log.info(_), base, src, "ImportLexer"))
     }
   cache(Set(base / "project" / "flex" / "warning.txt",
-            base / "project" / "flex" / "ImportLexer.flex",
-            base / "project" / "flex" / "TokenLexer.flex")).toSeq
+            base / "project" / "flex" / "ImportLexer.flex")).toSeq
 }.taskValue
 
 def flex(log: String => Unit, base: File, dir: File, kind: String): File = {
