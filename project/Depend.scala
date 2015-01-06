@@ -147,7 +147,7 @@ check [XML-free-zone] independentOf [xml]
 [reflections-free-zone] = org.nlogo.* excluding org.nlogo.headless.lang.* org.nlogo.headless.test.*
 check [reflections-free-zone] independentOf [reflections]
 
-[parser-combinator-free-zone] = org.nlogo.* excluding org.nlogo.parse.StructureCombinators* org.nlogo.parse.SeqReader* org.nlogo.parse.Cleanup
+[parser-combinator-free-zone] = org.nlogo.* excluding org.nlogo.parse.StructureCombinators* org.nlogo.parse.SeqReader* org.nlogo.lex.TokenLexer*
 check [parser-combinator-free-zone] directlyIndependentOf [parser-combinators]
 """
               )
