@@ -256,7 +256,7 @@ class DefaultFileManagerTests extends FunSuite with OneInstancePerTest {
     intercept[IOException](fileManager.getErrorInfo)
   }
 
-  test("getErrorInfo returns the line number and character number where an error occurred") {
+  test("getErrorInfo returns the line number and character where an error occurred") {
     withWrittenFile("abc\ndef", { file =>
       fileManager.readLine()
       fileManager.readChars(1)
