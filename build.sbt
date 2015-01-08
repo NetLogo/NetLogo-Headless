@@ -39,7 +39,7 @@ javacOptions ++=
 
 libraryDependencies ++= Seq(
   "org.ow2.asm" % "asm-all" % "5.0.3",
-  "org.scala-lang.modules" %% "scala-parser-combinators" % "1.0.2"
+  "org.scala-lang.modules" %% "scala-parser-combinators" % "1.0.3"
 )
 
 // JMock isn't declaring its dependency upon Hamcrest in 2.6.0, but hopefully
