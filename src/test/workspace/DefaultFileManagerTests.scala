@@ -2,16 +2,21 @@
 
 package org.nlogo.workspace
 
-import org.nlogo.agent.OutputObject
-import org.nlogo.api
-import org.nlogo.api.{World, ExtensionManager => APIExtensionManager, Program, File, FileMode}
-import org.nlogo.nvm.FrontEndInterface.ProceduresMap
-import org.nlogo.nvm.{Reporter, FrontEndInterface, CompilerResults, CompilerFlags, CompilerInterface, DummyWorkspace}
-import org.scalatest.{ FunSuite, OneInstancePerTest }
+import
+  java.io.{ BufferedReader, File => JFile, FileReader, IOException, PrintWriter }
 
-import java.io.{File => JFile, BufferedReader, FileReader, PrintWriter, IOException}
+import
+  org.nlogo.{ agent, api, nvm },
+    agent.OutputObject,
+    api.{ ExtensionManager => APIExtensionManager, File, FileMode, Program, World },
+    nvm.{ CompilerFlags, CompilerInterface, CompilerResults, FrontEndInterface, Reporter },
+      FrontEndInterface.ProceduresMap
+
+import
+  org.scalatest.{ FunSuite, OneInstancePerTest }
 
 class DefaultFileManagerTests extends FunSuite with OneInstancePerTest {
+
   test("openFile allows opening files that do not exist") {
     fileManager.getFile("foobar")
   }
@@ -41,7 +46,7 @@ class DefaultFileManagerTests extends FunSuite with OneInstancePerTest {
   test("initializes a file with position set to 0 and eof set to false") {
     withWrittenFile("", { file =>
       assert(file.pos == 0)
-      assert(! file.eof)
+      assert(!file.eof)
     })
   }
 
@@ -239,8 +244,8 @@ class DefaultFileManagerTests extends FunSuite with OneInstancePerTest {
 
   test("eof returns false does not set file's eof to true if the reader is not at EOF") {
     withWrittenFile("a", { file =>
-      assert(! fileManager.eof)
-      assert(! file.eof)
+      assert(!fileManager.eof)
+      assert(!file.eof)
       assert(file.pos == 0)
       assert(file.reader.read() == 'a')
     })

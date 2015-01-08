@@ -2,276 +2,255 @@
 
 package org.nlogo.workspace
 
-import org.nlogo.agent.{ World, OutputObject }
-import org.nlogo.api.{FileMode, I18N, File, LocalFile}
-import java.net.URL
-import java.io.{File => JFile, PrintWriter, BufferedReader, FileNotFoundException, IOException, EOFException}
+import
+  java.{ io, net },
+    io.{ BufferedReader, EOFException, File => JFile, FileNotFoundException, IOException },
+      JFile.separatorChar,
+    net.URL
 
-import scala.collection._
+import
+  org.nlogo.{ agent, api, nvm },
+    agent.{ OutputObject, World },
+    api.{ File, FileMode, I18N, LocalFile },
+    nvm.FileManager
 
-final class DefaultFileManager(val workspace: AbstractWorkspace) extends org.nlogo.nvm.FileManager {
-  private var openFiles: Map[String, File] = Map[String, File]()
-  private var _currentFile: Option[File] = None
-  var prefix: String = ""
+private[workspace] final class DefaultFileManager(private val workspace: AbstractWorkspace) extends FileManager {
 
-  @throws(classOf[java.io.IOException])
-  def getErrorInfo: String = {
-    currentFile.map { file =>
-      val position: Long = file.pos
-      file.close(true)
-      file.open(FileMode.Read)
-      var lineNumber: Int = 1
-      var prevPosition: Long = 0
-      var lastLine: String = readLine
-      while (file.pos < position) {
-        lineNumber += 1
-        prevPosition = file.pos
-        lastLine = readLine
-      }
-      var charPos: Int = (position - prevPosition).toInt
-      if (charPos >= lastLine.length && !eof) {
-        lastLine = readLine
-        charPos = 0
-        lineNumber += 1
-      }
-      closeCurrentFile()
-      " (line number " + lineNumber + ", character " + (charPos + 1) + ")"
+  private            var openFiles:   Map[String, File] = Map[String, File]()
+  private[workspace] var currentFile: Option[File]      = None
+  private[workspace] var prefix:      String            = ""
+
+  def getErrorInfo: String =
+    currentFile.map {
+      file =>
+
+        val position = file.pos
+        file.close(true)
+        file.open(FileMode.Read)
+
+        var lineNumber:   Int    = 1
+        var prevPosition: Long   = 0
+        var lastLine:     String = readLine()
+
+        while (file.pos < position) {
+          lineNumber   += 1
+          prevPosition  = file.pos
+          lastLine      = readLine()
+        }
+
+        var charPos: Int = (position - prevPosition).toInt
+        if (charPos >= lastLine.length && !eof) {
+          lastLine    = readLine()
+          charPos     = 0
+          lineNumber += 1
+        }
+
+        closeCurrentFile()
+
+        s" (line number $lineNumber, character ${charPos + 1})"
+
     }.getOrElse(throw new IOException)
-  }
 
-  def getFile(filename: String): File = {
+  def getFile(filename: String): File =
     new LocalFile(filename)
-  }
 
-  def setPrefix(setPrefix: String) = {
-    def ensureDirPath(s: String) = if (s.last != java.io.File.separatorChar) s + java.io.File.separatorChar else s
-    if (setPrefix == "") {
-      prefix = ""
-    } else {
-      val newPrefix = ensureDirPath(setPrefix)
-      if (new JFile(newPrefix).isAbsolute) {
-        prefix = newPrefix
-      } else {
-        prefix = ensureDirPath(relativeToAbsolute(newPrefix))
+  def setPrefix(setPrefix: String): Unit = {
+    prefix =
+      if (setPrefix == "")
+        ""
+      else {
+        val asDirPath = (s: String) => s + (if (s.last != separatorChar) separatorChar else "")
+        val newPrefix = asDirPath(setPrefix)
+        if (new JFile(newPrefix).isAbsolute)
+          newPrefix
+        else
+          asDirPath(relativeToAbsolute(newPrefix))
       }
-    }
   }
 
-  def setPrefix(newPrefix: URL) = {
+  def setPrefix(newPrefix: URL): Unit = {
     prefix = newPrefix.toString
   }
 
-  @throws(classOf[java.net.MalformedURLException])
-  def attachPrefix(filename: String): String = {
-    if (new JFile(filename).isAbsolute || prefix == "") {
+  def attachPrefix(filename: String): String =
+    if (new JFile(filename).isAbsolute || prefix == "")
       filename
-    } else {
+    else
       relativeToAbsolute(filename)
-    }
-  }
 
-  def currentFile: Option[File] = _currentFile
-
-  def hasCurrentFile: Boolean = {
-    currentFile.flatMap(f => openFiles.get(f.getAbsolutePath)).isDefined
-  }
+  def hasCurrentFile: Boolean =
+    currentFile.flatMap(f => openFiles.get(f.getAbsolutePath)).nonEmpty
 
   def findOpenFile(filename: String): Option[File] = {
-    val newFile: JFile = new JFile(filename)
+    val newFile = new JFile(filename)
     openFiles.get(newFile.getAbsolutePath)
   }
 
-  @throws(classOf[java.io.IOException])
-  def ensureMode(openMode: FileMode) = {
-    currentFile.map(ensureFileMode(_, openMode)).getOrElse(fileNotAvailable())
+  def ensureMode(openMode: FileMode): Unit = {
+    currentFile.fold(throwNoOpenFile())(throwOnBadFileMode(_, openMode))
   }
 
-  def fileExists(filePath: String): Boolean = new JFile(filePath).exists
+  def fileExists(filePath: String): Boolean =
+    new JFile(filePath).exists()
 
-  @throws(classOf[java.io.IOException])
-  def deleteFile(filePath: String) = {
-    val file: Option[File] = findOpenFile(filePath)
-    if (file.isDefined) {
+  def deleteFile(filePath: String): Unit = {
+
+    if (findOpenFile(filePath).nonEmpty)
       throw new IOException("You need to close the file before deletion")
-    }
+
     val checkFile = new JFile(filePath)
-    if (!checkFile.exists) {
+
+    if (!checkFile.exists)
       throw new IOException(I18N.errorsJ.get("org.nlogo.workspace.DefaultFileManager.cannotDeleteNonExistantFile"))
-    }
-    if (!checkFile.canWrite) {
+    else if (!checkFile.canWrite)
       throw new IOException("Modification to this file is denied.")
-    }
-    if (!checkFile.isFile) {
+    else if (!checkFile.isFile)
       throw new IOException(I18N.errorsJ.get("org.nlogo.workspace.DefaultFileManager.canOnlyDeleteFiles"))
-    }
-    if (!checkFile.delete) {
+    else if (!checkFile.delete)
       throw new IOException("Deletion failed.")
-    }
+
   }
 
-  @throws(classOf[java.io.IOException])
-  def openFile(newFileName: String) = {
-    val fullFileName: String = attachPrefix(newFileName)
-    if (fullFileName == null) {
-      throw new IOException("This filename is illegal, " + newFileName)
-    }
-    _currentFile = findOpenFile(fullFileName).orElse {
-      val createdFile = new LocalFile(fullFileName)
-      openFiles = openFiles + (createdFile.getAbsolutePath -> createdFile)
-      Some(createdFile)
-    }
-  }
-
-  @throws(classOf[java.io.IOException])
-  def flushCurrentFile() = {
-    currentFile.map(_.flush()).getOrElse(throw new IOException("There is no file to file"))
-  }
-
-  @throws(classOf[java.io.IOException])
-  def closeCurrentFile() = {
-    currentFile.map(closeFile).getOrElse(throw new IOException("There is no file to close"))
-    _currentFile = None
-  }
-
-  @throws(classOf[java.io.IOException])
-  def readLine(): String = {
-    currentFile.map(readable).map(notAtEof).map { file =>
-      def readToNewLineOrEof(iter: BufferedIterator[Char], acc: String = ""): String = {
-        if (iter.hasNext) {
-          (iter.next(), iter.head) match {
-            case ('\r', '\n') =>
-              iter.next()
-              acc
-            case ('\r', _) => acc
-            case ('\n', _) => acc
-            case (c, _) => readToNewLineOrEof(iter, acc + c)
-          }
-        } else {
-          acc
+  def openFile(newFileName: String): Unit = {
+    currentFile = Option(attachPrefix(newFileName)).map {
+      fullFileName =>
+        findOpenFile(fullFileName) orElse {
+          val createdFile = new LocalFile(fullFileName)
+          openFiles += createdFile.getAbsolutePath -> createdFile
+          Option(createdFile)
         }
-      }
-
-      val charIterator = new BufferedFileCharIterator(file)
-
-      readToNewLineOrEof(charIterator)
-    }.getOrElse(fileNotAvailable())
+    }.getOrElse(throw new IOException(s"This filename is illegal, $newFileName"))
   }
 
-  @throws(classOf[java.io.IOException])
+  def flushCurrentFile(): Unit = {
+    currentFile.fold(throw new IOException("There is no file to flush"))(_.flush())
+  }
+
+  def closeCurrentFile(): Unit = {
+    currentFile.fold(throw new IOException("There is no file to close"))(closeFile)
+    currentFile = None
+  }
+
+  def readLine(): String = {
+
+    def readToNewLineOrEof(iter: BufferedIterator[Char], acc: String = ""): String =
+      if (iter.hasNext)
+        (iter.next(), iter.head) match {
+          case ('\r', '\n') => iter.next(); acc
+          case ('\r', _)    => acc
+          case ('\n', _)    => acc
+          case (c,    _)    => readToNewLineOrEof(iter, acc + c)
+        }
+      else
+        acc
+
+    currentFile.map(asReadableFile _                  andThen
+                    asFileNotAtEof                    andThen
+                    (new BufferedFileCharIterator(_)) andThen
+                    (readToNewLineOrEof(_)))
+      .getOrElse(throwNoOpenFile())
+
+  }
+
   def readChars(num: Int): String = {
-    currentFile.map(readable).map(notAtEof).map { file =>
-      new BufferedFileCharIterator(file).take(num).mkString
-    }
-  }.getOrElse(fileNotAvailable())
+    val takeCharsFromFile = (file: File) => new BufferedFileCharIterator(file).take(num).mkString
+    currentFile.map(asReadableFile _ andThen asFileNotAtEof andThen takeCharsFromFile).getOrElse(throwNoOpenFile())
+  }
 
-  @throws(classOf[java.io.IOException])
   def read(world: World): AnyRef = {
-    currentFile.map(readable).map(notAtEof).map { file =>
-      // This should read in from the file until it hits Whitespace, and pass the string into readFromFile
-      // this is something to work on once the compiler divorce is merged in -- RGG 12/9/14
-      workspace.compiler.frontEnd.readFromFile(file, world, workspace.getExtensionManager)
-    }.getOrElse(fileNotAvailable())
+    val readLiteral = (file: File) => workspace.compiler.frontEnd.readFromFile(file, world, workspace.getExtensionManager)
+    currentFile.map(asReadableFile _ andThen asFileNotAtEof andThen readLiteral).getOrElse(throwNoOpenFile())
   }
 
-  @throws(classOf[java.io.IOException])
-  def eof: Boolean = {
-    currentFile.map(readable).map(updateFileEof).map(_.eof).getOrElse(fileNotAvailable())
+  def eof: Boolean =
+    currentFile.map(asReadableFile _ andThen updateFileEof andThen (_.eof)).getOrElse(throwNoOpenFile())
+
+  def closeAllFiles(): Unit = {
+    openFiles.values foreach closeFile
+    currentFile = None
   }
 
-  @throws(classOf[java.io.IOException])
-  def closeAllFiles() {
-    openFiles.foreach { case (filePath, file) => closeFile(file) }
-    _currentFile = None
+  def writeOutputObject(oo: OutputObject): Unit = {
+    currentFile.fold(throw new IOException)(_.getPrintWriter.print(oo.get))
   }
 
-  def writeOutputObject(oo: OutputObject) = {
-    currentFile.map(_.getPrintWriter.print(oo.get)).getOrElse(throw new IOException)
-  }
-
-  def handleModelChange() = {
-    if (workspace.getModelDir != null) {
-      setPrefix(workspace.getModelDir)
-    }
-    try {
-      closeAllFiles()
-    } catch {
+  def handleModelChange(): Unit = {
+    Option(workspace.getModelDir).foreach(setPrefix)
+    try closeAllFiles()
+    catch {
       case ex: IOException => throw new IllegalStateException(ex)
     }
   }
 
-  private def notAtEof(file: File): File = {
+  private def asFileNotAtEof(file: File): File = {
     updateFileEof(file)
     if (file.eof)
       throw new EOFException()
-    else
-      file
-  }
-
-  private def updateFileEof(file: File): File = {
-    if (!file.eof) {
-      file.eof = ! new BufferedFileCharIterator(file).hasNext
-    }
     file
   }
 
-  private def readable(file: File): File = ensureFileMode(file, FileMode.Read)
+  private def updateFileEof(file: File): File = {
+    if (!file.eof)
+      file.eof = !new BufferedFileCharIterator(file).hasNext
+    file
+  }
 
-  private def ensureFileMode(file: File, openMode: FileMode): File = {
+  private def asReadableFile(file: File): File = {
+    throwOnBadFileMode(file, FileMode.Read)
+    file
+  }
+
+  private def throwOnBadFileMode(file: File, openMode: FileMode): Unit = {
     (file.mode, openMode) match {
+      case (FileMode.None, FileMode.None) =>
+        throw new IllegalArgumentException("must specify a valid file mode for opening")
       case (FileMode.None, mode) =>
-        try {
-          if (mode == FileMode.None) {
-            throw new IllegalArgumentException("must specify a valid file mode for opening")
-          }
-          file.open(mode)
-        } catch {
+        try file.open(mode)
+        catch {
           case ex: FileNotFoundException =>
-            throw new IOException("The file " + file.getAbsolutePath + " cannot be found")
-          case ex: IOException => throw new IOException(ex.getMessage)
+            throw new IOException(s"The file ${file.getAbsolutePath} cannot be found")
+          case ex: IOException =>
+            throw new IOException(ex.getMessage)
         }
       case (FileMode.Read, expectedMode) if expectedMode != FileMode.Read =>
         throw new IOException("You can only use READING primitives with this file")
       case (currentMode, expectedMode) if currentMode != expectedMode =>
         throw new IOException("You can only use WRITING primitives with this file")
-      case _ =>
+      case _ => // Do nothing!
     }
-    file
   }
 
-  private def fileNotAvailable(): Nothing = {
+  private def throwNoOpenFile(): Nothing =
     throw new IOException(I18N.errors.get("org.nlogo.workspace.DefaultFileManager.noOpenFile"))
-  }
 
-  @throws(classOf[java.io.IOException])
-  private def closeFile(file: File) = {
-    openFiles = openFiles - file.getAbsolutePath
+  private def closeFile(file: File): Unit = {
+    openFiles -= file.getAbsolutePath
     file.close(true)
   }
 
-  private def relativeToAbsolute(newPath: String): String = {
-    try {
-      new JFile(prefix + java.io.File.separatorChar + newPath).getCanonicalPath
-    } catch {
+  private def relativeToAbsolute(newPath: String): String =
+    try new JFile(s"$prefix$separatorChar$newPath").getCanonicalPath
+    catch {
       case ex: IOException => throw new IllegalStateException(ex)
     }
-  }
 
-  class BufferedFileCharIterator(file: File) extends BufferedIterator[Char] {
+  private class BufferedFileCharIterator(file: File) extends BufferedIterator[Char] {
+
     private val buffReader: BufferedReader = file.reader
 
     private def nextChar(reset: Boolean = true): Int = {
       buffReader.mark(1)
       val i = buffReader.read()
-      if (reset) {
+      if (reset)
         buffReader.reset()
-      } else {
+      else
         file.pos += 1
-      }
       i
     }
 
-    override def head: Char = nextChar().asInstanceOf[Char]
+    override def head:    Char    = nextChar().asInstanceOf[Char]
     override def hasNext: Boolean = nextChar() != -1
-    override def next(): Char = nextChar(false).asInstanceOf[Char]
+    override def next():  Char    = nextChar(false).asInstanceOf[Char]
+
   }
 }
