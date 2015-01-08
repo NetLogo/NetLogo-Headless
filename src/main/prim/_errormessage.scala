@@ -12,14 +12,9 @@ import org.nlogo.nvm.{ Context, Reporter }
  *
  * @see _carefully
  */
-class _errormessage extends Reporter {
-  // MethodRipper won't let us call a public method from perform_1() - ST 7/20/12
-  private[this] var _let: Let = null
-  def let = _let
-  def let_=(let: Let) { _let = let }
-
+class _errormessage(let: Let) extends Reporter {
   override def report(context: Context): String =
     report_1(context)
   def report_1(context: Context): String =
-    context.getLet(_let).asInstanceOf[LogoException].getMessage
+    context.getLet(let).asInstanceOf[LogoException].getMessage
 }

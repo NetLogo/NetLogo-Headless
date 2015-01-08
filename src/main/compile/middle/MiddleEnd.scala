@@ -32,7 +32,6 @@ object MiddleEnd extends MiddleEndInterface {
       procdef.accept(new TaskVisitor)  // handle _taskvariable
       procdef.accept(new LocalsVisitor(alteredLets)) // convert _let/_repeat to _locals
       procdef.accept(new SetVisitor)   // convert _set to specific setters
-      procdef.accept(new CarefullyVisitor)  // connect _carefully to _errormessage
     }
 
     if (flags.useOptimizer)

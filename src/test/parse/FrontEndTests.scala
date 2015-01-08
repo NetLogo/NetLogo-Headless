@@ -113,6 +113,9 @@ class FrontEndTests extends FunSuite {
       "Names beginning with ? are reserved for use as task inputs",
       18, 19)
   }
+  test("error-message used outside of carefully") {
+    runFailure("let foo error-message", "error-message cannot be used outside of CAREFULLY.", 8, 21)
+  }
   test("DoParseMap") {
     runTest("__ignore map [round ?] [1.2 1.7 3.2]",
       "_ignore()[_map()[_reportertask(1)[_round()[_taskvariable(1)[]]], _const([1.2, 1.7, 3.2])[]]]")
@@ -138,6 +141,10 @@ class FrontEndTests extends FunSuite {
       "_observercode()[] " +
       "_ignore()[_const(5.0)[]] " +
       "_done()[]")
+  }
+  test("DoParseCarefully") {
+    runTest("carefully [ error \"foo\" ] [ __ignore error-message ]",
+      """_carefully()[[_error()[_const(foo)[]]], [_ignore()[_errormessage()[]]]]""")
   }
   test("ParseExpressionWithInfix") {
     runTest("__ignore 5 + 2",

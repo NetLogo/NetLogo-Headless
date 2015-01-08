@@ -38,6 +38,8 @@ class Backifier(
         new prim._call(procedures(proc.name))
       case core.prim._let(let) =>
         new prim._let(let)
+      case cc: core.prim._carefully =>
+        new prim._carefully(cc.let)
       case _ =>
         fallback[core.Command, nvm.Command](c)
     }
@@ -89,6 +91,11 @@ class Backifier(
 
       case core.prim._callreport(proc) =>
         new prim._callreport(procedures(proc.name))
+
+      case core.prim._errormessage(Some(let)) =>
+        new prim._errormessage(let)
+      case core.prim._errormessage(None) =>
+        throw new Exception("Parse error - errormessage not matched with carefully")
 
       // diabolical special case: if we have e.g. `breed [fish]` with no singular,
       // then the singular defaults to `turtle`, which will cause BreedIdentifierHandler
