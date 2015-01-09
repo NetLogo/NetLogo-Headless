@@ -2,17 +2,10 @@
 
 package org.nlogo.prim.etc
 
-import org.nlogo.core.Syntax
-import org.nlogo.api.I18N
-import org.nlogo.nvm.{ Command, Context, EngineException, NonLocalExit, Procedure }
+import org.nlogo.core.I18N
+import org.nlogo.nvm.{ Command, Context, EngineException, NonLocalExit }
 
 class _foreach extends Command {
-  override def syntax =
-    Syntax.commandSyntax(
-      right = List(
-        Syntax.RepeatableType | Syntax.ListType,
-        Syntax.CommandTaskType),
-      defaultOption = Some(2))
   override def perform(context: Context) {
     var size = 0
     val n = args.length - 1

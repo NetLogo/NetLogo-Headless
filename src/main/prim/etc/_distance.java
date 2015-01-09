@@ -3,22 +3,13 @@
 package org.nlogo.prim.etc;
 
 import org.nlogo.agent.Agent;
-import org.nlogo.api.I18N;
-import org.nlogo.core.Syntax;
-import org.nlogo.core.SyntaxJ;
+import org.nlogo.core.I18N;
 import org.nlogo.nvm.Context;
 import org.nlogo.nvm.EngineException;
 import org.nlogo.nvm.Reporter;
 
 public final strictfp class _distance extends Reporter {
-  @Override
-  public Syntax syntax() {
-    return SyntaxJ.reporterSyntax
-        (new int[]{Syntax.TurtleType() | Syntax.PatchType()},
-            Syntax.NumberType(), "-TP-");
-  }
-
-  @Override
+    @Override
   public Object report(Context context) {
     return report_1(context, argEvalAgent(context, 0));
   }

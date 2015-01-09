@@ -5,6 +5,7 @@ package org.nlogo.render;
 import org.nlogo.api.Dump;
 import org.nlogo.api.Graphics2DWrapper;
 import org.nlogo.api.HexString;
+import org.nlogo.core.File;
 
 public strictfp class TrailDrawer
     implements org.nlogo.api.TrailDrawerInterface,
@@ -209,7 +210,7 @@ public strictfp class TrailDrawer
     sendPixels = true;
   }
 
-  public void importDrawing(org.nlogo.api.File file)
+  public void importDrawing(File file)
       throws java.io.IOException {
     try {
       importDrawing(file.getInputStream());

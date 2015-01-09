@@ -3,8 +3,8 @@
 package org.nlogo.prim.etc
 
 import
-  org.nlogo.{ api, agent, core, nvm },
-    core.{ Syntax, AgentKind },
+  org.nlogo.{ agent, core, nvm },
+    core.Syntax,
     agent.{ Turtle, Link, LinkManager, AgentSet, AgentSetBuilder },
     nvm.{ Command, Context, EngineException }
 
@@ -19,12 +19,8 @@ trait LinkCreationCommand extends Command with nvm.CustomAssembled {
   // overrides
   override def toString =
     super.toString + ":" + breedName + ",+" + offset
-  override def syntax =
-    Syntax.commandSyntax(
-      right = List(inputType, Syntax.CommandBlockType | Syntax.OptionalType),
-      agentClassString = "-T--",
-      blockAgentClassString = "---L",
-      switches = true)
+
+  switches = true
   override def perform(context: Context) {
     val breed =
       if (breedName.isEmpty)
@@ -47,13 +43,13 @@ trait LinkCreationCommand extends Command with nvm.CustomAssembled {
   def checkForBreedCompatibility(context: Context, breed: AgentSet) {
     if (!world.linkManager.checkBreededCompatibility(breed eq world.links))
       throw new EngineException(
-        context, this, api.I18N.errors.get(
+        context, this, core.I18N.errors.get(
           "org.nlogo.agent.Link.cantHaveBreededAndUnbreededLinks"))
   }
   def newLink(context: Context, src: Turtle, dest: Turtle, breed: AgentSet): Option[Link] =
     if (src eq dest)
       throw new EngineException(
-        context, this, api.I18N.errors.get(
+        context, this, core.I18N.errors.get(
           "org.nlogo.prim.$common.turtleCantLinkToSelf"))
     else if (src.id == -1 || dest.id == -1 || linkAlreadyExists(src, dest, breed))
       None

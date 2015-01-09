@@ -2,17 +2,12 @@
 
 package org.nlogo.prim.etc
 
-import org.nlogo.core.Syntax
-import org.nlogo.api.I18N
 import org.nlogo.agent.{ Agent, Link, Turtle }
+import org.nlogo.core.I18N
 import org.nlogo.nvm.{ Command, Context, EngineException }
 
 class _face extends Command {
-  override def syntax =
-    Syntax.commandSyntax(
-      right = List(Syntax.TurtleType | Syntax.PatchType),
-      agentClassString = "-T--",
-      switches = true)
+  switches = true
   override def perform(context: Context) {
     perform_1(context, argEvalAgent(context, 0))
   }

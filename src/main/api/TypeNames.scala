@@ -2,13 +2,15 @@
 
 package org.nlogo.api
 
-import org.nlogo.core, core.Syntax, Syntax._
+import org.nlogo.core,
+  core.{LogoList, Nobody, Syntax},
+  Syntax._
 
 object TypeNames {
 
   def aName(obj: AnyRef): String = {
     val result = name(obj)
-    if (obj == org.nlogo.api.Nobody)
+    if (obj == Nobody)
       result
     else
       core.TypeNames.addAOrAn(result)

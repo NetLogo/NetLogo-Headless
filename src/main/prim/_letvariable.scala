@@ -2,24 +2,22 @@
 
 package org.nlogo.prim
 
-import org.nlogo.core.Syntax
-import org.nlogo.api.Let
+import org.nlogo.core.Let
 import org.nlogo.nvm.{ Context, Reporter }
 
-class _letvariable(_let: Let) extends Reporter {
+class _letvariable(private[this] val _let: Let) extends Reporter {
 
-  // MethodRipper won't let us call a public method from perform_1() - ST 7/20/12
-  def let = _let
+  def this() = this(null)
 
-  override def syntax =
-    Syntax.reporterSyntax(
-      ret = Syntax.WildcardType)
+  // MethodRipper won't let us call a public method from report_1() - ST 7/20/12
+  def let: Let = _let
+
   override def toString =
-    super.toString + "(" + _let.name + ")"
+    s"${super.toString}($let)"
 
   override def report(context: Context): AnyRef =
     report_1(context)
+
   def report_1(context: Context): AnyRef =
     context.getLet(_let)
-
 }

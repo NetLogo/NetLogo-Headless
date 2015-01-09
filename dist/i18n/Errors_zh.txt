@@ -182,4 +182,4 @@ org.nlogo.prim.etc._randomNormal.secondInputNotNegative = random-normal的第二
 compiler.CarefullyVisitor.badNesting = {0} 不能在 CAREFULLY 外面使用.
 compiler.SetVisitor.notSettable = 不能对其使用set.
 compiler.TaskVisitor.notDefined = 该变量未定义.
-compiler.LocalsVisitor.notDefined = {0} 未定义.
+compiler.LetVariable.notDefined = {0} 未定义.

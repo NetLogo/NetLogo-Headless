@@ -2,16 +2,12 @@
 
 package org.nlogo.prim.etc;
 
-import org.nlogo.agent.Agent;
-import org.nlogo.agent.AgentSet;
-import org.nlogo.agent.Link;
-import org.nlogo.agent.Patch;
-import org.nlogo.agent.Turtle;
-import org.nlogo.core.AgentKindJ;
+import org.nlogo.agent.*;
 import org.nlogo.api.Equality;
-import org.nlogo.api.LogoList;
+import org.nlogo.core.AgentKindJ;
+import org.nlogo.core.LogoList;
+import org.nlogo.core.Pure;
 import org.nlogo.core.Syntax;
-import org.nlogo.core.SyntaxJ;
 import org.nlogo.nvm.ArgumentTypeException;
 import org.nlogo.nvm.Reporter;
 
@@ -19,7 +15,7 @@ import java.util.Iterator;
 
 public final strictfp class _member
     extends Reporter
-    implements org.nlogo.nvm.Pure {
+    implements Pure {
   @Override
   public Object report(final org.nlogo.nvm.Context context) {
     Object obj = args[1].report(context);
@@ -89,11 +85,4 @@ public final strictfp class _member
     }
   }
 
-  @Override
-  public Syntax syntax() {
-    int[] right = {Syntax.WildcardType(),
-        Syntax.ListType() | Syntax.StringType() | Syntax.AgentsetType()};
-    int ret = Syntax.BooleanType();
-    return SyntaxJ.reporterSyntax(right, ret);
-  }
 }

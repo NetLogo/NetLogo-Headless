@@ -2,22 +2,12 @@
 
 package org.nlogo.prim
 
-import org.nlogo.core.Syntax
-import org.nlogo.api.{ Dump, I18N }
 import org.nlogo.agent.{ Agent, AgentSet }
-import org.nlogo.nvm.{ Reporter, Context, EngineException }
+import org.nlogo.api.Dump
+import org.nlogo.core.I18N
+import org.nlogo.nvm.{ Context, EngineException, Reporter }
 
 class _with extends Reporter {
-
-  override def syntax =
-    Syntax.reporterSyntax(
-      left = Syntax.AgentsetType,
-      right = List(Syntax.BooleanBlockType),
-      ret = Syntax.AgentsetType,
-      precedence = Syntax.NormalPrecedence + 2,
-      isRightAssociative = false,
-      agentClassString = "OTPL",
-      blockAgentClassString = "?")
 
   override def report(context: Context): AgentSet =
     report_1(context, argEvalAgentSet(context, 0), args(1))

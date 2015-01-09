@@ -2,17 +2,11 @@
 
 package org.nlogo.prim.etc
 
-import org.nlogo.core.{ Syntax, AgentKind }
-import org.nlogo.api.I18N
-import org.nlogo.nvm.{ Reporter, Context, EngineException, ArgumentTypeException }
-import org.nlogo.agent.{ Agent, Turtle, Patch, AgentSet }
+import org.nlogo.agent.{ Agent, AgentSet, Patch, Turtle }
+import org.nlogo.core.{ AgentKind, I18N, Syntax }
+import org.nlogo.nvm.{ ArgumentTypeException, Context, EngineException, Reporter }
 
 class _breedon(breedName: String) extends Reporter {
-
-  override def syntax =
-    Syntax.reporterSyntax(
-      right = List(Syntax.TurtleType | Syntax.PatchType | Syntax.TurtlesetType | Syntax.PatchsetType),
-      ret = Syntax.TurtlesetType)
 
   override def toString =
     super.toString + ":" + breedName

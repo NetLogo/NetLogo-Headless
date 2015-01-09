@@ -6,20 +6,15 @@ package org.nlogo.headless
 // AbstractWorkspace are not, so if you want to document a method for everyone, override that method
 // here and document it here.  The overriding method can simply call super(). - ST 6/1/05, 7/28/11
 
-import org.nlogo.agent.Agent
-import org.nlogo.core.{ AgentKind, WorldDimensions }
-import org.nlogo.api.{ Program, Version, RendererInterface,
-                       CompilerException, LogoException, SimpleJobOwner,
-                       CommandRunnable, ReporterRunnable }
-import org.nlogo.core.{ Model, UpdateMode }
-import org.nlogo.api.model.ModelReader
-
-import org.nlogo.agent.World
-import org.nlogo.nvm, nvm.{ LabInterface, Context, FrontEndInterface,
-                            DefaultParserServices, CompilerInterface }
-import org.nlogo.workspace.AbstractWorkspace
-import org.nlogo.api.Femto
-import org.nlogo.drawing.DrawingActionBroker
+import
+  org.nlogo.{ agent, api, core, drawing, nvm, workspace },
+    agent.{ Agent, World },
+    api.{ CommandRunnable, DefaultParserServices, FileIO, LogoException, model, RendererInterface, ReporterRunnable, SimpleJobOwner },
+      model.ModelReader,
+    core.{ AgentKind, CompilerException, CompilerUtilitiesInterface, Femto, File, FileMode, Model, UpdateMode, WorldDimensions },
+    drawing.DrawingActionBroker,
+    nvm.{ CompilerInterface, Context, LabInterface },
+    workspace.AbstractWorkspace
 
 /**
  * Companion object, and factory object, for the HeadlessWorkspace class.
@@ -45,12 +40,12 @@ object HeadlessWorkspace {
   }
 
   def newLab: LabInterface = {
-    val frontEnd: FrontEndInterface =
-      Femto.scalaSingleton("org.nlogo.compile.front.FrontEnd")
+    val utilities: CompilerUtilitiesInterface =
+      Femto.scalaSingleton("org.nlogo.parse.CompilerUtilities")
     // kludgy, use AnyRef here because ProtocolLoader doesn't implement an interface - ST 4/25/13
     val protocolLoader: AnyRef =
       Femto.get("org.nlogo.lab.ProtocolLoader",
-        new DefaultParserServices(frontEnd))
+        new DefaultParserServices(utilities))
     Femto.get("org.nlogo.lab.Lab", protocolLoader)
   }
 
@@ -81,7 +76,7 @@ class HeadlessWorkspace(
 extends AbstractWorkspace(_world)
 with org.nlogo.workspace.WorldLoaderInterface {
 
-  override def parser = compiler.frontEnd
+  override def parser = compiler.utilities
 
   val drawingActionBroker = new DrawingActionBroker(renderer.trailDrawer)
   world.trailDrawer(drawingActionBroker)
@@ -202,7 +197,7 @@ with org.nlogo.workspace.WorldLoaderInterface {
   }
   override def getAndCreateDrawing =
     drawingActionBroker.getAndCreateDrawing(true)
-  override def importDrawing(file: org.nlogo.api.File) {
+  override def importDrawing(file: File) {
     drawingActionBroker.importDrawing(file)
   }
   override def clearDrawing() {
@@ -220,9 +215,9 @@ with org.nlogo.workspace.WorldLoaderInterface {
   }
 
   def exportOutput(filename: String) {
-    val file: org.nlogo.api.File = new org.nlogo.api.LocalFile(filename)
+    val file: File = new org.nlogo.api.LocalFile(filename)
     try {
-      file.open(org.nlogo.api.FileMode.Write)
+      file.open(FileMode.Write)
       val lines =
           new java.util.StringTokenizer(outputAreaBuffer.toString, "\n")
       while (lines.hasMoreTokens) {
@@ -373,7 +368,7 @@ with org.nlogo.workspace.WorldLoaderInterface {
   @throws(classOf[java.io.IOException])
   override def open(path: String) {
     setModelPath(path)
-    val modelContents = org.nlogo.api.FileIO.file2String(path)
+    val modelContents = FileIO.file2String(path)
     try openModel(ModelReader.parseModel(modelContents, this))
     catch {
       case ex: CompilerException =>
@@ -399,7 +394,7 @@ with org.nlogo.workspace.WorldLoaderInterface {
    * Runs NetLogo commands and waits for them to complete.
    *
    * @param source The command or commands to run
-   * @throws org.nlogo.api.CompilerException
+   * @throws CompilerException
    *                       if the code fails to compile
    * @throws LogoException if the code fails to run
    */
@@ -417,9 +412,9 @@ with org.nlogo.workspace.WorldLoaderInterface {
    *
    * @param source The reporter to run
    * @return the result reported; may be of type java.lang.Integer, java.lang.Double,
-   *         java.lang.Boolean, java.lang.String, {@link org.nlogo.api.LogoList},
+   *         java.lang.Boolean, java.lang.String, {@link org.nlogo.core.LogoList},
    *         {@link org.nlogo.api.Agent}, AgentSet, or Nobody
-   * @throws org.nlogo.api.CompilerException
+   * @throws core.CompilerException
    *                       if the code fails to compile
    * @throws LogoException if the code fails to run
    */

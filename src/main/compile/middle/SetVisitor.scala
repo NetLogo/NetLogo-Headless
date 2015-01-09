@@ -3,9 +3,10 @@
 package org.nlogo.compile
 package middle
 
-import org.nlogo.{ api, nvm, prim },
-  prim._,
-  Fail._
+import org.nlogo.core.Instantiator
+import org.nlogo.{ api, core, nvm, prim },
+  core.Fail._,
+  prim._
 
 /**
  * an AstVisitor that handles the set command. We convert constructs like
@@ -15,7 +16,7 @@ import org.nlogo.{ api, nvm, prim },
  */
 class SetVisitor extends DefaultAstVisitor {
   private lazy val INVALID_SET =
-    api.I18N.errors.get("compiler.SetVisitor.notSettable")
+    core.I18N.errors.get("compiler.SetVisitor.notSettable")
   override def visitStatement(stmt: Statement) {
     super.visitStatement(stmt)
     if(stmt.command.isInstanceOf[_set]) {
@@ -26,8 +27,7 @@ class SetVisitor extends DefaultAstVisitor {
         Instantiator.newInstance[nvm.Command](
           newCommandClass, rApp.reporter)
       newCommand.token = stmt.command.token
-      newCommand.token2 = rApp.instruction.token
-      stmt.command_$eq(newCommand)
+      stmt.command = newCommand
       stmt.removeArgument(0)
     }
   }

@@ -2,21 +2,12 @@
 
 package org.nlogo.prim
 
-import org.nlogo.core.Syntax
 import org.nlogo.agent.AgentSet
-import org.nlogo.api.{ Let, LogoException }
-import org.nlogo.nvm.{ Command, Context, CustomAssembled, AssemblerAssistant }
+import org.nlogo.api.LogoException
+import org.nlogo.core.Let
+import org.nlogo.nvm.{ AssemblerAssistant, Command, Context, CustomAssembled }
 
-class _carefully extends Command with CustomAssembled {
-
-  // MethodRipper won't let us call a public method from perform_1() - ST 7/20/12
-  private[this] val _let = Let()
-  def let = _let
-
-  override def syntax =
-    Syntax.commandSyntax(
-      right = List(Syntax.CommandBlockType, Syntax.CommandBlockType))
-
+class _carefully(let: Let) extends Command with CustomAssembled {
   override def toString =
     super.toString + ":+" + offset
 
@@ -33,7 +24,7 @@ class _carefully extends Command with CustomAssembled {
       context.ip = next
     }
     catch { case ex: LogoException =>
-      context.let(_let, ex)
+      context.let(let, ex)
       context.ip = offset  // jump to error handler
     }
   }
@@ -47,5 +38,4 @@ class _carefully extends Command with CustomAssembled {
     a.block(1)
     a.comeFrom()
   }
-
 }

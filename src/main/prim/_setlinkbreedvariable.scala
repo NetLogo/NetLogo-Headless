@@ -2,7 +2,6 @@
 
 package org.nlogo.prim
 
-import org.nlogo.core.Syntax
 import org.nlogo.api.AgentException
 import org.nlogo.nvm.{ Command, Context, EngineException }
 
@@ -10,11 +9,7 @@ class _setlinkbreedvariable(name: String) extends Command {
 
   def this(original: _linkbreedvariable) = this(original.name)
 
-  override def syntax =
-    Syntax.commandSyntax(
-      right = List(Syntax.WildcardType),
-      agentClassString = "---L",
-      switches = true)
+  switches = true
 
   override def toString =
     super.toString + ":" + name

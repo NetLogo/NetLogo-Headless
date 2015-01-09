@@ -2,6 +2,8 @@
 
 package org.nlogo.api
 
+import org.nlogo.core.{ File, FileMode }
+
 class LocalFile(filepath: String) extends File {
 
   private var w: java.io.PrintWriter = null

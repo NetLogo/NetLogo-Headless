@@ -2,18 +2,13 @@
 
 package org.nlogo.prim.etc
 
-import org.nlogo.core.{ Syntax, AgentKind }
-import org.nlogo.agent.{ AgentSet, Turtle, LinkManager }
-import org.nlogo.nvm.{ Reporter, Context, EngineException }
+import org.nlogo.agent.{ AgentSet, LinkManager, Turtle }
+import org.nlogo.core.AgentKind
+import org.nlogo.nvm.{ Context, EngineException, Reporter }
 
 class _myinlinks(val breedName: String) extends Reporter {
 
   def this() = this(null)
-
-  override def syntax =
-    Syntax.reporterSyntax(
-      ret = Syntax.LinksetType,
-      agentClassString = "-T--")
 
   override def toString =
     super.toString + ":" + breedName

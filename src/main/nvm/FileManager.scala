@@ -3,7 +3,7 @@
 package org.nlogo.nvm
 
 import org.nlogo.agent.{ World, OutputObject }
-import org.nlogo.api.{ File, FileMode }
+import org.nlogo.core.{ File, FileMode }
 
 trait FileManager {
   @throws(classOf[java.net.MalformedURLException])

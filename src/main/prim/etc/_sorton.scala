@@ -2,18 +2,12 @@
 
 package org.nlogo.prim.etc
 
-import org.nlogo.core.Syntax
-import org.nlogo.api.{ LogoList, LogoListBuilder, TypeNames }
 import org.nlogo.agent.Agent
+import org.nlogo.api.{ LogoListBuilder, TypeNames }
+import org.nlogo.core.LogoList
 import org.nlogo.nvm.{ Context, EngineException, Reporter }
 
 class _sorton extends Reporter {
-
-  override def syntax =
-    Syntax.reporterSyntax(
-      right = List(Syntax.ReporterBlockType, Syntax.AgentsetType),
-      ret = Syntax.ListType,
-      blockAgentClassString = "?")
 
   override def report(context: Context): LogoList = {
     val reporterBlock = args(0)

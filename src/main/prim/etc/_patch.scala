@@ -2,16 +2,11 @@
 
 package org.nlogo.prim.etc
 
-import org.nlogo.core.Syntax
-import org.nlogo.api.{ AgentException, Nobody }
-import org.nlogo.nvm.{ Reporter, Context }
+import org.nlogo.api.AgentException
+import org.nlogo.core.Nobody
+import org.nlogo.nvm.{ Context, Reporter }
 
 class _patch extends Reporter {
-
-  override def syntax =
-    Syntax.reporterSyntax(
-      right = List(Syntax.NumberType, Syntax.NumberType),
-      ret = Syntax.PatchType | Syntax.NobodyType)
 
   // I've tried to rejigger this and the result gets past TryCatchSafeChecker but then doesn't work
   // at runtime ("Inconsistent stack height") - ST 2/10/09

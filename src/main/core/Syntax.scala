@@ -45,17 +45,14 @@ case class Syntax private(
   minimumOption: Option[Int], // minimum number of args might be different than the default
   isRightAssociative: Boolean, // only relevant if infix
   agentClassString: String,
-  blockAgentClassString: String,
-  switches: Boolean)
+  blockAgentClassString: Option[String])
 {
 
   import Syntax._
 
   require(agentClassString == null ||
           agentClassString.size == 4)
-  require(blockAgentClassString == null ||
-          blockAgentClassString.size == 4 ||
-          blockAgentClassString == "?")
+  require(blockAgentClassString.forall(s => s.size == 4 || s == "?"))
 
   /**
    * indicates whether this instruction should be parsed as infix. Infix
@@ -66,6 +63,12 @@ case class Syntax private(
    */
   def isInfix =
     left != VoidType
+
+  /**
+   * determines whether an instruction allows a variable number of args.
+   */
+  def isVariadic: Boolean =
+    right.exists(compatible(_, Syntax.RepeatableType))
 
   def dfault =
     defaultOption.getOrElse(right.size)
@@ -117,8 +120,6 @@ case class Syntax private(
     buf.append(minimum)
     if (isRightAssociative)
       buf.append(" [RIGHT ASSOCIATIVE]")
-    if (switches)
-      buf.append(" *")
     buf.toString
   }
 
@@ -134,8 +135,7 @@ object Syntax {
     defaultOption: Option[Int] = None,
     minimumOption: Option[Int] = None, // minimum number of args might be different than the default
     agentClassString: String = "OTPL",
-    blockAgentClassString: String = null,
-    switches: Boolean = false
+    blockAgentClassString: Option[String] = None
   ) = new Syntax(
     precedence = CommandPrecedence,
     left = Syntax.VoidType,
@@ -145,8 +145,7 @@ object Syntax {
     minimumOption = minimumOption,
     isRightAssociative = false,
     agentClassString = agentClassString,
-    blockAgentClassString = blockAgentClassString,
-    switches = switches
+    blockAgentClassString = blockAgentClassString
   )
 
   def reporterSyntax(
@@ -158,7 +157,7 @@ object Syntax {
     minimumOption: Option[Int] = None,
     isRightAssociative: Boolean = false,
     agentClassString: String = "OTPL",
-    blockAgentClassString: String = null
+    blockAgentClassString: Option[String] = None
   ) = new Syntax(
     precedence = precedence,
     left = left,
@@ -168,8 +167,7 @@ object Syntax {
     minimumOption = minimumOption,
     isRightAssociative = isRightAssociative,
     agentClassString = agentClassString,
-    blockAgentClassString = blockAgentClassString,
-    switches = false
+    blockAgentClassString = blockAgentClassString
   )
 
   /** <i>Unsupported. Do not use.</i> */

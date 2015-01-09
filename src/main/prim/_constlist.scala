@@ -2,14 +2,11 @@
 
 package org.nlogo.prim
 
-import org.nlogo.core.Syntax
-import org.nlogo.api.{ Dump, LogoList }
-import org.nlogo.nvm.{ Reporter, Pure, Context }
+import org.nlogo.api.Dump
+import org.nlogo.core.{ LogoList, Pure }
+import org.nlogo.nvm.{ Context, Reporter }
 
 class _constlist(value: LogoList) extends Reporter with Pure {
-  override def syntax =
-    Syntax.reporterSyntax(
-      ret = Syntax.ListType)
   override def toString =
     super.toString + ":" + Dump.logoObject(value)
   override def report(context: Context): LogoList =

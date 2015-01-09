@@ -3,16 +3,16 @@
 package org.nlogo.nvm
 
 import org.nlogo.agent.{Agent, AgentSet, World}
-import org.nlogo.{ api, core }
-import org.nlogo.api.{DummyParserServices, DummyExtensionManager, JobOwner,
-                      CommandRunnable, ReporterRunnable, ImportErrorHandler, OutputDestination}
-import core.Model
+import org.nlogo.{ api, core },
+  api.{DummyParserServices, DummyExtensionManager, JobOwner,
+    CommandRunnable, ReporterRunnable, ImportErrorHandler, OutputDestination }
+import org.nlogo.core.Model
 
 class DummyWorkspace extends DummyParserServices with Workspace {
   private def unsupported = throw new UnsupportedOperationException
   val world = new World
-  override def procedures = FrontEndInterface.NoProcedures
-  override def procedures_=(procedures: FrontEndInterface.ProceduresMap) = unsupported
+  override def procedures = Procedure.NoProcedures
+  override def procedures_=(procedures: Procedure.ProceduresMap) = unsupported
   override def requestDisplayUpdate(context: Context, force: Boolean) = unsupported
   override def breathe(context: Context) = unsupported
   override def joinForeverButtons(agent: Agent) = unsupported

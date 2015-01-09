@@ -2,14 +2,10 @@
 
 package org.nlogo.prim.etc
 
-import org.nlogo.core.Syntax
 import org.nlogo.nvm.{ Command, Context }
 
 class _resetticks extends Command {
-  override def syntax =
-    Syntax.commandSyntax(
-      agentClassString = "O---",
-      switches = true)
+  switches = true
   override def callsOtherCode = true
   override def perform(context: Context) {
     workspace.resetTicks(context)

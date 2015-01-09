@@ -33,38 +33,12 @@ object SyntaxJ {
     Syntax.commandSyntax(right = right.toList,
       defaultOption = Some(dfault))
 
-  def commandSyntax(switches: Boolean) =
-    Syntax.commandSyntax(switches = switches)
-
-  def commandSyntax(agentClassString: String, switches: Boolean) =
-    Syntax.commandSyntax(agentClassString = agentClassString,
-      switches = switches)
-
-  def commandSyntax(right: Array[Int], switches: Boolean) =
-    Syntax.commandSyntax(right = right.toList,
-      switches = switches)
-
   def commandSyntax(right: Array[Int], agentClassString: String) =
     Syntax.commandSyntax(right = right.toList,
       agentClassString = agentClassString)
 
-  def commandSyntax(right: Array[Int], agentClassString: String, switches: Boolean) =
-    Syntax.commandSyntax(right = right.toList,
-      agentClassString = agentClassString,
-      switches = switches)
-
-  def commandSyntax(right: Array[Int], agentClassString: String, blockAgentClassString: String, switches: Boolean) =
-    Syntax.commandSyntax(right = right.toList,
-      agentClassString = agentClassString,
-      blockAgentClassString = blockAgentClassString,
-      switches = switches)
-
-  def commandSyntax(right: Array[Int], dfault: Int, agentClassString: String, blockAgentClassString: String, switches: Boolean) =
-    Syntax.commandSyntax(right = right.toList,
-      defaultOption = Some(dfault),
-      agentClassString = agentClassString,
-      blockAgentClassString = blockAgentClassString,
-      switches = switches)
+  def commandSyntax(agentClassString: String) =
+    Syntax.commandSyntax(agentClassString = agentClassString)
 
   // for use by constants and no-argument reporters
   def reporterSyntax(ret: Int, agentClassString: String) =
@@ -84,7 +58,7 @@ object SyntaxJ {
     Syntax.reporterSyntax(right = right.toList,
       ret = ret,
       agentClassString = agentClassString,
-      blockAgentClassString = blockAgentClassString)
+      blockAgentClassString = Option(blockAgentClassString))
 
   // for use by prefix reporters
   def reporterSyntax(right: Array[Int], ret: Int, agentClassString: String) =
@@ -108,7 +82,7 @@ object SyntaxJ {
       precedence = precedence,
       isRightAssociative = isRightAssociative,
       agentClassString = agentClassString,
-      blockAgentClassString = blockAgentClassString)
+      blockAgentClassString = Option(blockAgentClassString))
 
   /**
    * Returns a <code>Syntax</code> for reporters with no arguments

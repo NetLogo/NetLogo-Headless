@@ -2,22 +2,12 @@
 
 package org.nlogo.prim
 
-import org.nlogo.core.Syntax
-import org.nlogo.api.{ I18N, LogoListBuilder }
 import org.nlogo.agent.{ Agent, AgentSet }
-import org.nlogo.nvm.{ Reporter, Context, EngineException }
+import org.nlogo.api.LogoListBuilder
+import org.nlogo.core.{ I18N, Syntax }
+import org.nlogo.nvm.{ Context, EngineException, Reporter }
 
 class _of extends Reporter {
-
-  override def syntax =
-    Syntax.reporterSyntax(
-      left = Syntax.ReporterBlockType,
-      right = List(Syntax.AgentType | Syntax.AgentsetType),
-      ret = Syntax.WildcardType,
-      precedence = Syntax.NormalPrecedence + 1,
-      isRightAssociative = true,
-      agentClassString = "OTPL",
-      blockAgentClassString = "?")
 
   override def report(context: Context): AnyRef =
     args(1).report(context) match {

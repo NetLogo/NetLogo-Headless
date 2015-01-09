@@ -7,8 +7,9 @@ import
     asm.Opcodes._,
     asm.{ Label, MethodVisitor },
   org.nlogo.{ api, core, nvm },
-    api.CompilerException,
+
     nvm.{ ArgumentTypeException, Instruction }
+import org.nlogo.core.CompilerException
 
 object TypeConverter {
   /**

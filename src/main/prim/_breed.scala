@@ -3,13 +3,9 @@
 package org.nlogo.prim
 
 import org.nlogo.agent.AgentSet
-import org.nlogo.core.Syntax
-import org.nlogo.nvm.{ Reporter, Context }
+import org.nlogo.nvm.{ Context, Reporter }
 
 class _breed(breedName: String) extends Reporter {
-  override def syntax =
-    Syntax.reporterSyntax(
-      ret = Syntax.TurtlesetType)
   override def toString =
     super.toString + ":" + breedName
   override def report(context: Context): AgentSet =

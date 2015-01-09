@@ -3,6 +3,7 @@
 package org.nlogo.api
 
 import org.scalatest.FunSuite
+import org.nlogo.core.LogoList
 
 class ColorTests extends FunSuite {
   test("modulate") {

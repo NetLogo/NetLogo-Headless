@@ -2,9 +2,7 @@
 
 package org.nlogo.prim
 
-import org.nlogo.core.Syntax
-import org.nlogo.nvm.{ Reporter, CustomGenerated, Context, Procedure,
-                       Activation, EngineException }
+import org.nlogo.nvm.{ Activation, Context, CustomGenerated, EngineException, Procedure, Reporter }
 
 // Note that _callreport is "CustomGenerated".  That means that the bytecode generator generates
 // custom bytecode for _callreport, instead of using the report() method below.  The body of the
@@ -13,7 +11,8 @@ import org.nlogo.nvm.{ Reporter, CustomGenerated, Context, Procedure,
 
 class _callreport(val procedure: Procedure) extends Reporter with CustomGenerated {
 
-  override def syntax = procedure.syntax
+  override def returnType =
+    procedure.syntax.ret
 
   override def toString =
     super.toString + ":" + procedure.name

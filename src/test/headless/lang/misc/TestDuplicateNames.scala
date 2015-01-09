@@ -4,6 +4,7 @@ package org.nlogo.headless
 package lang
 package misc
 
+import org.nlogo.core.CompilerException
 import org.nlogo.{ api, nvm }
 import org.nlogo.util.SlowTest  // depends on array extension
 
@@ -17,7 +18,7 @@ class TestDuplicateNames extends FixtureSuite with SlowTest {
     def check(source: String, note: String) {
       test(s"$name - $note") { fixture =>
         import fixture._
-        val ex = intercept[api.CompilerException] {
+        val ex = intercept[CompilerException] {
           declare(source)
         }
         assertResult(error)(ex.getMessage)
@@ -72,7 +73,7 @@ class TestDuplicateNames extends FixtureSuite with SlowTest {
   // at least we get errors on these, but the messages aren't great
   // https://github.com/NetLogo/NetLogo/issues/352
   testBadName("array:set",
-    "There is already a _extern:+0 called ARRAY:SET",
+    "There is already a _extern called ARRAY:SET",
     "extensions [array]")
 
 }

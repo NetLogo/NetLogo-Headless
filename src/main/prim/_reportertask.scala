@@ -2,29 +2,18 @@
 
 package org.nlogo.prim
 
-import org.nlogo.core.Syntax
-import org.nlogo.api.Let
-import org.nlogo.nvm.{ ReporterTask, Context, Reporter }
+import org.nlogo.core.Let
+import org.nlogo.nvm.{ Context, Reporter, ReporterTask }
 
-class _reportertask extends Reporter {
+class _reportertask(val argCount: Int) extends Reporter {
 
-  val formals = collection.mutable.ArrayBuffer[Let]()
-
-  override def syntax =
-    Syntax.reporterSyntax(
-      right = List(Syntax.WildcardType),
-      ret = Syntax.ReporterTaskType)
+  val taskFormals = Array.fill(argCount)(Let())
 
   override def report(c: Context): AnyRef =
     ReporterTask(body = args(0),
-                 formals = formals.reverse.dropWhile(_==null).reverse.toArray,
+                 formals = taskFormals,
                  lets = c.allLets,
                  locals = c.activation.args)
 
-  def getFormal(n: Int): Let = {
-    while(formals.size < n)
-      formals += Let()
-    formals(n - 1)
-  }
-
+  def getFormal(n: Int): Let = taskFormals(n - 1)
 }

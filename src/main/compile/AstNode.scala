@@ -2,26 +2,7 @@
 
 package org.nlogo.compile
 
-// here is the AstNode (AST = Abstract Syntax Tree) trait, along with its extending traits
-// Expression and Application and their subclasses: ProcedureDefinition, Statements, Statement,
-// ReporterApp, ReporterBlock, CommandBlock, DelayedBlock.
-
-/*
- * The jargon here is a bit different from the usual NetLogo terminology:
- *  - "command" is an actual command token itself, e.g., show, run.
- *  - "reporter" is an actual reporter itself, e.g., +, round, with.
- *  - "statement" is a syntactic form with no value and a command as head (e.g., show 5)
- *  - "expression" is a syntactic form which can occur as an argument to a command or to a
- *    reporter. expressions denote values. there are two basic kinds of expression:
- *     - reporter applications (infix or prefix). Note that this is reporter in the internal sense,
- *       which includes variables and literals. So these include, e.g., turtles with [ true ], 5 +
- *       10, 5, [1 2 3].
- *     - blocks. command and reporter blocks are expressions of this type.  a command block contains
- *       zero or more statements, while a reporter block contains exactly one expression.
- */
-
-import org.nlogo.core.Syntax
-import org.nlogo.nvm.{ Procedure, Command, Reporter, Instruction }
+import org.nlogo.{ core, nvm }
 
 /**
  * An interface representing a node in the NetLogo abstract syntax tree (AKA parse tree, in
@@ -31,7 +12,7 @@ import org.nlogo.nvm.{ Procedure, Command, Reporter, Instruction }
  * indicated by the position and length. It's the compiler's job to make sure these values are
  * always reasonable.
  */
-trait AstNode {
+trait AstNode extends core.AstNode {
   def start: Int
   def end: Int
   def file: String
@@ -88,7 +69,8 @@ trait Expression extends AstNode {
  */
 trait Application extends AstNode {
   def args: Seq[Expression]
-  def instruction: Instruction
+  def coreInstruction: core.Instruction
+  def nvmInstruction: nvm.Instruction
   def end_=(end: Int)
   def addArgument(arg: Expression)
   def replaceArg(index: Int, expr: Expression)
@@ -98,7 +80,7 @@ trait Application extends AstNode {
  * represents a single procedure definition.  really just a container
  * for the procedure body, which is a Statements object.
  */
-class ProcedureDefinition(val procedure: Procedure, val statements: Statements) extends AstNode {
+class ProcedureDefinition(val procedure: nvm.Procedure, val statements: Statements) extends AstNode {
   def start = procedure.pos
   def end = procedure.end
   def file = procedure.filename
@@ -135,11 +117,12 @@ class Statements(val file: String) extends AstNode {
  * represents a NetLogo statement. Statements only have one form: command
  * application.
  */
-class Statement(var command: Command, var start: Int, var end: Int, val file: String)
+class Statement(var coreCommand: core.Command, var command: nvm.Command, var start: Int, var end: Int, val file: String)
     extends Application {
   private val _args = collection.mutable.Buffer[Expression]()
   override def args: Seq[Expression] = _args
-  def instruction = command // for Application
+  def nvmInstruction = command // for Application
+  def coreInstruction = coreCommand // for Application
   def addArgument(arg: Expression) { _args.append(arg) }
   override def toString = command.toString + "[" + args.mkString(", ") + "]"
   def accept(v: AstVisitor) { v.visitStatement(this) }
@@ -155,7 +138,7 @@ class Statement(var command: Command, var start: Int, var end: Int, val file: St
  * to commands and reporters, etc.
  */
 class CommandBlock(val statements: Statements, var start: Int, var end: Int, val file: String) extends Expression {
-  def reportedType() = Syntax.CommandBlockType
+  def reportedType() = core.Syntax.CommandBlockType
   override def toString = "[" + statements.toString + "]"
   def accept(v: AstVisitor) { v.visitCommandBlock(this) }
 }
@@ -177,14 +160,15 @@ class ReporterBlock(val app: ReporterApp, var start: Int, var end: Int, val file
    */
   def reportedType(): Int = {
     val appType = app.reportedType
+    import core.Syntax._
     appType match {
-      case Syntax.BooleanType => Syntax.BooleanBlockType
-      case Syntax.NumberType => Syntax.NumberBlockType
+      case BooleanType => BooleanBlockType
+      case NumberType => NumberBlockType
       case _ =>
-        if (Syntax.compatible(appType, Syntax.BooleanType)
-            || Syntax.compatible(appType, Syntax.NumberType))
-          Syntax.ReporterBlockType
-        else Syntax.OtherBlockType
+        if (compatible(appType, BooleanType)
+            || compatible(appType, NumberType))
+          ReporterBlockType
+        else OtherBlockType
     }
   }
 }
@@ -195,16 +179,17 @@ class ReporterBlock(val app: ReporterApp, var start: Int, var end: Int, val file
  * represents things like constants, which are converted into no-arg reporter
  * applications as they're parsed.
  */
-class ReporterApp(var reporter: Reporter, var start: Int, var end: Int, val file: String)
+class ReporterApp(var coreReporter: core.Reporter, var reporter: nvm.Reporter, var start: Int, var end: Int, val file: String)
 extends Expression with Application {
   /**
    * the args for this application.
    */
   private val _args = collection.mutable.Buffer[Expression]()
   override def args: Seq[Expression] = _args
-  def instruction = reporter // for Application
+  def coreInstruction = coreReporter // for Application
+  def nvmInstruction = reporter // for Application
   def addArgument(arg: Expression) { _args.append(arg) }
-  def reportedType() = reporter.syntax.ret
+  def reportedType() = coreReporter.syntax.ret
   def accept(v: AstVisitor) { v.visitReporterApp(this) }
   def removeArgument(index: Int) { _args.remove(index) }
   def replaceArg(index: Int, expr: Expression) { _args(index) = expr }

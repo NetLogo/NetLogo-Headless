@@ -2,7 +2,8 @@
 
 package org.nlogo.agent
 
-import org.nlogo.api.{ AgentException, I18N }
+import org.nlogo.api.AgentException
+import org.nlogo.core.I18N
 
 @annotation.strictfp
 class Box(_world: World)

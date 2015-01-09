@@ -5,7 +5,7 @@ package org.nlogo.workspace
 import org.nlogo.agent.{ Agent, World }
 import org.nlogo.nvm, nvm.CompilerInterface
 import org.nlogo.api
-import org.nlogo.core, core.Model
+import org.nlogo.core, org.nlogo.core.{File, Model}
 
 /**
  * handy for use in unit tests
@@ -29,7 +29,7 @@ extends AbstractWorkspace(new World)
   override def clearOutput(): Unit = unsupported
   override def sendOutput(oo: org.nlogo.agent.OutputObject, toOutputArea: Boolean): Unit = unsupported
   override def importerErrorHandler: org.nlogo.agent.ImporterJ.ErrorHandler = unsupported
-  override def importDrawing(file: api.File) = unsupported
+  override def importDrawing(file: File) = unsupported
   override def exportOutput(filename: String) = unsupported
   override def exportDrawing(filename: String, format: String) = unsupported
   override def exportDrawingToCSV(writer: java.io.PrintWriter) = unsupported

@@ -20,7 +20,7 @@ trait PlotHelpers extends Instruction {
     plotManager.currentPlot.getOrElse(
       throw new EngineException(
         context, this,
-          api.I18N.errors.get("org.nlogo.plot.noPlotSelected")))
+          core.I18N.errors.get("org.nlogo.plot.noPlotSelected")))
   def currentPen(context: Context): api.PlotPenInterface = {
     val plot = currentPlot(context)
     plot.currentPen.getOrElse(
@@ -31,16 +31,10 @@ trait PlotHelpers extends Instruction {
 
 abstract class PlotCommand(args: Int*)
 extends Command with PlotHelpers {
-  override def syntax =
-    Syntax.commandSyntax(
-      right = args.toList)
 }
 
 abstract class PlotActionCommand(args: Int*)
 extends PlotCommand(args: _*) {
-  override def syntax =
-    Syntax.commandSyntax(
-      right = args.toList)
   override def perform(context: Context) {
     plotManager.publish(action(context))
     context.ip = next
@@ -50,10 +44,6 @@ extends PlotCommand(args: _*) {
 
 abstract class PlotReporter(returnType: Int, args: Int*)
 extends Reporter with PlotHelpers {
-  override def syntax =
-    Syntax.reporterSyntax(
-      right = args.toList,
-      ret = returnType)
 }
 
 //

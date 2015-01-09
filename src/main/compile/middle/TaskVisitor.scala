@@ -3,11 +3,11 @@
 package org.nlogo.compile
 package middle
 
-import org.nlogo.{ api, nvm, prim },
-  Fail._
+import org.nlogo.{ core, api, nvm, prim },
+  core.Fail._
 
 // This replaces _taskvariable with _letvariable everywhere.  And we need
-//   to know which api.Let object to connect each occurrence to.
+//   to know which Let object to connect each occurrence to.
 // There are two cases, command tasks and reporter tasks:
 // - In the command task case, LambdaLifter already made the task body into
 //   its own procedure, so we never see _commandtask, so we look up the
@@ -32,13 +32,11 @@ class TaskVisitor extends DefaultAstVisitor {
       case lv: prim._taskvariable =>
         task match {
           case None =>
-            cAssert(procedure.get.isTask,
-                    api.I18N.errors.get("compiler.TaskVisitor.notDefined"), expr)
-            val formal: api.Let = procedure.get.getTaskFormal(lv.varNumber, lv.token)
+            val formal: core.Let = procedure.get.getTaskFormal(lv.varNumber)
             expr.reporter = new prim._letvariable(formal)
             expr.reporter.token = lv.token
           case Some(l: prim._reportertask) =>
-            val formal: api.Let = l.getFormal(lv.varNumber)
+            val formal: core.Let = l.getFormal(lv.varNumber)
             expr.reporter = new prim._letvariable(formal)
             expr.reporter.token = lv.token
         }

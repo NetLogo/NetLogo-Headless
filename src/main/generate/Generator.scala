@@ -131,66 +131,68 @@ class Generator(source: String, procedure: Procedure, profilingEnabled: Boolean)
       // handling later, among other things.
       val thisInstrUID = curInstructionUID
       keepInstruction(instr, thisInstrUID)
-      if (instr.isInstanceOf[CustomGenerated]) {
-        nlgen.markLineNumber(thisInstrUID)
-        new CustomGenerator(profilingEnabled).generate(instr.asInstanceOf[CustomGenerated], nlgen, thisInstrUID, ip)
-        nlgen.markLineNumber(parentInstrUID)
-        val actualReturnType = instr.syntax.ret match {
-          case Syntax.BooleanType => classOf[Boolean]
-          case Syntax.ListType => classOf[org.nlogo.api.LogoList]
-          case Syntax.StringType => classOf[String]
-          case Syntax.WildcardType => classOf[Object]
-          case Syntax.VoidType => java.lang.Void.TYPE
-        }
-        nlgen.generateConversion(actualReturnType, retTypeWanted, parentInstr, argIndex)
-      } else {
-        MethodSelector.select(instr, retTypeWanted, profilingEnabled) match {
-          case None =>
-            generateOldStyleCall(instr, retTypeWanted, parentInstrUID, parentInstr, argIndex)
-          case Some(bestEvalMethod) =>
-            // need to save the curInstructionUID value in a local var, since curInstructionUID gets
-            // changed as a result of generating the children.
-            // keep every instruction in a field of our GeneratedInstruction class for use with error
-            // handling later, among other things.
-            val thisInstrUID = curInstructionUID
-            keepInstruction(instr, thisInstrUID)
-            // libraryCall flag just means we invoke the report_X() or perform_X() method rather than
-            // inlining it.
-            val paramTypes = bestEvalMethod.getParameterTypes()
-            if (paramTypes.length != instr.args.length + 1)
-              throw new IllegalStateException((instr, bestEvalMethod).toString)
-            for (i <- 0 until instr.args.length) {
-              val paramType = paramTypes(i + 1)
-              // if it's a Reporter argument, don't evaluate it.
-              if (classOf[Reporter].isAssignableFrom(paramType)) {
-                curInstructionUID += 1
-                val newArg = recurse(instr.args(i))
-                instr.args(i) = newArg
-                keepAndLoadReporter(newArg, curInstructionUID)
-              } else generateInstruction(instr.args(i), paramType, thisInstrUID, instr, i)
-            }
-            // pop off the stack into local vars, in backwards order because this is where the
-            // inlined code expects to find the args.
-            val paramJVMTypes = Type.getArgumentTypes(bestEvalMethod)
-            var totalLocalSlots = paramJVMTypes.map(_.getSize).sum
-            for (i <- paramJVMTypes.length - 1 to 1 by -1) {
-              totalLocalSlots -= paramJVMTypes(i).getSize
-              nlgen.visitVarInsn(paramJVMTypes(i).getOpcode(ISTORE),
-                totalLocalSlots + 1)
-            }
-            // PeepholeOptimizer3 will be looking for this flag.  If it finds it, then it goes on to
-            // replace the pattern it's looking for.  If it doesn't find it, it aborts.
-            if (new PeepholeSafeChecker(profilingEnabled).isSafe(bestEvalMethod))
-              nlgen.visitLabel(PeepholeOptimizer3.PEEPHOLE_FLAG_LABEL)
-            // Set the line number to thisInstrUID, for use with error handling.
-            nlgen.markLineNumber(thisInstrUID)
-            val mripper = new MethodRipper(bestEvalMethod, instr, nlgen, this, thisInstrUID)
-            mripper.writeTransformedBytecode()
-            // Set the line number to the parent, since any errors that occur
-            // during the type conversion are the parent instruction's responsibility
-            nlgen.markLineNumber(parentInstrUID)
-            nlgen.generateConversion(bestEvalMethod.getReturnType, retTypeWanted, parentInstr, argIndex)
-        }
+      instr match {
+        case cg: CustomGenerated =>
+          val cg = instr.asInstanceOf[CustomGenerated]
+          nlgen.markLineNumber(thisInstrUID)
+          new CustomGenerator(profilingEnabled).generate(cg, nlgen, thisInstrUID, ip)
+          nlgen.markLineNumber(parentInstrUID)
+          val actualReturnType = cg.returnType match {
+            case Syntax.BooleanType => classOf[Boolean]
+            case Syntax.ListType => classOf[org.nlogo.core.LogoList]
+            case Syntax.StringType => classOf[String]
+            case Syntax.WildcardType => classOf[Object]
+            case Syntax.VoidType => java.lang.Void.TYPE
+          }
+          nlgen.generateConversion(actualReturnType, retTypeWanted, parentInstr, argIndex)
+            case _ =>
+              MethodSelector.select(instr, retTypeWanted, profilingEnabled) match {
+                case None =>
+                  generateOldStyleCall(instr, retTypeWanted, parentInstrUID, parentInstr, argIndex)
+                case Some(bestEvalMethod) =>
+                  // need to save the curInstructionUID value in a local var, since curInstructionUID gets
+                  // changed as a result of generating the children.
+                  // keep every instruction in a field of our GeneratedInstruction class for use with error
+                  // handling later, among other things.
+                  val thisInstrUID = curInstructionUID
+                  keepInstruction(instr, thisInstrUID)
+                  // libraryCall flag just means we invoke the report_X() or perform_X() method rather than
+                  // inlining it.
+                  val paramTypes = bestEvalMethod.getParameterTypes()
+                  if (paramTypes.length != instr.args.length + 1)
+                    throw new IllegalStateException((instr, bestEvalMethod).toString)
+                  for (i <- 0 until instr.args.length) {
+                    val paramType = paramTypes(i + 1)
+                    // if it's a Reporter argument, don't evaluate it.
+                    if (classOf[Reporter].isAssignableFrom(paramType)) {
+                      curInstructionUID += 1
+                      val newArg = recurse(instr.args(i))
+                      instr.args(i) = newArg
+                      keepAndLoadReporter(newArg, curInstructionUID)
+                    } else generateInstruction(instr.args(i), paramType, thisInstrUID, instr, i)
+                  }
+                  // pop off the stack into local vars, in backwards order because this is where the
+                  // inlined code expects to find the args.
+                  val paramJVMTypes = Type.getArgumentTypes(bestEvalMethod)
+                  var totalLocalSlots = paramJVMTypes.map(_.getSize).sum
+                  for (i <- paramJVMTypes.length - 1 to 1 by -1) {
+                    totalLocalSlots -= paramJVMTypes(i).getSize
+                    nlgen.visitVarInsn(paramJVMTypes(i).getOpcode(ISTORE),
+                      totalLocalSlots + 1)
+                  }
+                  // PeepholeOptimizer3 will be looking for this flag.  If it finds it, then it goes on to
+                  // replace the pattern it's looking for.  If it doesn't find it, it aborts.
+                  if (new PeepholeSafeChecker(profilingEnabled).isSafe(bestEvalMethod))
+                    nlgen.visitLabel(PeepholeOptimizer3.PEEPHOLE_FLAG_LABEL)
+                  // Set the line number to thisInstrUID, for use with error handling.
+                nlgen.markLineNumber(thisInstrUID)
+                val mripper = new MethodRipper(bestEvalMethod, instr, nlgen, this, thisInstrUID)
+                mripper.writeTransformedBytecode()
+                // Set the line number to the parent, since any errors that occur
+                // during the type conversion are the parent instruction's responsibility
+                nlgen.markLineNumber(parentInstrUID)
+                nlgen.generateConversion(bestEvalMethod.getReturnType, retTypeWanted, parentInstr, argIndex)
+              }
       }
     }
     def generateOldStyleCall(instr: Instruction, retTypeWanted: Class[_], parentInstrUID: Int,

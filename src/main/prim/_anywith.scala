@@ -2,19 +2,12 @@
 
 package org.nlogo.prim
 
-import org.nlogo.core.Syntax
-import org.nlogo.api.{ Dump, I18N }
-import org.nlogo.nvm.{ Reporter, Context, EngineException }
 import org.nlogo.agent.AgentSet
+import org.nlogo.api.Dump
+import org.nlogo.core.I18N
+import org.nlogo.nvm.{ Context, EngineException, Reporter }
 
 class _anywith extends Reporter {
-
-  override def syntax =
-    Syntax.reporterSyntax(
-      right = List(Syntax.AgentsetType, Syntax.BooleanBlockType),
-      ret = Syntax.BooleanType,
-      agentClassString = "OTPL",
-      blockAgentClassString = "?")
 
   override def report(context: Context): java.lang.Boolean =
     Boolean.box(

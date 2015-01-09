@@ -2,17 +2,10 @@
 
 package org.nlogo.prim.etc
 
-import org.nlogo.core.Syntax
-import org.nlogo.api.Nobody
-import org.nlogo.agent.{ AgentSet, Link }
-import org.nlogo.nvm.{ Reporter, Context }
+import org.nlogo.core.Nobody
+import org.nlogo.nvm.{ Context, Reporter }
 
 class _linkbreedsingular(breedName: String) extends Reporter {
-
-  override def syntax =
-    Syntax.reporterSyntax(
-      right = List(Syntax.NumberType, Syntax.NumberType),
-      ret = Syntax.LinkType | Syntax.NobodyType)
 
   override def toString =
     super.toString + ":" + breedName

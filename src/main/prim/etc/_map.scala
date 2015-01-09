@@ -2,17 +2,11 @@
 
 package org.nlogo.prim.etc
 
-import org.nlogo.core.Syntax
-import org.nlogo.api.{ LogoList, LogoListBuilder }
-import org.nlogo.nvm.{ EngineException, Context, Reporter }
+import org.nlogo.api.LogoListBuilder
+import org.nlogo.core.LogoList
+import org.nlogo.nvm.{ Context, EngineException, Reporter }
 
 class _map extends Reporter {
-
-  override def syntax =
-    Syntax.reporterSyntax(
-      right = List(Syntax.ReporterTaskType, Syntax.RepeatableType | Syntax.ListType),
-      ret = Syntax.ListType,
-      defaultOption = Some(2))
 
   // Oh boy, this is going to be really fun one to generate...
   //   ~Forrest (7/21/2006)

@@ -2,6 +2,7 @@
 
 package org.nlogo.api
 
+import org.nlogo.core.Keywords
 import org.scalatest.FunSuite
 
 class KeywordsTests extends FunSuite {

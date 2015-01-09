@@ -5,16 +5,19 @@ package org.nlogo.workspace
 // omg. rat's nest. - ST 5/3/13
 
 import
+  java.io.{ IOException, PrintWriter }
+
+import
+  scala.collection.mutable.WeakHashMap
+
+import
   org.nlogo.{ agent, api, core, nvm, plot },
-  core.{ AgentKind, Token },
-  agent.{ World, Agent, AbstractExporter, AgentSet },
-  api.{ PlotInterface, Dump, CommandLogoThunk, ReporterLogoThunk, Femto,
-    CompilerException, LogoException, JobOwner, SimpleJobOwner, ModelType, Exceptions },
-  nvm.{ FrontEndInterface, FileManager, Instruction, EngineException, Context,
-    Procedure, Job, Command, MutableLong, Workspace, Activation },
-  plot.{ PlotExporter, PlotManager },
-  java.io.{ IOException, PrintWriter },
-  collection.mutable.WeakHashMap
+  agent.{ AbstractExporter, Agent, AgentSet, World },
+  api.{ CommandLogoThunk, Dump, Exceptions, JobOwner, LogoException, ModelType, PlotInterface, ReporterLogoThunk, SimpleJobOwner },
+  core.{ AgentKind, CompilerException, Femto, File, FileMode },
+  nvm.{ Activation, Command, Context, EngineException, FileManager, ImportHandler, Instruction, Job, MutableLong, Procedure, Workspace },
+    Procedure.{ NoProcedures, ProceduresMap },
+  plot.{ PlotExporter, PlotManager }
 
 import AbstractWorkspaceTraits._
 
@@ -134,17 +137,17 @@ object AbstractWorkspaceTraits {
     var flags = nvm.CompilerFlags()
 
     override def readNumberFromString(source: String) =
-      compiler.frontEnd.readNumberFromString(
-        source, world, getExtensionManager)
+      compiler.utilities.readNumberFromString(
+        source, new ImportHandler(world, getExtensionManager))
 
     override def isReporter(s: String) =
-      compiler.frontEnd.isReporter(s, world.program, procedures, getExtensionManager)
+      compiler.utilities.isReporter(s, world.program, procedures, getExtensionManager)
 
   }
 
   trait Procedures { this: AbstractWorkspace =>
-    var procedures: FrontEndInterface.ProceduresMap =
-      FrontEndInterface.NoProcedures
+    var procedures: ProceduresMap =
+      NoProcedures
     def init() {
       procedures.values.foreach(_.init(this))
     }
@@ -263,9 +266,9 @@ object AbstractWorkspaceTraits {
     }
 
     @throws(classOf[java.io.IOException])
-    def exportBehaviors(filename: String, experimentName: String, includeHeader: Boolean): api.File = {
+    def exportBehaviors(filename: String, experimentName: String, includeHeader: Boolean): File = {
       val file = new api.LocalFile(filename)
-      file.open(api.FileMode.Write)
+      file.open(FileMode.Write)
       if (includeHeader) {
         agent.AbstractExporter.exportHeader(
           file.getPrintWriter, "BehaviorSpace", getModelFileName, experimentName)
@@ -546,7 +549,7 @@ object AbstractWorkspaceTraits {
 
     abstract class FileImporter(val filename: String) {
       @throws(classOf[java.io.IOException])
-      def doImport(reader: api.File)
+      def doImport(reader: File)
     }
 
     def importerErrorHandler: agent.ImporterJ.ErrorHandler
@@ -579,7 +582,7 @@ object AbstractWorkspaceTraits {
       new agent.ImporterJ.StringReader {
         @throws(classOf[agent.ImporterJ.StringReaderException])
         def readFromString(s: String): AnyRef =
-          try compiler.frontEnd.readFromString(s, world, getExtensionManager)
+          try compiler.utilities.readFromString(s, new ImportHandler(world, getExtensionManager))
           catch { case ex: CompilerException =>
               throw new agent.ImporterJ.StringReaderException(ex.getMessage)
           }
@@ -590,20 +593,20 @@ object AbstractWorkspaceTraits {
       doImport(
         new FileImporter(filename) {
           @throws(classOf[java.io.IOException])
-          override def doImport(file: api.File) {
+          override def doImport(file: File) {
             importDrawing(file)
           }
         })
     }
 
     @throws(classOf[java.io.IOException])
-    def importDrawing(file: api.File)
+    def importDrawing(file: File)
 
     @throws(classOf[java.io.IOException])
     def doImport(importer: BufferedReaderImporter) {
       val file = new api.LocalFile(importer.filename)
       try {
-        file.open(org.nlogo.api.FileMode.Read)
+        file.open(FileMode.Read)
         importer.doImport(file.reader)
       }
       finally

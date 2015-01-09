@@ -3,20 +3,16 @@
 package org.nlogo.prim.etc;
 
 import org.nlogo.agent.Turtle;
-import org.nlogo.api.I18N;
 import org.nlogo.api.PerspectiveJ;
-import org.nlogo.core.Syntax;
-import org.nlogo.core.SyntaxJ;
+import org.nlogo.core.I18N;
 import org.nlogo.nvm.Command;
 import org.nlogo.nvm.EngineException;
 
 public final strictfp class _ride
     extends Command {
-  @Override
-  public Syntax syntax() {
-    return SyntaxJ.commandSyntax
-        (new int[]{Syntax.TurtleType()},
-            "O---", true);
+
+  public _ride() {
+    switches = true;
   }
 
   @Override

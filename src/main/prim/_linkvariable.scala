@@ -2,16 +2,10 @@
 
 package org.nlogo.prim
 
-import org.nlogo.core.Syntax
 import org.nlogo.api.AgentException
-import org.nlogo.nvm.{ Reporter, Context, EngineException }
+import org.nlogo.nvm.{ Context, EngineException, Reporter }
 
 class _linkvariable(_vn: Int) extends Reporter {
-
-  override def syntax =
-    Syntax.reporterSyntax(
-      ret = Syntax.WildcardType | Syntax.ReferenceType,
-      agentClassString = "---L")
 
   override def toString =
     super.toString + ":" +

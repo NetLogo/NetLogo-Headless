@@ -2,17 +2,13 @@
 
 package org.nlogo.prim
 
-import org.nlogo.core.Syntax
-import org.nlogo.api.{ LogoException, LogoList, LogoListBuilder }
-import org.nlogo.nvm.{ Reporter, Context, Pure, CustomGenerated }
+import org.nlogo.api.LogoListBuilder
+import org.nlogo.core.{ LogoList, Pure, Syntax }
+import org.nlogo.nvm.{ Context, CustomGenerated, Reporter }
 
 class _list extends Reporter with Pure with CustomGenerated {
-  override def syntax =
-    Syntax.reporterSyntax(
-      right = List(Syntax.RepeatableType | Syntax.WildcardType),
-      ret = Syntax.ListType,
-      defaultOption = Some(2),
-      minimumOption = Some(0))
+  override def returnType =
+    Syntax.ListType
   override def report(context: Context): LogoList = {
     val builder = new LogoListBuilder
     var i = 0

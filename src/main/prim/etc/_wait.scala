@@ -2,17 +2,12 @@
 
 package org.nlogo.prim.etc
 
-import org.nlogo.core.Syntax
-import org.nlogo.api.{ Let, LogoException }
-import org.nlogo.nvm.{ Command, Context, CustomAssembled, MutableLong, AssemblerAssistant }
+import org.nlogo.core.Let
+import org.nlogo.nvm.{ AssemblerAssistant, Command, Context, CustomAssembled, MutableLong }
 
 class _wait extends Command with CustomAssembled {
 
   private[this] val let = Let()
-
-  override def syntax =
-    Syntax.commandSyntax(
-      right = List(Syntax.NumberType))
 
   override def perform(context: Context) {
     val now = System.nanoTime()

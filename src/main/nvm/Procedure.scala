@@ -2,7 +2,10 @@
 
 package org.nlogo.nvm
 
-import org.nlogo.{ api, core }
+import org.nlogo.{ api, core },
+  core.{FrontEndProcedure, Let}
+
+import scala.collection.immutable.ListMap
 
 class Procedure(
   val isReporter: Boolean,
@@ -10,32 +13,23 @@ class Procedure(
   val nameToken: core.Token,
   val argTokens: Seq[core.Token],
   _displayName: Option[String] = None,
-  val parent: Procedure = null) {
+  val parent: Procedure = null,
+  val procedureDeclaration: core.StructureDeclarations.Procedure = null,
+  val taskFormals: Array[Let] = Array()) extends FrontEndProcedure {
 
   val filename = nameToken.filename; // used by cities include-file stuff
   val displayName = buildDisplayName(_displayName)
   var pos: Int = 0
   var end: Int = 0
-  var agentClassString = "OTPL"
   var localsCount = 0
-  var topLevel = false
   private var _owner: api.SourceOwner = null
   val children = collection.mutable.Buffer[Procedure]()
-  var args = Vector[String]()
   def isTask = parent != null
 
   // cache args.size() for efficiency with making Activations
   var size = 0
 
-  // ExpressionParser doesn't know how many parameters the task is going to take;
-  // that's determined by TaskVisitor. so for now this is mutable - ST 2/4/11
-  val taskFormals = collection.mutable.Buffer[api.Let]()
-
-  def getTaskFormal(n: Int, token: core.Token): api.Let = {
-    while (taskFormals.size < n)
-      taskFormals += api.Let("?" + n, token.start, token.end)
-    taskFormals.last
-  }
+  def getTaskFormal(n: Int): Let = taskFormals(n - 1)
 
   var code = Array[Command]()
 
@@ -50,14 +44,6 @@ class Procedure(
           .getOrElse(name)
       displayName.getOrElse("procedure " + nameAndFile)
     }
-
-  def syntax: core.Syntax = {
-    val right = List.fill(args.size - localsCount)(core.Syntax.WildcardType)
-    if (isReporter)
-      core.Syntax.reporterSyntax(right = right, ret = core.Syntax.WildcardType)
-    else
-      core.Syntax.commandSyntax(right = right)
-  }
 
   override def toString =
     super.toString + "[" + name + ":" + args.mkString("[", " ", "]") +
@@ -102,5 +88,9 @@ class Procedure(
     _owner = owner
     children.foreach(_.owner = owner)
   }
+}
 
+object Procedure {
+  type ProceduresMap = ListMap[String, Procedure]
+  val NoProcedures = ListMap[String, Procedure]()
 }

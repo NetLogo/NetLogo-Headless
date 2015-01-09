@@ -3,7 +3,8 @@
 package org.nlogo.nvm
 
 import org.nlogo.core.{ AgentKind, Syntax, Token, TokenHolder }
-import org.nlogo.api.{ I18N, LogoList }
+import org.nlogo.core.I18N
+import org.nlogo.core.LogoList
 import org.nlogo.agent.{ Agent, AgentSet, AgentBit, Turtle, Patch, Link, World }
 
 object Instruction {
@@ -24,18 +25,7 @@ object Instruction {
 
 abstract class Instruction extends InstructionJ with TokenHolder {
 
-  def syntax: Syntax
-
   var token: Token = null
-  var token2: Token = null
-
-  // for some instructions two tokens are relevant for example
-  // _setturtlevariable, the SET is what we want to report
-  // for runtime errors since it's expecting a command
-  // however, the type is actually limited by the variable
-  // name not the set and we want to compiler to report that ev 7/13/07
-  def tokenLimitingType =
-    Option(token2).getOrElse(token)
 
   /// the bytecode generator uses these to store text for dump() to print
 
@@ -79,7 +69,7 @@ abstract class Instruction extends InstructionJ with TokenHolder {
     val allowedKinds =
       for {
         (kind, c) <- pairs
-        if syntax.agentClassString.contains(c)
+        if agentClassString.contains(c)
       }
       yield kind
     throw new EngineException(context, this,

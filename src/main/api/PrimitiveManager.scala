@@ -2,6 +2,8 @@
 
 package org.nlogo.api
 
+import org.nlogo.core.Primitive
+
 /** Ships extension primitives and associated names to NetLogo. */
 trait PrimitiveManager {
 

@@ -2,9 +2,8 @@
 
 package org.nlogo.prim.etc
 
-import org.nlogo.nvm,
-  org.nlogo.core.Syntax,
-  org.nlogo.agent.{ Turtle, Patch, AgentSet }
+import org.nlogo.agent.{ AgentSet, Patch, Turtle }
+import org.nlogo.nvm
 
 class _uphill extends HillCommand(sign = 1) {
   override def neighbors(p: Patch) = p.getNeighbors }
@@ -17,11 +16,7 @@ class _downhill4 extends HillCommand(sign = -1) {
 
 abstract class HillCommand(sign: Int) extends nvm.Command {
 
-  override def syntax =
-    Syntax.commandSyntax(
-      right = List(Syntax.ReferenceType),
-      agentClassString = "-T--",
-      switches = true)
+  switches = true
 
   override def toString =
     super.toString +

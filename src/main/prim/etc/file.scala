@@ -2,15 +2,13 @@
 
 package org.nlogo.prim.etc
 
-import org.nlogo.core.Syntax
-import org.nlogo.api.{ CompilerException, FileMode, OutputDestination }
-import org.nlogo.nvm.{ Command, Context, EngineException, Reporter }
 import java.io.IOException
 
+import org.nlogo.api.OutputDestination
+import org.nlogo.core.{ CompilerException, FileMode }
+import org.nlogo.nvm.{ Command, Context, EngineException, Reporter }
+
 class _fileatend extends Reporter {
-  override def syntax =
-    Syntax.reporterSyntax(
-      ret = Syntax.BooleanType)
   override def report(context: Context): java.lang.Boolean =
     try Boolean.box(workspace.fileManager.eof)
     catch {
@@ -20,8 +18,6 @@ class _fileatend extends Reporter {
 }
 
 class _fileclose extends Command {
-  override def syntax =
-    Syntax.commandSyntax()
   override def perform(context: Context) {
     try
       if (workspace.fileManager.hasCurrentFile)
@@ -35,8 +31,6 @@ class _fileclose extends Command {
 }
 
 class _filecloseall extends Command {
-  override def syntax =
-    Syntax.commandSyntax()
   override def perform(context: Context) {
     try workspace.fileManager.closeAllFiles()
     catch {
@@ -48,9 +42,6 @@ class _filecloseall extends Command {
 }
 
 class _filedelete extends Command {
-  override def syntax =
-    Syntax.commandSyntax(
-      right = List(Syntax.StringType))
   override def perform(context: Context) {
     try
       workspace.fileManager.deleteFile(
@@ -69,10 +60,6 @@ class _filedelete extends Command {
 }
 
 class _fileexists extends Reporter {
-  override def syntax =
-    Syntax.reporterSyntax(
-      right = List(Syntax.StringType),
-      ret = Syntax.BooleanType)
   override def report(context: Context): java.lang.Boolean =
     try
       Boolean.box(
@@ -90,8 +77,6 @@ class _fileexists extends Reporter {
 }
 
 class _fileflush extends Command {
-  override def syntax =
-    Syntax.commandSyntax()
   override def perform(context: Context) {
     try
       if (workspace.fileManager.hasCurrentFile)
@@ -105,9 +90,6 @@ class _fileflush extends Command {
 }
 
 class _fileopen extends Command {
-  override def syntax =
-    Syntax.commandSyntax(
-      right = List(Syntax.StringType))
   override def perform(context: Context) {
     try
       // DefaultFileManager.openFile attaches the prefix for us, so we need not normalize our path
@@ -123,13 +105,9 @@ class _fileopen extends Command {
 }
 
 class _fileprint extends Command {
-  override def syntax =
-    Syntax.commandSyntax(
-      right = List(Syntax.WildcardType))
   override def perform(context: Context) {
     try
-      workspace.fileManager.ensureMode(
-        org.nlogo.api.FileMode.Append)
+      workspace.fileManager.ensureMode(FileMode.Append)
     catch {
       case ex: IOException =>
         throw new EngineException(context, this, ex.getMessage)
@@ -142,9 +120,6 @@ class _fileprint extends Command {
 }
 
 class _fileread extends Reporter {
-  override def syntax =
-    Syntax.reporterSyntax(
-      ret = Syntax.ReadableType)
   override def report(context: Context): AnyRef =
     try workspace.fileManager.read(world)
     catch {
@@ -161,10 +136,6 @@ class _fileread extends Reporter {
 }
 
 class _filereadchars extends Reporter {
-  override def syntax =
-    Syntax.reporterSyntax(
-      right = List(Syntax.NumberType),
-      ret = Syntax.StringType)
   override def report(context: Context): String =
     try workspace.fileManager.readChars(argEvalIntValue(context, 0))
     catch {
@@ -177,9 +148,6 @@ class _filereadchars extends Reporter {
 }
 
 class _filereadline extends Reporter {
-  override def syntax =
-    Syntax.reporterSyntax(
-      ret = Syntax.StringType)
   override def report(context: Context): String =
     try workspace.fileManager.readLine()
     catch {
@@ -192,9 +160,6 @@ class _filereadline extends Reporter {
 }
 
 class _fileshow extends Command {
-  override def syntax =
-    Syntax.commandSyntax(
-      right = List(Syntax.WildcardType))
   override def perform(context: Context) {
     val s = args(0).report(context)
     try
@@ -210,9 +175,6 @@ class _fileshow extends Command {
 }
 
 class _filetype extends Command {
-  override def syntax =
-    Syntax.commandSyntax(
-      right = List(Syntax.WildcardType))
   override def perform(context: Context) {
     val s = args(0).report(context)
     try workspace.fileManager.ensureMode(FileMode.Append)
@@ -227,9 +189,6 @@ class _filetype extends Command {
 }
 
 class _filewrite extends Command {
-  override def syntax =
-    Syntax.commandSyntax(
-      right = List(Syntax.ReadableType))
   override def perform(context: Context) {
     val s = args(0).report(context)
     try

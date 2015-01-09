@@ -2,20 +2,14 @@
 
 package org.nlogo.prim
 
-import org.nlogo.core.Syntax
-import org.nlogo.api.I18N
-import org.nlogo.nvm.{ Command, Context, CustomAssembled, AssemblerAssistant,
-                       EngineException, ArgumentTypeException }
 import org.nlogo.agent.{ Agent, AgentSet, Observer }
+import org.nlogo.core.{ I18N, Syntax }
+import org.nlogo.nvm.{ ArgumentTypeException, AssemblerAssistant, Command, Context,
+                       CustomAssembled, EngineException }
 
 class _ask extends Command with CustomAssembled {
 
-  override def syntax =
-    Syntax.commandSyntax(
-      right = List(Syntax.AgentsetType | Syntax.AgentType, Syntax.CommandBlockType),
-      agentClassString = "OTPL",
-      blockAgentClassString = "?",
-      switches = true)
+  switches = true
 
   override def toString =
     super.toString + ":+" + offset

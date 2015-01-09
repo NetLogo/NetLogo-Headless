@@ -2,14 +2,11 @@
 
 package org.nlogo.prim
 
-import org.nlogo.{ core, api, agent }
 import org.nlogo.nvm.{ Command, Context }
+import org.nlogo.{ agent, api }
 
 class _fd1 extends Command {
-  override def syntax =
-    core.Syntax.commandSyntax(
-      agentClassString = "-T--",
-      switches = true)
+  switches = true
   override def perform(context: Context) {
     perform_1(context)
   }

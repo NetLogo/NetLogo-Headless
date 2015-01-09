@@ -4,7 +4,7 @@ package org.nlogo.headless
 package lang
 
 import org.nlogo.{ core, api },
-  core.AgentKind
+  core.{Keywords, AgentKind}
 
 object Parser {
 
@@ -39,7 +39,7 @@ object Parser {
 
   def parse(line: String): Entry = {
     if (line.split(' ').headOption.exists(s =>
-        api.Keywords.isKeyword(s) || s.toUpperCase == "BREED"))
+        Keywords.isKeyword(s) || s.toUpperCase == "BREED"))
       Declaration(line)
     else line.trim match {
       case CommandErrorRegex(kind, command, err) =>

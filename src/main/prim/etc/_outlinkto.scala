@@ -2,20 +2,13 @@
 
 package org.nlogo.prim.etc
 
-import org.nlogo.core.Syntax
-import org.nlogo.api.Nobody
-import org.nlogo.nvm.{ Reporter, Context, EngineException }
-import org.nlogo.agent.{ Turtle, LinkManager }
+import org.nlogo.agent.{ LinkManager, Turtle }
+import org.nlogo.core.Nobody
+import org.nlogo.nvm.{ Context, EngineException, Reporter }
 
 class _outlinkto(val breedName: String) extends Reporter {
 
   def this() = this(null)
-
-  override def syntax =
-    Syntax.reporterSyntax(
-      right = List(Syntax.AgentType),
-      ret = Syntax.AgentType,
-      agentClassString = "-T--")
 
   override def toString =
     super.toString + ":" + breedName

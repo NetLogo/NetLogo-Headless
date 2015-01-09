@@ -7,8 +7,8 @@ package org.nlogo.agent
 // methods from ImporterJ to here. - ST 7/11/12
 
 import org.nlogo.{ api, core }
-import core.AgentKind
-import api.{ AgentVariables, Breed, ImporterUser, PlotInterface, PlotPenInterface }
+import org.nlogo.core.{Breed, AgentKind, AgentVariables}
+import api.{ ImporterUser, PlotInterface, PlotPenInterface }
 import collection.immutable.ListMap
 import collection.JavaConverters._
 import ImporterJ.Junk

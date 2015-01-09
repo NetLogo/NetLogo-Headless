@@ -2,16 +2,11 @@
 
 package org.nlogo.prim.etc
 
-import org.nlogo.core.Syntax
 import org.nlogo.api.Color
-import org.nlogo.nvm.{ Context, Pure, Reporter }
+import org.nlogo.core.Pure
+import org.nlogo.nvm.{ Context, Reporter }
 
 class _wrapcolor extends Reporter with Pure {
-
-  override def syntax =
-    Syntax.reporterSyntax(
-      right = List(Syntax.NumberType),
-      ret = Syntax.NumberType)
 
   override def report(context: Context): java.lang.Double =
     Double.box(report_1(context, argEvalDoubleValue(context, 0)))

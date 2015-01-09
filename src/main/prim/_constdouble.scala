@@ -2,17 +2,13 @@
 
 package org.nlogo.prim
 
-import org.nlogo.core.Syntax
-import org.nlogo.nvm.{ Reporter, Pure, Context }
+import org.nlogo.core.Pure
+import org.nlogo.nvm.{ Context, Reporter }
 
-class _constdouble(value: java.lang.Double) extends Reporter with Pure {
+class _constdouble(_primitiveValue: Double) extends Reporter with Pure {
 
-  private[this] val _primitiveValue = value.doubleValue
-  def primitiveValue = _primitiveValue
-
-  override def syntax =
-    Syntax.reporterSyntax(
-      ret = Syntax.NumberType)
+  private[this] val value = Double.box(_primitiveValue)
+  val primitiveValue = _primitiveValue
 
   override def toString =
     super.toString + ":" + primitiveValue
