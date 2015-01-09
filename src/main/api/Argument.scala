@@ -19,8 +19,8 @@ trait Argument {
   /**
    * Returns the argument as an <code>Object</code> without type checking.
    *
-   * @throws ExtensionException
-   * @throws LogoException      if a LogoException occurred while evaluating this argument
+   * @throws api.ExtensionException
+   * @throws api.LogoException      if a LogoException occurred while evaluating this argument
    */
   @throws(classOf[ExtensionException])
   def get: AnyRef
@@ -28,8 +28,8 @@ trait Argument {
   /**
    * Returns the argument as an <code>org.nlogo.api.AgentSet</code>.
    *
-   * @throws ExtensionException if the argument is not an <code>AgentSet</code>
-   * @throws LogoException      if a LogoException occurred while evaluating this argument
+   * @throws api.ExtensionException if the argument is not an <code>AgentSet</code>
+   * @throws api.LogoException      if a LogoException occurred while evaluating this argument
    */
   @throws(classOf[ExtensionException])
   def getAgentSet: AgentSet
@@ -37,8 +37,8 @@ trait Argument {
   /**
    * Returns the argument as an <code>Agent</code>.
    *
-   * @throws ExtensionException if the argument is not an <code>Agent</code>
-   * @throws LogoException      if a LogoException occurred while evaluating this argument
+   * @throws api.ExtensionException if the argument is not an <code>Agent</code>
+   * @throws api.LogoException      if a LogoException occurred while evaluating this argument
    */
   @throws(classOf[ExtensionException])
   def getAgent: Agent
@@ -46,8 +46,8 @@ trait Argument {
   /**
    * Returns the argument as a boxed <code>java.lang.Boolean</code>
    *
-   * @throws ExtensionException if the argument is not a <code>Boolean</code>
-   * @throws LogoException      if a LogoException occurred while evaluating this argument
+   * @throws api.ExtensionException if the argument is not a <code>Boolean</code>
+   * @throws api.LogoException      if a LogoException occurred while evaluating this argument
    */
   @throws(classOf[ExtensionException])
   def getBoolean: java.lang.Boolean
@@ -55,8 +55,8 @@ trait Argument {
   /**
    * Returns the value of the argument as an unboxed <code>boolean</code>.
    *
-   * @throws ExtensionException if the argument is not a <code>boolean</code>
-   * @throws LogoException      if a LogoException occurred while evaluating this argument
+   * @throws api.ExtensionException if the argument is not a <code>boolean</code>
+   * @throws api.LogoException      if a LogoException occurred while evaluating this argument
    */
   @throws(classOf[ExtensionException])
   def getBooleanValue: Boolean
@@ -65,8 +65,8 @@ trait Argument {
    * Returns the value of the argument as an unboxed <code>int</code>.
    * Any fractional part is discarded.
    *
-   * @throws ExtensionException if the argument is not a number.
-   * @throws LogoException      if a LogoException occurred while evaluating this argument
+   * @throws api.ExtensionException if the argument is not a number.
+   * @throws api.LogoException      if a LogoException occurred while evaluating this argument
    */
   @throws(classOf[ExtensionException])
   def getIntValue: Int
@@ -74,8 +74,8 @@ trait Argument {
   /**
    * Returns the value of the argument as an unboxed <code>double</code>.
    *
-   * @throws ExtensionException if the argument is not a number.
-   * @throws LogoException      if a LogoException occurred while evaluating this argument
+   * @throws api.ExtensionException if the argument is not a number.
+   * @throws api.LogoException      if a LogoException occurred while evaluating this argument
    */
   @throws(classOf[ExtensionException])
   def getDoubleValue: Double
@@ -83,8 +83,8 @@ trait Argument {
   /**
    * Returns the argument as a <code>org.nlogo.core.LogoList</code>
    *
-   * @throws ExtensionException if the argument is not a <code>LogoList</code>
-   * @throws LogoException      if a LogoException occurred while evaluating this argument
+   * @throws api.ExtensionException if the argument is not a <code>LogoList</code>
+   * @throws api.LogoException      if a LogoException occurred while evaluating this argument
    */
   @throws(classOf[ExtensionException])
   def getList: LogoList
@@ -92,8 +92,8 @@ trait Argument {
   /**
    * Returns the argument as an <code>org.nlogo.api.Patch</code>
    *
-   * @throws ExtensionException if the argument is not a <code>Patch</code>
-   * @throws LogoException      if a LogoException occurred while evaluating this argument
+   * @throws api.ExtensionException if the argument is not a <code>Patch</code>
+   * @throws api.LogoException      if a LogoException occurred while evaluating this argument
    */
   @throws(classOf[ExtensionException])
   def getPatch: Patch
@@ -101,8 +101,8 @@ trait Argument {
   /**
    * Returns the argument as a <code>String</code>
    *
-   * @throws ExtensionException if the argument cannot be cast to a <code>String</code>
-   * @throws LogoException      if a LogoException occurred while evaluating this argument
+   * @throws api.ExtensionException if the argument cannot be cast to a <code>String</code>
+   * @throws api.LogoException      if a LogoException occurred while evaluating this argument
    */
   @throws(classOf[ExtensionException])
   def getString: String
@@ -110,8 +110,8 @@ trait Argument {
   /**
    * Returns the argument as a <code>org.nlogo.api.Turtle</code>.
    *
-   * @throws ExtensionException if the argument is not a <code>Turtle</code>
-   * @throws LogoException      if a LogoException occurred while evaluating this argument
+   * @throws api.ExtensionException if the argument is not a <code>Turtle</code>
+   * @throws api.LogoException      if a LogoException occurred while evaluating this argument
    */
   @throws(classOf[ExtensionException])
   def getTurtle: Turtle
@@ -119,8 +119,8 @@ trait Argument {
   /**
    * Returns the argument as a <code>org.nlogo.api.Link</code>.
    *
-   * @throws ExtensionException if the argument is not a <code>Link</code>
-   * @throws LogoException      if a LogoException occurred while evaluating this argument
+   * @throws api.ExtensionException if the argument is not a <code>Link</code>
+   * @throws api.LogoException      if a LogoException occurred while evaluating this argument
    */
   @throws(classOf[ExtensionException])
   def getLink: Link
@@ -128,8 +128,8 @@ trait Argument {
   /**
    * Returns the argument as a <code>org.nlogo.api.ReporterTask</code>.
    *
-   * @throws ExtensionException if the argument is not a <code>ReporterTask</code>
-   * @throws LogoException      if a LogoException occurred while evaluating this argument
+   * @throws api.ExtensionException if the argument is not a <code>ReporterTask</code>
+   * @throws api.LogoException      if a LogoException occurred while evaluating this argument
    */
   @throws(classOf[ExtensionException])
   def getReporterTask: ReporterTask
@@ -137,8 +137,8 @@ trait Argument {
   /**
    * Returns the argument as a <code>org.nlogo.api.CommandTask</code>.
    *
-   * @throws ExtensionException if the argument is not a <code>CommandTask</code>
-   * @throws LogoException      if a LogoException occurred while evaluating this argument
+   * @throws api.ExtensionException if the argument is not a <code>CommandTask</code>
+   * @throws api.LogoException      if a LogoException occurred while evaluating this argument
    */
   @throws(classOf[ExtensionException])
   def getCommandTask: CommandTask
