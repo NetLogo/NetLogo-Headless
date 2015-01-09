@@ -68,7 +68,7 @@ object Depend {
       "core/prim/etc" -> List("core"),
       "drawing" -> List("api"),
       "generate" -> List("prim"),
-      "headless" -> List("mirror","workspace"),
+      "headless" -> List("mirror", "workspace"),
       "headless/lang" -> List("headless"),
       "headless/lang/misc" -> List("headless/lang"),
       "headless/misc" -> List("headless"),
@@ -97,9 +97,9 @@ object Depend {
     for(p <- allPackages)
       p.depends = allPackages.filter(p2 => packageDefs(p.dir).contains(p2.dir))
     def generate(p: Package) {
-      val name = p.dir.replaceAll("/",".")
+      val name = p.dir.replaceAll("/", ".")
       println("[" + name + "] = org.nlogo." + name + ".* excluding org.nlogo." + name + ".*.*")
-      println("[" + name + "+] = [" + name + "]" + p.depends.map(p2 => "[" + p2.dir.replaceAll("/",".") + "+]").mkString(" "," ","") + " [libs]")
+      println("[" + name + "+] = [" + name + "]" + p.depends.map(p2 => "[" + p2.dir.replaceAll("/", ".") + "+]").mkString(" ", " ", "") + " [libs]")
       println("check [" + name + "] dependentOnlyOn [" + name + "+]")
       println("")
     }
