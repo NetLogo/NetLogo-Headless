@@ -15,7 +15,7 @@ class _reduce extends Reporter {
     val list = argEvalList(context, 1)
     if (list.size < 1)
       throw new EngineException( context , this , I18N.errors.get("org.nlogo.prim._reduce.emptyListInvalidInput"))
-    val it = list.iterator
+    val it = list.javaIterator
     var result = it.next()
     while (it.hasNext)
       result = task.report(context, Array(result, it.next()))

@@ -8,9 +8,7 @@ import org.nlogo.core.LogoList;
 import org.nlogo.core.Pure;
 import org.nlogo.nvm.Context;
 import org.nlogo.nvm.Reporter;
-
 import java.util.HashSet;
-import java.util.Iterator;
 
 public final strictfp class _removeduplicates
     extends Reporter
@@ -21,8 +19,7 @@ public final strictfp class _removeduplicates
     LogoList list = argEvalList(context, 0);
     LogoListBuilder result = new LogoListBuilder();
     HashSet<Object> seenHash = new HashSet<Object>();
-    for (Iterator<Object> it = list.iterator(); it.hasNext();) {
-      Object srcElt = it.next();
+    for (Object srcElt : list.toJava()) {
       LogoHashObject logoElt = new LogoHashObject(srcElt);
       if (!seenHash.contains(logoElt)) {
         seenHash.add(logoElt);

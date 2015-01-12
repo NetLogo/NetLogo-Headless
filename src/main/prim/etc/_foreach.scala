@@ -15,7 +15,7 @@ class _foreach extends Command {
       else if (size != list.size)
         throw new EngineException(context, this,
           I18N.errors.get("org.nlogo.prim.etc._foreach.listsMustBeSameLength"))
-      list.iterator
+      list.javaIterator
     }
     val task = argEvalCommandTask(context, n)
     if(n < task.formals.size)
