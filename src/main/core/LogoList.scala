@@ -1,6 +1,10 @@
 // (C) Uri Wilensky. https://github.com/NetLogo/NetLogo
 
 package org.nlogo.core
+
+import java.util
+
+import scala.collection
 import scala.language.implicitConversions
 
 object LogoList {
@@ -14,32 +18,37 @@ object LogoList {
     new LogoList(it.toVector)
   def fromVector(v: Vector[AnyRef]) =
     new LogoList(v)
-  implicit def toIterator(ll:LogoList) = ll.scalaIterator
+  implicit def toIterator(ll:LogoList): Iterator[AnyRef] = ll.scalaIterator
 }
 
 class LogoList private (private val v: Vector[AnyRef])
-extends java.util.AbstractSequentialList[AnyRef] with Serializable {
+  extends IndexedSeq[AnyRef] with Serializable {
 
   def scalaIterator = v.iterator
-  def toVector = v
-  def toList: List[AnyRef] = scalaIterator.toList
+  override def toVector = v
 
-  /// methods required by AbstractSequentialList
+  override def length: Int = v.length
 
-  override def get(index: Int) = v(index)
+  override def apply(idx: Int): AnyRef = v(idx)
+
+  override def iterator: collection.Iterator[AnyRef] =
+    v.iterator
+  def get(index: Int) = v(index)
   override def size = v.size
-  override def iterator: java.util.Iterator[AnyRef] =
+  def javaIterator: java.util.Iterator[AnyRef] =
     new Iterator(v)
-  override def listIterator(i: Int): java.util.ListIterator[AnyRef] =
+  def toJava: java.util.AbstractSequentialList[AnyRef] =
+    new JavaList(v, size)
+  def listIterator(i: Int): java.util.ListIterator[AnyRef] =
     new Iterator(v.drop(i))
-  override def add(index: Int, obj: AnyRef) = unsupported
+  def add(index: Int, obj: AnyRef) = unsupported
 
   /// public methods for prims. input validity checking is caller's job
 
   def first = v.head
   def fput(obj: AnyRef) = new LogoList(obj +: v)
   def lput(obj: AnyRef) = new LogoList(v :+ obj)
-  def reverse = new LogoList(v.reverse)
+  override def reverse = new LogoList(v.reverse)
   def replaceItem(index: Int, obj: AnyRef) =
     new LogoList(v.updated(index, obj))
   def logoSublist(start: Int, stop: Int) =
@@ -48,6 +57,8 @@ extends java.util.AbstractSequentialList[AnyRef] with Serializable {
   def butLast = new LogoList(v.init)
   def removeItem(index: Int) =
     new LogoList(v.patch(index, Nil, 1))
+
+  override def toString = v.mkString("[", ", ", "]")
 
   /// Iterator class
 
@@ -62,6 +73,11 @@ extends java.util.AbstractSequentialList[AnyRef] with Serializable {
     override def nextIndex = unsupported
     override def previous = unsupported
     override def remove = unsupported
+  }
+
+  private class JavaList(v: Vector[AnyRef], override val size: Int) extends java.util.AbstractSequentialList[AnyRef] {
+    override def listIterator(index: Int): java.util.ListIterator[AnyRef] =
+      new Iterator(v.splitAt(index)._2)
   }
 
   private def unsupported = throw new UnsupportedOperationException

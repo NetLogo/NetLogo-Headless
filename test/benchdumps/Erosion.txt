@@ -1987,7 +1987,8 @@ procedure RECOLOR:[]{-TP-}:
           ACONST_NULL
           ASTORE 5
           ALOAD 2
-          INVOKEVIRTUAL org/nlogo/core/LogoList.iterator ()Ljava/util/Iterator;
+          INVOKEVIRTUAL org/nlogo/core/LogoList.toJava ()Ljava/util/AbstractSequentialList;
+          INVOKEVIRTUAL java/util/AbstractSequentialList.iterator ()Ljava/util/Iterator;
           ASTORE 6
          L12
          FRAME FULL [org/nlogo/prim/_asm_procedurerecolor_setpatchvariable_3 org/nlogo/nvm/Context org/nlogo/core/LogoList D java/lang/Double java/util/Iterator] [D]
@@ -4129,7 +4130,8 @@ procedure FLOW:[TARGET AMOUNT EROSION]{-TP-}:
           ACONST_NULL
           ASTORE 5
           ALOAD 2
-          INVOKEVIRTUAL org/nlogo/core/LogoList.iterator ()Ljava/util/Iterator;
+          INVOKEVIRTUAL org/nlogo/core/LogoList.toJava ()Ljava/util/AbstractSequentialList;
+          INVOKEVIRTUAL java/util/AbstractSequentialList.iterator ()Ljava/util/Iterator;
           ASTORE 6
          L52
          FRAME FULL [org/nlogo/prim/_asm_procedureflow_setprocedurevariable_3 org/nlogo/nvm/Context org/nlogo/core/LogoList D java/lang/Double java/util/Iterator] []
@@ -4945,7 +4947,8 @@ procedure FLOW:[TARGET AMOUNT EROSION]{-TP-}:
           ACONST_NULL
           ASTORE 5
           ALOAD 2
-          INVOKEVIRTUAL org/nlogo/core/LogoList.iterator ()Ljava/util/Iterator;
+          INVOKEVIRTUAL org/nlogo/core/LogoList.toJava ()Ljava/util/AbstractSequentialList;
+          INVOKEVIRTUAL java/util/AbstractSequentialList.iterator ()Ljava/util/Iterator;
           ASTORE 6
          L52
          FRAME FULL [org/nlogo/prim/_asm_procedureflow_setprocedurevariable_7 org/nlogo/nvm/Context org/nlogo/core/LogoList D java/lang/Double java/util/Iterator] []
