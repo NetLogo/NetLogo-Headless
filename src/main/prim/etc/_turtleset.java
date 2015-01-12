@@ -51,7 +51,7 @@ public final strictfp class _turtleset
   }
 
   private void descendList(Context context, LogoList tempList, Set<Turtle> result) {
-    for (Iterator<Object> iter = tempList.iterator();
+    for (Iterator<Object> iter = tempList.javaIterator();
          iter.hasNext();) {
       Object obj = iter.next();
       if (obj instanceof Turtle) {

@@ -22,7 +22,7 @@ public final strictfp class _variance extends Reporter implements Pure {
   public double report_1(Context context, LogoList list) {
     double sum = 0, badElts = 0;
     int listSize = list.size();
-    for (Iterator<Object> it = list.iterator(); it.hasNext();) {
+    for (Iterator<Object> it = list.javaIterator(); it.hasNext();) {
       Object elt = it.next();
       if (!(elt instanceof Double)) {
         ++badElts;
@@ -36,7 +36,7 @@ public final strictfp class _variance extends Reporter implements Pure {
     }
     double mean = sum / (listSize - badElts);
     double squareOfDifference = 0;
-    for (Iterator<Object> it = list.iterator(); it.hasNext();) {
+    for (Iterator<Object> it = list.javaIterator(); it.hasNext();) {
       Object elt = it.next();
       if (elt instanceof Double) {
         squareOfDifference +=

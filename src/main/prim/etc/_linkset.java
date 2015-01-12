@@ -12,6 +12,7 @@ import org.nlogo.nvm.Context;
 import org.nlogo.nvm.EngineException;
 import org.nlogo.nvm.Reporter;
 
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -46,15 +47,16 @@ public final strictfp class _linkset
   }
 
   private void descendList(Context context, LogoList tempList, Set<Link> result) {
-    for (Object obj : tempList) {
+    for (Iterator<Object> i = tempList.javaIterator(); i.hasNext();) {
+      Object obj = i.next();
       if (obj instanceof Link) {
         result.add((Link) obj);
       } else if (obj instanceof AgentSet) {
         AgentSet tempSet = (AgentSet) obj;
         if (tempSet.kind() != AgentKindJ.Link()) {
           throw new EngineException(context, this,
-              I18N.errorsJ().getN("org.nlogo.prim.etc._linkset.invalidLAgentsetTypeInputToList",
-                  this.displayName(), Dump.logoObject(tempList, true, false), Dump.logoObject(obj, true, false)));
+                  I18N.errorsJ().getN("org.nlogo.prim.etc._linkset.invalidLAgentsetTypeInputToList",
+                          this.displayName(), Dump.logoObject(tempList, true, false), Dump.logoObject(obj, true, false)));
         }
         for (AgentIterator iter2 = tempSet.iterator();
              iter2.hasNext();) {
@@ -64,8 +66,8 @@ public final strictfp class _linkset
         descendList(context, (LogoList) obj, result);
       } else if (obj != Nobody$.MODULE$) {
         throw new EngineException(context, this,
-            I18N.errorsJ().getN("org.nlogo.prim.etc._linkset.invalidListInputs",
-                this.displayName(), Dump.logoObject(tempList, true, false), Dump.logoObject(obj, true, false)));
+                I18N.errorsJ().getN("org.nlogo.prim.etc._linkset.invalidListInputs",
+                        this.displayName(), Dump.logoObject(tempList, true, false), Dump.logoObject(obj, true, false)));
       }
     }
   }

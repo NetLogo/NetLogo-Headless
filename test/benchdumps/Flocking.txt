@@ -1492,7 +1492,7 @@ reporter procedure AVERAGE-FLOCKMATE-HEADING:[]{-T--}:
          L6
          FRAME FULL [org/nlogo/prim/_asm_procedureaverageflockmateheading_report_0 org/nlogo/nvm/Context org/nlogo/core/LogoList D] []
           ALOAD 2
-          INVOKEVIRTUAL org/nlogo/core/LogoList.iterator ()Ljava/util/Iterator;
+          INVOKEVIRTUAL org/nlogo/core/LogoList.javaIterator ()Ljava/util/Iterator;
           ASTORE 5
          L7
          FRAME APPEND [java/util/Iterator]
@@ -1587,7 +1587,7 @@ reporter procedure AVERAGE-FLOCKMATE-HEADING:[]{-T--}:
          L13
          FRAME FULL [org/nlogo/prim/_asm_procedureaverageflockmateheading_report_0 org/nlogo/nvm/Context org/nlogo/core/LogoList D java/util/Iterator] [D]
           ALOAD 2
-          INVOKEVIRTUAL org/nlogo/core/LogoList.iterator ()Ljava/util/Iterator;
+          INVOKEVIRTUAL org/nlogo/core/LogoList.javaIterator ()Ljava/util/Iterator;
           ASTORE 5
          L14
          FRAME SAME1 D
@@ -2113,7 +2113,7 @@ reporter procedure AVERAGE-HEADING-TOWARDS-FLOCKMATES:[]{-T--}:
          L6
          FRAME FULL [org/nlogo/prim/_asm_procedureaverageheadingtowardsflockmates_report_0 org/nlogo/nvm/Context org/nlogo/core/LogoList D] []
           ALOAD 2
-          INVOKEVIRTUAL org/nlogo/core/LogoList.iterator ()Ljava/util/Iterator;
+          INVOKEVIRTUAL org/nlogo/core/LogoList.javaIterator ()Ljava/util/Iterator;
           ASTORE 5
          L7
          FRAME APPEND [java/util/Iterator]
@@ -2208,7 +2208,7 @@ reporter procedure AVERAGE-HEADING-TOWARDS-FLOCKMATES:[]{-T--}:
          L13
          FRAME FULL [org/nlogo/prim/_asm_procedureaverageheadingtowardsflockmates_report_0 org/nlogo/nvm/Context org/nlogo/core/LogoList D java/util/Iterator] [D]
           ALOAD 2
-          INVOKEVIRTUAL org/nlogo/core/LogoList.iterator ()Ljava/util/Iterator;
+          INVOKEVIRTUAL org/nlogo/core/LogoList.javaIterator ()Ljava/util/Iterator;
           ASTORE 5
          L14
          FRAME SAME1 D

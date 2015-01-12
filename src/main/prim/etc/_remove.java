@@ -22,7 +22,7 @@ public final strictfp class _remove
     if (obj instanceof LogoList) {
       LogoList list = (LogoList) obj;
       LogoListBuilder listCopy = new LogoListBuilder();
-      for (Iterator<Object> it = list.iterator(); it.hasNext();) {
+      for (Iterator<Object> it = list.javaIterator(); it.hasNext();) {
         Object elt = it.next();
         if (!Equality.equals(value, elt)) {
           listCopy.add(elt);

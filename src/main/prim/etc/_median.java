@@ -12,6 +12,7 @@ import org.nlogo.nvm.Reporter;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 public final strictfp class _median
@@ -23,7 +24,8 @@ public final strictfp class _median
     int badElts = 0;
     List<Double> nums =
         new ArrayList<Double>(list.size());
-    for (Object elt : list) {
+    for (Iterator<Object> i = list.javaIterator(); i.hasNext();) {
+      Object elt = i.next();
       if (!(elt instanceof Double)) {
         ++badElts;
         continue;

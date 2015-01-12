@@ -20,7 +20,7 @@ public final strictfp class _modes
     LinkedHashMap<LogoHashObject, MutableInteger> counts =
         new LinkedHashMap<LogoHashObject, MutableInteger>();
     LogoList list = argEvalList(context, 0);
-    for (Iterator<Object> it = list.iterator(); it.hasNext();) {
+    for (Iterator<Object> it = list.javaIterator(); it.hasNext();) {
       Object srcElt = it.next();
       LogoHashObject logoElt = new LogoHashObject(srcElt);
       if (counts.containsKey(logoElt)) {

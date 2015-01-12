@@ -30,7 +30,7 @@ public final strictfp class Layouts {
     int n = nodes.size();
     int midx = world.minPxcor() + (int) StrictMath.floor(world.worldWidth() / 2);
     int midy = world.minPycor() + (int) StrictMath.floor(world.worldHeight() / 2);
-    for (Iterator<Object> it = nodes.iterator(); it.hasNext(); i++) {
+    for (Iterator<Object> it = nodes.javaIterator(); it.hasNext(); i++) {
       Object obj = it.next();
       if (obj instanceof Turtle) {
         Turtle t = (Turtle) obj;

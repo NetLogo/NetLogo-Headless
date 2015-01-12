@@ -21,7 +21,7 @@ public final strictfp class _removeduplicates
     LogoList list = argEvalList(context, 0);
     LogoListBuilder result = new LogoListBuilder();
     HashSet<Object> seenHash = new HashSet<Object>();
-    for (Iterator<Object> it = list.iterator(); it.hasNext();) {
+    for (Iterator<Object> it = list.javaIterator(); it.hasNext();) {
       Object srcElt = it.next();
       LogoHashObject logoElt = new LogoHashObject(srcElt);
       if (!seenHash.contains(logoElt)) {

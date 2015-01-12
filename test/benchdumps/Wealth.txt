@@ -7682,7 +7682,7 @@ procedure UPDATE-LORENZ-AND-GINI-PLOTS:[SORTED-WEALTHS TOTAL-WEALTH WEALTH-SUM-S
           INVOKESPECIAL java/util/ArrayList.<init> ()V
           ASTORE 6
           ALOAD 3
-          INVOKEVIRTUAL org/nlogo/core/LogoList.iterator ()Ljava/util/Iterator;
+          INVOKEVIRTUAL org/nlogo/core/LogoList.javaIterator ()Ljava/util/Iterator;
           ASTORE 7
          L15
          FRAME FULL [org/nlogo/prim/_asm_procedureupdatelorenzandginiplots_setprocedurevariable_7 org/nlogo/nvm/Context java/lang/Object org/nlogo/core/LogoList java/util/ArrayList java/util/ArrayList java/util/ArrayList java/util/Iterator] []
@@ -7813,7 +7813,7 @@ procedure UPDATE-LORENZ-AND-GINI-PLOTS:[SORTED-WEALTHS TOTAL-WEALTH WEALTH-SUM-S
           DCONST_0
           DSTORE 3
           ALOAD 2
-          INVOKEVIRTUAL org/nlogo/core/LogoList.iterator ()Ljava/util/Iterator;
+          INVOKEVIRTUAL org/nlogo/core/LogoList.javaIterator ()Ljava/util/Iterator;
           ASTORE 5
          L5
          FRAME FULL [org/nlogo/prim/_asm_procedureupdatelorenzandginiplots_setprocedurevariable_8 org/nlogo/nvm/Context org/nlogo/core/LogoList D java/util/Iterator] []

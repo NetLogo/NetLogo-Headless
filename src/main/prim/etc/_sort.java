@@ -32,7 +32,7 @@ public final strictfp class _sort
       ArrayList<Double> numbers = new ArrayList<Double>();
       ArrayList<String> strings = new ArrayList<String>();
       ArrayList<Agent> agents = new ArrayList<Agent>();
-      for (Iterator<Object> it = input.iterator(); it.hasNext();) {
+      for (Iterator<Object> it = input.javaIterator(); it.hasNext();) {
         Object elt = it.next();
         if (elt instanceof Double) {
           numbers.add((Double) elt);
@@ -65,7 +65,8 @@ public final strictfp class _sort
     ArrayList<Double> numbers = new ArrayList<Double>();
     ArrayList<String> strings = new ArrayList<String>();
     ArrayList<Agent> agents = new ArrayList<Agent>();
-    for (Object elt : input) {
+    for (Iterator<Object> i = input.javaIterator(); i.hasNext();) {
+      Object elt = i.next();
       if (elt instanceof Double) {
         numbers.add((Double) elt);
       } else if (elt instanceof String) {

@@ -25,7 +25,7 @@ public final strictfp class _atpoints
     AgentSet sourceSet = argEvalAgentSet(context, 0);
     List<Agent> result = new ArrayList<Agent>();
     LogoList points = argEvalList(context, 1);
-    for (Iterator<Object> it = points.iterator(); it.hasNext();) {
+    for (Iterator<Object> it = points.javaIterator(); it.hasNext();) {
       if (!validateListEntry(it.next())) {
         throw new EngineException(context, this, I18N.errorsJ().getN(
             "org.nlogo.prim.etc._atpoints.invalidListOfPoints", Dump.logoObject(points)));
@@ -86,7 +86,7 @@ public final strictfp class _atpoints
     if (entry instanceof LogoList) {
       LogoList entryList = (LogoList) entry;
       if (entryList.size() == 2 ) {
-        for (Iterator<Object> iter = entryList.iterator(); iter.hasNext();) {
+        for (Iterator<Object> iter = entryList.javaIterator(); iter.hasNext();) {
           if (!(iter.next() instanceof Double)) {
             return false;
           }
@@ -102,12 +102,12 @@ public final strictfp class _atpoints
     // predictable ordering so runs are reproducible - ST 8/13/03
     LinkedHashSet<Patch> result =
         new LinkedHashSet<Patch>();
-    for (Iterator<Object> it = points.iterator(); it.hasNext();) {
+    for (Iterator<Object> it = points.javaIterator(); it.hasNext();) {
       LogoList entry = (LogoList) it.next();
       Double x = null;
       Double y = null;
       int j = 0;
-      for (Iterator<Object> it2 = entry.iterator(); it2.hasNext();) {
+      for (Iterator<Object> it2 = entry.javaIterator(); it2.hasNext();) {
         switch (j) {
           case 0:
             x = (Double) it2.next();

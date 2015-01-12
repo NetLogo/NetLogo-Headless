@@ -1514,7 +1514,7 @@ procedure SETUP-CONTINUE:[ON?-LIST]{O---}:
               INVOKESPECIAL java/util/ArrayList.<init> ()V
               ASTORE 6
               ALOAD 3
-              INVOKEVIRTUAL org/nlogo/core/LogoList.iterator ()Ljava/util/Iterator;
+              INVOKEVIRTUAL org/nlogo/core/LogoList.javaIterator ()Ljava/util/Iterator;
               ASTORE 7
              L4
              FRAME FULL [org/nlogo/prim/_asm_proceduresetupcontinue_sort_5 org/nlogo/nvm/Context java/lang/Object org/nlogo/core/LogoList java/util/ArrayList java/util/ArrayList java/util/ArrayList java/util/Iterator] []

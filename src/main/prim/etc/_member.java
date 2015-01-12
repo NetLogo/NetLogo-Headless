@@ -22,7 +22,7 @@ public final strictfp class _member
     if (obj instanceof LogoList) {
       Object value = args[0].report(context);
       LogoList list = (LogoList) obj;
-      for (Iterator<Object> it = list.iterator(); it.hasNext();) {
+      for (Iterator<Object> it = list.javaIterator(); it.hasNext();) {
         if (Equality.equals(value, it.next())) {
           return Boolean.TRUE;
         }

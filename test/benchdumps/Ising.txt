@@ -519,7 +519,7 @@ procedure SETUP:[INITIAL-MAGNETIZATION]{O---}:
           DCONST_0
           DSTORE 3
           ALOAD 2
-          INVOKEVIRTUAL org/nlogo/core/LogoList.iterator ()Ljava/util/Iterator;
+          INVOKEVIRTUAL org/nlogo/core/LogoList.javaIterator ()Ljava/util/Iterator;
           ASTORE 5
          L11
          FRAME FULL [org/nlogo/prim/_asm_proceduresetup_setobservervariable_7 org/nlogo/nvm/Context org/nlogo/core/LogoList D java/util/Iterator] []

@@ -21,7 +21,7 @@ public final strictfp class _position
       Object value = args[0].report(context);
       LogoList list = (LogoList) obj;
       int i = 0;
-      for (Iterator<Object> it = list.iterator(); it.hasNext();) {
+      for (Iterator<Object> it = list.javaIterator(); it.hasNext();) {
         if (Equality.equals(value, it.next())) {
           return Double.valueOf(i);
         }

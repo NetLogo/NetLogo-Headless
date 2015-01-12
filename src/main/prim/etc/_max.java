@@ -10,13 +10,16 @@ import org.nlogo.nvm.Context;
 import org.nlogo.nvm.EngineException;
 import org.nlogo.nvm.Reporter;
 
+import java.util.Iterator;
+
 public final strictfp class _max extends Reporter implements Pure {
   @Override
   public Object report(Context context) {
     LogoList list = argEvalList(context, 0);
     double winner = 0;
     Double boxedWinner = null;
-    for (Object elt : list) {
+    for (Iterator<Object> i = list.javaIterator(); i.hasNext();) {
+      Object elt = i.next();
       if (elt instanceof Double) {
         Double boxedValue = (Double) elt;
         double value = boxedValue.doubleValue();
