@@ -56,12 +56,12 @@ object Serializer {
           data.writeByte(PairType)
           writeValue(x1)
           writeValue(x2)
-        case xs: Seq[_] =>
-          data.writeByte(SeqType)
-          writeSeq(xs.asInstanceOf[Seq[AnyRef]])
         case xs: core.LogoList =>
           data.writeByte(LogoListType)
           writeSeq(xs.toVector)
+        case xs: Seq[_] =>
+          data.writeByte(SeqType)
+          writeSeq(xs.asInstanceOf[Seq[AnyRef]])
         case xs: ListMap[_, _] =>
           data.writeByte(ListMapType)
           writeSeq(xs.toSeq)

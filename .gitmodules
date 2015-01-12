@@ -1,12 +1,6 @@
 [submodule "models"]
 	path = models
 	url = https://github.com/NetLogo/models.git
-[submodule "extensions/array"]
-	path = extensions/array
-	url = https://github.com/NetLogo/Array-Extension.git
-[submodule "extensions/matrix"]
-	path = extensions/matrix
-	url = https://github.com/NetLogo/Matrix-Extension.git
 [submodule "extensions/profiler"]
 	path = extensions/profiler
 	url = https://github.com/NetLogo/Profiler-Extension.git
@@ -16,6 +10,3 @@
 [submodule "extensions/sample-scala"]
 	path = extensions/sample-scala
 	url = https://github.com/NetLogo/Sample-Scala-Extension.git
-[submodule "extensions/table"]
-	path = extensions/table
-	url = https://github.com/NetLogo/Table-Extension.git

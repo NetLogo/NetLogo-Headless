@@ -1795,7 +1795,8 @@ procedure UPDATE-VARIABLES:[]{OTPL}:
          L11
          FRAME FULL [org/nlogo/prim/_asm_procedureupdatevariables_setobservervariable_10 org/nlogo/nvm/Context org/nlogo/core/LogoList D org/nlogo/agent/AgentIterator] []
           ALOAD 2
-          INVOKEVIRTUAL org/nlogo/core/LogoList.iterator ()Ljava/util/Iterator;
+          INVOKEVIRTUAL org/nlogo/core/LogoList.toJava ()Ljava/util/AbstractSequentialList;
+          INVOKEVIRTUAL java/util/AbstractSequentialList.iterator ()Ljava/util/Iterator;
           ASTORE 5
          L12
          FRAME FULL [org/nlogo/prim/_asm_procedureupdatevariables_setobservervariable_10 org/nlogo/nvm/Context org/nlogo/core/LogoList D java/util/Iterator] []
@@ -1952,7 +1953,8 @@ procedure UPDATE-VARIABLES:[]{OTPL}:
          L11
          FRAME FULL [org/nlogo/prim/_asm_procedureupdatevariables_setobservervariable_11 org/nlogo/nvm/Context org/nlogo/core/LogoList D org/nlogo/agent/AgentIterator] []
           ALOAD 2
-          INVOKEVIRTUAL org/nlogo/core/LogoList.iterator ()Ljava/util/Iterator;
+          INVOKEVIRTUAL org/nlogo/core/LogoList.toJava ()Ljava/util/AbstractSequentialList;
+          INVOKEVIRTUAL java/util/AbstractSequentialList.iterator ()Ljava/util/Iterator;
           ASTORE 5
          L12
          FRAME FULL [org/nlogo/prim/_asm_procedureupdatevariables_setobservervariable_11 org/nlogo/nvm/Context org/nlogo/core/LogoList D java/util/Iterator] []

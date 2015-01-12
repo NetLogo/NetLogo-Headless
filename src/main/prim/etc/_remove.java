@@ -10,8 +10,6 @@ import org.nlogo.core.Syntax;
 import org.nlogo.nvm.ArgumentTypeException;
 import org.nlogo.nvm.Reporter;
 
-import java.util.Iterator;
-
 public final strictfp class _remove
     extends Reporter
     implements Pure {
@@ -22,8 +20,7 @@ public final strictfp class _remove
     if (obj instanceof LogoList) {
       LogoList list = (LogoList) obj;
       LogoListBuilder listCopy = new LogoListBuilder();
-      for (Iterator<Object> it = list.iterator(); it.hasNext();) {
-        Object elt = it.next();
+      for (Object elt : list.toJava()) {
         if (!Equality.equals(value, elt)) {
           listCopy.add(elt);
         }

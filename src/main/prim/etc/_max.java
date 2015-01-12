@@ -16,7 +16,7 @@ public final strictfp class _max extends Reporter implements Pure {
     LogoList list = argEvalList(context, 0);
     double winner = 0;
     Double boxedWinner = null;
-    for (Object elt : list) {
+    for (Object elt : list.toJava()) {
       if (elt instanceof Double) {
         Double boxedValue = (Double) elt;
         double value = boxedValue.doubleValue();
