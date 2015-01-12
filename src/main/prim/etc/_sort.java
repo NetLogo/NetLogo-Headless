@@ -13,7 +13,6 @@ import org.nlogo.nvm.Reporter;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 
 public final strictfp class _sort
     extends Reporter
@@ -32,8 +31,7 @@ public final strictfp class _sort
       ArrayList<Double> numbers = new ArrayList<Double>();
       ArrayList<String> strings = new ArrayList<String>();
       ArrayList<Agent> agents = new ArrayList<Agent>();
-      for (Iterator<Object> it = input.iterator(); it.hasNext();) {
-        Object elt = it.next();
+      for (Object elt : input.toJava()) {
         if (elt instanceof Double) {
           numbers.add((Double) elt);
         } else if (elt instanceof String) {
@@ -65,7 +63,7 @@ public final strictfp class _sort
     ArrayList<Double> numbers = new ArrayList<Double>();
     ArrayList<String> strings = new ArrayList<String>();
     ArrayList<Agent> agents = new ArrayList<Agent>();
-    for (Object elt : input) {
+    for (Object elt : input.toJava()) {
       if (elt instanceof Double) {
         numbers.add((Double) elt);
       } else if (elt instanceof String) {

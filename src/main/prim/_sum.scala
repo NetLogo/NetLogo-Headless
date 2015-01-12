@@ -12,7 +12,7 @@ class _sum extends Reporter with Pure {
 
   def report_1(context: Context, l0: LogoList): Double = {
     var sum = 0d
-    val it = l0.iterator
+    val it = l0.javaIterator
     while(it.hasNext)
       it.next() match {
         case d: java.lang.Double =>

@@ -23,13 +23,13 @@ object ScalaConversions {
   }
 
   def toLogoList[T](seq: Seq[T]): LogoList =
-    LogoList.fromIterator(seq.map(toLogoObject).iterator)
+    LogoList.fromVector(seq.map(toLogoObject).toVector)
 
   def toLogoList[T](arr: Array[T]): LogoList =
     toLogoList(arr: Seq[T]) // trigger implicit conversion
 
   def toLogoList(ll: LogoList): LogoList =
-    LogoList.fromIterator(ll.map(toLogoObject))
+    LogoList.fromVector(ll.toVector.map(toLogoObject))
 
   def toLogoObject(a: Any): AnyRef = a match {
 
@@ -55,11 +55,11 @@ object ScalaConversions {
     case x: AgentSet => x
     case Nobody => Nobody
 
+    case ll: LogoList => toLogoList(ll)
     // Seqs turn into LogoList. their elements are recursively converted.
     // also recurse into LogoLists.
     case a: Array[_] => toLogoList(a)
     case s: Seq[_] => toLogoList(s)
-    case ll: LogoList => toLogoList(ll)
 
     // unconvertible type
     case _ =>

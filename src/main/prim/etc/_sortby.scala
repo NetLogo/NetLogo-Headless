@@ -2,6 +2,8 @@
 
 package org.nlogo.prim.etc
 
+import scala.collection.mutable
+import scala.math.Ordering
 import org.nlogo.agent.AgentSet
 import org.nlogo.api.LogoException
 import org.nlogo.core.{ LogoList, Syntax }
@@ -20,22 +22,20 @@ class _sortby extends Reporter {
         context, this, task.missingInputs(2))
     val obj = args(1).report(context)
     val input = obj match {
-      case list: LogoList =>
-        // must copy the list, because Collections.sort() works in place - ST 7/31/04, 1/12/06
-        new java.util.ArrayList[AnyRef](list)
+      case list: LogoList => list
       case agents: AgentSet =>
-        val list = new java.util.ArrayList[AnyRef]
+        val list = mutable.MutableList[AnyRef]()
         val it = agents.shufflerator(context.job.random)
         while(it.hasNext)
-          list.add(it.next())
+          list += it.next()
         list
       case _ =>
         throw new ArgumentTypeException(
           context, this, 0, Syntax.ListType | Syntax.AgentsetType, obj)
     }
     try {
-      java.util.Collections.sort(input, new MyComparator(context, task))
-      LogoList.fromJava(input)
+      val sorted = input.sortBy(identity)(new SortOrdering(context, task))
+      LogoList.fromIterator(sorted.iterator)
     }
     catch {
       case e: IllegalArgumentException if e.getMessage == Java7SoPicky =>
@@ -45,15 +45,15 @@ class _sortby extends Reporter {
     }
   }
 
-  class MyComparator(context: Context, task: ReporterTask)
-  extends java.util.Comparator[AnyRef] {
+  class SortOrdering(context: Context, task: ReporterTask) extends Ordering[AnyRef] {
     def die(o: AnyRef) =
       throw new ArgumentTypeException(
         context, _sortby.this, 0, Syntax.BooleanType, o)
-    override def compare(o1: AnyRef, o2: AnyRef) =
+
+    def compare(o1: AnyRef, o2: AnyRef): Int =
       try task.report(context, Array(o1, o2)) match {
             case b: java.lang.Boolean =>
-              if(b.booleanValue) -1
+              if (b.booleanValue) -1
               else task.report(context, Array(o2, o1)) match {
                 case b: java.lang.Boolean =>
                   if(b.booleanValue) 1

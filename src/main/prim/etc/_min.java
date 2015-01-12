@@ -20,7 +20,8 @@ public final strictfp class _min extends Reporter implements Pure {
   public double report_1(Context context, LogoList list) {
     double winner = 0;
     Double boxedWinner = null;
-    for (Object elt : list) {
+
+    for (Object elt : list.toJava()) {
       if (elt instanceof Double) {
         Double boxedValue = (Double) elt;
         double value = boxedValue.doubleValue();
@@ -32,7 +33,7 @@ public final strictfp class _min extends Reporter implements Pure {
     }
     if (boxedWinner == null) {
       throw new EngineException(context, this,
-        I18N.errorsJ().getN("org.nlogo.prim._min.cantFindMinOfListWithNoNumbers", Dump.logoObject(list)));
+            I18N.errorsJ().getN("org.nlogo.prim._min.cantFindMinOfListWithNoNumbers", Dump.logoObject(list)));
     }
     return boxedWinner;
   }

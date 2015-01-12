@@ -56,7 +56,7 @@ public final strictfp class _nof
     LogoListBuilder result = new LogoListBuilder();
     int i = 0;
     int j = 0;
-    for (Iterator<Object> it = list.iterator();
+    for (Iterator<Object> it = list.javaIterator();
          it.hasNext() && j < n;
          i++) {
       Object elt = it.next();
