@@ -12,7 +12,6 @@ import org.nlogo.nvm.Context;
 import org.nlogo.nvm.EngineException;
 import org.nlogo.nvm.Reporter;
 
-import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -49,9 +48,7 @@ public final strictfp class _patchset
   }
 
   private void descendList(Context context, LogoList tempList, Set<Patch> result) {
-    for (Iterator<Object> iter = tempList.iterator();
-         iter.hasNext();) {
-      Object obj = iter.next();
+    for (Object obj : tempList.toJava()) {
       if (obj instanceof Patch) {
         result.add((Patch) obj);
       } else if (obj instanceof AgentSet) {

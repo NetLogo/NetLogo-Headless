@@ -10,8 +10,6 @@ import org.nlogo.nvm.Context;
 import org.nlogo.nvm.EngineException;
 import org.nlogo.nvm.Reporter;
 
-import java.util.Iterator;
-
 public final strictfp class _variance extends Reporter implements Pure {
 
   @Override
@@ -22,8 +20,7 @@ public final strictfp class _variance extends Reporter implements Pure {
   public double report_1(Context context, LogoList list) {
     double sum = 0, badElts = 0;
     int listSize = list.size();
-    for (Iterator<Object> it = list.iterator(); it.hasNext();) {
-      Object elt = it.next();
+    for (Object elt : list.toJava()) {
       if (!(elt instanceof Double)) {
         ++badElts;
         continue;
@@ -36,8 +33,7 @@ public final strictfp class _variance extends Reporter implements Pure {
     }
     double mean = sum / (listSize - badElts);
     double squareOfDifference = 0;
-    for (Iterator<Object> it = list.iterator(); it.hasNext();) {
-      Object elt = it.next();
+    for (Object elt : list.toJava()) {
       if (elt instanceof Double) {
         squareOfDifference +=
             StrictMath.pow(((Number) elt).doubleValue() - mean, 2);

@@ -28,7 +28,7 @@ class _map extends Reporter {
       if (i == 1) size = list.size
       else if (size != list.size)
         throw new EngineException(context, this, "All the list arguments to MAP must be the same length.")
-      list.iterator
+      list.javaIterator
     }
 
     // make the result list.

@@ -23,7 +23,7 @@ public final strictfp class _median
     int badElts = 0;
     List<Double> nums =
         new ArrayList<Double>(list.size());
-    for (Object elt : list) {
+    for (Object elt : list.toJava()) {
       if (!(elt instanceof Double)) {
         ++badElts;
         continue;

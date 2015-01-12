@@ -9,8 +9,6 @@ import org.nlogo.core.Syntax;
 import org.nlogo.nvm.ArgumentTypeException;
 import org.nlogo.nvm.Reporter;
 
-import java.util.Iterator;
-
 public final strictfp class _position
     extends Reporter
     implements Pure {
@@ -21,8 +19,8 @@ public final strictfp class _position
       Object value = args[0].report(context);
       LogoList list = (LogoList) obj;
       int i = 0;
-      for (Iterator<Object> it = list.iterator(); it.hasNext();) {
-        if (Equality.equals(value, it.next())) {
+      for (Object elt : list.toJava()) {
+        if (Equality.equals(value, elt)) {
           return Double.valueOf(i);
         }
         i++;

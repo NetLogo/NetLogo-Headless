@@ -2,7 +2,6 @@
 
 package org.nlogo.prim.etc;
 
-import org.nlogo.agent.*;
 import org.nlogo.api.Equality;
 import org.nlogo.core.AgentKindJ;
 import org.nlogo.core.LogoList;
@@ -10,8 +9,6 @@ import org.nlogo.core.Pure;
 import org.nlogo.core.Syntax;
 import org.nlogo.nvm.ArgumentTypeException;
 import org.nlogo.nvm.Reporter;
-
-import java.util.Iterator;
 
 public final strictfp class _member
     extends Reporter
@@ -22,8 +19,8 @@ public final strictfp class _member
     if (obj instanceof LogoList) {
       Object value = args[0].report(context);
       LogoList list = (LogoList) obj;
-      for (Iterator<Object> it = list.iterator(); it.hasNext();) {
-        if (Equality.equals(value, it.next())) {
+      for (Object elt : list.toJava()) {
+        if (Equality.equals(value, elt)) {
           return Boolean.TRUE;
         }
       }

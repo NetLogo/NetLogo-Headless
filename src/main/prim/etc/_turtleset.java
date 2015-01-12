@@ -12,7 +12,6 @@ import org.nlogo.nvm.Context;
 import org.nlogo.nvm.EngineException;
 import org.nlogo.nvm.Reporter;
 
-import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -51,9 +50,7 @@ public final strictfp class _turtleset
   }
 
   private void descendList(Context context, LogoList tempList, Set<Turtle> result) {
-    for (Iterator<Object> iter = tempList.iterator();
-         iter.hasNext();) {
-      Object obj = iter.next();
+    for (Object obj : tempList.toJava()) {
       if (obj instanceof Turtle) {
         result.add((Turtle) obj);
       } else if (obj instanceof AgentSet) {

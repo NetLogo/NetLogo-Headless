@@ -11,8 +11,6 @@ import org.nlogo.nvm.Context;
 import org.nlogo.nvm.EngineException;
 import org.nlogo.nvm.Reporter;
 
-import java.util.Iterator;
-
 public final strictfp class _mean extends Reporter implements Pure {
 
   @Override
@@ -26,8 +24,7 @@ public final strictfp class _mean extends Reporter implements Pure {
       throw new EngineException(
         context, this, I18N.errorsJ().get("org.nlogo.prim.etc.$common.emptyList"));
     }
-    for (Iterator<Object> it = list.iterator(); it.hasNext();) {
-      Object elt = it.next();
+    for (Object elt : list.toJava()) {
       if (!(elt instanceof Double)) {
         throw new EngineException(context, this,
             I18N.errorsJ().getN("org.nlogo.prim._mean.cantFindMeanOfNonNumbers",
