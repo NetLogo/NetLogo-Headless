@@ -3,6 +3,9 @@
 package org.nlogo.agent
 
 // table lookup of square roots
+//
+// StrictMath.sqrt is expensive, so doing a table lookup instead
+// speeds up distance calculations between patch centers greatly
 
 @annotation.strictfp
 class RootsTable(worldWidth: Int, worldHeight: Int) {
