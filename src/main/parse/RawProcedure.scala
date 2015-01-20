@@ -3,8 +3,7 @@
 package org.nlogo.parse
 
 import org.nlogo.core.FrontEndProcedure
-import org.nlogo.{ api, core },
-
+import org.nlogo.core,
   core.StructureDeclarations.Procedure
 
 class RawProcedure(val procedureDeclaration: Procedure, val displayNameOption: Option[String])
