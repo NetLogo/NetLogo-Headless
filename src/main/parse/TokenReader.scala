@@ -2,8 +2,8 @@
 
 package org.nlogo.parse
 
-import org.nlogo.{ core, api },
-org.nlogo.core.{CompilerException, File, FileMode}
+import org.nlogo.core,
+  core.{CompilerException, File, FileMode}
 
 // This exists to support the file-read primitive, which uses LiteralParser.  During normal
 // compilation we just slurp all of the code into memory before doing any parsing, but it

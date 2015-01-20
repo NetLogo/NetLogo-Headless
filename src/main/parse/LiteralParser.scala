@@ -2,7 +2,7 @@
 
 package org.nlogo.parse
 
-import org.nlogo.{ core, api },
+import org.nlogo.core,
   core.{ LiteralImportHandler, Token, TokenType },
   core.Fail._
 

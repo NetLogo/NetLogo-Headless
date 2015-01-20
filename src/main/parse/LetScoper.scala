@@ -84,9 +84,8 @@ package org.nlogo.parse
 //    LetScoper, but it would result in having to change the syntax of the _let primitive,
 //    seems awkward and confusing.
 
-import org.nlogo.{ core, api },
-  core.{ Token, TokenType, Let },
-  core.I18N,
+import org.nlogo.core,
+  core.{ Token, TokenType, Let, I18N },
   core.Fail._
 
 import scala.annotation.tailrec
