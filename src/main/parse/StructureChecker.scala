@@ -9,7 +9,7 @@ package org.nlogo.parse
 // well encapsulated, maybe it's good enough. - ST 12/7/12)
 
 import
-  org.nlogo.{ core, api },
+  org.nlogo.core,
     core.{ Token, StructureDeclarations },
       StructureDeclarations.{ Breed, Declaration, Extensions, Identifier, Includes, Procedure, Variables },
     core.Fail._

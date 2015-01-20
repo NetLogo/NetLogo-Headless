@@ -19,8 +19,7 @@ package org.nlogo.parse
 // include further files.)
 
 import
-  org.nlogo.{ api, core },
-    api.FileIO,
+  org.nlogo.core,
     core.{ErrorSource, ExtensionManager, BreedIdentifierHandler, FrontEndInterface, Program, Token, StructureDeclarations, StructureResults},
       FrontEndInterface.ProceduresMap,
     core.Fail._
@@ -57,8 +56,9 @@ object StructureParser {
         cAssert(path.endsWith(".nls"),
           "Included files must end with .nls",
           results.includes.head)
+        val fileContents = io.Source.fromFile(path).mkString
         val newResults =
-          parseOne(FileIO.file2String(path), path, results)
+          parseOne(fileContents, path, results)
         newResults.copy(includes = newResults.includes.filterNot(_ == results.includes.head))
       }.dropWhile(_.includes.nonEmpty).next
     if (!subprogram) {

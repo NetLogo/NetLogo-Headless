@@ -2,8 +2,9 @@
 
 package org.nlogo.parse
 
-import org.nlogo.{ core, api },
-org.nlogo.core.{CompilerException, CompilerUtilitiesInterface, File, FrontEndInterface, ExtensionManager, StructureResults, Program, LiteralImportHandler}
+import org.nlogo.core,
+  core.{CompilerException, CompilerUtilitiesInterface, File, FrontEndInterface,
+        ExtensionManager, StructureResults, Program, LiteralImportHandler}
 
 object CompilerUtilities extends CompilerUtilitiesInterface {
   import FrontEndInterface.ProceduresMap
