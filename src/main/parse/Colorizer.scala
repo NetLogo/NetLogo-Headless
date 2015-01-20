@@ -4,7 +4,7 @@ package org.nlogo.parse
 
 import
   java.awt.Color,
-  org.nlogo.{ core, api },
+  org.nlogo.core,
     core.{Program, Token, TokenType}
 
 // code in, HTML out!
