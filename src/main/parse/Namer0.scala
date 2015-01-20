@@ -2,8 +2,8 @@
 
 package org.nlogo.parse
 
-import org.nlogo.{ core, api },
-org.nlogo.core.{CompilerException, Keywords, Token, TokenType}
+import org.nlogo.core,
+  core.{CompilerException, Keywords, Token, TokenType}
 
 object Namer0 extends (Token => Token) {
   override def apply(token: Token) =
