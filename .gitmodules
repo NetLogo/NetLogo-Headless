@@ -1,21 +1,21 @@
 [submodule "models"]
 	path = models
 	url = https://github.com/NetLogo/models.git
-[submodule "extensions/array"]
-	path = extensions/array
+[submodule "jvm/extensions/array"]
+	path = jvm/extensions/array
 	url = https://github.com/NetLogo/Array-Extension.git
-[submodule "extensions/matrix"]
-	path = extensions/matrix
+[submodule "jvm/extensions/matrix"]
+	path = jvm/extensions/matrix
 	url = https://github.com/NetLogo/Matrix-Extension.git
-[submodule "extensions/profiler"]
-	path = extensions/profiler
+[submodule "jvm/extensions/profiler"]
+	path = jvm/extensions/profiler
 	url = https://github.com/NetLogo/Profiler-Extension.git
-[submodule "extensions/sample"]
-	path = extensions/sample
+[submodule "jvm/extensions/sample"]
+	path = jvm/extensions/sample
 	url = https://github.com/NetLogo/Sample-Extension.git
-[submodule "extensions/sample-scala"]
-	path = extensions/sample-scala
+[submodule "jvm/extensions/sample-scala"]
+	path = jvm/extensions/sample-scala
 	url = https://github.com/NetLogo/Sample-Scala-Extension.git
-[submodule "extensions/table"]
-	path = extensions/table
+[submodule "jvm/extensions/table"]
+	path = jvm/extensions/table
 	url = https://github.com/NetLogo/Table-Extension.git
