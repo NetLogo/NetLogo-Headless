@@ -1,3 +1,5 @@
+lazy val netlogoVersion = taskKey[String]("from api.Version")
+
 lazy val commonSettings = Seq(
   organization := "org.nlogo",
   licenses += ("GPL-2.0", url("http://opensource.org/licenses/GPL-2.0")),
@@ -55,6 +57,13 @@ lazy val publicationSettings =
   )
 
 lazy val docOptions = Seq(
+  netlogoVersion := {
+    (testLoader in Test).value
+      .loadClass("org.nlogo.api.Version")
+      .getMethod("version")
+      .invoke(null).asInstanceOf[String]
+      .stripPrefix("NetLogo ")
+  },
   scalacOptions in (Compile, doc) ++= {
     val version = netlogoVersion.value
     Seq("-encoding", "us-ascii") ++
@@ -74,7 +83,7 @@ lazy val docOptions = Seq(
   }
 )
 
-lazy val root = (project in file (".")).
+lazy val jvmBuild = (project in file ("jvm")).
   configs(FastMediumSlow.configs: _*).
   settings(commonSettings: _*).
   settings(jvmSettings: _*).
@@ -108,16 +117,6 @@ lazy val root = (project in file (".")).
 ///
 /// Scaladoc
 ///
-
-val netlogoVersion = taskKey[String]("from api.Version")
-
-netlogoVersion := {
-  (testLoader in Test).value
-    .loadClass("org.nlogo.api.Version")
-    .getMethod("version")
-    .invoke(null).asInstanceOf[String]
-    .stripPrefix("NetLogo ")
-}
 
 ///
 /// plugins

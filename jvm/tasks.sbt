@@ -80,7 +80,6 @@ classycle := {
   "open -a Safari target/classycle/classycle.xml".!
   baseDirectory.value / "target" / "classycle" / "classycle.xml"
 }
-
 ///
 /// dump
 ///
@@ -93,6 +92,7 @@ classycle := {
 val dumper = InputKey[Unit]("dump", "dump compiled models")
 
 fullRunInputTask(dumper, Test, "org.nlogo.headless.misc.Dump")
+
 
 ///
 /// all
