@@ -2,7 +2,6 @@
 
 package org.nlogo.parse
 
-import org.nlogo.api.FileIO
 import org.scalatest.FunSuite
 import java.awt.Color
 
@@ -48,21 +47,6 @@ class ColorizerTests extends FunSuite {
       """<font color="#007f69">end</font>"""
     assertResult(expected)(
       Colorizer.toHtml("to foo crt 10 [ set xcor 5 ] end"))
-  }
-
-}
-
-import org.nlogo.util.SlowTest
-
-class ColorizerTests2 extends FunSuite with SlowTest {
-
-  // very long Code tabs shouldn't blow the stack.
-  // slow, hence SlowTest
-  test("don't blow stack") {
-    import FileIO.file2String
-    val path = "models/test/Really Long Code.nls"
-    assertResult(1010916)(
-      Colorizer.toHtml(file2String(path)).size)
   }
 
 }

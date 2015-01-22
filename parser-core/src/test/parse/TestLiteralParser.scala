@@ -3,9 +3,8 @@
 package org.nlogo.parse
 
 import org.scalatest.FunSuite
-import org.nlogo.api.Dump
 
-import org.nlogo.core.{CompilerException, LogoList, Token, LiteralImportHandler},
+import org.nlogo.core.{CompilerException, LogoList, Token, LiteralImportHandler, StringEscaper},
   LiteralImportHandler.Parser
 
 class TestLiteralParser extends FunSuite {
@@ -62,6 +61,23 @@ class TestLiteralParser extends FunSuite {
     assertResult(error)(e.getMessage)
   }
 
+  def dumpObject(obj: AnyRef): String = {
+    obj match {
+      case b: java.lang.Boolean => b.toString
+      case jd: java.lang.Double =>
+        val d = jd.doubleValue
+        val l = d.toLong
+        if(l == d && l >= -9007199254740992L && l <= 9007199254740992L)
+          l.toString
+        else
+          d.toString
+      case s: String => s
+      case l: LogoList =>
+        l.scalaIterator.map(dumpObject).mkString("[", " ", "]")
+      case _ => "<" + obj.getClass.getSimpleName + ">"
+    }
+  }
+
   test("booleanTrue") { assertResult(java.lang.Boolean.TRUE)(toLiteral("true")) }
   test("booleanFalse") { assertResult(java.lang.Boolean.FALSE)(toLiteral("false")) }
   test("literalInt") { assertResult(Double.box(4))(toLiteral("4")) }
@@ -75,16 +91,16 @@ class TestLiteralParser extends FunSuite {
   test("largeLiteral3") { testError("9007199254740993", "9007199254740993 is too large to be represented exactly as an integer in NetLogo") }
   test("largeLiteral4") { testError("-9007199254740993", "-9007199254740993 is too large to be represented exactly as an integer in NetLogo") }
   test("literalString") { assertResult("hi there")(toLiteral("\"hi there\"")) }
-  test("literalList") { assertResult("[1 2 3]")(Dump.logoObject(toLiteralList("[1 2 3]"))) }
-  test("literalList2") { assertResult("[1 [2] 3]")(Dump.logoObject(toLiteralList("[1 [2] 3]"))) }
-  test("literalList3") { assertResult("[[1 2 3]]")(Dump.logoObject(toLiteralList("[[1 2 3]]"))) }
-  test("literalList4") { assertResult("[1 hi true]")(Dump.logoObject(toLiteralList("[1 \"hi\" true]"))) }
-  test("literalList5") { assertResult("[[1 hi true]]")(Dump.logoObject(toLiteral("([([1 \"hi\" true])])"))) }
-  test("parseLiteralList") { assertResult("[1 2 3]")(Dump.logoObject(toLiteralList("[1 2 3]"))) }
-  test("parseLiteralList2a") { assertResult("[1 [2] 3]")(Dump.logoObject(toLiteralList("[1 [2] 3]"))) }
-  test("parseLiteralList2b") { assertResult("[[1] [2] [3]]")(Dump.logoObject(toLiteralList("[[1] [2] [3]]"))) }
-  test("parseLiteralList3") { assertResult("[[1 2 3]]")(Dump.logoObject(toLiteralList("[[1 2 3]]"))) }
-  test("parseLiteralList4") { assertResult("[1 hi true]")(Dump.logoObject(toLiteralList("[1 \"hi\" true]"))) }
+  test("literalList") { assertResult("[1 2 3]")(dumpObject(toLiteralList("[1 2 3]"))) }
+  test("literalList2") { assertResult("[1 [2] 3]")(dumpObject(toLiteralList("[1 [2] 3]"))) }
+  test("literalList3") { assertResult("[[1 2 3]]")(dumpObject(toLiteralList("[[1 2 3]]"))) }
+  test("literalList4") { assertResult("[1 hi true]")(dumpObject(toLiteralList("[1 \"hi\" true]"))) }
+  test("literalList5") { assertResult("[[1.0, hi, true]]")(toLiteral("([([1 \"hi\" true])])").toString) }
+  test("parseLiteralList") { assertResult("[1 2 3]")(dumpObject(toLiteralList("[1 2 3]"))) }
+  test("parseLiteralList2a") { assertResult("[1 [2] 3]")(dumpObject(toLiteralList("[1 [2] 3]"))) }
+  test("parseLiteralList2b") { assertResult("[[1] [2] [3]]")(dumpObject(toLiteralList("[[1] [2] [3]]"))) }
+  test("parseLiteralList3") { assertResult("[[1 2 3]]")(dumpObject(toLiteralList("[[1 2 3]]"))) }
+  test("parseLiteralList4") { assertResult("[1 hi true]")(dumpObject(toLiteralList("[1 \"hi\" true]"))) }
 
   test("agent and agentset literals surrounded by brackets") {
     val result = toLiteral("{agent-parseable}")

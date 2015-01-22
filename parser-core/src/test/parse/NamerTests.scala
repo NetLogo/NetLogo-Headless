@@ -3,8 +3,8 @@
 package org.nlogo.parse
 
 import org.scalatest.FunSuite
-import org.nlogo.{ core, api, parse },
-org.nlogo.core._
+import org.nlogo.{ core, parse },
+  core._
 
 class NamerTests extends FunSuite {
 

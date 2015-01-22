@@ -2,8 +2,6 @@
 
 package org.nlogo.core
 
-import org.nlogo.api.{ClassManager, ExtensionObject}
-
 // This isn't a singleton because in testing contexts it's sometimes useful
 // to override a few methods. - ST 11/5/11
 
