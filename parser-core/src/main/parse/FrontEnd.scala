@@ -7,7 +7,7 @@ import org.nlogo.core,
 
 object FrontEnd extends FrontEnd {
   val tokenizer: core.TokenizerInterface =
-    Femto.scalaSingleton("org.nlogo.lex.Tokenizer")
+    Femto.scalaSingleton[core.TokenizerInterface]("org.nlogo.lex.Tokenizer")
   val tokenMapper = new TokenMapper(
     "/system/tokens.txt", "org.nlogo.core.prim.")
 }

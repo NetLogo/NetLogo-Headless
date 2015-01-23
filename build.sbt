@@ -86,21 +86,43 @@ lazy val docOptions = Seq(
 
 lazy val parserSettings = Seq(
   isSnapshot := true,
-  version := "0.0.1"
+  name := "NetLogo-Parser",
+  version := "0.0.1",
+  unmanagedSourceDirectories in Compile += (baseDirectory in base).value / "parser-core" / "src" / "main"
 )
 
 lazy val base = project.in(file("."))
 
 lazy val parserJvm = (project in file ("parser-jvm")).
-  settings(jvmSettings: _*).
   settings(commonSettings: _*).
   settings(parserSettings: _*).
+  settings(jvmSettings: _*).
   settings(scalatestSettings: _*).
   settings(
-    name := "Parser-JVM",
-    libraryDependencies += "org.scala-lang.modules" %% "scala-parser-combinators" % "1.0.3",
-    unmanagedSourceDirectories in Compile += (baseDirectory in base).value / "parser-core" / "src" / "main"
+    libraryDependencies += "org.scala-lang.modules" %% "scala-parser-combinators" % "1.0.3"
   )
+
+lazy val scalaReflect = Def.setting { "org.scala-lang" % "scala-reflect" % scalaVersion.value }
+
+lazy val macros = (project in file("macro")).
+  settings(commonSettings: _*).
+  settings(
+    scalaVersion := "2.11.2",
+    libraryDependencies += "org.scala-lang" % "scala-reflect" % scalaVersion.value
+  )
+
+lazy val parserJs = (project in file ("parser-js")).
+  dependsOn(macros).
+  settings(commonSettings: _*).
+  settings(parserSettings: _*).
+  settings(scalaJSSettings: _*).
+  settings(utest.jsrunner.Plugin.utestJsSettings: _*).
+  settings(
+    scalaVersion := "2.11.2",
+    testFrameworks += new TestFramework("utest.jsrunner.JsFramework"),
+    libraryDependencies += "org.scalajs" %%% "scala-parser-combinators" % "1.0.2"
+  )
+
 
 lazy val jvmBuild = (project in file ("jvm")).
   dependsOn(parserJvm % "test->test;compile->compile").
