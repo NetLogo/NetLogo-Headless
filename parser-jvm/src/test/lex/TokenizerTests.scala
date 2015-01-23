@@ -89,6 +89,10 @@ class TokenizerTests extends FunSuite {
     assertResult("Closing double quote is missing")(
       firstBadToken(tokens).get.value)
   }
+  test("TokenizeEscapedBackslash") {
+    val tokens = tokenize("\"\\\\\"")
+    assertResult("Token(\"\\\\\",Literal,\\)")(tokens.mkString)
+  }
   test("TokenizeBadNumberFormat1") {
     val tokens = tokenizeRobustly("1.2.3")
     assertResult(0)(firstBadToken(tokens).get.start)
@@ -107,6 +111,17 @@ class TokenizerTests extends FunSuite {
     val tokens = tokenize("-.")
     val expected = "Token(-.,Ident,-.)"
     assertResult(expected)(tokens.mkString)
+  }
+
+  test("ListOfLiterals") {
+    val tokens = tokenize("[123 -456 \"a\"]")
+    val expected = """|Token([,OpenBracket,null)
+                      |Token(123,Literal,123.0)
+                      |Token(-456,Literal,-456.0)
+                      |Token("a",Literal,a)
+                      |Token(],CloseBracket,null)""".stripMargin.replaceAll("\n", "")
+    assertResult(expected)(tokens.mkString)
+
   }
 
   test("Empty1") {

@@ -51,13 +51,15 @@ class TokenLexer {
     var lastChar = Option.empty[Char]
     var nesting = 0
     val detectEnd = withFeedback[(Option[Char], Int)]((lastChar, nesting)) {
-        case ((_, n), _) if n < 0 => ((None, n), Error)
+        case ((None, 0), '{')              => ((Some('{'), 0), Accept)
+        case ((_, n), _) if n < 0          => ((None, n), Error)
         case ((_, n), c) if c == '\r' || c == '\n' => ((Some(c), n), Finished)
-        case ((Some('}'), 1), '}') => ((None, 0), Finished)
-        case ((Some('{'), n), '{') => ((None, n + 1), Accept)
-        case ((Some('}'), n), '}') => ((None, n - 1), Accept)
-        case ((_, n), c)           => ((Some(c), n), Accept)
-        case _ => ((None, 0), Error)
+        case ((Some('}'), 1), '}')         => ((None, 0), Finished)
+        case ((Some('{'), n), '{')         => ((None, n + 1), Accept)
+        case ((Some('}'), n), '}')         => ((None, n - 1), Accept)
+        case ((Some(c), 0), _) if c != '{' => ((None, 0), Error) // may be able to clean this up
+        case ((_, n), c)                   => ((Some(c), n), Accept)
+        case _                             => ((None, 0), Error)
       }
 
     def apply(c: Char): DetectorStates =
@@ -76,13 +78,13 @@ class TokenLexer {
   def string: (LexPredicate, TokenGenerator) =
     (chain('"', stringLexer, '"') , tokenizeString)
 
-  def stringLexer: LexPredicate = {
+  def stringLexer: LexPredicate =
     withFeedback[Option[Char]](Some('"')) {
       case (Some('\\'), '"') => (Some('"'), Accept)
+      case (Some('\\'), '\\') => (None, Accept)
       case (_, '"') => (Some('"'), Finished)
       case (_, c) => (Some(c), Accept)
     }
-  }
 
   def comment: (LexPredicate, TokenGenerator) =
     (chain(';', zeroOrMore(c => c != '\r' && c != '\n')),
@@ -120,22 +122,26 @@ class TokenLexer {
       Some((literalString, TokenType.Extension, literalString))
   }
 
-  private def tokenizeLiteral(literalString: String): Option[(String, TokenType, AnyRef)] = {
+  private def tokenizeLiteral(literalString: String): Option[(String, TokenType, AnyRef)] =
     if (literalString.exists(Character.isDigit))
       NumberParser.parse(literalString) match {
-        case Left (error) => Some((literalString, TokenType.Bad, error) )
-        case Right (literal) => Some((literalString, TokenType.Literal, literal) )
+        case Left(error) => Some((literalString, TokenType.Bad, error))
+        case Right(literal) => Some((literalString, TokenType.Literal, literal))
       }
     else
       None
-  }
 
   private def tokenizeIdent(identString: String): Option[(String, TokenType, AnyRef)] =
     Some((identString, TokenType.Ident, identString.toUpperCase))
 
   private def tokenizeString(stringText: String): Option[(String, TokenType, AnyRef)] = {
+    val lastCharEscaped = stringText.dropRight(1).foldLeft(false) {
+      case (true, '\\') => false
+      case (_, '\\') => true
+      case _ => false
+    }
     try {
-      if (stringText.last != '"' || stringText.takeRight(2) == "\\\"")
+      if (stringText.last != '"' || lastCharEscaped)
         Some((s"""$stringText""", TokenType.Bad, "Closing double quote is missing"))
       else {
         val unescapedText = StringEscaper.unescapeString(stringText.drop(1).dropRight(1))
@@ -147,10 +153,52 @@ class TokenLexer {
   }
 
   def wrapInput(reader: JReader, filename: String): WrappedInput =
-    new BufferedInputWrapper(reader, 0, filename)
+  reader match {
+    case br: BufferedReader => new BufferedInputWrapper(br, 0, filename)
+    case r => new BufferedInputWrapper(reader, 0, filename)
+  }
 
-  class BufferedInputWrapper(input: JReader, var offset: Int, val filename: String) extends WrappedInput {
-    private val buffReader: BufferedReader = new BufferedReader(input, 10000)
+
+  class AutoGrowingBufferedReader(reader: BufferedReader) {
+    private var markSize: Int = 65536
+    private var remainingMark: Int = 0
+
+    def mark(): Unit = {
+      reader.mark(markSize)
+      remainingMark = markSize
+    }
+
+    def reset(): Unit = {
+      reader.reset()
+      remainingMark = markSize
+    }
+
+    def skip(l: Long): Unit = {
+      reader.skip(l)
+      remainingMark -= l.toInt
+    }
+
+    def read(): Int = {
+      if (remainingMark == 0) {
+        reader.reset()
+        reader.mark(markSize * 2)
+        reader.skip(markSize)
+        remainingMark = markSize
+        markSize = markSize * 2
+      }
+      val i = reader.read()
+      remainingMark -= 1
+      i
+    }
+  }
+
+  class BufferedInputWrapper(buffReader: AutoGrowingBufferedReader, var offset: Int, val filename: String) extends WrappedInput {
+    def this(input: BufferedReader, offset: Int, filename: String) = {
+      this(new AutoGrowingBufferedReader(input), offset, filename)
+    }
+    def this(input: JReader, offset: Int, filename: String) = {
+      this(new BufferedReader(input, 65536), offset, filename)
+    }
     import TokenLexer.WrappedInput
 
     def nextChar: Option[Char] = {
@@ -168,7 +216,7 @@ class TokenLexer {
       }
 
     override def hasNext: Boolean = {
-      buffReader.mark(1)
+      buffReader.mark()
       val r = buffReader.read() != -1
       buffReader.reset()
       r
@@ -180,7 +228,7 @@ class TokenLexer {
       val r = prefix match {
         case "" => None
         case nonEmptyString => f(nonEmptyString).map {
-          case (text, tpe, tval) => (new Token(text, tpe, tval)(originalOffset, offset, filename), this)
+          case (text, tpe, tval) => (new Token(text, tpe, tval)(originalOffset, remainder.offset, filename), this)
         }
       }
       r orElse {
@@ -191,7 +239,7 @@ class TokenLexer {
     }
 
     override def longestPrefix(f: LexPredicate): (String, WrappedInput) = {
-      buffReader.mark(10000)
+      buffReader.mark()
       val (a, b) = (longestPrefixTail(f, ""), this)
       buffReader.reset()
       buffReader.skip(a.length) // we always go "one too far", so we have to backup
