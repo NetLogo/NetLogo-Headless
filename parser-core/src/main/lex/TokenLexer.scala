@@ -5,24 +5,14 @@ package org.nlogo.lex
 import java.io.{Reader => JReader, BufferedReader}
 
 import org.nlogo.core.{ NumberParser, StringEscaper, Token, TokenType }
-import org.nlogo.lex.TokenLexer.WrappedInput
-import TokenLexer.WrappedInput
 import LexOperations._
 
 import scala.annotation.tailrec
-import scala.collection.immutable.HashSet
 
 class TokenLexer {
   import LexOperations.PrefixConversions._
-
-  private val identifierPunctuation = """_.?=*!<>:#+/%$^'&\\-"""
-  private val digits = "0123456789"
-  private val identifierChars = {
-    UnicodeInformation.letterCharacters.foldLeft(HashSet[Int]())(_ ++ _.toSet) ++
-      (digits.map(_.toInt).toSet ++ identifierPunctuation.map(_.toInt).toSet)
-  }
-
-  private def validIdentifierChar(c: Char): Boolean = identifierChars.contains(c)
+  import TokenLexer._
+  import Charset.validIdentifierChar
 
   private val punctuation = Map(
     "," -> TokenType.Comma,
@@ -161,6 +151,7 @@ class TokenLexer {
 
   class BufferedInputWrapper(input: JReader, var offset: Int, val filename: String) extends WrappedInput {
     private val buffReader: BufferedReader = new BufferedReader(input, 10000)
+    import TokenLexer.WrappedInput
 
     def nextChar: Option[Char] = {
       val readChar = buffReader.read()
@@ -213,6 +204,8 @@ class TokenLexer {
 object StandardLexer extends TokenLexer {}
 
 object WhitespaceSkippingLexer extends TokenLexer {
+  import TokenLexer.WrappedInput
+
   override def apply(input: WrappedInput): (Token, WrappedInput) = {
     val (t, endOfToken) = super.apply(input)
     val (_, beginningOfNextToken) = fastForwardWhitespace(endOfToken)
