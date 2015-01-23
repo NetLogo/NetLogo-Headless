@@ -22,8 +22,8 @@ lazy val jvmSettings = Seq(
     .split(" ").toSeq,
   javaSource in Compile := baseDirectory.value / "src" / "main",
   javaSource in Test := baseDirectory.value / "src" / "test",
-  resourceDirectory in Compile := file(".") / "resources" / "main",
-  resourceDirectory in Test := file(".") / "resources" / "test",
+  resourceDirectory in Compile := (baseDirectory in base).value / "resources" / "main",
+  resourceDirectory in Test := (baseDirectory in base).value / "resources" / "test",
   publishArtifact in Test := true
 )
 
@@ -84,19 +84,26 @@ lazy val docOptions = Seq(
   }
 )
 
-lazy val parserCore = (project in file ("parser-core")).
-  settings(commonSettings: _*).
+lazy val parserSettings = Seq(
+  isSnapshot := true,
+  version := "0.0.1"
+)
+
+lazy val base = project.in(file("."))
+
+lazy val parserJvm = (project in file ("parser-jvm")).
   settings(jvmSettings: _*).
+  settings(commonSettings: _*).
+  settings(parserSettings: _*).
   settings(scalatestSettings: _*).
   settings(
+    name := "Parser-JVM",
     libraryDependencies += "org.scala-lang.modules" %% "scala-parser-combinators" % "1.0.3",
-    name := "NetLogo-Parser",
-    isSnapshot := true,
-    version := "0.0.1"
+    unmanagedSourceDirectories in Compile += (baseDirectory in base).value / "parser-core" / "src" / "main"
   )
 
 lazy val jvmBuild = (project in file ("jvm")).
-  dependsOn(parserCore % "test->test;compile->compile").
+  dependsOn(parserJvm % "test->test;compile->compile").
   configs(FastMediumSlow.configs: _*).
   settings(commonSettings: _*).
   settings(jvmSettings: _*).
@@ -114,7 +121,6 @@ lazy val jvmBuild = (project in file ("jvm")).
     isSnapshot := true,
     version := "5.2.0"
   )
-
 
 ///
 /// building
