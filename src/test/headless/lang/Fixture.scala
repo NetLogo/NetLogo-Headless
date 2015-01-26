@@ -8,6 +8,8 @@ import org.nlogo.{ api, agent, core }
 import org.nlogo.core.{CompilerException, Femto, Model, View}
 import CompilerException.{RuntimeErrorAtCompileTimePrefix => runtimePrefix}
 import org.nlogo.nvm.CompilerInterface
+import org.nlogo.headless.test.{RunMode, NormalMode, TestMode, CompileError,
+                                Success, Result, Reporter, Command, AbstractFixture, RuntimeError, StackTrace}
 
 trait FixtureSuite extends scalatest.fixture.FunSuite {
   type FixtureParam = Fixture
@@ -22,33 +24,6 @@ object Fixture {
     val fixture = new Fixture(name)
     try fn(fixture)
     finally fixture.workspace.dispose()
-  }
-}
-
-// implemented below via HeadlessWorkspace, but also to be implemented
-// elsewhere by Tortoise - ST 8/28/13
-trait AbstractFixture {
-  import Assertions._
-  def defaultView: core.View
-  def declare(code: String): Unit = declare(Model(code = code, widgets = List(defaultView)))
-  def declare(model: Model = Model(widgets = List(defaultView)))
-  def open(path: String)
-  def open(model: Model)
-  def runCommand(command: Command, mode: TestMode)
-  def runReporter(reporter: Reporter, mode: TestMode)
-  def readFromString(literal: String): AnyRef
-  def checkResult(mode: TestMode, reporter: String, expectedResult: String, actualResult: AnyRef) {
-    // To be as safe as we can, let's do two separate checks here...  we'll compare the results both
-    // as values and as printed representations.  Most of the time these checks will come out
-    // the same, but it might be good to have both, partially as a way of giving both Equality and
-    // Dump lots of testing! - ST 5/8/03, 8/21/13
-    withClue(s"""$mode: not equals(): reporter "$reporter" """) {
-      assertResult(expectedResult)(
-        api.Dump.logoObject(actualResult, true, false))
-    }
-    assert(api.Equality.equals(actualResult,
-      readFromString(expectedResult)),
-      s"""$mode: not recursivelyEqual(): reporter "$reporter" """)
   }
 }
 

@@ -1,10 +1,9 @@
 // (C) Uri Wilensky. https://github.com/NetLogo/NetLogo
 
-package org.nlogo.headless
-package lang
+package org.nlogo.headless.test
 
-import org.nlogo.{ core, api },
-  core.{Keywords, AgentKind}
+import org.nlogo.core
+import org.nlogo.core.{AgentKind, Keywords}
 
 object Parser {
 

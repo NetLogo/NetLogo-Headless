@@ -1,9 +1,8 @@
 // (C) Uri Wilensky. https://github.com/NetLogo/NetLogo
 
-package org.nlogo.headless.lang
+package org.nlogo.headless.test
 
 import org.scalatest.FunSuite
-import org.nlogo.core.AgentKind
 
 class ParserTests extends FunSuite {
 

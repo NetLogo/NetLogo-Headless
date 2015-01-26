@@ -12,6 +12,7 @@ package misc
 // This would be nicer looking if it were done using Josh's model testing DSL.  (At the time I made
 // this, the DSL didn't support catching runtime errors, but now it does.) - ST 5/4/10
 
+import org.nlogo.headless.test.RuntimeError
 import org.nlogo.util.SlowTest
 import org.nlogo.api
 import org.nlogo.core.Model

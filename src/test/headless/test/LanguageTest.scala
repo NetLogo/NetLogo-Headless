@@ -1,7 +1,6 @@
 // (C) Uri Wilensky. https://github.com/NetLogo/NetLogo
 
-package org.nlogo.headless
-package lang
+package org.nlogo.headless.test
 
 import org.nlogo.core.AgentKind
 
