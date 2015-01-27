@@ -7,7 +7,7 @@ import scala.reflect.macros.blackbox.{ Context => BlackBoxContext}
 
 object TokenClasses {
   val FileEntries: Seq[(String, String, String)] =
-    io.Source.fromFile("/Users/rgg284/IdeaProjects/NetLogo-Headless/resources/main/system/tokens.txt")
+    io.Source.fromFile("resources/main/system/tokens.txt")
       .getLines()
       .toSeq
       .map {
