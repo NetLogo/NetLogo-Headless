@@ -48,16 +48,6 @@ object ReporterHandler extends PrimitiveHandler {
     lookup(token, FrontEnd.tokenMapper.getReporter  _, TokenType.Reporter)
 }
 
-// go thru our breed prim handlers, if one triggers, return the result
-class BreedHandler(program: Program) extends NameHandler {
-  override def apply(token: Token) =
-    BreedIdentifierHandler.process(token, program) map {
-      case (className, breedName, tokenType) =>
-        (tokenType, Instantiator.newInstance[core.Instruction](
-          Class.forName("org.nlogo.core.prim." + className), breedName))
-    }
-}
-
 // replaces an identifier token with its imported implementation, if necessary
 class ExtensionPrimitiveHandler(extensionManager: ExtensionManager) extends NameHandler {
   override def apply(token: Token) =
