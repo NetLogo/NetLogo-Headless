@@ -51,7 +51,6 @@ lazy val testSettings = scalatestSettings ++ Seq(
 
 lazy val publicationSettings =
   bintrayPublishSettings ++
-  PublishVersioned.settings ++
   Seq(
     bintray.Keys.repository in bintray.Keys.bintray := "NetLogoHeadlessMaven",
     bintray.Keys.bintrayOrganization in bintray.Keys.bintray := Some("netlogo")
@@ -87,7 +86,6 @@ lazy val docOptions = Seq(
 )
 
 lazy val parserSettings = Seq(
-  isSnapshot := true,
   name := "NetLogo-Parser",
   version := "0.0.1",
   unmanagedSourceDirectories in Compile += (baseDirectory in base).value / "parser-core" / "src" / "main"
@@ -118,8 +116,10 @@ lazy val parserJs = (project in file ("parser-js")).
   settings(commonSettings: _*).
   settings(parserSettings: _*).
   settings(scalaJSSettings: _*).
+  settings(PubVersioned.settings: _*).
   settings(utest.jsrunner.Plugin.utestJsSettings: _*).
   settings(
+    isSnapshot := true,
     scalaVersion := "2.11.2",
     testFrameworks += new TestFramework("utest.jsrunner.JsFramework"),
     libraryDependencies += "org.scalajs" %%% "scala-parser-combinators" % "1.0.2"
@@ -137,14 +137,14 @@ lazy val jvmBuild = (project in file ("jvm")).
   settings(Depend.settings: _*).
   settings(publicationSettings: _*).
   settings(
+    version := "5.2.0",
+    isSnapshot := true,
     libraryDependencies += "org.ow2.asm" % "asm-all" % "5.0.3",
     mainClass in Compile := Some("org.nlogo.headless.Main"),
     onLoadMessage := "",
-    name := "NetLogoHeadless",
-    // Used by the publish-versioned plugin
-    isSnapshot := true,
-    version := "5.2.0"
-  )
+    name := "NetLogoHeadless"
+  ).
+  settings(PubVersioned.settings: _*)
 
 ///
 /// building
