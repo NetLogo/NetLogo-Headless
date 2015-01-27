@@ -66,13 +66,15 @@ lazy val docOptions = Seq(
       .stripPrefix("NetLogo ")
   },
   scalacOptions in (Compile, doc) ++= {
-    val version = netlogoVersion.value
     Seq("-encoding", "us-ascii") ++
     Opts.doc.title("NetLogo") ++
-    Opts.doc.version(version) ++
+    Opts.doc.version(version.value) ++
     Opts.doc.sourceUrl("https://github.com/NetLogo/NetLogo/blob/" +
-      version + "/src/main€{FILE_PATH}.scala")
+      version.value + "/src/main€{FILE_PATH}.scala")
   },
+  sources in (Compile, doc) ++= (
+    ((baseDirectory in base).value / "parser-core" / "src" / "main" ** "*.scala").get ++
+    ((baseDirectory in base).value / "parser-jvm" / "src" / "main" ** "*.scala").get),
   // compensate for issues.scala-lang.org/browse/SI-5388
   doc in Compile := {
     val path = (doc in Compile).value

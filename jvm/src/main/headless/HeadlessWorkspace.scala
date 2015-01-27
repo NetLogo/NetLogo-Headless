@@ -394,10 +394,11 @@ with org.nlogo.workspace.WorldLoaderInterface {
    * Runs NetLogo commands and waits for them to complete.
    *
    * @param source The command or commands to run
-   * @throws CompilerException
-   *                       if the code fails to compile
-   * @throws LogoException if the code fails to run
+   * @throws core.CompilerException if the code fails to compile
+   * @throws api.LogoException if the code fails to run
    */
+  @throws(classOf[core.CompilerException])
+  @throws(classOf[api.LogoException])
   def command(source: String) {
     evaluator.evaluateCommands(defaultOwner, source, world.observers, true, flags)
     if (lastLogoException != null) {
@@ -414,10 +415,11 @@ with org.nlogo.workspace.WorldLoaderInterface {
    * @return the result reported; may be of type java.lang.Integer, java.lang.Double,
    *         java.lang.Boolean, java.lang.String, {@link org.nlogo.core.LogoList},
    *         {@link org.nlogo.api.Agent}, AgentSet, or Nobody
-   * @throws core.CompilerException
-   *                       if the code fails to compile
-   * @throws LogoException if the code fails to run
+   * @throws core.CompilerException if the code fails to compile
+   * @throws api.LogoException if the code fails to run
    */
+  @throws(classOf[core.CompilerException])
+  @throws(classOf[api.LogoException])
   def report(source: String): AnyRef = {
     val result = evaluator.evaluateReporter(defaultOwner, source, world.observers, flags)
     if (lastLogoException != null) {
