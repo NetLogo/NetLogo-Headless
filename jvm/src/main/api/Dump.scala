@@ -3,10 +3,10 @@
 package org.nlogo.api
 
 import org.nlogo.core,
-  core.{ LogoList, Nobody },
+  core.{ Dump => CDump, LogoList, Nobody },
   collection.JavaConverters._
 
-object Dump {
+object Dump extends CDump {
 
   val csv = new CSV({
     // Boxed integers are illegal Logo values, but we have legacy CSV generation code
@@ -27,41 +27,27 @@ object Dump {
     obj.isInstanceOf[ExtensionObject] ||
     (obj eq Nobody)
 
-  def logoObject(obj: AnyRef): String =
-    logoObject(obj, false, false)
+  override def logoObject(obj: AnyRef, readable: Boolean, exporting: Boolean): String =
+    dumpApiObject((obj, readable, exporting))
 
-  def logoObject(obj: AnyRef, readable: Boolean, exporting: Boolean): String =
-    obj match {
+  val dumpApiObject: PartialFunction[(AnyRef, Boolean, Boolean), String] =
+    dumpObject orElse {
       // We need to check this first, otherwise those who subclass from the base types
       // when defining an ExtensionObject will never have their dump(...) called
-      case eo: ExtensionObject =>
+      case (eo: ExtensionObject, readable: Boolean, exporting: Boolean) =>
         // note that unless we directly call Dump.extensionObject we'll always be calling
         // reference = exporting.  I think that works since only the extension itself should
         // be calling !reference ev 2/29/08
         extensionObject(eo, readable, exporting, exporting)
-      case i: java.lang.Integer =>
-        throw new IllegalArgumentException("java.lang.Integer: " + i)
-      case b: java.lang.Boolean =>
-        b.toString
-      case d: java.lang.Double =>
-        number(d)
-      case s: String =>
-        if (readable)
-          "\"" + core.StringEscaper.escapeString(s) + "\""
-        else s
-      case a: AgentSet =>
+      case (a: AgentSet, _, exporting: Boolean) =>
         agentset(a, exporting)
-      case a: Agent =>
+      case (a: Agent, _, exporting: Boolean) =>
         agent(a, exporting)
-      case Nobody =>
-        "nobody"
-      case l: LogoList =>
-        list(l, readable, exporting)
-      case task: Task =>
+      case (task: Task, _, _) =>
         task.toString
-      case null =>
+      case (null, _, _) =>
         "<null>"
-      case _ =>
+      case (obj, _, _) =>
         "<" + obj.getClass.getSimpleName + ">"
     }
 
@@ -70,32 +56,6 @@ object Dump {
     // The #{extension:type DATA}# format is treated as a literal when tokenizing
     "{{" + obj.getExtensionName + ":" + obj.getNLTypeName + " " +
       obj.dump(readable, exporting, reference) + "}}"
-
-  def number(obj: java.lang.Double) = {
-    // If there is some more efficient way to test whether a double has no fractional part and lies
-    // in IEEE 754's exactly representable range, I don't know it. - ST 5/31/06
-    val d = obj.doubleValue
-    val l = d.toLong
-    if(l == d && l >= -9007199254740992L && l <= 9007199254740992L)
-      l.toString
-    else
-      d.toString
-  }
-
-  def number(d: Double) = {
-    val l = d.toLong
-    if(l == d && l >= -9007199254740992L && l <= 9007199254740992L)
-      l.toString
-    else
-      d.toString
-  }
-
-  def list(list: LogoList, readable: Boolean = false, exporting: Boolean = false) =
-    iterator(list.scalaIterator, "[", "]", " ", readable, exporting)
-
-  def iterator(iter: Iterator[AnyRef], prefix: String, suffix: String, delimiter: String, readable: Boolean, exporting: Boolean): String =
-    iter.map(logoObject(_, readable, exporting))
-      .mkString(prefix, delimiter, suffix)
 
   // This is fugly. But it really is this complicated - ST 6/27/11
   def agentset(as: AgentSet, exporting: Boolean): String =

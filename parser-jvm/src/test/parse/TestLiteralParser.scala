@@ -4,7 +4,7 @@ package org.nlogo.parse
 
 import org.scalatest.FunSuite
 
-import org.nlogo.core.{CompilerException, LogoList, Token, LiteralImportHandler, StringEscaper},
+import org.nlogo.core.{Dump, CompilerException, LogoList, Token, LiteralImportHandler, StringEscaper},
   LiteralImportHandler.Parser
 
 class TestLiteralParser extends FunSuite {
@@ -62,20 +62,7 @@ class TestLiteralParser extends FunSuite {
   }
 
   def dumpObject(obj: AnyRef): String = {
-    obj match {
-      case b: java.lang.Boolean => b.toString
-      case jd: java.lang.Double =>
-        val d = jd.doubleValue
-        val l = d.toLong
-        if(l == d && l >= -9007199254740992L && l <= 9007199254740992L)
-          l.toString
-        else
-          d.toString
-      case s: String => s
-      case l: LogoList =>
-        l.scalaIterator.map(dumpObject).mkString("[", " ", "]")
-      case _ => "<" + obj.getClass.getSimpleName + ">"
-    }
+    Dump.logoObject(obj)
   }
 
   test("booleanTrue") { assertResult(java.lang.Boolean.TRUE)(toLiteral("true")) }
@@ -119,5 +106,4 @@ class TestLiteralParser extends FunSuite {
     val result = toLiteral(input)
     assertResult("PARSEDEXTENSIONOBJECT")(result)
   }
-
 }
