@@ -4,13 +4,13 @@ package org.nlogo.parse
 
 import org.scalatest.FunSuite
 
-import org.nlogo.core.{CompilerException, LogoList, Token, LiteralImportHandler, StringEscaper},
+import org.nlogo.core.{Dump, CompilerException, LogoList, Token, LiteralImportHandler, StringEscaper},
   LiteralImportHandler.Parser
 
 class TestLiteralParser extends FunSuite {
 
-  def importHandler(isImport: Boolean) = {
-    if (isImport) {
+  def importHandler(isImport: Boolean) =
+    if (isImport)
       new LiteralImportHandler {
         override def parseExtensionLiteral(token: Token): AnyRef = {
           assert(token.value == "{{foo: bar baz}}")
@@ -22,7 +22,7 @@ class TestLiteralParser extends FunSuite {
           "PARSEDAGENTLITERAL"
         }
       }
-    } else {
+    else
       new LiteralImportHandler {
         override def parseExtensionLiteral(token: Token): AnyRef =
           throw new CompilerException(
@@ -35,8 +35,6 @@ class TestLiteralParser extends FunSuite {
             token.start, token.end, token.filename)
         }
       }
-    }
-  }
 
   def tokenizeString(input: String): Iterator[Token] =
     FrontEnd.tokenizer.tokenizeString(input).map(Namer0)
@@ -61,22 +59,7 @@ class TestLiteralParser extends FunSuite {
     assertResult(error)(e.getMessage)
   }
 
-  def dumpObject(obj: AnyRef): String = {
-    obj match {
-      case b: java.lang.Boolean => b.toString
-      case jd: java.lang.Double =>
-        val d = jd.doubleValue
-        val l = d.toLong
-        if(l == d && l >= -9007199254740992L && l <= 9007199254740992L)
-          l.toString
-        else
-          d.toString
-      case s: String => s
-      case l: LogoList =>
-        l.scalaIterator.map(dumpObject).mkString("[", " ", "]")
-      case _ => "<" + obj.getClass.getSimpleName + ">"
-    }
-  }
+  def dumpObject(obj: AnyRef): String = Dump.logoObject(obj)
 
   test("booleanTrue") { assertResult(java.lang.Boolean.TRUE)(toLiteral("true")) }
   test("booleanFalse") { assertResult(java.lang.Boolean.FALSE)(toLiteral("false")) }
@@ -119,5 +102,4 @@ class TestLiteralParser extends FunSuite {
     val result = toLiteral(input)
     assertResult("PARSEDEXTENSIONOBJECT")(result)
   }
-
 }
