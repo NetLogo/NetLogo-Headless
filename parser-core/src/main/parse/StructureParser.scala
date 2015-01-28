@@ -52,14 +52,18 @@ object StructureParser {
     val results =
       Iterator.iterate(firstResults) { results =>
         assert(!subprogram)
-        val path = extensionManager.resolvePath(results.includes.head.value.asInstanceOf[String])
-        cAssert(path.endsWith(".nls"),
+        val suppliedPath = results.includes.head.value.asInstanceOf[String]
+        cAssert(suppliedPath.endsWith(".nls"),
           "Included files must end with .nls",
           results.includes.head)
-        val fileContents = io.Source.fromFile(path).mkString
-        val newResults =
-          parseOne(fileContents, path, results)
-        newResults.copy(includes = newResults.includes.filterNot(_ == results.includes.head))
+        IncludeFile(extensionManager, suppliedPath) match {
+          case Some((path, fileContents)) =>
+            val newResults =
+              parseOne(fileContents, path, results)
+            newResults.copy(includes = newResults.includes.filterNot(_ == results.includes.head))
+          case None =>
+            exception(s"Could not find $suppliedPath", results.includes.head)
+        }
       }.dropWhile(_.includes.nonEmpty).next
     if (!subprogram) {
       for (token <- results.extensions)
