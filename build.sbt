@@ -133,7 +133,7 @@ lazy val parserJs = (project in file ("parser-js")).
 
 
 lazy val jvmBuild = (project in file ("jvm")).
-  dependsOn(parserJvm % "test->test;compile->compile").
+  dependsOn(parserJvm % "test-internal->test;compile-internal->compile").
   configs(FastMediumSlow.configs: _*).
   settings(commonSettings: _*).
   settings(jvmSettings: _*).
