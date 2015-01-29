@@ -142,7 +142,10 @@ lazy val jvmBuild = (project in file ("jvm")).
     libraryDependencies += "org.ow2.asm" % "asm-all" % "5.0.3",
     mainClass in Compile := Some("org.nlogo.headless.Main"),
     onLoadMessage := "",
-    name := "NetLogoHeadless"
+    name := "NetLogoHeadless",
+    mappings in (Compile, packageBin) ++= mappings.in(parserJvm, Compile, packageBin).value,
+    // include the macro sources in the main source jar
+    mappings in (Compile, packageSrc) ++= mappings.in(parserJvm, Compile, packageSrc).value
   ).
   settings(PubVersioned.settings: _*)
 
