@@ -22,15 +22,13 @@ lazy val jvmSettings = Seq(
     .split(" ").toSeq,
   javaSource in Compile := baseDirectory.value / "src" / "main",
   javaSource in Test := baseDirectory.value / "src" / "test",
-  resourceDirectory in Compile := (baseDirectory in base).value / "resources" / "main",
-  resourceDirectory in Test := (baseDirectory in base).value / "resources" / "test",
   publishArtifact in Test := true
 )
 
 lazy val scalatestSettings = Seq(
   // show test failures again at end, after all tests complete.
   // T gives truncated stack traces; change to G if you need full.
-  testOptions in Test += Tests.Argument("-oT"),
+  testOptions in Test += Tests.Argument("-oG"),
   libraryDependencies += "org.scalatest" %% "scalatest" % "2.2.1" % "test"
 )
 
@@ -93,18 +91,26 @@ lazy val parserSettings = Seq(
 
 lazy val base = project.in(file("."))
 
+lazy val sharedResources = (project in file ("shared")).
+  settings(commonSettings: _*).
+  settings(unmanagedResourceDirectories in Compile += baseDirectory.value / "resources" / "main")
+
 lazy val parserJvm = (project in file ("parser-jvm")).
+  dependsOn(sharedResources).
   settings(commonSettings: _*).
   settings(parserSettings: _*).
   settings(jvmSettings: _*).
   settings(scalatestSettings: _*).
   settings(
+    mappings in (Compile, packageBin) ++= mappings.in(sharedResources, Compile, packageBin).value,
+    mappings in (Compile, packageSrc) ++= mappings.in(sharedResources, Compile, packageSrc).value,
     libraryDependencies += "org.scala-lang.modules" %% "scala-parser-combinators" % "1.0.3"
   )
 
 lazy val scalaReflect = Def.setting { "org.scala-lang" % "scala-reflect" % scalaVersion.value }
 
 lazy val macros = (project in file("macro")).
+  dependsOn(sharedResources).
   settings(commonSettings: _*).
   settings(
     scalaVersion := "2.11.2",
@@ -144,8 +150,9 @@ lazy val jvmBuild = (project in file ("jvm")).
     onLoadMessage := "",
     name := "NetLogoHeadless",
     mappings in (Compile, packageBin) ++= mappings.in(parserJvm, Compile, packageBin).value,
-    // include the macro sources in the main source jar
-    mappings in (Compile, packageSrc) ++= mappings.in(parserJvm, Compile, packageSrc).value
+    mappings in (Compile, packageSrc) ++= mappings.in(parserJvm, Compile, packageSrc).value,
+    unmanagedResourceDirectories in Compile += baseDirectory.value / "resources" / "main",
+    unmanagedResourceDirectories in Test += baseDirectory.value / "resources" / "test"
   ).
   settings(PubVersioned.settings: _*)
 

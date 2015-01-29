@@ -13,9 +13,12 @@ object Resource {
     import c.universe._
     resourcePath match {
       case q"${resource: String}" =>
-        val lines = io.Source.fromFile(s"resources/main${resource}").getLines.map(s => q"$s").toList
+        val lines = getResource(resource).getLines.map(s => q"$s").toList
         q"Seq(..$lines).toIterator"
       case _ => c.abort(c.enclosingPosition, "Must supply a string literal to Resource.lines")
     }
   }
+
+  def getResource(path: String): io.Source =
+    io.Source.fromURL(getClass.getResource(path))
 }

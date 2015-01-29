@@ -2,12 +2,13 @@
 
 package org.nlogo.parse
 
+import org.nlogo.core.Resource.getResource
 import scala.language.experimental.macros
 import scala.reflect.macros.blackbox.{ Context => BlackBoxContext}
 
 object TokenClasses {
   val FileEntries: Seq[(String, String, String)] =
-    io.Source.fromFile("resources/main/system/tokens.txt")
+    getResource("/system/tokens.txt")
       .getLines()
       .toSeq
       .map {
