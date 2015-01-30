@@ -57,11 +57,10 @@ class TestColor extends AbstractTestRenderer {
   implicit class RichWorkspace(val workspace: HeadlessWorkspace){
     def setShapes(shapes: VectorShape*) {
       // remove all shapes from the world
-      import collection.JavaConverters._
-      for (shape <- workspace.world.turtleShapeList().getShapes.asScala)
-        workspace.world.turtleShapeList().removeShape(shape)
+      val turtleShapeList = workspace.world.turtleShapeList()
+      turtleShapeList.getShapes.foreach(turtleShapeList.removeShape)
       // add one non-recolorable shape
-      shapes.foreach(workspace.world.turtleShapeList().add)
+      shapes.foreach(turtleShapeList.add)
     }
     // test that the entire world is a particular color.
     def testColors(r: Int, g: Int, b: Int, a: Int = 255) {
