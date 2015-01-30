@@ -2,8 +2,7 @@
 
 package org.nlogo.api
 
-import org.nlogo.core
-import org.nlogo.core.Program
+import org.nlogo.core, core.{ Program, ShapeList }
 
 trait World {
   def patchSize: Double
