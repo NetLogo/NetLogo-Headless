@@ -13,24 +13,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public strictfp class LinkShape
-    implements org.nlogo.api.Shape, Cloneable, java.io.Serializable, DrawableShape {
+    implements org.nlogo.core.Shape, Cloneable, java.io.Serializable, DrawableShape {
   static final long serialVersionUID = 0L;
 
-  private VectorShape directionIndicator;
+  private org.nlogo.shape.VectorShape directionIndicator;
   private double curviness;
   private String name;
 
   public LinkShape() {
     name = "";
     directionIndicator = getDefaultLinkDirectionShape();
-    lines[0] = new LinkLine(-0.2, false);
-    lines[1] = new LinkLine(0.0, true);
-    lines[2] = new LinkLine(0.2, false);
+    lines[0] = new org.nlogo.shape.LinkLine(-0.2, false);
+    lines[1] = new org.nlogo.shape.LinkLine(0.0, true);
+    lines[2] = new org.nlogo.shape.LinkLine(0.2, false);
   }
 
-  private LinkLine[] lines = new LinkLine[3];
+  private org.nlogo.shape.LinkLine[] lines = new org.nlogo.shape.LinkLine[3];
 
-  public LinkLine getLine(int i) {
+  public org.nlogo.shape.LinkLine getLine(int i) {
     return lines[i];
   }
 
@@ -46,7 +46,7 @@ public strictfp class LinkShape
     lines[index].setVisible(visible);
   }
 
-  public void add(int index, LinkLine line) {
+  public void add(int index, org.nlogo.shape.LinkLine line) {
     lines[index] = line;
   }
 
@@ -79,11 +79,11 @@ public strictfp class LinkShape
         curviness == 0 && lines[1].isStraightPlainLine();
   }
 
-  public org.nlogo.api.Shape getDirectionIndicator() {
+  public org.nlogo.core.Shape getDirectionIndicator() {
     return directionIndicator;
   }
 
-  public void setDirectionIndicator(VectorShape shape) {
+  public void setDirectionIndicator(org.nlogo.shape.VectorShape shape) {
     directionIndicator = shape;
   }
 
@@ -279,16 +279,16 @@ public strictfp class LinkShape
 
   @Override
   public Object clone() {
-    LinkShape newShape;
+    org.nlogo.shape.LinkShape newShape;
     try {
-      newShape = (LinkShape) super.clone();
+      newShape = (org.nlogo.shape.LinkShape) super.clone();
     } catch (CloneNotSupportedException ex) {
       throw new IllegalStateException(ex);
     }
-    newShape.directionIndicator = (VectorShape) directionIndicator.clone();
-    newShape.lines = new LinkLine[lines.length];
+    newShape.directionIndicator = (org.nlogo.shape.VectorShape) directionIndicator.clone();
+    newShape.lines = new org.nlogo.shape.LinkLine[lines.length];
     for (int i = 0; i < lines.length; i++) {
-      newShape.lines[i] = (LinkLine) lines[i].clone();
+      newShape.lines[i] = (org.nlogo.shape.LinkLine) lines[i].clone();
     }
     return newShape;
   }
@@ -303,21 +303,21 @@ public strictfp class LinkShape
     return str;
   }
 
-  public static List<org.nlogo.api.Shape> parseShapes(String[] shapes, String version) {
+  public static List<org.nlogo.core.Shape> parseShapes(String[] shapes, String version) {
     int index = 0;
-    List<org.nlogo.api.Shape> ret =
-        new ArrayList<org.nlogo.api.Shape>();
-    LinkShape shape;
+    List<org.nlogo.core.Shape> ret =
+        new ArrayList<org.nlogo.core.Shape>();
+    org.nlogo.shape.LinkShape shape;
 
     // Skip initial blank lines, if any
     while ((shapes.length > index) &&
-        (0 == VectorShape.getString(shapes, index).length())) {
+        (0 == org.nlogo.shape.VectorShape.getString(shapes, index).length())) {
       index++;
     }
 
     // Go through the lines of text, reading in shapes
     while (shapes.length > index) {
-      shape = new LinkShape();
+      shape = new org.nlogo.shape.LinkShape();
       index = parseShape(shapes, version, shape, index);
       ret.add(shape);     // Add the shape to the return vector
       index++;         // Skip the blank line we're on before looking for the next shape
@@ -325,34 +325,34 @@ public strictfp class LinkShape
     return ret;
   }
 
-  public static int parseShape(String[] shapes, String version, LinkShape shape, int index) {
-    LinkLine line;
-    shape.setName(VectorShape.getString(shapes, index++));
+  public static int parseShape(String[] shapes, String version, org.nlogo.shape.LinkShape shape, int index) {
+    org.nlogo.shape.LinkLine line;
+    shape.setName(org.nlogo.shape.VectorShape.getString(shapes, index++));
 
-    shape.curviness = Double.parseDouble(VectorShape.getString(shapes, index++));
+    shape.curviness = Double.parseDouble(org.nlogo.shape.VectorShape.getString(shapes, index++));
 
     for (int i = 0; i < 3; i++) {
-      line = new LinkLine();
-      index = LinkLine.parseLine(shapes, version, line, index);
+      line = new org.nlogo.shape.LinkLine();
+      index = org.nlogo.shape.LinkLine.parseLine(shapes, version, line, index);
       shape.add(i, line);
     }
 
-    VectorShape indicator = new VectorShape();
-    index = VectorShape.parseShape(shapes, version, indicator, index);
+    org.nlogo.shape.VectorShape indicator = new org.nlogo.shape.VectorShape();
+    index = org.nlogo.shape.VectorShape.parseShape(shapes, version, indicator, index);
     shape.setDirectionIndicator(indicator);
 
     return index;
   }
 
-  public static LinkShape getDefaultLinkShape() {
-    LinkShape result = new LinkShape();
+  public static org.nlogo.shape.LinkShape getDefaultLinkShape() {
+    org.nlogo.shape.LinkShape result = new org.nlogo.shape.LinkShape();
     result.setName("default");
     result.setDirectionIndicator(getDefaultLinkDirectionShape());
     return result;
   }
 
-  public static VectorShape getDefaultLinkDirectionShape() {
-    VectorShape result = new VectorShape();
+  public static org.nlogo.shape.VectorShape getDefaultLinkDirectionShape() {
+    org.nlogo.shape.VectorShape result = new org.nlogo.shape.VectorShape();
     result.setName("link direction");
     result.setRotatable(true);
     result.setEditableColorIndex(0);

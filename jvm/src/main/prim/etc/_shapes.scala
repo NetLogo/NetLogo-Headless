@@ -9,8 +9,7 @@ import org.nlogo.nvm.{ Context, Reporter }
 class _shapes extends Reporter {
   override def report(context: Context): LogoList = {
     val result = new LogoListBuilder
-    import scala.collection.JavaConverters._
-    for(shape <- world.turtleShapeList.getShapes.asScala)
+    for(shape <- world.turtleShapeList.getShapes)
       result.add(shape.getName)
     result.toLogoList
   }
