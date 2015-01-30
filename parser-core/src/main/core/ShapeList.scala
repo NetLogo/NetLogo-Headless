@@ -1,25 +1,19 @@
 // (C) Uri Wilensky. https://github.com/NetLogo/NetLogo
 
-package org.nlogo.api
-
-import org.nlogo.core
-
-import java.util.{ Collection => JCollection, List => JList, Set => JSet }
-import collection.JavaConverters._
+package org.nlogo.core
 
 object ShapeList {
   val DefaultShapeName = "default"
   def isDefaultShapeName(name: String) =
     name == DefaultShapeName
-  def sortShapes(unsortedShapes: JList[Shape]): JList[Shape] =
-    collection.mutable.ArrayBuffer(unsortedShapes.asScala: _*)
+  def sortShapes(unsortedShapes: Seq[Shape]): Seq[Shape] =
+    collection.mutable.ArrayBuffer(unsortedShapes: _*)
       .sortBy(_.getName)
-      .asJava
 }
 
-class ShapeList(val kind: core.AgentKind, _shapes: Seq[Shape]) {
+class ShapeList(val kind: AgentKind, _shapes: Seq[Shape]) {
 
-  def this(kind: core.AgentKind) = this(kind, Seq())
+  def this(kind: AgentKind) = this(kind, Seq())
 
   private val shapes = collection.mutable.HashMap[String, Shape]()
 
@@ -31,27 +25,24 @@ class ShapeList(val kind: core.AgentKind, _shapes: Seq[Shape]) {
     shapes.get(name).getOrElse(shapes(DefaultShapeName))
 
   /** Returns vector of the list of shapes available to the current model */
-  def getShapes: JList[Shape] = {
+  def getShapes: Seq[Shape] = {
     // leave out the default shape for now; we will add it later so that it is at the top of the list
     val currentShapes =
       shapes.values.toSeq.filterNot(s => isDefaultShapeName(s.getName))
-    val sortedShapes = new java.util.ArrayList[Shape]
-    sortedShapes.addAll(sortShapes(currentShapes.asJava))
     // make sure that the shape with the name DefaultShapeName is at the top of the list.
-    sortedShapes.add(0, shapes(DefaultShapeName))
-    sortedShapes
+    shapes(DefaultShapeName) +: sortShapes(currentShapes)
   }
 
   /** Returns a set of the names of all available shapes */
-  def getNames: JSet[String] =
-    shapes.keySet.asJava
+  def getNames: Set[String] =
+    shapes.keySet.toSet
 
   /** Returns true when a shape with the given name is already available to the current model */
   def exists(name: String) =
     shapes.contains(name)
 
   /** Clears the list of shapes currently available */
-  def replaceShapes(newShapes: JCollection[Shape]) {
+  def replaceShapes(newShapes: Iterable[Shape]) {
     shapes.clear()
     addAll(newShapes)
   }
@@ -64,8 +55,8 @@ class ShapeList(val kind: core.AgentKind, _shapes: Seq[Shape]) {
   }
 
   /** Adds a collection of shapes to the ones currently available for use */
-  def addAll(collection: JCollection[Shape]) {
-    collection.asScala.foreach(add)
+  def addAll(collection: Iterable[Shape]) {
+    collection.foreach(add)
   }
 
   /** Removes a shape from those currently in use */
@@ -74,5 +65,4 @@ class ShapeList(val kind: core.AgentKind, _shapes: Seq[Shape]) {
     shapes -= shapeToRemove.getName
     removed
   }
-
 }
