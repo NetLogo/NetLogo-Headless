@@ -7,10 +7,10 @@ import org.nlogo.plot.PlotLoader
 import org.nlogo.agent.{BooleanConstraint, ChooserConstraint, InputBoxConstraint, NumericConstraint}
 import org.nlogo.api.{ValueConstraint, Version}
 import org.nlogo.api.model.ModelReader
-import org.nlogo.core.{CompilerException, Program, ConstraintSpecification, LogoList, Model},
+import org.nlogo.core.{ShapeParser, CompilerException, Program, ConstraintSpecification, LogoList, Model},
   ConstraintSpecification._
 
-import org.nlogo.shape.{LinkShape, VectorShape}
+import org.nlogo.shape.{ShapeConverter, LinkShape, VectorShape}
 
 // this class is an abomination
 // everything works off of side effects, asking the workspace to update something
@@ -75,11 +75,13 @@ class HeadlessModelOpener(ws: HeadlessWorkspace) {
 
 
   private def parseShapes(turtleShapeLines: Array[String], linkShapeLines: Array[String], netLogoVersion: String) {
-    ws.world.turtleShapeList.replaceShapes(VectorShape.parseShapes(turtleShapeLines, netLogoVersion))
+    ws.world.turtleShapeList.replaceShapes(
+      ShapeParser.parseVectorShapes(turtleShapeLines).map(ShapeConverter.baseVectorShapeToVectorShape))
     if (turtleShapeLines.isEmpty) ws.world.turtleShapeList.add(VectorShape.getDefaultShape)
 
     // A new model is being loaded, so get rid of all previous shapes
-    ws.world.linkShapeList.replaceShapes(LinkShape.parseShapes(linkShapeLines, netLogoVersion))
+    ws.world.linkShapeList.replaceShapes(
+      ShapeParser.parseLinkShapes(linkShapeLines).map(ShapeConverter.baseLinkShapeToLinkShape))
     if (linkShapeLines.isEmpty) ws.world.linkShapeList.add(LinkShape.getDefaultLinkShape)
   }
 

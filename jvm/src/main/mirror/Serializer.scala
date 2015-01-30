@@ -2,11 +2,17 @@
 
 package org.nlogo.mirror
 
+
 import scala.language.implicitConversions
+
 import java.io.{ ByteArrayOutputStream, DataOutputStream, DataOutput,
                  ByteArrayInputStream, DataInputStream }
+
 import collection.immutable.{ ListMap, Vector }
-import org.nlogo.{ api, core, shape }
+
+import org.nlogo.{ api, core, shape },
+  core.{ AgentKind, LogoList, Shape, ShapeList, ShapeParser },
+  shape.ShapeConverter
 
 object Serializer {
 
@@ -56,7 +62,7 @@ object Serializer {
           data.writeByte(PairType)
           writeValue(x1)
           writeValue(x2)
-        case xs: core.LogoList =>
+        case xs: LogoList =>
           data.writeByte(LogoListType)
           writeSeq(xs.toVector)
         case xs: Seq[_] =>
@@ -74,11 +80,10 @@ object Serializer {
           data.writeByte(ByteArrayType)
           data.writeInt(bytes.size)
           data.write(bytes, 0, bytes.size)
-        case shapes: api.ShapeList =>
-          import collection.JavaConverters._
+        case shapes: ShapeList =>
           data.writeByte(ShapeListType)
           data.writeUTF(shapes.kind.toString)
-          writeSeq(shapes.getShapes.asScala.map(_.toString))
+          writeSeq(shapes.getShapes.map(_.toString))
         case _ =>
           data.writeByte(UnknownType)
           val name = x.getClass.toString
@@ -145,7 +150,7 @@ object Serializer {
         case SeqType =>
           readValues()
         case LogoListType =>
-          core.LogoList.fromVector(readValues())
+          LogoList.fromVector(readValues())
         case ListMapType =>
           ListMap(readValues().asInstanceOf[Seq[(_, _)]]: _*)
         case ByteArrayType =>
@@ -155,19 +160,19 @@ object Serializer {
           bytes
         case ShapeListType =>
           val kind = data.readUTF()
-          val parser: Array[String] => java.util.List[api.Shape] =
+          val parser: Array[String] => Iterable[Shape] =
             kind match {
               case "Turtle" =>
-                shape.VectorShape.parseShapes(_, api.Version.version)
+                ShapeParser.parseVectorShapes(_).map(ShapeConverter.baseVectorShapeToVectorShape)
               case "Link" =>
-                shape.LinkShape.parseShapes(_, api.Version.version)
+                ShapeParser.parseLinkShapes(_).map(ShapeConverter.baseLinkShapeToLinkShape)
             }
-          val result = new api.ShapeList(
+          val result = new ShapeList(
             kind match {
               case "Turtle" =>
-                core.AgentKind.Turtle
+                AgentKind.Turtle
               case "Link" =>
-                core.AgentKind.Link
+                AgentKind.Link
             })
           result.replaceShapes(
             parser(
