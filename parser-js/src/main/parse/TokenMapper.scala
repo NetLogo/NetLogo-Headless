@@ -7,9 +7,9 @@ import org.nlogo.core.{Command, Reporter, TokenHolder}
 //TODO: These constructor parameters are unused, it would be better to have this as an object
 class TokenMapper(location: String, prefix: String) {
   def getCommand(s: String): Option[TokenHolder] =
-    commands.get(s.toLowerCase).map(_())
+    commands.get(s.toUpperCase).map(_())
   def getReporter(s: String): Option[TokenHolder] =
-    reporters.get(s.toLowerCase).map(_())
+    reporters.get(s.toUpperCase).map(_())
 
   val reporters:Map[String, () => TokenHolder] = TokenClasses.compiledReporters[TokenHolder]("org.nlogo.core.prim")
   val commands:Map[String, () => TokenHolder] = TokenClasses.compiledCommands[TokenHolder]("org.nlogo.core.prim")

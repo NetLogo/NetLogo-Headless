@@ -118,7 +118,7 @@ lazy val macros = (project in file("macro")).
   )
 
 lazy val parserJs = (project in file ("parser-js")).
-  dependsOn(macros % "compile-internal").
+  dependsOn(macros % "compile-internal->compile;test-internal->compile").
   settings(commonSettings: _*).
   settings(parserSettings: _*).
   settings(scalaJSSettings: _*).

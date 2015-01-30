@@ -14,7 +14,7 @@ object TokenClasses {
       .map {
       case l: String =>
         val List(tpe, primName, className) = l.split(' ').toList
-        (tpe, primName, className)
+        (tpe, primName.toUpperCase, className)
     }
 
   def compiledReporters[T](packagePrefix: String): Map[String, () => T] = macro compileReporters[T]
