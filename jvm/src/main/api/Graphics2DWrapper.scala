@@ -4,6 +4,7 @@ package org.nlogo.api
 
 import java.awt.Graphics2D
 import scala.util.Properties.isMac
+import org.nlogo.core.Shape
 
 // implements GraphicsInterface, wrapper around Graphics2D
 
