@@ -2,7 +2,9 @@
 
 package org.nlogo.shape
 
-import org.nlogo.api.{ GraphicsInterface, Shape }
+import org.nlogo.{ api, core },
+  api.GraphicsInterface,
+  core.Shape
 import java.awt.Color
 import java.io.IOException
 
