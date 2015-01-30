@@ -39,6 +39,7 @@ trait TestUsingWorkspace extends MockSuite {
 
   def runWorkspaceTest(radius: Int = 5, worldType: api.WorldType = api.WorldType.Torus)
                       (f: HeadlessWorkspace => Unit) {
+    import scala.collection.JavaConverters._
     val workspace: HeadlessWorkspace = HeadlessWorkspace.newInstance
     workspace.silent = true
     try {
@@ -46,10 +47,10 @@ trait TestUsingWorkspace extends MockSuite {
       workspace.changeTopology(worldType.xWrap, worldType.yWrap)
       workspace.world.turtleShapeList.replaceShapes(
         VectorShape.parseShapes(
-          Model.defaultShapes.toArray, api.Version.version))
+          Model.defaultShapes.toArray, api.Version.version).asScala)
       workspace.world.linkShapeList.replaceShapes(
         LinkShape.parseShapes(
-          Model.defaultLinkShapes.toArray, api.Version.version))
+          Model.defaultLinkShapes.toArray, api.Version.version).asScala)
       f(workspace)
     }
     finally workspace.dispose()

@@ -75,10 +75,9 @@ object Serializer {
           data.writeInt(bytes.size)
           data.write(bytes, 0, bytes.size)
         case shapes: api.ShapeList =>
-          import collection.JavaConverters._
           data.writeByte(ShapeListType)
           data.writeUTF(shapes.kind.toString)
-          writeSeq(shapes.getShapes.asScala.map(_.toString))
+          writeSeq(shapes.getShapes.map(_.toString))
         case _ =>
           data.writeByte(UnknownType)
           val name = x.getClass.toString
@@ -154,13 +153,14 @@ object Serializer {
           data.read(bytes, 0, size)
           bytes
         case ShapeListType =>
+          import scala.collection.JavaConverters._
           val kind = data.readUTF()
-          val parser: Array[String] => java.util.List[api.Shape] =
+          val parser: Array[String] => Iterable[api.Shape] =
             kind match {
               case "Turtle" =>
-                shape.VectorShape.parseShapes(_, api.Version.version)
+                shape.VectorShape.parseShapes(_, api.Version.version).asScala
               case "Link" =>
-                shape.LinkShape.parseShapes(_, api.Version.version)
+                shape.LinkShape.parseShapes(_, api.Version.version).asScala
             }
           val result = new api.ShapeList(
             kind match {

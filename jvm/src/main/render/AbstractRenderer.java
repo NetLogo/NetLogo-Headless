@@ -54,6 +54,7 @@ import org.nlogo.api.PerspectiveJ;
 import org.nlogo.api.ShapeList;
 import org.nlogo.api.TrailDrawerInterface;
 import org.nlogo.api.ViewSettings;
+import static scala.collection.JavaConversions.asScalaBuffer;
 
 public abstract strictfp class AbstractRenderer
     implements org.nlogo.api.RendererInterface {
@@ -201,11 +202,11 @@ public abstract strictfp class AbstractRenderer
   }
 
   public void replaceTurtleShapes(java.util.List<org.nlogo.api.Shape> shapes) {
-    turtleDrawer.shapes.shapeList.replaceShapes(shapes);
+    turtleDrawer.shapes.shapeList.replaceShapes(asScalaBuffer(shapes));
   }
 
   public void replaceLinkShapes(java.util.List<org.nlogo.api.Shape> shapes) {
-    linkDrawer.linkShapes.replaceShapes(shapes);
+    linkDrawer.linkShapes.replaceShapes(asScalaBuffer(shapes));
   }
 
   protected boolean darkenPeripheral(ViewSettings settings) {
