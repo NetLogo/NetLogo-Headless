@@ -2,8 +2,8 @@
 
 package org.nlogo.render
 
-import org.nlogo.core.{ AgentKind, ColorConstants }
-import org.nlogo.api.{ AgentSet, Color, GraphicsInterface, ShapeList, Turtle, World }
+import org.nlogo.core.{ AgentKind, ColorConstants, ShapeList }
+import org.nlogo.api.{ AgentSet, Color, GraphicsInterface, Turtle, World }
 import org.nlogo.util.MockSuite
 
 class TurtleTestsDrawer extends MockSuite {

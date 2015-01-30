@@ -3,7 +3,8 @@
 package org.nlogo.mirror
 
 import org.nlogo.core.{Femto, Program, Breed}
-import org.nlogo.{ api, core }
+import org.nlogo.{ api, core },
+  core.ShapeList
 import Mirrorables._
 import Mirroring.State
 import collection.JavaConverters._
@@ -170,8 +171,8 @@ class FakeWorld(state: State) extends api.World {
 
   def ticks = worldVar[Double](Ticks.id)
   def patchesWithLabels = worldVar[Int](PatchesWithLabels.id)
-  def turtleShapeList = worldVar[api.ShapeList](TurtleShapeList.id)
-  def linkShapeList = worldVar[api.ShapeList](LinkShapeList.id)
+  def turtleShapeList = worldVar[ShapeList](TurtleShapeList.id)
+  def linkShapeList = worldVar[ShapeList](LinkShapeList.id)
   def patchSize = worldVar[Double](PatchSize.id)
   def worldWidth = worldVar[Int](WorldWidth.id)
   def worldHeight = worldVar[Int](WorldHeight.id)

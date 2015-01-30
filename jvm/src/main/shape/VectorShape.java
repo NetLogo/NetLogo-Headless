@@ -12,7 +12,7 @@ import static org.nlogo.shape.Element.SHAPE_WIDTH;
 
 public strictfp class VectorShape
     extends Observable
-    implements org.nlogo.api.Shape, Cloneable, java.io.Serializable, DrawableShape {
+    implements org.nlogo.core.Shape, Cloneable, java.io.Serializable, DrawableShape {
   static final long serialVersionUID = 0L;
   protected String name = "";
 
@@ -30,8 +30,8 @@ public strictfp class VectorShape
 
   /// data members
 
-  protected List<Element> elementList =
-      new ArrayList<Element>();    // The list of elements currently contained in the model
+  protected List<org.nlogo.shape.Element> elementList =
+      new ArrayList<org.nlogo.shape.Element>();    // The list of elements currently contained in the model
   protected boolean rotatable = true;
 
   // Accessors for the index of the model's editable color
@@ -47,27 +47,27 @@ public strictfp class VectorShape
 
   @Override
   public Object clone() {
-    VectorShape newShape;
+    org.nlogo.shape.VectorShape newShape;
     try {
-      newShape = (VectorShape) super.clone();
+      newShape = (org.nlogo.shape.VectorShape) super.clone();
     } catch (CloneNotSupportedException ex) {
       throw new IllegalStateException(ex);
     }
-    newShape.elementList = new ArrayList<Element>();
-    for (Element e : elementList) {
-      newShape.elementList.add((Element) (e.clone()));
+    newShape.elementList = new ArrayList<org.nlogo.shape.Element>();
+    for (org.nlogo.shape.Element e : elementList) {
+      newShape.elementList.add((org.nlogo.shape.Element) (e.clone()));
     }
     return newShape;
   }
 
   public void setOutline() {
-    for (Element e : elementList) {
+    for (org.nlogo.shape.Element e : elementList) {
       e.setFilled(false);
     }
   }
 
   // Returns the vector containing all the elements of the model
-  public List<Element> getElements() {
+  public List<org.nlogo.shape.Element> getElements() {
     return elementList;
   }
 
@@ -125,21 +125,21 @@ public strictfp class VectorShape
       case 0:
         return true;
       case 1:
-        Element element = element(0);
-        return !(element instanceof Polygon);
+        org.nlogo.shape.Element element = element(0);
+        return !(element instanceof org.nlogo.shape.Polygon);
       default:
         return false;
     }
   }
 
   // Clean accessor to the list of elements
-  protected Element element(int i) {
+  protected org.nlogo.shape.Element element(int i) {
     return elementList.get(i);
   }
 
 
   // Removes the specified element from the model
-  public void remove(Element element) {
+  public void remove(org.nlogo.shape.Element element) {
     boolean removed = elementList.remove(element);
     if (removed) {
       setChanged();
@@ -177,12 +177,12 @@ public strictfp class VectorShape
 
   // Add a new element to the model
   // Adds at the end of the list
-  public void add(Element element) {
+  public void add(org.nlogo.shape.Element element) {
     elementList.add(element);
 
     // Rectangles' max and min coords must be set once the rectangle is no longer being modified
-    if (element instanceof Rectangle) {
-      ((Rectangle) element).setMaxsAndMins();
+    if (element instanceof org.nlogo.shape.Rectangle) {
+      ((org.nlogo.shape.Rectangle) element).setMaxsAndMins();
     }
 
     setChanged();
@@ -191,7 +191,7 @@ public strictfp class VectorShape
 
   // Add an element at an arbitrary spot in the shape
   // This is used when changing the z-ordering of the elements in a shape
-  public void addAtPosition(int index, Element element) {
+  public void addAtPosition(int index, org.nlogo.shape.Element element) {
     elementList.add(index, element);
     setChanged();
     notifyObservers();
@@ -283,7 +283,7 @@ public strictfp class VectorShape
   public String toString() {
     String ret = name + "\n" + rotatable + "\n" + editableColorIndex;
     for (int i = 0; i < elementList.size(); ++i) {
-      Element elt = elementList.get(i);
+      org.nlogo.shape.Element elt = elementList.get(i);
       if (elt.shouldSave()) {
         ret += "\n" + elt.toString();
       }
@@ -295,13 +295,13 @@ public strictfp class VectorShape
     org.nlogo.shape.Element element = null;
     if (line.startsWith("Line"))        // See what shape it is, and parse it accordingly
     {
-      element = Line.parseLine(line);
+      element = org.nlogo.shape.Line.parseLine(line);
     } else if (line.startsWith("Rectangle")) {
-      element = Rectangle.parseRectangle(line);
+      element = org.nlogo.shape.Rectangle.parseRectangle(line);
     } else if (line.startsWith("Circle")) {
-      element = Circle.parseCircle(line);
+      element = org.nlogo.shape.Circle.parseCircle(line);
     } else if (line.startsWith("Polygon")) {
-      element = Polygon.parsePolygon(line);
+      element = org.nlogo.shape.Polygon.parsePolygon(line);
     }
     // ellipses aren't supported right now - SAB/ST 6/11/04
     //else if( line.startsWith( "Ellipse" ) )
@@ -319,11 +319,11 @@ public strictfp class VectorShape
 
   ///
 
-  public static List<org.nlogo.api.Shape> parseShapes(String[] shapes, String version) {
+  public static List<org.nlogo.core.Shape> parseShapes(String[] shapes, String version) {
     int index = 0;
-    List<org.nlogo.api.Shape> ret =
-        new ArrayList<org.nlogo.api.Shape>();
-    VectorShape shape;
+    List<org.nlogo.core.Shape> ret =
+        new ArrayList<org.nlogo.core.Shape>();
+    org.nlogo.shape.VectorShape shape;
 
     // Skip initial blank lines, if any
     while ((shapes.length > index) &&
@@ -334,7 +334,7 @@ public strictfp class VectorShape
     // Go through the lines of text, reading in shapes
     while (shapes.length > index) {
       try {
-        shape = new VectorShape();
+        shape = new org.nlogo.shape.VectorShape();
         index = parseShape(shapes, version, shape, index);
         ret.add(shape);    // Add the shape to the return vector
       } catch (IllegalStateException e) {
@@ -345,7 +345,7 @@ public strictfp class VectorShape
     return ret;
   }
 
-  public static int parseShape(String[] shapes, String version, VectorShape shape, int index) {
+  public static int parseShape(String[] shapes, String version, org.nlogo.shape.VectorShape shape, int index) {
     // Read in the name and rotatability of a shape
     shape.setName(getString(shapes, index++));
 
@@ -378,9 +378,9 @@ public strictfp class VectorShape
 
   // ugly that this is hardcoded here instead of being pulled
   // out of defaultShapes.txt - ST 6/27/05
-  public static VectorShape getDefaultShape() {
-    VectorShape result = new org.nlogo.shape.VectorShape();
-    result.setName(org.nlogo.api.ShapeList.DefaultShapeName());
+  public static org.nlogo.shape.VectorShape getDefaultShape() {
+    org.nlogo.shape.VectorShape result = new org.nlogo.shape.VectorShape();
+    result.setName(org.nlogo.core.ShapeList.DefaultShapeName());
     result.setRotatable(true);
     result.setEditableColorIndex(0);
     result.addElement
