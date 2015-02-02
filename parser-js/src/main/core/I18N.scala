@@ -6,17 +6,18 @@ object I18N {
 
   case class Prefix(name: String)
 
-  class BundleKind(name: String) {
-
-    // TODO: Abstract user preferences so that JVM NetLogo and JS NetLogo can work separately
-    //
-    // TODO: Provide a way for javascript to load up resource files, separate from JVM NetLogo
+  class BundleKind(errorStrings: Map[String, String]) {
     def apply(key: String)(implicit prefix: Prefix) = get(prefix.name + "." + key)
     def get(key: String) = getN(key)
     def getN(key: String, args: AnyRef*) = {
-      s"key ${args.mkString(", ")}"
+      val templateString = errorStrings.getOrElse(key, throw new IllegalArgumentException(
+        "coding error, bad translation key: " + key + " for Errors"))
+      (args zip (0 until args.length)).foldLeft(templateString) {
+        case (templatedString, (substitution: String, i: Int)) =>
+          templatedString.replaceAll("\\{" + i.toString + "\\}", substitution)
+      }
     }
   }
 
-  lazy val errors = new BundleKind("Errors")
+  lazy val errors = new BundleKind(I18NBundle.errorBundle)
 }

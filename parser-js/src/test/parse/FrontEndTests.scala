@@ -312,13 +312,10 @@ object FrontEndTests extends TestSuite {
       duplicateName("to-report bazort let bazort 5 report bazort end",
         "There is already a procedure called BAZORT")
     }
-    // skipped until I18N
-    /*
     "SameLocalVariableTwice1"-{
       duplicateName("to a1 locals [b b] end",
         "Nothing named LOCALS has been defined.")
     }
-    */
     "SameLocalVariableTwice2"-{
       duplicateName("to a2 [b b] end",
         "There is already a local variable called B here")
@@ -327,8 +324,6 @@ object FrontEndTests extends TestSuite {
       duplicateName("to a3 let b 5 let b 6 end",
         "There is already a local variable here called B")
     }
-    // skipped until I18N
-    /*
     "SameLocalVariableTwice4"-{
       duplicateName("to a4 locals [b] let b 5 end",
         "Nothing named LOCALS has been defined.")
@@ -337,7 +332,6 @@ object FrontEndTests extends TestSuite {
       duplicateName("to a5 [b] locals [b] end",
         "Nothing named LOCALS has been defined.")
     }
-    */
     "SameLocalVariableTwice6"-{
       duplicateName("to a6 [b] let b 5 end",
         "There is already a local variable here called B")
