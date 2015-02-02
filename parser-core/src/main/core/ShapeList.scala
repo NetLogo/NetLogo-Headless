@@ -1,8 +1,6 @@
 // (C) Uri Wilensky. https://github.com/NetLogo/NetLogo
 
-package org.nlogo.api
-
-import org.nlogo.core
+package org.nlogo.core
 
 object ShapeList {
   val DefaultShapeName = "default"
@@ -13,9 +11,9 @@ object ShapeList {
       .sortBy(_.getName)
 }
 
-class ShapeList(val kind: core.AgentKind, _shapes: Seq[Shape]) {
+class ShapeList(val kind: AgentKind, _shapes: Seq[Shape]) {
 
-  def this(kind: core.AgentKind) = this(kind, Seq())
+  def this(kind: AgentKind) = this(kind, Seq())
 
   private val shapes = collection.mutable.HashMap[String, Shape]()
 

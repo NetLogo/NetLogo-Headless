@@ -2,6 +2,9 @@
 
 package org.nlogo.mirror
 
+import org.nlogo.core.ShapeParser
+import org.nlogo.shape.ShapeConverter
+
 import scala.language.implicitConversions
 import java.io.{ ByteArrayOutputStream, DataOutputStream, DataOutput,
                  ByteArrayInputStream, DataInputStream }
@@ -74,7 +77,7 @@ object Serializer {
           data.writeByte(ByteArrayType)
           data.writeInt(bytes.size)
           data.write(bytes, 0, bytes.size)
-        case shapes: api.ShapeList =>
+        case shapes: core.ShapeList =>
           data.writeByte(ShapeListType)
           data.writeUTF(shapes.kind.toString)
           writeSeq(shapes.getShapes.map(_.toString))
@@ -155,14 +158,14 @@ object Serializer {
         case ShapeListType =>
           import scala.collection.JavaConverters._
           val kind = data.readUTF()
-          val parser: Array[String] => Iterable[api.Shape] =
+          val parser: Array[String] => Iterable[core.Shape] =
             kind match {
               case "Turtle" =>
-                shape.VectorShape.parseShapes(_, api.Version.version).asScala
+                ShapeParser.parseVectorShapes(_).map(ShapeConverter.baseVectorShapeToVectorShape)
               case "Link" =>
-                shape.LinkShape.parseShapes(_, api.Version.version).asScala
+                ShapeParser.parseLinkShapes(_).map(ShapeConverter.baseLinkShapeToLinkShape)
             }
-          val result = new api.ShapeList(
+          val result = new core.ShapeList(
             kind match {
               case "Turtle" =>
                 core.AgentKind.Turtle

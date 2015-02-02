@@ -170,8 +170,8 @@ class FakeWorld(state: State) extends api.World {
 
   def ticks = worldVar[Double](Ticks.id)
   def patchesWithLabels = worldVar[Int](PatchesWithLabels.id)
-  def turtleShapeList = worldVar[api.ShapeList](TurtleShapeList.id)
-  def linkShapeList = worldVar[api.ShapeList](LinkShapeList.id)
+  def turtleShapeList = worldVar[core.ShapeList](TurtleShapeList.id)
+  def linkShapeList = worldVar[core.ShapeList](LinkShapeList.id)
   def patchSize = worldVar[Double](PatchSize.id)
   def worldWidth = worldVar[Int](WorldWidth.id)
   def worldHeight = worldVar[Int](WorldHeight.id)

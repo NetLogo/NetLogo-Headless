@@ -36,8 +36,8 @@ trait World {
   def patches: AgentSet
   def links: AgentSet
   def program: Program
-  def turtleShapeList: ShapeList
-  def linkShapeList: ShapeList
+  def turtleShapeList: core.ShapeList
+  def linkShapeList: core.ShapeList
   def getDrawing: AnyRef
   def trailDrawer: TrailDrawerInterface
   def sendPixels: Boolean
