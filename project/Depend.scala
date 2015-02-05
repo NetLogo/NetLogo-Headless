@@ -69,10 +69,11 @@ object Depend {
       "drawing" -> List("api"),
       "generate" -> List("prim"),
       "headless" -> List("mirror", "workspace"),
-      "headless/lang" -> List("headless"),
+      "headless/lang" -> List("headless", "headless/test"),
       "headless/lang/misc" -> List("headless/lang"),
       "headless/misc" -> List("headless"),
       "headless/render" -> List("headless"),
+      "headless/test" -> List("api"),
       "job" -> List("nvm"),
       "lab" -> List("nvm"),
       "lex" -> List("core"),
@@ -143,7 +144,7 @@ check [ASM-free-zone] independentOf org.objectweb.*
 [XML-free-zone] = org.nlogo.* excluding [lab]
 check [XML-free-zone] independentOf [xml]
 
-[reflections-free-zone] = org.nlogo.* excluding org.nlogo.headless.lang.*
+[reflections-free-zone] = org.nlogo.* excluding org.nlogo.headless.lang.* org.nlogo.headless.test.*
 check [reflections-free-zone] independentOf [reflections]
 
 [parser-combinator-free-zone] = org.nlogo.* excluding org.nlogo.parse.StructureCombinators* org.nlogo.parse.SeqReader* org.nlogo.parse.Cleanup
