@@ -19,16 +19,16 @@ object ShapeConverter {
   def baseLinkShapeToLinkShape(l: BaseLinkShape): LinkShape = {
     import l._
     val ls = new LinkShape()
-    ls.setName(name)
-    ls.curviness(curviness)
-    ls.setDirectionIndicator(baseVectorShapeToVectorShape(indicator))
+    ls.name = name
+    ls.curviness = curviness
+    ls.directionIndicator = baseVectorShapeToVectorShape(indicator)
     ls
   }
 
   def baseVectorShapeToVectorShape(v: BaseVectorShape): VectorShape = {
     import v._
     val vs = new VectorShape()
-    vs.setName(name)
+    vs.name = name
     vs.setRotatable(rotatable)
     vs.setEditableColorIndex(editableColorIndex)
     elements.map(e => vs.add(coreElementToElement(e)))
@@ -45,29 +45,28 @@ object ShapeConverter {
     e match {
       case bl: BaseLine =>
         val line = new Line(point(bl.startPoint), point(bl.endPoint), color(bl.color))
-        line.setMarked(bl.marked)
+        line.marked = bl.marked
         line
       case bp: BasePolygon =>
-        import collection.JavaConversions._
-        val poly = new Polygon(bp.xCoords.map(Int.box).toList, bp.yCoords.map(Int.box).toList, color(bp.color))
-        poly.setFilled(bp.filled)
-        poly.setMarked(bp.marked)
+        val poly = new Polygon(bp.xCoords.toList, bp.yCoords.toList, color(bp.color))
+        poly.filled = bp.filled
+        poly.marked = bp.marked
         poly
       case bc: BaseCircle =>
         val circle = new Circle(bc.x, bc.y, bc.diameter, color(bc.color))
-        circle.setFilled(bc.filled)
-        circle.setMarked(bc.marked)
+        circle.filled = bc.filled
+        circle.marked = bc.marked
         circle
       case br: BaseRectangle =>
         val rect = new Rectangle(point(br.upperLeftCorner), point(br.lowerRightCorner), color(br.color))
-        rect.setFilled(br.filled)
-        rect.setMarked(br.marked)
+        rect.filled = br.filled
+        rect.marked = br.marked
         rect
     }
 
   def coreLinkLineToLinkLine(l: BaseLinkLine): LinkLine = {
     val ll = new LinkLine(l.xcor, l.isVisible)
-    ll.setDashiness(l.dashChoices.toArray)
+    ll.dashes = l.dashChoices.toArray
     ll
   }
 }
