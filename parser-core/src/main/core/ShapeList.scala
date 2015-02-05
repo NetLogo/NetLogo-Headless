@@ -8,61 +8,54 @@ object ShapeList {
     name == DefaultShapeName
   def sortShapes(unsortedShapes: Seq[Shape]): Seq[Shape] =
     collection.mutable.ArrayBuffer(unsortedShapes: _*)
-      .sortBy(_.getName)
+      .sortBy(_.name)
 }
 
 class ShapeList(val kind: AgentKind, _shapes: Seq[Shape]) {
 
   def this(kind: AgentKind) = this(kind, Seq())
 
-  private val shapes = collection.mutable.HashMap[String, Shape]()
+  private val shapeMap = collection.mutable.HashMap[String, Shape]()
 
   _shapes.foreach(add)
 
   import ShapeList._
 
   def shape(name: String): Shape =
-    shapes.get(name).getOrElse(shapes(DefaultShapeName))
+    shapeMap.get(name).getOrElse(shapeMap(DefaultShapeName))
 
   /** Returns vector of the list of shapes available to the current model */
-  def getShapes: Seq[Shape] = {
-    // leave out the default shape for now; we will add it later so that it is at the top of the list
-    val currentShapes =
-      shapes.values.toSeq.filterNot(s => isDefaultShapeName(s.getName))
+  def shapes: Seq[Shape] =
     // make sure that the shape with the name DefaultShapeName is at the top of the list.
-    shapes(DefaultShapeName) +: sortShapes(currentShapes)
-  }
+    shapeMap(DefaultShapeName) +:
+      shapeMap.values.toSeq.filterNot(s => isDefaultShapeName(s.name)).sortBy(_.name)
 
   /** Returns a set of the names of all available shapes */
-  def getNames: Set[String] =
-    shapes.keySet.toSet
+  def names: Set[String] =
+    shapeMap.keySet.toSet
 
   /** Returns true when a shape with the given name is already available to the current model */
   def exists(name: String) =
-    shapes.contains(name)
+    shapeMap.contains(name)
 
   /** Clears the list of shapes currently available */
   def replaceShapes(newShapes: Iterable[Shape]) {
-    shapes.clear()
+    shapeMap.clear()
     addAll(newShapes)
   }
 
   /** Adds a new shape to the ones currently available for use */
   def add(newShape: Shape): Shape = {
-    val replaced = shapes.get(newShape.getName).orNull
-    shapes(newShape.getName) = newShape
+    val replaced = shapeMap.get(newShape.name).orNull
+    shapeMap(newShape.name) = newShape
     replaced
   }
 
   /** Adds a collection of shapes to the ones currently available for use */
-  def addAll(collection: Iterable[Shape]) {
+  def addAll(collection: Iterable[Shape]) =
     collection.foreach(add)
-  }
 
   /** Removes a shape from those currently in use */
-  def removeShape(shapeToRemove: Shape) = {
-    val removed = shapes.get(shapeToRemove.getName).orNull
-    shapes -= shapeToRemove.getName
-    removed
-  }
+  def removeShape(shapeToRemove: Shape) =
+    shapeMap.remove(shapeToRemove.name).orNull
 }
