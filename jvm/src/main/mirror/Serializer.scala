@@ -80,10 +80,10 @@ object Serializer {
           data.writeByte(ByteArrayType)
           data.writeInt(bytes.size)
           data.write(bytes, 0, bytes.size)
-        case shapes: ShapeList =>
+        case shapeList: ShapeList =>
           data.writeByte(ShapeListType)
-          data.writeUTF(shapes.kind.toString)
-          writeSeq(shapes.getShapes.map(_.toString))
+          data.writeUTF(shapeList.kind.toString)
+          writeSeq(shapeList.shapes.map(_.toString))
         case _ =>
           data.writeByte(UnknownType)
           val name = x.getClass.toString
