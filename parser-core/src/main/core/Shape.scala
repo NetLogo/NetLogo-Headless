@@ -82,7 +82,7 @@ object Shape {
 }
 
 // so that org.nlogo.shape doesn't need to depend on org.nlogo.agent
-trait Shape {
-  def getName: String
-  def setName(s: String): Unit
+sealed trait Shape {
+  def name: String
+  def name_=(s: String): Unit
 }
