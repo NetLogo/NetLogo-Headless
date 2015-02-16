@@ -2,8 +2,9 @@
 
 package org.nlogo.plot
 
+
 import collection.mutable.Buffer
-import org.nlogo.api.{ PlotPenState, PlotPenInterface }
+import org.nlogo.core.{ PlotPenInterface, PlotPenState }
 
 class PlotPen(
   val temporary: Boolean,

@@ -2,7 +2,7 @@
 
 package org.nlogo.plot
 
-import org.nlogo.api.PlotPenInterface
+import org.nlogo.core.PlotPenInterface
 
 class PlotPainter(plot: Plot) {
 
