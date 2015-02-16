@@ -2,8 +2,7 @@
 
 package org.nlogo.api.model
 
-import org.nlogo.api
-import org.nlogo.core.{Model, View}
+import org.nlogo.core.{LiteralParser, Model}
 
 object ModelReader {
 
@@ -11,7 +10,7 @@ object ModelReader {
 
   // This should really be changed in the future to not need a compiler to parse widgets, but that is not
   // a things for today.  FD 4/17/14
-  def parseModel(model: String, parser: api.ParserServices): Model = {
+  def parseModel(model: String, parser: LiteralParser): Model = {
     var sections = Vector[Vector[String]]()
     var sectionContents = Vector[String]()
     def sectionDone() {
@@ -36,7 +35,7 @@ object ModelReader {
               linkShapes.toList, previewCommands.toList)
   }
 
-  def formatModel(model: Model, parser: api.ParserServices): String = {
+  def formatModel(model: Model, parser: LiteralParser): String = {
     model.code + s"\n$SEPARATOR\n" +
       WidgetReader.formatInterface(model.widgets, parser) + s"\n$SEPARATOR\n" +
       model.info + s"\n$SEPARATOR\n" +

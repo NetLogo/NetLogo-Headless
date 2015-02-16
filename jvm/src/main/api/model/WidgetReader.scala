@@ -91,7 +91,7 @@ trait WidgetReader {
 }
 
 object WidgetReader {
-  def read(lines: List[String], parser: api.ParserServices): Widget = {
+  def read(lines: List[String], parser: LiteralParser): Widget = {
     val readers = List(ButtonReader, SliderReader, ViewReader, MonitorReader, SwitchReader, PlotReader, ChooserReader(parser),
       OutputReader, TextBoxReader, new InputBoxReader())
     readers.find(_.validate(lines)) match {
@@ -103,7 +103,7 @@ object WidgetReader {
     }
   }
 
-  def format(widget: Widget, parser: api.ParserServices): String =
+  def format(widget: Widget, parser: LiteralParser): String =
     widget match {
       case b: Button => ButtonReader.format(b)
       case s: Slider => SliderReader.format(s)
@@ -118,7 +118,7 @@ object WidgetReader {
       case _ => throw new UnsupportedOperationException("Widget type is not supported: " + widget.getClass.getName)
     }
 
-  def readInterface(lines: List[String], parser: api.ParserServices): List[Widget] = {
+  def readInterface(lines: List[String], parser: LiteralParser): List[Widget] = {
     var widgets = Vector[Widget]()
     var widgetLines = Vector[String]()
     for(line <- lines)
@@ -135,7 +135,7 @@ object WidgetReader {
     widgets.toList
   }
 
-  def formatInterface(widgets: List[Widget], parser: api.ParserServices): String =
+  def formatInterface(widgets: List[Widget], parser: LiteralParser): String =
     widgets.map(format(_, parser)).mkString("\n\n")
 }
 
@@ -352,7 +352,7 @@ object SwitchReader extends BaseWidgetReader {
   }
 }
 
-case class ChooserReader(parser: api.ParserServices) extends BaseWidgetReader {
+case class ChooserReader(parser: LiteralParser) extends BaseWidgetReader {
   type T = Chooser
 
   def definition = List(new SpecifiedLine("CHOOSER"),
