@@ -2,11 +2,11 @@
 
 package org.nlogo.api
 
-import org.nlogo.core.{ Model, LogoList }
+import org.nlogo.core.{ Model, LiteralParser, LogoList }
 
 import java.io.IOException
 
-trait Workspace extends ImporterUser with ParserServices with RandomServices
+trait Workspace extends ImporterUser with LiteralParser with RandomServices
 with ViewSettings with Controllable {
   def world: World
   def getExtensionManager: ExtensionManager

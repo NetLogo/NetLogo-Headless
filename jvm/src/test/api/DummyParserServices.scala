@@ -2,11 +2,14 @@
 
 package org.nlogo.api
 
-import org.nlogo.core.{CompilerException, LogoList, Nobody}
+import java.io.IOException
 
+import org.nlogo.core,
+  core.{Program, File, LiteralImportHandler, FrontEndInterface, CompilerUtilitiesInterface, CompilerException, LogoList, Nobody},
+    FrontEndInterface.ProceduresMap
 // just enough functionality to make the tests pass
 
-class DummyParserServices extends ParserServices {
+class DummyParserServices extends CompilerUtilitiesInterface {
   private def unsupported = throw new UnsupportedOperationException
   def readFromString(s: String): AnyRef =
     try { s.toDouble: java.lang.Double }
@@ -24,5 +27,15 @@ class DummyParserServices extends ParserServices {
         }
     }
   def readNumberFromString(source: String) = source
-  def isReporter(s: String): Boolean = unsupported
+
+  override def readFromString(source: String, importHandler: LiteralImportHandler): AnyRef = unsupported
+
+  override def isReporter(s: String, program: Program, procedures: ProceduresMap, extensionManager: core.ExtensionManager): Boolean = unsupported
+
+  @throws(classOf[IOException])
+  override def readFromFile(currFile: File, importHandler: LiteralImportHandler): AnyRef = unsupported
+
+  override def isReporter(s: String): Boolean = unsupported
+
+  override def readNumberFromString(source: String, importHandler: LiteralImportHandler): AnyRef = unsupported
 }

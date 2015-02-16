@@ -23,7 +23,8 @@ object Main {
       w
     }
     val lab = HeadlessWorkspace.newLab
-    lab.load(ModelReader.parseModel(FileIO.file2String(settings.model), newWorkspace).behaviorSpace.mkString("", "\n", "\n"))
+    lab.load(ModelReader.parseModel(FileIO.file2String(settings.model), newWorkspace.compiler.utilities)
+      .behaviorSpace.mkString("", "\n", "\n"))
     lab.run(settings, newWorkspace _)
   }
   private def parseArgs(args: Array[String]): Option[Settings] = {
