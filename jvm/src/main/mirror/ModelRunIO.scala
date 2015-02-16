@@ -4,7 +4,8 @@ package org.nlogo.mirror
 
 import java.io.{ InputStream, ObjectOutputStream, OutputStream }
 
-import org.nlogo.api.{ PlotPenState, PlotState }
+import org.nlogo.api.PlotState
+import org.nlogo.core.PlotPenState
 import org.nlogo.drawing.imageToBytes
 import org.nlogo.plot.{ Plot, PlotPen, PlotPoint }
 

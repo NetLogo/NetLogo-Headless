@@ -4,7 +4,7 @@ package org.nlogo.agent
 
 import org.scalatest.{ FunSuite, OneInstancePerTest }
 import org.nlogo.core.WorldDimensions
-import org.nlogo.api.ImporterUser
+import org.nlogo.api.{PlotInterface, ImporterUser}
 
 class ImporterTests extends FunSuite with OneInstancePerTest {
   val IGNORE_ERROR_HANDLER =
@@ -28,7 +28,7 @@ class ImporterTests extends FunSuite with OneInstancePerTest {
       def setOutputAreaContents(text: String) { }
       def resizeView() { }
       def currentPlot(plot: String) { }
-      def getPlot(plot: String): org.nlogo.api.PlotInterface = null
+      def getPlot(plot: String): PlotInterface = null
       def importExtensionData(name: String, data: java.util.List[Array[String]], handler: org.nlogo.api.ImportErrorHandler) { }
       def isExtensionName(name: String) = false
     }
