@@ -30,7 +30,6 @@ object TestCompileAll {
 }
 
 class TestCompileAll extends FunSuite with SlowTest {
-
   for (path <- ModelsLibrary.getModelPaths.filterNot(TestCompileAll.badPath))
     test("compile: " + path) {
       compile(path)
@@ -44,7 +43,7 @@ class TestCompileAll extends FunSuite with SlowTest {
   for(path <- ModelsLibrary.getModelPaths ++ ModelsLibrary.getModelPathsAtRoot("extensions"))
     test("version: " + path) {
       val workspace = HeadlessWorkspace.newInstance
-      val version = ModelReader.parseModel(FileIO.file2String(path), workspace).version
+      val version = ModelReader.parseModel(FileIO.file2String(path), workspace.parser).version
       assert(Version.compatibleVersion(version))
     }
 
@@ -52,8 +51,9 @@ class TestCompileAll extends FunSuite with SlowTest {
     val workspace = HeadlessWorkspace.newInstance
     try {
       val modelContents = FileIO.file2String(path)
-      val model = ModelReader.parseModel(modelContents, workspace)
-      val newModel = ModelReader.parseModel(ModelReader.formatModel(model, workspace), workspace)
+      val model = ModelReader.parseModel(modelContents, workspace.parser)
+      val newModel = ModelReader.parseModel(
+        ModelReader.formatModel(model, workspace.parser), workspace.parser)
       assertResult(model.code)(newModel.code)
       assertResult(model.widgets)(newModel.widgets)
       assertResult(model.info)(newModel.info)
@@ -76,7 +76,8 @@ class TestCompileAll extends FunSuite with SlowTest {
       System.setProperty("netlogo.extensions.dir", "jvm/extensions")
       workspace.open(path)
       val lab = HeadlessWorkspace.newLab
-      lab.load(ModelReader.parseModel(FileIO.file2String(path), workspace).behaviorSpace.mkString("", "\n", "\n"))
+      lab.load(ModelReader.parseModel(
+        FileIO.file2String(path), workspace.parser).behaviorSpace.mkString("", "\n", "\n"))
       lab.names.foreach(lab.newWorker(_).compile(workspace))
     }
     finally workspace.dispose()
