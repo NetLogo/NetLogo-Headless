@@ -6,7 +6,6 @@ import org.nlogo.core.AgentKind;
 import org.nlogo.core.AgentKindJ;
 import org.nlogo.api.AgentException;
 import org.nlogo.api.Color;
-import org.nlogo.api.ParserServices;
 import org.nlogo.api.ImporterUser;
 import org.nlogo.api.LogoException;
 import org.nlogo.core.Nobody$;
@@ -18,6 +17,7 @@ import org.nlogo.api.TrailDrawerInterface;
 import org.nlogo.api.ValueConstraint;
 import org.nlogo.core.Breed;
 import org.nlogo.core.WorldDimensions;
+import org.nlogo.core.LiteralParser;
 import org.nlogo.api.MersenneTwisterFast;
 
 import java.util.Arrays;
@@ -1165,13 +1165,13 @@ public strictfp class World
         ("\"" + var + "\" not found");
   }
 
-  private ParserServices _parser;
+  private LiteralParser _parser;
 
-  public void parser_$eq(ParserServices parser) {
+  public void parser_$eq(LiteralParser parser) {
     _parser = parser;
   }
 
-  public ParserServices parser() {
+  public LiteralParser parser() {
     return _parser;
   }
 

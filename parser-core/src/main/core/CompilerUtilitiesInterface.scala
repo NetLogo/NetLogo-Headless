@@ -4,7 +4,12 @@ package org.nlogo.core
 
 import FrontEndInterface.ProceduresMap
 
-trait CompilerUtilitiesInterface {
+trait LiteralParser {
+  def readFromString(s: String): AnyRef
+  def readNumberFromString(source: String): AnyRef
+}
+
+trait CompilerUtilitiesInterface extends LiteralParser {
   def readFromString(source: String): AnyRef
 
   def readNumberFromString(source: String): AnyRef
@@ -20,4 +25,6 @@ trait CompilerUtilitiesInterface {
                  program: Program,
                  procedures: ProceduresMap,
                  extensionManager: ExtensionManager): Boolean
+
+  def isReporter(s: String): Boolean
 }

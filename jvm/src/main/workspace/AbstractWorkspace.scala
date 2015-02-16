@@ -14,7 +14,7 @@ import
   org.nlogo.{ agent, api, core, nvm, plot },
   agent.{ AbstractExporter, Agent, AgentSet, World },
   api.{ CommandLogoThunk, Dump, Exceptions, JobOwner, LogoException, ModelType, PlotInterface, ReporterLogoThunk, SimpleJobOwner },
-  core.{ AgentKind, CompilerException, Femto, File, FileMode },
+  core.{CompilerUtilitiesInterface, AgentKind, CompilerException, Femto, File, FileMode, LiteralParser},
   nvm.{ Activation, Command, Context, EngineException, FileManager, ImportHandler, Instruction, Job, MutableLong, Procedure, Workspace },
     Procedure.{ NoProcedures, ProceduresMap },
   plot.{ PlotExporter, PlotManager }
@@ -56,7 +56,7 @@ object AbstractWorkspace {
 }
 
 abstract class AbstractWorkspace(val world: World)
-extends api.LogoThunkFactory with api.ParserServices
+extends api.LogoThunkFactory with LiteralParser
 with Workspace with Procedures with Plotting with Exporting with Evaluating with Benchmarking
 with Compiling with Profiling with Extensions with BehaviorSpace with Paths with Checksums
 with RunCache with Jobs with Warning with OutputArea with Importing {
@@ -124,7 +124,6 @@ with RunCache with Jobs with Warning with OutputArea with Importing {
   override def auxRNG = world.auxRNG
   override def lastLogoException: LogoException = null
   override def clearLastLogoException() { }
-
 }
 
 object AbstractWorkspaceTraits {
@@ -140,9 +139,8 @@ object AbstractWorkspaceTraits {
       compiler.utilities.readNumberFromString(
         source, new ImportHandler(world, getExtensionManager))
 
-    override def isReporter(s: String) =
+    def isReporter(s: String) =
       compiler.utilities.isReporter(s, world.program, procedures, getExtensionManager)
-
   }
 
   trait Procedures { this: AbstractWorkspace =>

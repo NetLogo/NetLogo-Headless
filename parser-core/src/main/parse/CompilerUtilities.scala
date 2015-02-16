@@ -3,8 +3,8 @@
 package org.nlogo.parse
 
 import org.nlogo.core,
-  core.{CompilerException, CompilerUtilitiesInterface, File, FrontEndInterface,
-        ExtensionManager, StructureResults, Program, LiteralImportHandler}
+  core.{DummyExtensionManager, CompilerException, CompilerUtilitiesInterface,
+        File, FrontEndInterface, ExtensionManager, StructureResults, Program, LiteralImportHandler}
 
 object CompilerUtilities extends CompilerUtilitiesInterface {
   import FrontEndInterface.ProceduresMap
@@ -45,6 +45,9 @@ object CompilerUtilities extends CompilerUtilitiesInterface {
         .getLiteralFromFile(tokens)
     result
   }
+
+  def isReporter(s: String): Boolean =
+    isReporter(s, Program.empty(), FrontEndInterface.NoProcedures, new DummyExtensionManager)
 
   // used by CommandLine
   def isReporter(s: String, program: Program, procedures: ProceduresMap, extensionManager: ExtensionManager) =
