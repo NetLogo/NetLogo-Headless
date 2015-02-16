@@ -2,7 +2,7 @@
 
 package org.nlogo.lab
 
-import org.nlogo.api.ParserServices
+import org.nlogo.core.CompilerUtilitiesInterface
 import org.w3c.dom
 import org.xml.sax
 import language.implicitConversions
@@ -12,7 +12,7 @@ object ProtocolLoader
   val DOCTYPE = "<!DOCTYPE experiments SYSTEM \"behaviorspace.dtd\">"
 }
 
-class ProtocolLoader(services: ParserServices)
+class ProtocolLoader(services: CompilerUtilitiesInterface)
 {
   def loadOne(file: java.io.File):Protocol =
     new Loader().load(file) match { case Seq(ps) => ps }

@@ -322,6 +322,8 @@ class DefaultFileManagerTests extends FunSuite with OneInstancePerTest {
                             procedures: ProceduresMap,
                             extensionManager: core.ExtensionManager): Boolean = ???
 
+    override def isReporter(s: String): Boolean = ???
+
     @throws(classOf[IOException])
     override def readFromFile(currFile: File, importHandler: LiteralImportHandler): AnyRef = {
       readFile = Some(currFile)
