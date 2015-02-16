@@ -6,9 +6,10 @@ package org.nlogo.agent
 // we'll convert it at method at a time, as needed, by relocating
 // methods from ImporterJ to here. - ST 7/11/12
 
-import org.nlogo.{ api, core }
-import org.nlogo.core.{Breed, AgentKind, AgentVariables}
-import api.{ ImporterUser, PlotInterface, PlotPenInterface }
+import org.nlogo.{ api, core },
+  core.{PlotPenState, PlotPenInterface, Breed, AgentKind, AgentVariables},
+  api.{PlotState, PlotInterface, ImporterUser}
+
 import collection.immutable.ListMap
 import collection.JavaConverters._
 import ImporterJ.Junk
@@ -104,7 +105,7 @@ extends ImporterJ(_errorHandler, _world, _importerUser, _stringReader) {
       0
     else {
       val line = nextLine()
-      plot.state = api.PlotState(
+      plot.state = PlotState(
         xMin = readNumber(line(0)),
         xMax = readNumber(line(1)),
         yMin = readNumber(line(2)),
@@ -115,7 +116,7 @@ extends ImporterJ(_errorHandler, _world, _importerUser, _stringReader) {
       readNumber(line(7)).toInt
     }
 
-  def importPens(plot: api.PlotInterface, numPens: Int) {
+  def importPens(plot: PlotInterface, numPens: Int) {
     if (hasMoreLines(false))
       for (i <- 0 until numPens; if hasMoreLines(false)) {
         val line = nextLine()
@@ -125,7 +126,7 @@ extends ImporterJ(_errorHandler, _world, _importerUser, _stringReader) {
           case name: String =>
             plot.getPen(name) match {
               case Some(pen) =>
-                pen.state = api.PlotPenState(
+                pen.state = PlotPenState(
                   isDown = readBoolean(line(1)),
                   mode = readNumber(line(2)).toInt,
                   interval = readNumber(line(3)),

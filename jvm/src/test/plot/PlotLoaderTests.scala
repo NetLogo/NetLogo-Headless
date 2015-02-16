@@ -4,7 +4,7 @@ package org.nlogo.plot
 
 import org.scalatest.FunSuite
 import org.nlogo.api.DummyLogoThunkFactory
-import org.nlogo.api.model.{PenReader, PlotReader}
+import org.nlogo.core.model.{PlotReader, PenReader}
 
 class PlotLoaderTests extends TestPlotLoaderHelper{
 

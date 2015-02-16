@@ -2,8 +2,9 @@
 
 package org.nlogo.plot
 
-import org.nlogo.api.{ PlotInterface, PlotPenInterface, PlotState, PlotAction }
+import org.nlogo.api.{ PlotState, PlotInterface, PlotAction }
 import PlotAction.{ PlotXY, SoftResetPen }
+import org.nlogo.core.PlotPenInterface
 import scala.collection.immutable
 import scala.collection.immutable.VectorBuilder
 

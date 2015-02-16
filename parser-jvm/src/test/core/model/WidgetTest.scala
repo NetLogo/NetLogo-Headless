@@ -1,12 +1,12 @@
 // (C) Uri Wilensky. https://github.com/NetLogo/NetLogo
 
-package org.nlogo.api
-package model
+package org.nlogo.core.model
 
-import org.nlogo.api
-import org.nlogo.core._
+import org.nlogo.core.{ model, Col, TextBox, Output, CompilerException, LiteralParser, LogoList,
+  Str, NumberParser, StrReporter, Num, InputBox, Chooser, ChooseableString, Pen, Plot, Switch,
+  Monitor, UpdateMode, View, Horizontal, Button, Slider, Widget },
+  model._
 import org.scalatest.FunSuite
-import org.nlogo.headless.HeadlessWorkspace
 
 class WidgetTest extends FunSuite {
 
@@ -375,8 +375,20 @@ class WidgetTest extends FunSuite {
   }
 
   private def chooserReader: ChooserReader = {
-    val ps = new api.DummyParserServices()
-    new ChooserReader(ps)
+    val literalParser = new LiteralParser {
+      override def readFromString(s: String): AnyRef =
+        if (s.startsWith("[") && s.endsWith("]"))
+          LogoList.fromVector(s.drop(1).dropRight(1).split(' ').map(readFromString).toVector)
+        else if (s.startsWith("\"") && s.endsWith("\""))
+          s.drop(1).dropRight(1)
+        else
+          readNumberFromString(s)
+
+      override def readNumberFromString(source: String): AnyRef =
+        NumberParser.parse(source).right.getOrElse(
+          throw new CompilerException(source, 0, 1, "test"))
+    }
+    new ChooserReader(literalParser)
   }
 
   test("output") {
