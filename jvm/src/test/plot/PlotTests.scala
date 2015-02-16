@@ -2,8 +2,8 @@
 
 package org.nlogo.plot
 
+import org.nlogo.core.PlotPenInterface
 import org.scalatest.FunSuite
-import org.nlogo.api.PlotPenInterface
 
 trait SimplePlotTest extends FunSuite {
 

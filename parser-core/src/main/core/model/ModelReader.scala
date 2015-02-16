@@ -1,6 +1,6 @@
 // (C) Uri Wilensky. https://github.com/NetLogo/NetLogo
 
-package org.nlogo.api.model
+package org.nlogo.core.model
 
 import org.nlogo.core.{LiteralParser, Model}
 

@@ -2,8 +2,9 @@
 
 package org.nlogo.plot
 
-import org.nlogo.api
-import org.nlogo.core.CompilerException
+import org.nlogo.{ api, core },
+  api.PlotAction,
+  core.CompilerException
 
 trait PlotManagerInterface extends api.PlotManagerInterface {
   def newPlot(name: String): Plot
@@ -30,7 +31,7 @@ class DummyPlotManager extends PlotManagerInterface {
   override def getPenSetupError(pen: PlotPen) = None
   override def getPenUpdateError(pen: PlotPen) = None
   override def currentPlot = None
-  override def publish(action: api.PlotAction) { }
+  override def publish(action: PlotAction) { }
   override def setCurrentPlot(name: String) { }
   override def hasPlot(name: String) = false
   override def getPlot(name: String) = None

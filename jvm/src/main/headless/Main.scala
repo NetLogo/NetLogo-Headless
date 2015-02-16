@@ -2,11 +2,11 @@
 
 package org.nlogo.headless
 
+import org.nlogo.core.model.ModelReader
 import org.nlogo.core.WorldDimensions
 import org.nlogo.api.{ APIVersion, FileIO, Version }
 import org.nlogo.workspace.AbstractWorkspace.setHeadlessProperty
 import org.nlogo.nvm.LabInterface.Settings
-import org.nlogo.api.model.ModelReader
 
 object Main {
   class CancelException extends RuntimeException
