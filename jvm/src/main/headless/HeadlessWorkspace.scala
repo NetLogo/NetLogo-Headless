@@ -9,7 +9,7 @@ package org.nlogo.headless
 import
   org.nlogo.{ agent, api, core, drawing, nvm, workspace },
     agent.{ Agent, World },
-    api.{ CommandRunnable, DefaultParserServices, FileIO, LogoException, model, RendererInterface, ReporterRunnable, SimpleJobOwner },
+    api.{ CommandRunnable, FileIO, LogoException, model, RendererInterface, ReporterRunnable, SimpleJobOwner },
       model.ModelReader,
     core.{ AgentKind, CompilerException, CompilerUtilitiesInterface, Femto, File, FileMode, Model, UpdateMode, WorldDimensions },
     drawing.DrawingActionBroker,
@@ -44,8 +44,7 @@ object HeadlessWorkspace {
       Femto.scalaSingleton("org.nlogo.parse.CompilerUtilities")
     // kludgy, use AnyRef here because ProtocolLoader doesn't implement an interface - ST 4/25/13
     val protocolLoader: AnyRef =
-      Femto.get("org.nlogo.lab.ProtocolLoader",
-        new DefaultParserServices(utilities))
+      Femto.get("org.nlogo.lab.ProtocolLoader", utilities)
     Femto.get("org.nlogo.lab.Lab", protocolLoader)
   }
 
@@ -369,7 +368,7 @@ with org.nlogo.workspace.WorldLoaderInterface {
   override def open(path: String) {
     setModelPath(path)
     val modelContents = FileIO.file2String(path)
-    try openModel(ModelReader.parseModel(modelContents, this))
+    try openModel(ModelReader.parseModel(modelContents, compiler.utilities))
     catch {
       case ex: CompilerException =>
         // models with special comment are allowed not to compile
