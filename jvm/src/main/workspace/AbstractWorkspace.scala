@@ -13,9 +13,11 @@ import
 import
   org.nlogo.{ agent, api, core, nvm, plot },
   agent.{ AbstractExporter, Agent, AgentSet, World },
-  api.{ CommandLogoThunk, Dump, Exceptions, JobOwner, LogoException, ModelType, PlotInterface, ReporterLogoThunk, SimpleJobOwner },
+  api.{PlotInterface, CommandLogoThunk, Dump, Exceptions,
+    JobOwner, LogoException, ModelType, ReporterLogoThunk, SimpleJobOwner},
   core.{CompilerUtilitiesInterface, AgentKind, CompilerException, Femto, File, FileMode, LiteralParser},
-  nvm.{ Activation, Command, Context, EngineException, FileManager, ImportHandler, Instruction, Job, MutableLong, Procedure, Workspace },
+  nvm.{ Activation, Command, Context, EngineException, FileManager, ImportHandler,
+    Instruction, Job, MutableLong, Procedure, Workspace },
     Procedure.{ NoProcedures, ProceduresMap },
   plot.{ PlotExporter, PlotManager }
 

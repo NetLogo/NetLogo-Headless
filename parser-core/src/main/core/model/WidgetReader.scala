@@ -1,8 +1,8 @@
 // (C) Uri Wilensky. https://github.com/NetLogo/NetLogo
 
-package org.nlogo.api.model
+package org.nlogo.core.model
 
-import org.nlogo.api
+import org.nlogo.core
 import org.nlogo.core.StringEscaper.unescapeString
 import org.nlogo.core.StringEscaper.escapeString
 import org.nlogo.core._
@@ -99,7 +99,7 @@ object WidgetReader {
       case None =>
         System.out.println(lines)
         throw new RuntimeException(
-          "Couldn't find corresponding reader!")
+          s"Couldn't find corresponding reader for ${lines.head}")
     }
   }
 
@@ -218,7 +218,7 @@ object PenReader {
     val (rest1, rest2) = rest.span(_ != '"')
     val List(interval, mode, color, inLegend) =
       rest1.trim.split("\\s+").toList
-    require(api.PlotPenInterface.isValidPlotPenMode(mode.toInt))
+    require(PlotPenInterface.isValidPlotPenMode(mode.toInt))
     // optional; pre-5.0 models don't have them
     val (setup, update) =
       parseStringLiterals(rest2) match {
@@ -366,7 +366,7 @@ case class ChooserReader(parser: LiteralParser) extends BaseWidgetReader {
                         IntLine()   // current choice
                       )
   def asList(chooser: Chooser) = List((), chooser.left, chooser.top, chooser.right, chooser.bottom, chooser.display,
-    chooser.varName, chooser.choices.map(v => api.Dump.logoObject(v.value, true, false)).mkString(" "), chooser.currentChoice)
+    chooser.varName, chooser.choices.map(v => Dump.logoObject(v.value, true, false)).mkString(" "), chooser.currentChoice)
   def asWidget(vals: List[Any]): Chooser = {
     val List(_, left: Int, top: Int, right: Int, bottom: Int, display: String, varName: String,
     choicesStr: String, currentChoice: Int) = vals

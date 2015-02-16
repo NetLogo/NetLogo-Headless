@@ -2,9 +2,9 @@
 
 package org.nlogo.prim.etc
 
-import org.nlogo.{ core, api, nvm },
-  core.Syntax,
-  api.PlotAction,
+import org.nlogo.{core, api, nvm},
+  core.{ Syntax, PlotPenInterface },
+  api.{PlotInterface, PlotManagerInterface, PlotAction},
   nvm.{ Command, Context, EngineException, Instruction, Reporter }
 
 //
@@ -13,15 +13,15 @@ import org.nlogo.{ core, api, nvm },
 
 trait PlotHelpers extends Instruction {
   def plotManager =
-    workspace.plotManager.asInstanceOf[api.PlotManagerInterface]
+    workspace.plotManager.asInstanceOf[PlotManagerInterface]
   def currentPlotState(context: Context) =
     currentPlot(context).state
-  def currentPlot(context: Context): api.PlotInterface =
+  def currentPlot(context: Context): PlotInterface =
     plotManager.currentPlot.getOrElse(
       throw new EngineException(
         context, this,
           core.I18N.errors.get("org.nlogo.plot.noPlotSelected")))
-  def currentPen(context: Context): api.PlotPenInterface = {
+  def currentPen(context: Context): PlotPenInterface = {
     val plot = currentPlot(context)
     plot.currentPen.getOrElse(
       throw new EngineException(
@@ -298,7 +298,7 @@ class _plotpenreset extends PlotActionCommand() {
 class _setplotpenmode extends PlotActionCommand(Syntax.NumberType) {
   override def action(context: Context) = {
     val mode = argEvalIntValue(context, 0)
-    if (mode < api.PlotPenInterface.MinMode || mode > api.PlotPenInterface.MaxMode) {
+    if (mode < PlotPenInterface.MinMode || mode > PlotPenInterface.MaxMode) {
       throw new EngineException(context, this,
         mode + " is not a valid plot pen mode (valid modes are 0, 1, and 2)")
     }

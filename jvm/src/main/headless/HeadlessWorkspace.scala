@@ -9,9 +9,9 @@ package org.nlogo.headless
 import
   org.nlogo.{ agent, api, core, drawing, nvm, workspace },
     agent.{ Agent, World },
-    api.{ CommandRunnable, FileIO, LogoException, model, RendererInterface, ReporterRunnable, SimpleJobOwner },
+    api.{ CommandRunnable, FileIO, LogoException, RendererInterface, ReporterRunnable, SimpleJobOwner },
+    core.{ model, AgentKind, CompilerException, CompilerUtilitiesInterface, Femto, File, FileMode, Model, UpdateMode, WorldDimensions },
       model.ModelReader,
-    core.{ AgentKind, CompilerException, CompilerUtilitiesInterface, Femto, File, FileMode, Model, UpdateMode, WorldDimensions },
     drawing.DrawingActionBroker,
     nvm.{ CompilerInterface, Context, LabInterface },
     workspace.AbstractWorkspace

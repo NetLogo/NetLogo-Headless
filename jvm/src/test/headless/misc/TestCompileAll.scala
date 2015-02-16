@@ -3,11 +3,11 @@
 package org.nlogo.headless
 package misc
 
+import org.nlogo.core.model.ModelReader
 import org.nlogo.api.{ FileIO, Version }
 import org.nlogo.workspace.ModelsLibrary
 import org.scalatest.FunSuite
 import org.nlogo.util.SlowTest
-import org.nlogo.api.model.ModelReader
 
 object TestCompileAll {
   // core branch doesn't have these features - ST 1/11/12
