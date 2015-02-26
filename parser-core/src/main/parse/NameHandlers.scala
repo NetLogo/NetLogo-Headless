@@ -3,8 +3,8 @@
 package org.nlogo.parse
 
 import org.nlogo.core,
-  core.{BreedIdentifierHandler, ExtensionManager, Fail, FrontEndInterface,
-    Instantiator, Primitive, PrimitiveCommand, PrimitiveReporter, Program, Token, TokenType},
+  core.{ExtensionManager, Fail, FrontEndInterface,
+    Primitive, PrimitiveCommand, PrimitiveReporter, Program, Token, TokenType},
     FrontEndInterface.ProceduresMap,
     Fail._
 
@@ -46,16 +46,6 @@ object CommandHandler extends PrimitiveHandler {
 object ReporterHandler extends PrimitiveHandler {
   override def apply(token: Token) =
     lookup(token, FrontEnd.tokenMapper.getReporter  _, TokenType.Reporter)
-}
-
-// go thru our breed prim handlers, if one triggers, return the result
-class BreedHandler(program: Program) extends NameHandler {
-  override def apply(token: Token) =
-    BreedIdentifierHandler.process(token, program) map {
-      case (className, breedName, tokenType) =>
-        (tokenType, Instantiator.newInstance[core.Instruction](
-          Class.forName("org.nlogo.core.prim." + className), breedName))
-    }
 }
 
 // replaces an identifier token with its imported implementation, if necessary

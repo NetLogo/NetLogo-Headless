@@ -78,7 +78,7 @@ object BreedIdentifierHandler {
     breedPrimsMatching(Reporter, breed, matchesBreedName)
 
   private def matchesBreedName(patternString: String): Boolean =
-    patternString.matches(s"\\A$BreedPatternString\\Z")
+    patternString.matches(s"^$BreedPatternString$$")
 
   private def breedPrimsMatching(tokenType: TokenType, breed: DeclBreed, matches: (String) => Boolean): SpecMatcher =
     if (breed.isLinkBreed && breed.isDirected)
@@ -97,7 +97,7 @@ object BreedIdentifierHandler {
 
     private val PatternMatcher: Regex = {
       val refinedPattern = patternString.replaceAll("\\?", "\\\\?").replaceAll(BreedPatternString, "(.+)")
-      s"\\A$refinedPattern\\Z".r
+      s"^$refinedPattern$$".r
     }
 
     def patternString:              String

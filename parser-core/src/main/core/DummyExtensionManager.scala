@@ -11,6 +11,6 @@ class DummyExtensionManager extends ExtensionManager {
   override def anyExtensionsLoaded = false
   override def replaceIdentifier(name: String): Primitive = null
   override def importExtension(jarPath: String, errors: ErrorSource) = unsupported
-  override def resolvePath(path: String): String = unsupported
+  override def resolvePath(path: String): String = path
   private def unsupported = throw new UnsupportedOperationException
 }
