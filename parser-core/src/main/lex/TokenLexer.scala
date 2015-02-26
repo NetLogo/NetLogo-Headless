@@ -9,14 +9,11 @@ import TokenLexer.WrappedInput
 import LexOperations._
 
 import scala.annotation.tailrec
-import scala.collection.immutable.HashSet
 
 class TokenLexer {
   import LexOperations.PrefixConversions._
-
-  private val identifierPunctuation = """_.?=*!<>:#+/%$^'&\\-"""
-  private val digits = "0123456789"
-  private def validIdentifierChar(c: Char): Boolean = Character.isLetter(c)
+  import TokenLexer._
+  import Charset.validIdentifierChar
 
   private val punctuation = Map(
     "," -> TokenType.Comma,
@@ -160,7 +157,6 @@ class TokenLexer {
       case r => new BufferedInputWrapper(reader, 0, filename)
     }
 
-
   class AutoGrowingBufferedReader(reader: BufferedReader) {
     private var markSize: Int = 65536
     private var remainingMark: Int = 0
@@ -252,6 +248,7 @@ class TokenLexer {
 object StandardLexer extends TokenLexer {}
 
 object WhitespaceSkippingLexer extends TokenLexer {
+
   override def apply(input: WrappedInput): (Token, WrappedInput) = {
     val (t, endOfToken) = super.apply(input)
     val (_, beginningOfNextToken) = fastForwardWhitespace(endOfToken)

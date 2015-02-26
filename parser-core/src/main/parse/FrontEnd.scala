@@ -3,11 +3,13 @@
 package org.nlogo.parse
 
 import org.nlogo.core,
-  core.{AstTransformer, Femto, ExtensionManager, DummyExtensionManager, FrontEndInterface, FrontEndProcedure, Program}
+  core.{AstTransformer, Femto, ExtensionManager, DummyExtensionManager,
+  FrontEndInterface, FrontEndProcedure, Program, TokenizerInterface,
+  ProcedureDefinition}
 
 object FrontEnd extends FrontEnd {
-  val tokenizer: core.TokenizerInterface =
-    Femto.scalaSingleton("org.nlogo.lex.Tokenizer")
+  val tokenizer: TokenizerInterface =
+    Femto.scalaSingleton[TokenizerInterface]("org.nlogo.lex.Tokenizer")
   val tokenMapper = new TokenMapper(
     "/system/tokens.txt", "org.nlogo.core.prim.")
 }
@@ -17,7 +19,7 @@ class FrontEnd extends FrontEndMain
 
 trait FrontEndMain {
 
-  import FrontEndInterface.ProceduresMap
+  import FrontEndInterface.{ ProceduresMap, FrontEndResults }
   import FrontEnd.tokenizer
 
   // entry points
@@ -25,14 +27,14 @@ trait FrontEndMain {
   def frontEnd(
         source: String,
         displayName: Option[String] = None,
-        program: Program = core.Program.empty(),
+        program: Program = Program.empty(),
         subprogram: Boolean = true,
-        oldProcedures: FrontEndInterface.ProceduresMap = core.FrontEndInterface.NoProcedures,
+        oldProcedures: ProceduresMap = FrontEndInterface.NoProcedures,
         extensionManager: ExtensionManager = new DummyExtensionManager)
-      : FrontEndInterface.FrontEndResults = {
+      : FrontEndResults = {
     val structureResults = StructureParser.parseAll(
       tokenizer, source, displayName, program, subprogram, oldProcedures, extensionManager)
-    def parseProcedure(procedure: FrontEndProcedure): core.ProcedureDefinition = {
+    def parseProcedure(procedure: FrontEndProcedure): ProcedureDefinition = {
       val rawTokens = structureResults.procedureTokens(procedure.name)
       val usedNames =
         StructureParser.usedNames(structureResults.program,
