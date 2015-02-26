@@ -49,7 +49,6 @@ lazy val testSettings = scalatestSettings ++ Seq(
 
 lazy val publicationSettings =
   bintrayPublishSettings ++
-  PublishVersioned.settings ++
   Seq(
     bintray.Keys.repository in bintray.Keys.bintray := "NetLogoHeadless",
     bintray.Keys.bintrayOrganization in bintray.Keys.bintray := Some("netlogo")
@@ -126,10 +125,10 @@ lazy val parserJs = (project in file ("parser-js")).
   settings(commonSettings: _*).
   settings(parserSettings: _*).
   settings(scalaJSSettings: _*).
-  settings(PubVersioned.settings: _*).
   settings(publicationSettings: _*).
   settings(utest.jsrunner.Plugin.utestJsSettings: _*).
   settings(
+    isSnapshot := true,
     scalaVersion := "2.11.2",
     testFrameworks += new TestFramework("utest.jsrunner.JsFramework"),
     libraryDependencies += "org.scalajs" %%% "scala-parser-combinators" % "1.0.2"
@@ -147,6 +146,8 @@ lazy val jvmBuild = (project in file ("jvm")).
   settings(Depend.settings: _*).
   settings(publicationSettings: _*).
   settings(
+    version := "5.2.0",
+    isSnapshot := true,
     libraryDependencies += "org.ow2.asm" % "asm-all" % "5.0.3",
     mainClass in Compile := Some("org.nlogo.headless.Main"),
     onLoadMessage := "",
@@ -158,3 +159,4 @@ lazy val jvmBuild = (project in file ("jvm")).
     mappings in (Compile, packageSrc) ++= mappings.in(parserJvm, Compile, packageSrc).value,
     unmanagedResourceDirectories in Compile += baseDirectory.value / "resources" / "main",
     unmanagedResourceDirectories in Test += baseDirectory.value / "resources" / "test"
+  )
