@@ -2,7 +2,7 @@
 
 package org.nlogo.parse
 
-import org.nlogo.core.{CompilerException, Femto, StructureResults}
+import org.nlogo.core.{DummyExtensionManager, FrontEndInterface, Program, CompilerException, Femto, StructureResults}
 import org.scalatest.FunSuite
 
 import org.nlogo._
@@ -109,7 +109,6 @@ class StructureParserTests extends FunSuite {
     assertResult(1)(results.includes.size)
     assertResult("foo.nls")(results.includes.head.value)
   }
-
   /// allow breeds to share variables
 
   test("breeds may share variables") {
@@ -223,4 +222,23 @@ class StructureParserTests extends FunSuite {
     expectError("to foo end globals []",
       "TO or TO-REPORT expected") }
 
+  def compileAll(src: String): StructureResults = {
+    StructureParser.parseAll(
+      tokenizer, src, None, Program.empty(), false, FrontEndInterface.NoProcedures, new DummyExtensionManager)
+  }
+
+  def expectParseAllError(src: String, error: String) = {
+    val e = intercept[CompilerException] {
+      compileAll(src)
+    }
+    assertResult(error)(e.getMessage.takeWhile(_ != ','))
+  }
+
+  test("invalid included file") {
+    expectParseAllError("""__includes [ "foobar.nlogo" ]""", "Included files must end with .nls")
+  }
+
+  test("nonexistent included file") {
+    expectParseAllError("""__includes [ "foobar.nls" ]""", "Could not find foobar.nls")
+  }
 }
