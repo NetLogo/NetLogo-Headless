@@ -148,6 +148,7 @@ class TestAllSyntaxes extends FunSuite {
                      |_neighbors4 ,patch agentset,-TP-,None,10,0,0
                      |_netlogoapplet ,TRUE/FALSE,OTPL,None,10,0,0
                      |_netlogoversion ,string,OTPL,None,10,0,0
+                     |_netlogoweb ,TRUE/FALSE,OTPL,None,10,0,0
                      |_newseed ,number,OTPL,None,10,0,0
                      |_nof number/list or agentset,list or agentset,OTPL,None,10,2,2
                      |_nolinks ,link agentset,OTPL,None,10,0,0

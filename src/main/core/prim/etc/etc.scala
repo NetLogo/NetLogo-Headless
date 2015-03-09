@@ -618,6 +618,11 @@ case class _netlogoversion() extends Reporter {
     Syntax.reporterSyntax(
       ret = Syntax.StringType)
 }
+case class _netlogoweb() extends Reporter {
+  override def syntax =
+    Syntax.reporterSyntax(
+      ret = Syntax.BooleanType)
+}
 case class _newseed() extends Reporter {
   override def syntax =
     Syntax.reporterSyntax(

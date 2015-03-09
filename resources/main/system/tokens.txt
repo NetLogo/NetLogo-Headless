@@ -313,6 +313,7 @@ R neighbors _neighbors
 R neighbors4 _neighbors4
 R netlogo-applet? etc._netlogoapplet
 R netlogo-version etc._netlogoversion
+R netlogo-web? etc._netlogoweb
 R new-seed etc._newseed
 R no-links etc._nolinks
 R no-patches etc._nopatches
