@@ -46,9 +46,9 @@ class WidgetTest extends FunSuite {
     assert(!AllLineTest.validate(fullAllLineTest.updated(6, "0")))
     assert(!AllLineTest.validate(fullAllLineTest.updated(7, "8")))
     assert(AllLineTest.validate(fullAllLineTest))
-    assert((List((), 1, 3, "4a", 5.0, true, true, true, true, ()) ==
+    assert((List((), 2, 3, "4a", 5.0, true, true, true, true, ()) ==
             AllLineTest.parse(fullAllLineTest).vals))
-    assert((List((), 1, 3, "4a", 6.0, true, true, true, true, ()) !=
+    assert((List((), 2, 3, "4a", 6.0, true, true, true, true, ()) !=
             AllLineTest.parse(fullAllLineTest).vals))
 
   }
@@ -182,12 +182,11 @@ class WidgetTest extends FunSuite {
                      |NIL
                      |HORIZONTAL""".stripMargin.split("\n").toList
     assert(SliderReader.validate(slider))
-    assert(Slider("initial-sheep-stride", 20, 65, 201, 98, "initial-sheep-stride", "0", "1", 0.2, "0.1", "NIL", Horizontal) ==
+    assert(Slider("initial-sheep-stride", 20, 65, 201, 98, "initial-sheep-stride", "0", "1", 0.2, "0.1", None, Horizontal) ==
       SliderReader.parse(slider))
     assert(SliderReader.validate(SliderReader.format(SliderReader.parse(slider)).split("\n").toList))
-    assert(Slider("initial-sheep-stride", 20, 65, 201, 98, "initial-sheep-stride", "0", "1", 0.2, "0.1", "NIL", Horizontal) ==
+    assert(Slider("initial-sheep-stride", 20, 65, 201, 98, "initial-sheep-stride", "0", "1", 0.2, "0.1", None, Horizontal) ==
       SliderReader.parse(SliderReader.format(SliderReader.parse(slider)).split("\n").toList))
-      
   }
 
   test("view") {
@@ -212,8 +211,8 @@ class WidgetTest extends FunSuite {
                   |30
                   |-30
                   |30
-                  |1
-                  |1
+                  |0
+                  |0
                   |1
                   |ticks
                   |30.0""".stripMargin.split("\n").toList
@@ -224,6 +223,11 @@ class WidgetTest extends FunSuite {
     assert(ViewReader.validate(ViewReader.format(ViewReader.parse(view)).split("\n").toList))
     assert(View(430, 12, 806, 409, 6.0, 20, true, true, -30, 30, -30, 30, UpdateMode.Continuous, true, "ticks", 30.0) ==
       ViewReader.parse(ViewReader.format(ViewReader.parse(view)).split("\n").toList))
+  }
+
+  test("tick-based view") {
+    val view = View(updateMode = UpdateMode.TickBased)
+    assertResult(view)(ViewReader.parse(ViewReader.format(view).lines.toList))
   }
 
   test("monitor") {

@@ -91,7 +91,7 @@ case object Horizontal extends Direction
 case object Vertical extends Direction
 case class Slider(display: String, left: Int = 0, top: Int = 0, right: Int = 0, bottom: Int = 0,
              varName: String, min: String = "1", max: String = "10", default: Double = 1, step: String = "1",
-             units: String = "", direction: Direction = Horizontal)
+             units: Option[String] = None, direction: Direction = Horizontal)
              extends Widget with DeclaresGlobal with DeclaresGlobalCommand with DeclaresConstraint {
   override def constraint = NumericConstraintSpecification(default)
 }
