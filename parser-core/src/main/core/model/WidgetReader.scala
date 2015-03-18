@@ -64,8 +64,10 @@ case class SpecifiedLine(str: String) extends WidgetLine[Unit] {
   def valid(v: String): Boolean = v == str
 }
 case class MapLine[T](map: List[Tuple2[String, T]]) extends WidgetLine[T] {
-  def parse(line: String): T = map.collectFirst{case (v, x) => x}.get
-  def format(v: T): String = map.collectFirst{case (x, v) => x}.get
+  def parse(line: String): T =
+    map.collectFirst{ case (k, v) if k == line => v }.get
+  def format(valueToFormat: T): String =
+    map.collectFirst{ case (k, v) if v == valueToFormat => k}.get
   def valid(v: String): Boolean = map.toMap.contains(v)
 }
 case class ReservedLine(output: String = "RESERVED") extends WidgetLine[Unit] {
@@ -296,7 +298,7 @@ object SliderReader extends BaseWidgetReader {
                         DoubleLine(),    // default
                         StringLine(),   // step
                         ReservedLine(),
-                        StringLine(),   // units
+                        OptionLine[String]("NIL", StringLine()),   // units
                         new MapLine(List(("HORIZONTAL", Horizontal), ("VERTICAL", Vertical)))
                       )
   def asList(slider: Slider) = List((), slider.left, slider.top, slider.right, slider.bottom, slider.display,
@@ -304,7 +306,7 @@ object SliderReader extends BaseWidgetReader {
                                     (), slider.units, slider.direction)
   def asWidget(vals: List[Any]): Slider = {
     val List(_, left: Int, top: Int, right: Int, bottom: Int, display: String, varName: String, min: String,
-             max: String, default: Double, step: String, _, units: String, direction: Direction) = vals
+             max: String, default: Double, step: String, _, units: Option[String] @unchecked, direction: Direction) = vals
     Slider(display, left, top, right, bottom, varName, min, max, default, step, units, direction)
   }
 }
