@@ -16,10 +16,12 @@ class DrawingActionRunner(
       trailDrawer.setColors(colors)
     case SendPixels(dirty) =>
       trailDrawer.sendPixels(dirty)
-    case ReadImage(imageBytes) => {
-      val inputStream = new java.io.ByteArrayInputStream(imageBytes)
-      trailDrawer.readImage(inputStream)
-    }
+    case ReadImage(imageBytes) =>
+      readBytes(imageBytes)
+    case StampImage(imageBytes, _) =>
+      readBytes(imageBytes)
+    case EraseStampImage(imageBytes, _) =>
+      readBytes(imageBytes)
     case CreateDrawing(dirty: Boolean) =>
       trailDrawer.getAndCreateDrawing(dirty)
     case ImportDrawing(filePath: String) =>
@@ -32,6 +34,11 @@ class DrawingActionRunner(
       trailDrawer.markClean()
     case MarkDirty =>
       trailDrawer.markDirty()
+  }
+
+  private def readBytes(imageBytes: Array[Byte]): Unit = {
+    val inputStream = new java.io.ByteArrayInputStream(imageBytes)
+    trailDrawer.readImage(inputStream)
   }
 
 }

@@ -4,7 +4,10 @@ package org.nlogo.drawing
 
 import org.nlogo.api
 import DrawingAction._
-import org.nlogo.api.ActionBroker
+
+import
+  org.nlogo.api.{ ActionBroker, Link, Turtle }
+
 import org.nlogo.core.File
 
 class DrawingActionBroker(
@@ -24,6 +27,7 @@ class DrawingActionBroker(
   override def sendPixels(dirty: Boolean) { publish(SendPixels(dirty)) }
 
   override def stamp(agent: api.Agent, erase: Boolean) {
+
     /*
      * The way TrailDrawer.stamp currently works, it is too dependent on
      * current world state to be easily modeled as an Action that can be
@@ -33,8 +37,27 @@ class DrawingActionBroker(
      */
     trailDrawer.stamp(agent, erase)
     val image = trailDrawer.getDrawing.asInstanceOf[java.awt.image.BufferedImage]
+    val bytes = imageToBytes(image)
+
+    val stamp =
+      agent match {
+        case l: Link   =>
+          import l._
+          LinkStamp(x1, y1, x2, y2, midpointX, midpointY, heading, color, shape, lineThickness)
+        case t: Turtle =>
+          import t._
+          TurtleStamp(xcor, ycor, size, heading, color, shape)
+      }
+
+    val action =
+      if (!erase)
+        StampImage(bytes, stamp)
+      else
+        EraseStampImage(bytes, stamp)
+
     // Actually running the Action would needlessly re-apply the bitmap.
-    publishWithoutRunning(imageToAction(image))
+    publishWithoutRunning(action)
+
   }
 
   override def clearDrawing() { publish(ClearDrawing) }
