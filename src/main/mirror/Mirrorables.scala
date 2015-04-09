@@ -30,6 +30,7 @@ object Mirrorables {
       val Heading = Value("heading")
       val MidpointX = Value("midpointX")
       val MidpointY = Value("midpointY")
+      val IsDirected = Value("isDirected")
     }
   }
   case object Observer extends Kind {
@@ -109,7 +110,8 @@ object Mirrorables {
       Size.id -> Double.box(link.size),
       Heading.id -> Double.box(link.heading),
       MidpointX.id -> Double.box(link.midpointX),
-      MidpointY.id -> Double.box(link.midpointY))
+      MidpointY.id -> Double.box(link.midpointY),
+      IsDirected.id -> Boolean.box(link.isDirectedLink))
   }
 
   class MirrorableObserver(observer: api.Observer) extends MirrorableAgent(observer) {

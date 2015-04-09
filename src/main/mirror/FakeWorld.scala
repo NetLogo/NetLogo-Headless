@@ -120,7 +120,7 @@ class FakeWorld(state: State) extends api.World {
     override def hidden: Boolean = vars(VAR_LHIDDEN).asInstanceOf[Boolean]
     override def linkDestinationSize: Double = end2.size
     override def heading: Double = vars(Heading.id).asInstanceOf[Double]
-    override def isDirectedLink: Boolean = getBreed.isDirected
+    override def isDirectedLink: Boolean = vars(IsDirected.id).asInstanceOf[Boolean]
     override def x1: Double = end1.xcor
     override def y1: Double = end1.ycor
     override def x2: Double = shortestPathX(end1.xcor, end2.xcor)
