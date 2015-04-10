@@ -37,6 +37,9 @@ class Fixture(name: String) extends AbstractFixture {
   val workspace = HeadlessWorkspace.newInstance
   workspace.silent = true
 
+  val drawingActionBuffer = new api.ActionBuffer(workspace.drawingActionBroker)
+  drawingActionBuffer.activate()
+
   // the default error handler just spits something to stdout or stderr or somewhere.
   // we want to fail hard. - ST 7/21/10
   workspace.importerErrorHandler =
