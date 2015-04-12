@@ -1422,7 +1422,8 @@ procedure UPDATE-VARIABLES:[]{OTPL}:
          L7
          FRAME FULL [org/nlogo/prim/_asm_procedureupdatevariables_setobservervariable_6 org/nlogo/nvm/Context org/nlogo/core/LogoList D] []
           ALOAD 2
-          INVOKEVIRTUAL org/nlogo/core/LogoList.iterator ()Ljava/util/Iterator;
+          INVOKEVIRTUAL org/nlogo/core/LogoList.toJava ()Ljava/util/AbstractSequentialList;
+          INVOKEVIRTUAL java/util/AbstractSequentialList.iterator ()Ljava/util/Iterator;
           ASTORE 5
          L8
          FRAME APPEND [java/util/Iterator]
@@ -1562,7 +1563,8 @@ procedure UPDATE-VARIABLES:[]{OTPL}:
          L7
          FRAME FULL [org/nlogo/prim/_asm_procedureupdatevariables_setobservervariable_8 org/nlogo/nvm/Context org/nlogo/core/LogoList D] []
           ALOAD 2
-          INVOKEVIRTUAL org/nlogo/core/LogoList.iterator ()Ljava/util/Iterator;
+          INVOKEVIRTUAL org/nlogo/core/LogoList.toJava ()Ljava/util/AbstractSequentialList;
+          INVOKEVIRTUAL java/util/AbstractSequentialList.iterator ()Ljava/util/Iterator;
           ASTORE 5
          L8
          FRAME APPEND [java/util/Iterator]
@@ -2542,7 +2544,8 @@ procedure GO:[OLD-CLOCK]{O---}:
          L7
          FRAME FULL [org/nlogo/prim/_asm_procedurego_setobservervariable_19 org/nlogo/nvm/Context org/nlogo/core/LogoList D] []
           ALOAD 2
-          INVOKEVIRTUAL org/nlogo/core/LogoList.iterator ()Ljava/util/Iterator;
+          INVOKEVIRTUAL org/nlogo/core/LogoList.toJava ()Ljava/util/AbstractSequentialList;
+          INVOKEVIRTUAL java/util/AbstractSequentialList.iterator ()Ljava/util/Iterator;
           ASTORE 5
          L8
          FRAME APPEND [java/util/Iterator]
@@ -3727,7 +3730,7 @@ procedure CALCULATE-PRESSURE:[]{OTPL}:
           DCONST_0
           DSTORE 3
           ALOAD 2
-          INVOKEVIRTUAL org/nlogo/core/LogoList.iterator ()Ljava/util/Iterator;
+          INVOKEVIRTUAL org/nlogo/core/LogoList.javaIterator ()Ljava/util/Iterator;
           ASTORE 5
          L9
          FRAME FULL [org/nlogo/prim/_asm_procedurecalculatepressure_setobservervariable_0 org/nlogo/nvm/Context org/nlogo/core/LogoList D java/util/Iterator] [D]
@@ -13423,7 +13426,8 @@ procedure DO-PLOTTING:[]{OTPL}:
            L9
            FRAME FULL [org/nlogo/prim/_asm_proceduredoplotting_mean_3 org/nlogo/nvm/Context org/nlogo/core/LogoList D] []
             ALOAD 2
-            INVOKEVIRTUAL org/nlogo/core/LogoList.iterator ()Ljava/util/Iterator;
+            INVOKEVIRTUAL org/nlogo/core/LogoList.toJava ()Ljava/util/AbstractSequentialList;
+            INVOKEVIRTUAL java/util/AbstractSequentialList.iterator ()Ljava/util/Iterator;
             ASTORE 5
            L10
            FRAME APPEND [java/util/Iterator]

@@ -59,11 +59,11 @@ object Depend {
       "" -> Nil,
       "agent" -> List("api"),
       "api" -> List("core", "util"),
-      "api/model" -> List("api"),
       "compile" -> List("prim"),
       "compile/back" -> List("compile"),
       "compile/middle" -> List("compile", "core/prim"),
       "core" -> Nil,
+      "core/model" -> List("core"),
       "core/prim" -> List("core"),
       "core/prim/etc" -> List("core"),
       "drawing" -> List("api"),
@@ -80,7 +80,7 @@ object Depend {
       "mirror" -> List("drawing", "plot", "shape"),
       "nvm" -> List("agent"),
       "parse" -> List("api", "core/prim"),
-      "plot" -> List("api/model"),
+      "plot" -> List("api", "core/model"),
       "prim" -> List("nvm"),
       "prim/etc" -> List("nvm"),
       "render" -> List("shape"),
@@ -112,7 +112,7 @@ check absenceOfPackageCycles > 1 in org.nlogo.*
 
 [stdlib-j] = java.lang.* java.util.* java.io.* java.text.* java.net.* java.security.*
 
-[stdlib-s] = scala.Serializable scala.Predef* scala.collection.* scala.reflect.* scala.Function* scala.UninitializedFieldError scala.util.control.Exception* scala.Array* scala.LowPriorityImplicits scala.package$ scala.util.Properties$ scala.Option* scala.Tuple* scala.Product* scala.util.DynamicVariable scala.runtime.* scala.math.* scala.None* scala.Some* scala.MatchError scala.util.Left* scala.util.Right* scala.util.Either* scala.io.* scala.sys.package* scala.Console* scala.PartialFunction* scala.util.matching.Regex* scala.Enumeration* scala.Proxy* scala.FallbackArrayBuilding scala.util.Sorting* scala.StringContext scala.Double$ scala.util.Try*
+[stdlib-s] = scala.Cloneable scala.Serializable scala.Predef* scala.collection.* scala.reflect.* scala.Function* scala.UninitializedFieldError scala.util.control.Exception* scala.Array* scala.LowPriorityImplicits scala.package$ scala.util.Properties$ scala.Option* scala.Tuple* scala.Product* scala.util.DynamicVariable scala.runtime.* scala.math.* scala.None* scala.Some* scala.MatchError scala.util.Left* scala.util.Right* scala.util.Either* scala.io.* scala.sys.package* scala.Console* scala.PartialFunction* scala.util.matching.Regex* scala.Enumeration* scala.Proxy* scala.FallbackArrayBuilding scala.util.Sorting* scala.StringContext scala.Double$ scala.util.Try*
 
 [xml] = org.w3c.dom.* org.xml.sax.* javax.xml.parsers.*
 
@@ -147,7 +147,7 @@ check [XML-free-zone] independentOf [xml]
 [reflections-free-zone] = org.nlogo.* excluding org.nlogo.headless.lang.* org.nlogo.headless.test.*
 check [reflections-free-zone] independentOf [reflections]
 
-[parser-combinator-free-zone] = org.nlogo.* excluding org.nlogo.parse.StructureCombinators* org.nlogo.parse.SeqReader* org.nlogo.parse.Cleanup
+[parser-combinator-free-zone] = org.nlogo.* excluding org.nlogo.parse.StructureCombinators* org.nlogo.parse.SeqReader* org.nlogo.lex.TokenLexer*
 check [parser-combinator-free-zone] directlyIndependentOf [parser-combinators]
 """
               )
