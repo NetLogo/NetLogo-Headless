@@ -128,6 +128,7 @@ lazy val parserJs = (project in file ("parser-js")).
   settings(publicationSettings: _*).
   settings(utest.jsrunner.Plugin.utestJsSettings: _*).
   settings(
+    name := "parser-js",
     isSnapshot := true,
     scalaVersion := "2.11.2",
     testFrameworks += new TestFramework("utest.jsrunner.JsFramework"),
