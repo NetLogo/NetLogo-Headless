@@ -43,7 +43,7 @@ class DrawingActionBroker(
       agent match {
         case l: Link   =>
           import l._
-          LinkStamp(x1, y1, x2, y2, midpointX, midpointY, heading, color, shape, lineThickness)
+          LinkStamp(x1, y1, end2.xcor, end2.ycor, midpointX, midpointY, heading, color, shape, lineThickness)
         case t: Turtle =>
           import t._
           TurtleStamp(xcor, ycor, size, heading, color, shape)
