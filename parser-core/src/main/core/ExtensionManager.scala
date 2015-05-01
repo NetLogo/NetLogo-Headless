@@ -14,7 +14,7 @@ trait ExtensionManager {
    * "live", or currently in the block, so that its primitives are available for use
    * elsewhere in the model.
    *
-   * See the top of {@link org.nlogo.workspace.ExtensionManager} for full details.
+   * See the top of org.nlogo.workspace.ExtensionManager for full details.
    */
   def startFullCompilation()
 
@@ -23,7 +23,7 @@ trait ExtensionManager {
    * current compile to shut down. Should be called during each full
    * re-compile.
    *
-   * See the top of {@link org.nlogo.workspace.ExtensionManager} for full details.
+   * See the top of org.nlogo.workspace.ExtensionManager for full details.
    */
   def finishFullCompilation()
 
