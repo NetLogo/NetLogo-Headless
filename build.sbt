@@ -1,3 +1,5 @@
+import org.scalajs.sbtplugin.cross.{ CrossProject, CrossType }
+
 lazy val netlogoVersion = taskKey[String]("from api.Version")
 
 lazy val commonSettings = Seq(
@@ -11,12 +13,12 @@ lazy val commonSettings = Seq(
   ivyLoggingLevel := UpdateLogging.Quiet,
   logBuffered in testOnly in Test := false,
   onLoadMessage := "",
+  scalaVersion := "2.11.6",
   // don't cross-build for different Scala versions
   crossPaths := false
 )
 
 lazy val jvmSettings = Seq(
-  scalaVersion := "2.11.6",
   javacOptions ++=
     "-g -deprecation -encoding us-ascii -Werror -Xlint:all -Xlint:-serial -Xlint:-fallthrough -Xlint:-path -source 1.8 -target 1.8"
     .split(" ").toSeq,
@@ -69,7 +71,7 @@ lazy val docOptions = Seq(
     Opts.doc.sourceUrl("https://github.com/NetLogo/NetLogo/blob/" +
       version.value + "/src/main€{FILE_PATH}.scala")
   },
-  sources in (Compile, doc) ++= (sources in (parserJvm, Compile)).value,
+  sources in (Compile, doc) ++= (sources in (parserJVM, Compile)).value,
   // compensate for issues.scala-lang.org/browse/SI-5388
   doc in Compile := {
     val path = (doc in Compile).value
@@ -83,7 +85,7 @@ lazy val docOptions = Seq(
 
 lazy val parserSettings: Seq[Setting[_]] = Seq(
   isSnapshot := true,
-  name := "NetLogo-Parser",
+  name := "parser",
   version := "0.0.1",
   unmanagedSourceDirectories in Compile += file(".").getAbsoluteFile / "parser-core" / "src" / "main"
 )
@@ -99,45 +101,48 @@ lazy val parserCore = (project in file("parser-core")).
   settings(commonSettings: _*).
   settings(skip in (Compile, compile) := true)
 
-lazy val parserJvm = (project in file ("parser-jvm")).
-  dependsOn(sharedResources).
-  settings(commonSettings: _*).
-  settings(parserSettings: _*).
-  settings(jvmSettings: _*).
-  settings(scalatestSettings: _*).
-  settings(
-    mappings in (Compile, packageBin) ++= mappings.in(sharedResources, Compile, packageBin).value,
-    mappings in (Compile, packageSrc) ++= mappings.in(sharedResources, Compile, packageSrc).value,
-    libraryDependencies += "org.scala-lang.modules" %% "scala-parser-combinators" % "1.0.3"
-  )
-
 lazy val macros = (project in file("macro")).
   dependsOn(sharedResources).
   settings(commonSettings: _*).
-  settings(
-    scalaVersion := "2.11.2",
-    libraryDependencies += "org.scala-lang" % "scala-reflect" % scalaVersion.value
-  )
+  settings(libraryDependencies += "org.scala-lang" % "scala-reflect" % scalaVersion.value)
 
-lazy val parserJs = (project in file ("parser-js")).
-  dependsOn(sharedResources % "compile-internal->compile").
-  dependsOn(macros % "compile-internal->compile;test-internal->compile").
+lazy val parser = CrossProject("parser", file("."),
+  new CrossType {
+    override def projectDir(crossBase: File, projectType: String): File =
+      crossBase / s"parser-$projectType"
+    override def sharedSrcDir(projectBase: File, conf: String): Option[File] =
+      Some(projectBase / "parser-core" / "src" / conf)
+  }).
   settings(commonSettings: _*).
   settings(parserSettings: _*).
-  settings(scalaJSSettings: _*).
-  settings(publicationSettings: _*).
-  settings(utest.jsrunner.Plugin.utestJsSettings: _*).
-  settings(
-    name := "parser-js",
-    isSnapshot := true,
-    scalaVersion := "2.11.2",
-    testFrameworks += new TestFramework("utest.jsrunner.JsFramework"),
-    libraryDependencies += "org.scalajs" %%% "scala-parser-combinators" % "1.0.2"
-  )
+  jsConfigure(_.dependsOn(sharedResources % "compile-internal->compile")).
+  jsConfigure(_.dependsOn(macros % "compile-internal->compile;test-internal->compile")).
+  jsSettings(publicationSettings: _*).
+  jsSettings(
+      name := "parser-js",
+      ivyScala := ivyScala.value map { _.copy(overrideScalaVersion = true) },
+      resolvers += Resolver.sonatypeRepo("releases"),
+      testFrameworks += new TestFramework("utest.runner.Framework"),
+      libraryDependencies ++= {
+      import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport.toScalaJSGroupID
+        Seq(
+          "org.scala-js" %%%! "scala-parser-combinators" % "1.0.2",
+          "com.lihaoyi"  %%%! "utest" % "0.3.1"
+      )}).
+  jvmConfigure(_.dependsOn(sharedResources)).
+  jvmSettings(jvmSettings: _*).
+  jvmSettings(scalatestSettings: _*).
+  jvmSettings(
+      mappings in (Compile, packageBin) ++= mappings.in(sharedResources, Compile, packageBin).value,
+      mappings in (Compile, packageSrc) ++= mappings.in(sharedResources, Compile, packageSrc).value,
+      libraryDependencies += "org.scala-lang.modules" %% "scala-parser-combinators" % "1.0.3"
+    )
 
+lazy val parserJVM = parser.jvm
+lazy val parserJS  = parser.js
 
 lazy val jvmBuild = (project in file ("jvm")).
-  dependsOn(parserJvm % "test-internal->test;compile-internal->compile").
+  dependsOn(parserJVM % "test-internal->test;compile-internal->compile").
   configs(FastMediumSlow.configs: _*).
   settings(commonSettings: _*).
   settings(jvmSettings: _*).
@@ -156,8 +161,8 @@ lazy val jvmBuild = (project in file ("jvm")).
     // Used by the publish-versioned plugin
     isSnapshot := true,
     version := "5.2.0",
-    mappings in (Compile, packageBin) ++= mappings.in(parserJvm, Compile, packageBin).value,
-    mappings in (Compile, packageSrc) ++= mappings.in(parserJvm, Compile, packageSrc).value,
+    mappings in (Compile, packageBin) ++= mappings.in(parserJVM, Compile, packageBin).value,
+    mappings in (Compile, packageSrc) ++= mappings.in(parserJVM, Compile, packageSrc).value,
     unmanagedResourceDirectories in Compile += baseDirectory.value / "resources" / "main",
     unmanagedResourceDirectories in Test += baseDirectory.value / "resources" / "test"
   )
