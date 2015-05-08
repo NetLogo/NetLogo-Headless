@@ -34,15 +34,11 @@ lazy val scalatestSettings = Seq(
   libraryDependencies += "org.scalatest" %% "scalatest" % "2.2.1" % "test"
 )
 
-// JMock isn't declaring its dependency upon Hamcrest in 2.6.0, but hopefully
-// it will fix this in future versions, and then we can get rid of the Hamcrest
-// dependency --JAB (10/2/14)
 lazy val testSettings = scalatestSettings ++ Seq(
   libraryDependencies ++= Seq(
-    "org.jmock" % "jmock" % "2.6.0" % "test",
-    "org.jmock" % "jmock-legacy" % "2.6.0" % "test",
-    "org.jmock" % "jmock-junit4" % "2.6.0" % "test",
-    "org.hamcrest" % "hamcrest-core" % "1.3" % "test",
+    "org.jmock" % "jmock" % "2.8.1" % "test",
+    "org.jmock" % "jmock-legacy" % "2.8.1" % "test",
+    "org.jmock" % "jmock-junit4" % "2.8.1" % "test",
     "org.scalacheck" %% "scalacheck" % "1.12.0" % "test",
     "org.reflections" % "reflections" % "0.9.9" % "test",
     "org.slf4j" % "slf4j-nop" % "1.7.12" % "test"

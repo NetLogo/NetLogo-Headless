@@ -8,7 +8,7 @@ import org.hamcrest.{Description, BaseMatcher, Matcher}
 import reflect.ClassTag
 
 import
-  org.jmock.{ api, Expectations, integration, lib, Mockery, Sequence },
+  org.jmock.{ AbstractExpectations, api, Expectations, integration, lib, Mockery, Sequence },
     api.Action,
     integration.junit4.JUnit4Mockery,
     lib.{ concurrent, legacy },
@@ -127,9 +127,9 @@ trait MockSuite extends FunSuite {
   //  which can be statically imported at the top of the test code.)
 
   //  equal(n): The argument is equal to n.
-  def equal[T](t:T) = Expectations.equal(t)
+  def equal[T](t:T) = AbstractExpectations.equal(t)
   //  same(o): The argument is the same object as o.
-  def same[T](t:T) = Expectations.same(t)
+  def same[T](t:T) = AbstractExpectations.same(t)
 
   // a(Class<T> type) an(Class<T> type) aNonNull(Class<T> type)
   // The argument is an instance of type or a subclass of type and not null.
@@ -161,7 +161,7 @@ trait MockSuite extends FunSuite {
 
   // aNull(Class<T> type): The argument is null.
   // The type argument is required to force Java to type-check the argument at compile time.
-  def aNull[T : ClassTag]: Matcher[T] = Expectations.aNull(erasure[T])
+  def aNull[T : ClassTag]: Matcher[T] = AbstractExpectations.aNull(erasure[T])
 
   //  not(m): The argument does not match the Matcher m.
   def not[T](m:Matcher[T]) = arg(org.hamcrest.core.IsNot.not(m))
@@ -187,8 +187,8 @@ trait MockSuite extends FunSuite {
   //
 
   def will(a:Action) = expectations.will(a)
-  def returnValue[T](t:T) = Expectations.returnValue(t)
-  def throwException[T <: Throwable](t:T) = Expectations.throwException(t)
+  def returnValue[T](t:T) = AbstractExpectations.returnValue(t)
+  def throwException[T <: Throwable](t:T) = AbstractExpectations.throwException(t)
   def willReturn[T](t:T) = will(returnValue(t))
   def willThrow[T <: Throwable](t:T) = will(throwException(t))
   //  will(doAll(a1, a2, ..., an)): Do all actions a1 to an on every invocation.
