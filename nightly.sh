@@ -25,13 +25,13 @@ echo "*** done: test:compile"
 if [ ${PIPESTATUS[0]} -ne 0 ] ; then echo "*** FAILED: fast:test"; exit 1; fi
 echo "*** done: fast:test"
 
-./sbt parserJvm/test 2>&1 | tee tmp/nightly/0-parser-jvm-test.txt
-if [ ${PIPESTATUS[0]} -ne 0 ] ; then echo "*** FAILED: parserJvm/test"; exit 1; fi
-echo "*** done: parserJvm/test"
+./sbt parserJVM/test 2>&1 | tee tmp/nightly/0-parser-jvm-test.txt
+if [ ${PIPESTATUS[0]} -ne 0 ] ; then echo "*** FAILED: parserJVM/test"; exit 1; fi
+echo "*** done: parserJVM/test"
 
-./sbt parserJs/test 2>&1 | tee tmp/nightly/0-parser-js-test.txt
-if [ ${PIPESTATUS[0]} -ne 0 ] ; then echo "*** FAILED: parserJs/test"; exit 1; fi
-echo "*** done: parserJs/test"
+./sbt parserJS/test 2>&1 | tee tmp/nightly/0-parser-js-test.txt
+if [ ${PIPESTATUS[0]} -ne 0 ] ; then echo "*** FAILED: parserJS/test"; exit 1; fi
+echo "*** done: parserJS/test"
 
 ./sbt jvmBuild/nogen jvmBuild/fast:test 2>&1 | tee tmp/nightly/1-nogen-fast-test.txt
 if [ ${PIPESTATUS[0]} -ne 0 ] ; then echo "*** FAILED: nogen fast:test"; exit 1; fi
