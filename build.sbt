@@ -150,7 +150,7 @@ lazy val jvmBuild = (project in file ("jvm")).
   settings(
     version := "5.2.0",
     isSnapshot := true,
-    libraryDependencies += "org.ow2.asm" % "asm-all" % "5.0.3",
+    libraryDependencies += "org.ow2.asm" % "asm-all" % "5.0.4",
     mainClass in Compile := Some("org.nlogo.headless.Main"),
     onLoadMessage := "",
     name := "NetLogoHeadless",
