@@ -102,6 +102,7 @@ class TokenizerTests extends FunSuite {
     assertResult("Illegal number format")(
       firstBadToken(tokens).get.value)
   }
+
   test("TokenizeBadNumberFormat2") {
     val tokens = tokenizeRobustly("__ignore 3__ignore 4")
     assertResult(9)(firstBadToken(tokens).get.start)
@@ -109,6 +110,13 @@ class TokenizerTests extends FunSuite {
     assertResult("Illegal number format")(
       firstBadToken(tokens).get.value)
   }
+
+  test("TokenizeIdentStartingWithDash") {
+    val tokens   = tokenizeRobustly("-WOLF-SHAPE-00013")
+    val expected = "Token(-WOLF-SHAPE-00013,Ident,-WOLF-SHAPE-00013)"
+    assertResult(expected)(tokens.mkString)
+  }
+
   test("TokenizeLooksLikePotentialNumber") {
     val tokens = tokenize("-.")
     val expected = "Token(-.,Ident,-.)"

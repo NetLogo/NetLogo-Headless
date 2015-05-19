@@ -31,7 +31,7 @@ class TokenLexer {
       val r = Seq(extensionLiteral, punct, comment, numericLiteral, string, ident, illegalCharacter)
         .foldLeft((Option.empty[Token], input)) {
         case ((Some(token), remaining), (prefixDetector, tokenizer)) => (Some(token), remaining)
-        case ((None, remaining), (prefixDetector, tokenizer)) =>
+        case ((None,        remaining), (prefixDetector, tokenizer)) =>
           remaining.assembleToken(prefixDetector, tokenizer)
             .map(o => (Some(o._1), o._2))
             .getOrElse((None, remaining))
@@ -93,7 +93,9 @@ class TokenLexer {
 
   def numericLiteral: (LexPredicate, TokenGenerator) =
     (chain(
-      characterMatching(c => Character.isDigit(c) || c == '.' || c == '-'),
+      anyOf(characterMatching(Character.isDigit),
+        chain(anyOf('.', '-'),
+          anyOf(characterMatching(Character.isDigit), chain('.', characterMatching(Character.isDigit))))),
       zeroOrMore(c => validIdentifierChar(c))),
       tokenizeLiteral)
 

@@ -25,14 +25,20 @@ object LexOperations {
     }
 
   def anyOf(predicates: LexPredicate*): LexPredicate =
-    { (c: Char) => predicates.map(_(c)).reduce(_ or _) }
+    withFeedback(predicates) {
+      case (preds,            c) if preds.isEmpty => (preds, Finished)
+      case (activePredicates, c)                  =>
+        val results             = activePredicates.map(_(c))
+        val remainingPredicates = (activePredicates zip results).filter(_._2 == Accept).map(_._1)
+        (remainingPredicates, results.reduce(_ or _))
+    }
 
   def chain(ds: LexPredicate*): LexPredicate = {
     @tailrec def attemptMatch(matchers: Seq[LexPredicate], c: Char): (Seq[LexPredicate], DetectorStates) =
       matchers.head(c) match {
         case Finished if matchers.tail.nonEmpty => attemptMatch(matchers.tail, c)
-        case Finished => (Seq(), Finished)
-        case state => (matchers, state)
+        case Finished                           => (Seq(), Finished)
+        case state                              => (matchers, state)
       }
     withFeedback(ds) {
       case (matchers, c) => attemptMatch(matchers, c)

@@ -3,6 +3,11 @@ LetSimple
   O> let x 5 set glob1 x
   glob1 => 5
 
+LetNameStartingWithDash
+  globals [glob1]
+  O> let -WOLF-SHAPE-00013 5 set glob1 -WOLF-SHAPE-00013
+  glob1 => 5
+
 LetWithAsk
   turtles-own [tvar]
   O> crt 5
