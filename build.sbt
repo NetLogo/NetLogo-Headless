@@ -151,6 +151,7 @@ lazy val jvmBuild = (project in file ("jvm")).
     version := "5.2.0",
     isSnapshot := true,
     libraryDependencies += "org.ow2.asm" % "asm-all" % "5.0.4",
+    (fullClasspath in Runtime) ++= (fullClasspath in Runtime in parserJVM).value,
     mainClass in Compile := Some("org.nlogo.headless.Main"),
     onLoadMessage := "",
     name := "NetLogoHeadless",

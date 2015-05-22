@@ -7,4 +7,4 @@ fi
 rlwrap ./sbt \
   -Djline.terminal=jline.UnsupportedTerminal \
   --warn \
-  "run-main org.nlogo.headless.Shell $ARG"
+  "jvmBuild/runMain org.nlogo.headless.Shell $ARG"
