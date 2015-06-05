@@ -41,13 +41,13 @@ object ModelReader {
     model.code + s"\n$SEPARATOR\n" +
       WidgetReader.formatInterface(model.widgets, parser) + s"\n$SEPARATOR\n" +
       model.info + s"\n$SEPARATOR\n" +
-      model.turtleShapes.mkString("\n") + s"\n$SEPARATOR\n" +
+      ShapeParser.formatVectorShapes(model.turtleShapes) + s"\n$SEPARATOR\n" +
       model.version + s"\n$SEPARATOR" +
       (if(model.previewCommands.nonEmpty) model.previewCommands.mkString("\n", "\n", "\n") else "\n") + s"$SEPARATOR\n" +
       s"$SEPARATOR" +
       (if(model.behaviorSpace.nonEmpty) model.behaviorSpace.mkString("\n", "\n", "\n") else "\n") + s"$SEPARATOR\n" +
       s"$SEPARATOR\n" +
-      model.linkShapes.mkString("\n") + s"\n$SEPARATOR\n" +
+      ShapeParser.formatLinkShapes(model.linkShapes) + s"\n$SEPARATOR\n" +
       s"$SEPARATOR\n"
   }
 }

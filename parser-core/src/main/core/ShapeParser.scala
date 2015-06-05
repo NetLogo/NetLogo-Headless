@@ -2,13 +2,26 @@
 
 package org.nlogo.core
 
-import Shape.{ Element, RgbColor, LinkLine => ShapeLinkLine }
+import Shape.{
+  Circle      => CoreCircle,
+  Element,
+  Line        => CoreLine,
+  LinkLine    => CoreLinkLine,
+  LinkShape   => CoreLinkShape,
+  Polygon     => CorePolygon,
+  Rectangle   => CoreRectangle,
+  RgbColor,
+  VectorShape => CoreVectorShape }
 
 object ShapeParser {
 
   def parseVectorShapes(lines: Seq[String]): Seq[VectorShape] = parseNewlineSeparatedGroups(lines, parseShape)
 
   def parseLinkShapes(lines: Seq[String]): Seq[LinkShape] = parseNewlineSeparatedGroups(lines, parseLink)
+
+  def formatVectorShapes(shapes: Seq[CoreVectorShape]): String = shapes.map(formatShape).mkString("\n\n")
+
+  def formatLinkShapes(shapes: Seq[CoreLinkShape]): String = shapes.map(formatLink).mkString("\n\n")
 
   private def parseNewlineSeparatedGroups[A](lines: Seq[String], f: List[String] => A): Seq[A] =
     lines.foldLeft(List[List[String]](List[String]())) {
@@ -23,8 +36,11 @@ object ShapeParser {
     lines.toList match {
       case name :: rotatable :: editableColorIndex :: elements =>
         VectorShape(name, rotatable == "true", editableColorIndex.toInt, elements.map(parseElement): _*)
-      case _ => throw new IllegalStateException(s"Invalid vector shape: ${lines.mkString("\n")}")
+      case _ => throw new IllegalStateException(s"Invalid vector shape:\n ${lines.mkString("\n")}")
     }
+
+  private def formatShape(shape: CoreVectorShape): String =
+    (Seq(shape.name, shape.rotatable, shape.editableColorIndex) ++ shape.elements.map(formatElement)).mkString("\n")
 
   private def parseLink(lines: List[String]): LinkShape =
     lines.toList match {
@@ -34,14 +50,22 @@ object ShapeParser {
         throw new IllegalStateException(s"Invalid link shape: ${lines.mkString("\n")}")
     }
 
+  private def formatLink(link: CoreLinkShape): String =
+    Seq(link.name, link.curviness, link.linkLines.map(formatLinkLine).mkString("\n"), formatShape(link.indicator)).mkString("\n")
+
   private def parseLinkLine(line: String): LinkLine =
     line.split(' ').toList match {
-      case xcor::"1"::dashChoices if ShapeLinkLine.dashChoices.contains(dashChoices.map(_.toFloat).toArray) =>
+      case xcor::"1"::dashChoices if CoreLinkLine.dashChoices.contains(dashChoices.map(_.toFloat).toArray) =>
         LinkLine(xcor.toDouble, true, dashChoices.map(_.toFloat))
       case xcor::"1"::dashChoices => LinkLine(xcor.toDouble, true, Seq(1.0f, 0.0f))
       case xcor::"0"::dashChoices => LinkLine(xcor.toDouble, false, Seq(0.0f, 1.0f))
       case _ => throw new IllegalStateException(s"Invalid link line: $line")
     }
+
+  private def formatLinkLine(ll: CoreLinkLine): String = {
+    val visibleString = if (ll.isVisible) "1" else "0"
+    (Seq(ll.xcor, visibleString) ++ ll.dashChoices).mkString(" ")
+  }
 
   private def parseElement(s: String): Element =
     try {
@@ -75,6 +99,24 @@ object ShapeParser {
       case e: IllegalArgumentException =>
         throw new IllegalStateException(s"Invalid shape format in file: $s")
     }
+
+  private def formatElement(e: Element): String =
+    e match {
+      case c: CoreCircle    =>
+        Seq("Circle", formatColor(c.color), c.filled, c.marked, c.x, c.y, c.diameter).mkString(" ")
+      case l: CoreLine      =>
+        Seq("Line", formatColor(l.color), l.marked, l.startPoint._1, l.startPoint._2, l.endPoint._1, l.endPoint._2).mkString(" ")
+      case p: CorePolygon   =>
+        (Seq("Polygon", formatColor(p.color), p.filled, p.marked) ++
+          p.points.flatMap(p => Seq(p._1, p._2))).mkString(" ")
+      case r: CoreRectangle =>
+        Seq("Rectangle", formatColor(r.color), r.filled, r.marked,
+          r.upperLeftCorner._1, r.upperLeftCorner._2,
+          r.lowerRightCorner._1, r.lowerRightCorner._2).mkString(" ")
+    }
+
+  private def formatColor(color: RgbColor): String =
+   (color.alpha << 24 | color.red << 16 | color.green << 8 | color.blue).toString
 
   private def color(i: Int): RgbColor = {
     val (r, g, b) = ((i >> 16) & 0xFF, (i >> 8) & 0xFF, i & 0xFF)
