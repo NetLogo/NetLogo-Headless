@@ -6,9 +6,10 @@ import workspace.WorldLoader
 import org.nlogo.plot.PlotLoader
 import org.nlogo.agent.{BooleanConstraint, ChooserConstraint, InputBoxConstraint, NumericConstraint}
 import org.nlogo.api.{ValueConstraint, Version}
-import org.nlogo.core.{model, ShapeParser, CompilerException, Program, ConstraintSpecification, LogoList, Model},
+import org.nlogo.core.{model, Shape, ShapeParser, CompilerException, Program, ConstraintSpecification, LogoList, Model},
   model.ModelReader,
-  ConstraintSpecification._
+  ConstraintSpecification._,
+  Shape.{ LinkShape => CoreLinkShape, VectorShape => CoreVectorShape }
 
 import org.nlogo.shape.{ShapeConverter, LinkShape, VectorShape}
 
@@ -59,8 +60,8 @@ class HeadlessModelOpener(ws: HeadlessWorkspace) {
     if (!previewCommands.trim.isEmpty) ws.previewCommands = previewCommands
 
     // parse turtle and link shapes, updating the workspace.
-    parseShapes(model.turtleShapes.toArray,
-                model.linkShapes.toArray,
+    parseShapes(model.turtleShapes,
+                model.linkShapes,
                 netLogoVersion)
 
     ws.init()
@@ -74,15 +75,15 @@ class HeadlessModelOpener(ws: HeadlessWorkspace) {
   }
 
 
-  private def parseShapes(turtleShapeLines: Array[String], linkShapeLines: Array[String], netLogoVersion: String) {
+  private def parseShapes(turtleShapes: List[CoreVectorShape], linkShapes: List[CoreLinkShape], netLogoVersion: String) {
     ws.world.turtleShapeList.replaceShapes(
-      ShapeParser.parseVectorShapes(turtleShapeLines).map(ShapeConverter.baseVectorShapeToVectorShape))
-    if (turtleShapeLines.isEmpty) ws.world.turtleShapeList.add(VectorShape.getDefaultShape)
+      turtleShapes.map(ShapeConverter.baseVectorShapeToVectorShape))
+    if (turtleShapes.isEmpty) ws.world.turtleShapeList.add(VectorShape.getDefaultShape)
 
     // A new model is being loaded, so get rid of all previous shapes
     ws.world.linkShapeList.replaceShapes(
-      ShapeParser.parseLinkShapes(linkShapeLines).map(ShapeConverter.baseLinkShapeToLinkShape))
-    if (linkShapeLines.isEmpty) ws.world.linkShapeList.add(LinkShape.getDefaultLinkShape)
+      linkShapes.map(ShapeConverter.baseLinkShapeToLinkShape))
+    if (linkShapes.isEmpty) ws.world.linkShapeList.add(LinkShape.getDefaultLinkShape)
   }
 
   private def finish(constraints: Map[String, ConstraintSpecification], program: Program, interfaceGlobalCommands: String) {

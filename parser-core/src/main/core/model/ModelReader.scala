@@ -2,7 +2,7 @@
 
 package org.nlogo.core.model
 
-import org.nlogo.core.{LiteralParser, Model}
+import org.nlogo.core.{ LiteralParser, Model, ShapeParser }
 
 object ModelReader {
 
@@ -28,8 +28,10 @@ object ModelReader {
       throw new RuntimeException(
         "Models must have 12 sections, this had " + sections.size)
 
-    val Vector(code, interface, info, turtleShapes, version, previewCommands, systemDynamics,
-             behaviorSpace, hubNetClient, linkShapes, modelSettings, deltaTick) = sections
+    val Vector(code, interface, info, turtleShapeLines, version, previewCommands, systemDynamics,
+             behaviorSpace, hubNetClient, linkShapeLines, modelSettings, deltaTick) = sections
+    val turtleShapes = ShapeParser.parseVectorShapes(turtleShapeLines)
+    val linkShapes   = ShapeParser.parseLinkShapes(linkShapeLines)
     new Model(code.mkString("\n"), WidgetReader.readInterface(interface.toList, parser),
               info.mkString("\n"), version.head, turtleShapes.toList, behaviorSpace.toList,
               linkShapes.toList, previewCommands.toList)
