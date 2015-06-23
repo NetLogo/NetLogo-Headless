@@ -57,3 +57,15 @@ SetBreedOfUnbreededTurtleWithVar
   breed [wolves wolf]
   O> crt 1 [ set apples 10 set breed wolves set apples 20 ]
   [apples] of wolf 0 => 20
+
+DontPropagateGivenShapeOnHatch
+  breed [apples apple]
+  breed [grapes grape]
+  O> create-apples 1 [ set shape "car" hatch-grapes 1 ]
+  [shape] of grape 1 => "default"
+
+DropGivenShapeAfterSwitchingBreeds
+  breed [apples apple]
+  breed [grapes grape]
+  O> create-apples 1 [ set shape "car" set breed grapes ]
+  [shape] of grape 0 => "default"
