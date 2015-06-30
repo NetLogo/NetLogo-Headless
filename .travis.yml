@@ -7,7 +7,7 @@ scala: 2.11.6
 before_install:
   - git submodule update --init --recursive
 install:
-  - sbt update
+  - ./sbt update
 script:
 - ./nightly.sh
 
