@@ -18,23 +18,23 @@ The dependencies are as follows
   sharedResources
     ^          ^
     |          |
-parserJvm    macros
+parserJVM    macros
     |          |
-jvmBuild    parserJs
+jvmBuild    parserJS
 ```
 
 
 SBT works as it normally does.
 You can prefix tasks with the project name, like:
 ```sbt
-> parserJvm/compile
-[info] Updating {file:~/NetLogo-Headless/}parserJvm...
+> parserJVM/compile
+[info] Updating {file:~/NetLogo-Headless/}parserJVM...
 ```
 or you can switch "into" a project and use the commands without prefix:
 ```sbt
-> project parserJvm
+> project parserJVM
 > compile
-[info] Updating {file:~/NetLogo-Headless/}parserJvm...
+[info] Updating {file:~/NetLogo-Headless/}parserJVM...
 ```
 
 ### Macros
