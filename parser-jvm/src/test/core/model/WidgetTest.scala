@@ -110,9 +110,9 @@ class WidgetTest extends FunSuite {
                     |NIL
                     |1""".stripMargin.split("\n").toList
     assert(ButtonReader.validate(button))
-    assert(Button(Some("go"),202,101,271,134,"go",true) == ButtonReader.parse(button))
+    assert(Button(Some("go"),202,101,271,134,"go",true,false) == ButtonReader.parse(button))
     assert(ButtonReader.validate(ButtonReader.format(ButtonReader.parse(button)).split("\n").toList))
-    assert(Button(Some("go"),202,101,271,134,"go",true) ==
+    assert(Button(Some("go"),202,101,271,134,"go",true,false) ==
       ButtonReader.parse(ButtonReader.format(ButtonReader.parse(button)).split("\n").toList))
   }
 
@@ -134,9 +134,9 @@ class WidgetTest extends FunSuite {
                     |NIL
                     |1""".stripMargin.split("\n").toList
     assert(ButtonReader.validate(button))
-    assert(Button(None,202,101,271,134,"go",true) == ButtonReader.parse(button))
+    assert(Button(None,202,101,271,134,"go",true,false) == ButtonReader.parse(button))
     assert(ButtonReader.validate(ButtonReader.format(ButtonReader.parse(button)).split("\n").toList))
-    assert(Button(None,202,101,271,134,"go",true) ==
+    assert(Button(None,202,101,271,134,"go",true,false) ==
       ButtonReader.parse(ButtonReader.format(ButtonReader.parse(button)).split("\n").toList))
     assert(None == ButtonReader.parse(button).display)
   }
@@ -159,9 +159,34 @@ class WidgetTest extends FunSuite {
                     |NIL
                     |1""".stripMargin.split("\n").toList
     assert(ButtonReader.validate(button))
-    assert(Button(None,202,101,271,134,"\"bar\"",true) == ButtonReader.parse(button))
+    assert(Button(None,202,101,271,134,"\"bar\"",true,false) == ButtonReader.parse(button))
     assert(ButtonReader.validate(ButtonReader.format(ButtonReader.parse(button)).split("\n").toList))
-    assert(Button(None,202,101,271,134,"\"bar\"",true) ==
+    assert(Button(None,202,101,271,134,"\"bar\"",true,false) ==
+      ButtonReader.parse(ButtonReader.format(ButtonReader.parse(button)).split("\n").toList))
+    assert(None == ButtonReader.parse(button).display)
+  }
+
+  test("button disabled until ticks start") {
+    val button = """|BUTTON
+                    |202
+                    |101
+                    |271
+                    |134
+                    |NIL
+                    |\"bar\"
+                    |T
+                    |1
+                    |T
+                    |OBSERVER
+                    |NIL
+                    |NIL
+                    |NIL
+                    |NIL
+                    |0""".stripMargin.split("\n").toList
+    assert(ButtonReader.validate(button))
+    assert(Button(None,202,101,271,134,"\"bar\"",true,true) == ButtonReader.parse(button))
+    assert(ButtonReader.validate(ButtonReader.format(ButtonReader.parse(button)).split("\n").toList))
+    assert(Button(None,202,101,271,134,"\"bar\"",true,true) ==
       ButtonReader.parse(ButtonReader.format(ButtonReader.parse(button)).split("\n").toList))
     assert(None == ButtonReader.parse(button).display)
   }
@@ -326,14 +351,14 @@ class WidgetTest extends FunSuite {
                   |"grass / 4" 1.0 0 -10899396 true "" ";; divide by four to keep it within similar\n;; range as wolf and sheep populations\nplot count patches with [ pcolor = green ] / 4" """.stripMargin.split("\n").toList
     assert(PlotReader.validate(plot))
     assert(Plot("populations", 33, 265, 369, 408, "time", "pop.", 0.0, 100.0, 0.0, 100.0, true, true, "", "",
-      List(Pen("sheep", 1.0, 0, -13345367, true, "", "plot count sheep"), 
-           Pen("wolves", 1.0, 0, -2674135, true, "", "plot count wolves"), 
+      List(Pen("sheep", 1.0, 0, -13345367, true, "", "plot count sheep"),
+           Pen("wolves", 1.0, 0, -2674135, true, "", "plot count wolves"),
            Pen("grass / 4", 1.0, 0, -10899396, true, "", ";; divide by four to keep it within similar\n;; range as wolf and sheep populations\nplot count patches with [ pcolor = green ] / 4"))) ==
          PlotReader.parse(plot))
     assert(PlotReader.validate(PlotReader.format(PlotReader.parse(plot)).split("\n").toList))
     assert(Plot("populations", 33, 265, 369, 408, "time", "pop.", 0.0, 100.0, 0.0, 100.0, true, true, "", "",
-      List(Pen("sheep", 1.0, 0, -13345367, true, "", "plot count sheep"), 
-           Pen("wolves", 1.0, 0, -2674135, true, "", "plot count wolves"), 
+      List(Pen("sheep", 1.0, 0, -13345367, true, "", "plot count sheep"),
+           Pen("wolves", 1.0, 0, -2674135, true, "", "plot count wolves"),
            Pen("grass / 4", 1.0, 0, -10899396, true, "", ";; divide by four to keep it within similar\n;; range as wolf and sheep populations\nplot count patches with [ pcolor = green ] / 4"))) ==
       PlotReader.parse(PlotReader.format(PlotReader.parse(plot)).split("\n").toList))
   }
