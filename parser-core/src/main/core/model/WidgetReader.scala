@@ -186,7 +186,7 @@ object ButtonReader extends BaseWidgetReader {
     val List(_, left: Int, top: Int, right: Int, bottom: Int, rawDisplay: Option[String] @unchecked,
       source: String, forever: Boolean, _, _, buttonType: String, _, actionKey: String, _, _,
       enabledBeforeTicks: Int) = vals
-    Button(rawDisplay, left, top, right, bottom, source, forever, enabledBeforeTicks == 0, buttonType, actionKey)
+    Button(rawDisplay, left, top, right, bottom, source, forever, buttonType, actionKey, enabledBeforeTicks == 0)
   }
 }
 

@@ -110,9 +110,9 @@ class WidgetTest extends FunSuite {
                     |NIL
                     |1""".stripMargin.split("\n").toList
     assert(ButtonReader.validate(button))
-    assert(Button(Some("go"),202,101,271,134,"go",true,false) == ButtonReader.parse(button))
+    assert(Button(Some("go"),202,101,271,134,"go",true) == ButtonReader.parse(button))
     assert(ButtonReader.validate(ButtonReader.format(ButtonReader.parse(button)).split("\n").toList))
-    assert(Button(Some("go"),202,101,271,134,"go",true,false) ==
+    assert(Button(Some("go"),202,101,271,134,"go",true) ==
       ButtonReader.parse(ButtonReader.format(ButtonReader.parse(button)).split("\n").toList))
   }
 
@@ -134,9 +134,9 @@ class WidgetTest extends FunSuite {
                     |NIL
                     |1""".stripMargin.split("\n").toList
     assert(ButtonReader.validate(button))
-    assert(Button(None,202,101,271,134,"go",true,false) == ButtonReader.parse(button))
+    assert(Button(None,202,101,271,134,"go",true) == ButtonReader.parse(button))
     assert(ButtonReader.validate(ButtonReader.format(ButtonReader.parse(button)).split("\n").toList))
-    assert(Button(None,202,101,271,134,"go",true,false) ==
+    assert(Button(None,202,101,271,134,"go",true) ==
       ButtonReader.parse(ButtonReader.format(ButtonReader.parse(button)).split("\n").toList))
     assert(None == ButtonReader.parse(button).display)
   }
@@ -159,9 +159,9 @@ class WidgetTest extends FunSuite {
                     |NIL
                     |1""".stripMargin.split("\n").toList
     assert(ButtonReader.validate(button))
-    assert(Button(None,202,101,271,134,"\"bar\"",true,false) == ButtonReader.parse(button))
+    assert(Button(None,202,101,271,134,"\"bar\"",true) == ButtonReader.parse(button))
     assert(ButtonReader.validate(ButtonReader.format(ButtonReader.parse(button)).split("\n").toList))
-    assert(Button(None,202,101,271,134,"\"bar\"",true,false) ==
+    assert(Button(None,202,101,271,134,"\"bar\"",true) ==
       ButtonReader.parse(ButtonReader.format(ButtonReader.parse(button)).split("\n").toList))
     assert(None == ButtonReader.parse(button).display)
   }
@@ -184,9 +184,9 @@ class WidgetTest extends FunSuite {
                     |NIL
                     |0""".stripMargin.split("\n").toList
     assert(ButtonReader.validate(button))
-    assert(Button(None,202,101,271,134,"\"bar\"",true,true) == ButtonReader.parse(button))
+    assert(Button(None,202,101,271,134,"\"bar\"",true,disableUntilTicksStart = true) == ButtonReader.parse(button))
     assert(ButtonReader.validate(ButtonReader.format(ButtonReader.parse(button)).split("\n").toList))
-    assert(Button(None,202,101,271,134,"\"bar\"",true,true) ==
+    assert(Button(None,202,101,271,134,"\"bar\"",true,disableUntilTicksStart = true) ==
       ButtonReader.parse(ButtonReader.format(ButtonReader.parse(button)).split("\n").toList))
     assert(None == ButtonReader.parse(button).display)
   }
