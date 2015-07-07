@@ -1,4 +1,5 @@
 import org.scalajs.sbtplugin.cross.{ CrossProject, CrossType }
+import org.scalastyle.sbt.ScalastylePlugin.scalastyleTarget
 
 lazy val netlogoVersion = taskKey[String]("from api.Version")
 
@@ -15,7 +16,10 @@ lazy val commonSettings = Seq(
   onLoadMessage := "",
   scalaVersion := "2.11.7",
   // don't cross-build for different Scala versions
-  crossPaths := false
+  crossPaths := false,
+  scalastyleTarget in Compile := {
+    (target in root).value / s"scalastyle-result-${name.value}.xml"
+  }
 )
 
 lazy val jvmSettings = Seq(

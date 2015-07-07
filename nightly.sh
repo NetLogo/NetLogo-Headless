@@ -60,8 +60,8 @@ echo "*** done: nogen slow:test"
 if [ ${PIPESTATUS[0]} -ne 0 ] ; then echo "*** FAILED: depend"; exit 1; fi
 echo "*** done: depend"
 
-./sbt jvmBuild/scalastyle parserCore/scalastyle parserJvm/scalastyle macros/scalastyle parserJs/scalastyle 2>&1 | tee tmp/nightly/6-scalastyle.txt
-if [ `grep error target/scalastyle-result.xml | wc -l` -ne 0 ] ; then echo "*** FAILED: scalastyle"; exit 1; fi
+./sbt jvmBuild/scalastyle parserCore/scalastyle parserJVM/scalastyle macros/scalastyle parserJS/scalastyle 2>&1 | tee tmp/nightly/6-scalastyle.txt
+if [[ `ls target/scalastyle-result*.xml | wc -l` -ne 5 || `grep error target/scalastyle-result*.xml | wc -l` -ne 0 ]] ; then echo "*** FAILED: scalastyle"; exit 1; fi
 echo "*** done: scalastyle"
 
 echo "****** all done!"
