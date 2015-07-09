@@ -70,7 +70,7 @@ object Version {
 
   // 5.2 hasn't incompatibly diverged from 5.0 yet
   def versionForSaving =
-    "NetLogo 5.0"
+    "NetLogo 5.2"
 
   private def versionNumber(v: String) =
     v.substring("NetLogo ".length, "NetLogo 4.0".length)

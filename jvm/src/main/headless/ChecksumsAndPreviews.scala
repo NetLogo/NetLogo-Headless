@@ -149,11 +149,13 @@ object ChecksumsAndPreviews {
         }
       m
     }
+
     def write(m: ChecksumMap, path: String) {
       val fw = new java.io.FileWriter(path)
       m.values.foreach(entry => fw.write(entry.toString + '\n'))
       fw.close()
     }
+
     def getRevisionNumber(modelPath: String): String = {
       val cmds = Array("git", "log", "--pretty=format:%h",
                        new java.io.File(modelPath).getAbsolutePath)
@@ -163,7 +165,7 @@ object ChecksumsAndPreviews {
                                     Array[String](),
                                     new java.io.File("models"))
           .getInputStream))
-      stdInput.readLine().trim
+      Option(stdInput.readLine()).map(_.trim).getOrElse(throw new Exception(s"Filepath $modelPath not found"))
     }
   }
 }

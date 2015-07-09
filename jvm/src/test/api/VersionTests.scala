@@ -9,14 +9,14 @@ class VersionTests extends FunSuite {
   /// update this section every time the version changes -- ev 11/7/07
   test("currentVersion") {
     // these differ from the current version in suffix only
-    assert(compatibleVersion("NetLogo 5.0"))
-    assert(compatibleVersion("NetLogo 5.0RC1"))
-    assert(compatibleVersion("NetLogo 5.0beta1"))
-    assert(compatibleVersion("NetLogo 5.0pre1"))
-    assert(compatibleVersion("NetLogo 5.0alpha1"))
-    assert(compatibleVersion("NetLogo 5.0.1"))
-    assert(compatibleVersion("NetLogo 5.0.1weirdversion"))
-    assert(compatibleVersion("NetLogo 5.0weirdversion"))
+    assert(compatibleVersion("NetLogo 5.2"))
+    assert(compatibleVersion("NetLogo 5.2RC1"))
+    assert(compatibleVersion("NetLogo 5.2beta1"))
+    assert(compatibleVersion("NetLogo 5.2pre1"))
+    assert(compatibleVersion("NetLogo 5.2alpha1"))
+    assert(compatibleVersion("NetLogo 5.2.1"))
+    assert(compatibleVersion("NetLogo 5.2.1weirdversion"))
+    assert(compatibleVersion("NetLogo 5.2weirdversion"))
   }
   test("futureMinor") {
     // these differ from the current version by minor version only
