@@ -34,7 +34,7 @@ lazy val jvmSettings = Seq(
 lazy val scalatestSettings = Seq(
   // show test failures again at end, after all tests complete.
   // T gives truncated stack traces; change to G if you need full.
-  testOptions in Test += Tests.Argument("-oT"),
+  testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest, "-oT"),
   libraryDependencies += "org.scalatest" %% "scalatest" % "2.2.1" % "test"
 )
 
