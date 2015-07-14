@@ -395,6 +395,8 @@ class TestAllSyntaxes extends FunSuite {
                     |_stderr anything,OTPL,None,0,1,1
                     |_stdout anything,OTPL,None,0,1,1
                     |_stop ,OTPL,None,0,0,0
+                    |_stopinspecting agent,OTPL,None,0,1,1
+                    |_stopinspectingdeadagents ,OTPL,None,0,0,0
                     |_thunkdidfinish ,OTPL,None,0,0,0
                     |_tick ,O---,None,0,0,0
                     |_tickadvance number,O---,None,0,1,1

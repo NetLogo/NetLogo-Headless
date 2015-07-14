@@ -946,6 +946,15 @@ case class _stdout() extends Command {
     Syntax.commandSyntax(
       right = List(Syntax.WildcardType))
 }
+case class _stopinspecting() extends Command {
+  override def syntax =
+    Syntax.commandSyntax(
+      right = List(Syntax.AgentType))
+}
+case class _stopinspectingdeadagents() extends Command {
+  override def syntax =
+    Syntax.commandSyntax()
+}
 case class _subject() extends Reporter {
   override def syntax =
     Syntax.reporterSyntax(
