@@ -17,7 +17,7 @@ libraryDependencies +=
 
 addSbtPlugin("org.scalastyle" %% "scalastyle-sbt-plugin" % "0.6.0")
 
-addSbtPlugin("org.ensime" % "ensime-sbt-cmd" % "0.1.2")
+addSbtPlugin("org.ensime" % "ensime-sbt" % "0.1.7")
 
 addSbtPlugin("com.github.mpeltonen" % "sbt-idea" % "1.5.1")
 
