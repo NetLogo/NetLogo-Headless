@@ -19,6 +19,7 @@ case class Declaration(source: String)                                extends En
 case class Command(command: String,
   kind: AgentKind = AgentKind.Observer, result: Result = Success("")) extends Entry
 case class Reporter(reporter: String, result: Result)                 extends Entry
+case class Compile(result: Result)                                    extends Entry
 
 sealed trait Result
 case class Success       (message: String) extends Result

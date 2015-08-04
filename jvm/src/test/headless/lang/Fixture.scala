@@ -9,7 +9,8 @@ import org.nlogo.core.{CompilerException, Femto, Model, View}
 import CompilerException.{RuntimeErrorAtCompileTimePrefix => runtimePrefix}
 import org.nlogo.nvm.CompilerInterface
 import org.nlogo.headless.test.{RunMode, NormalMode, TestMode, CompileError,
-                                Success, Result, Reporter, Command, AbstractFixture, RuntimeError, StackTrace}
+                                Success, Result, Reporter, Command, Compile,
+                                AbstractFixture, RuntimeError, StackTrace}
 
 trait FixtureSuite extends scalatest.fixture.FunSuite {
   type FixtureParam = Fixture
@@ -112,6 +113,13 @@ class Fixture(name: String) extends AbstractFixture {
     catch catcher(s"command: $command", command.result)
   }
 
+  override def checkCompile(model: Model, compile: Compile) =
+    try {
+      open(model)
+      if (compile.result.isInstanceOf[CompileError])
+        fail("no CompilerException occurred")
+    } catch catcher(s"compile: ${model.code}", compile.result)
+
   // ConstantFolder makes this complicated, by turning some runtime errors into
   // compile-time errors.  Furthermore in RunMode the compile-time error again
   // becomes a runtime error, but with "Runtime error: " tacked onto the front.
@@ -145,5 +153,4 @@ class Fixture(name: String) extends AbstractFixture {
     workspace.open(path)
   def open(model: Model) =
     workspace.openModel(model)
-
 }

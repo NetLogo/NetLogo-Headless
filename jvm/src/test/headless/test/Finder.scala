@@ -92,12 +92,14 @@ trait Finder extends FunSuite with SlowTest {
         val decls =
           t.entries.collect{case d: Declaration => d.source}
             .mkString("\n").trim
-        if (nonDecls.forall(!_.isInstanceOf[Open]))
+
+        // you can't use declarations and opens in the same model
+        assert(t.entries.exists(_.isInstanceOf[Declaration]) && t.entries.exists(_.isInstanceOf[Open]))
+
+        if (! nonDecls.exists(e => e.isInstanceOf[Compile] || e.isInstanceOf[Open]))
           fixture.open(new Model(
             code = decls,
             widgets = StandardWidgets))
-        else
-          assert(t.entries.forall(!_.isInstanceOf[Declaration]))
         nonDecls.foreach{
           case Open(path) =>
             fixture.open(path)
@@ -105,6 +107,10 @@ trait Finder extends FunSuite with SlowTest {
             fixture.runCommand(command, mode)
           case reporter: Reporter =>
             fixture.runReporter(reporter, mode)
+          case compile: Compile =>
+            fixture.checkCompile(
+              new Model(code = decls, widgets = StandardWidgets),
+              compile)
           case _ =>
             throw new IllegalStateException
         }

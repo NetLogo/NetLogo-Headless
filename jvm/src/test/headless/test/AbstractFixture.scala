@@ -15,6 +15,7 @@ trait AbstractFixture {
   def declare(model: Model = Model(widgets = List(defaultView)))
   def open(path: String)
   def open(model: Model)
+  def checkCompile(model: Model, compile: Compile)
   def runCommand(command: Command, mode: TestMode)
   def runReporter(reporter: Reporter, mode: TestMode)
   def readFromString(literal: String): AnyRef

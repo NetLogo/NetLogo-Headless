@@ -25,6 +25,7 @@ object Parser {
   val ReporterRegex = """^(.*)\s+=>\s+(.*)$""".r
   val CommandRegex = """^([OTPL])>\s+(.*)$""".r
   val OpenRegex = """^OPEN>\s+(.*)$""".r
+  val CompileRegex = """^COMPILE>\s+(.*)$""".r
 
   def agentKind(s: String) = s match {
     case "O" => AgentKind.Observer
@@ -36,36 +37,39 @@ object Parser {
         s"unrecognized agent kind: $x")
   }
 
+  private def startsWithStrip(start: String, f: String => Result)(actual: String): Option[Result] =
+    if (actual.startsWith(start))
+      Some(f(actual.stripPrefix(start)))
+    else
+      None
+
+  val errorParsers: Seq[String => Option[Result]] =
+    Seq(startsWithStrip("ERROR ", RuntimeError(_)),
+        startsWithStrip("COMPILER ERROR ", CompileError(_)),
+        startsWithStrip("STACKTRACE ", (s: String) => StackTrace(s.replace("\\n", "\n"))))
+
   def parse(line: String): Entry = {
     if (line.split(' ').headOption.exists(s =>
         Keywords.isKeyword(s) || s.toUpperCase == "BREED"))
       Declaration(line)
     else line.trim match {
       case CommandErrorRegex(kind, command, err) =>
-        if (err.startsWith("ERROR "))
-          Command(command, agentKind(kind),
-            RuntimeError(err.stripPrefix("ERROR ")))
-        else if (err.startsWith("COMPILER ERROR "))
-          Command(command, agentKind(kind),
-            CompileError(err.stripPrefix("COMPILER ERROR ")))
-        else if (err.startsWith("STACKTRACE "))
-          Command(command, agentKind(kind),
-            StackTrace(err.stripPrefix("STACKTRACE ").replace("\\n", "\n")))
-        else
-          throw new IllegalArgumentException(
-            s"error missing!: $err")
+        errorParsers.flatMap(_(err)).headOption
+          .map(Command(command, agentKind(kind), _))
+          .getOrElse(
+            throw new IllegalArgumentException(s"error missing!: $err"))
       case ReporterRegex(reporter, result) =>
-        if (result.startsWith("ERROR" ))
-          Reporter(reporter,
-            RuntimeError(result.stripPrefix("ERROR ")))
-        else if (result.startsWith("STACKTRACE" ))
-          Reporter(reporter,
-            StackTrace(result.stripPrefix("STACKTRACE ").replace("\\n", "\n")))
-        else
-          Reporter(reporter, Success(result))
+        errorParsers.flatMap(_(result)).headOption
+          .map(Reporter(reporter, _))
+          .getOrElse(Reporter(reporter, Success(result)))
       case CommandRegex(kind, command) =>
         Command(command, agentKind(kind))
       case OpenRegex(path) => Open(path)
+      case CompileRegex(err) =>
+        errorParsers.flatMap(_(err)).headOption
+          .map(Compile(_))
+          .getOrElse(
+            throw new IllegalArgumentException(s"error missing!: $err"))
       case _ =>
         throw new IllegalArgumentException(
           s"could not parse: $line")
