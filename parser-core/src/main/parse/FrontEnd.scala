@@ -67,6 +67,9 @@ trait FrontEndMain {
     val verifier = new TaskVariableVerifier
     topLevelDefs.foreach(verifier.visitProcedureDefinition)
 
+    val cfVerifier = new ControlFlowVerifier
+    topLevelDefs.foreach(cfVerifier.visitProcedureDefinition)
+
     (topLevelDefs, structureResults)
   }
 
