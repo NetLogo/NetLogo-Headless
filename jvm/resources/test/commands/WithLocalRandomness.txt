@@ -51,7 +51,6 @@ WithLocalRandomnessCarefully
   glob1 = [who] of turtles => true
 
 WithLocalRandomnessReport
-  globals [glob1]
+  globals [ glob1 ]
   to-report foo with-local-randomness [ report [who] of turtles set glob1 [who] of turtles ] end
-  O> crt 4
-  O> set glob1 foo => ERROR REPORT must be immediately inside a TO-REPORT.
+  COMPILE> COMPILER ERROR REPORT must be immediately inside a TO-REPORT.

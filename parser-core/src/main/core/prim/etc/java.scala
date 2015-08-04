@@ -578,7 +578,8 @@ case class _while() extends Command {
 case class _withlocalrandomness() extends Command {
   override def syntax =
     Syntax.commandSyntax(
-      right = List(Syntax.CommandBlockType))
+      right = List(Syntax.CommandBlockType),
+      introducesContext = true)
 }
 case class _withmax() extends Reporter {
   override def syntax =
@@ -603,7 +604,8 @@ case class _withmin() extends Reporter {
 case class _withoutinterruption() extends Command {
   override def syntax =
     Syntax.commandSyntax(
-      right = List(Syntax.CommandBlockType))
+      right = List(Syntax.CommandBlockType),
+      introducesContext = true)
 }
 case class _xor() extends Reporter {
   override def syntax =

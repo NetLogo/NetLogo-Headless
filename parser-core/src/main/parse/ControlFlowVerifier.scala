@@ -2,12 +2,14 @@
 
 package org.nlogo.parse
 
-import org.nlogo.core.{ prim, AstVisitor, Fail, I18N, ProcedureDefinition, ReporterBlock, CommandBlock, Statement },
-  Fail._,
-  prim.etc.{ _report, _stop }
+import
+  org.nlogo.core.{ AstVisitor, CommandBlock, Fail, I18N,
+                   prim, ProcedureDefinition, ReporterBlock, Statement },
+    Fail._,
+    prim.etc.{ _report, _stop }
 
-
-import scala.collection.mutable.Stack
+import
+  scala.collection.mutable.Stack
 
 class ControlFlowVerifier extends AstVisitor {
 
@@ -33,11 +35,15 @@ class ControlFlowVerifier extends AstVisitor {
         exception(
           I18N.errors.getN("org.nlogo.prim.etc._stop.notAllowedInsideToReport", "STOP"),
           statement)
-      case (_, _: _report) if contextStack.contains(CommandContext) =>
+      case (_,               _: _report) if contextStack.contains(CommandContext) =>
         exception(
           I18N.errors.getN("org.nlogo.prim._report.canOnlyUseInToReport", "REPORT"),
           statement)
-      case _ if (statement.command.syntax.blockAgentClassString.nonEmpty) =>
+      case (ctx,             _: _report) if ctx != ReporterContext =>
+        exception(
+          I18N.errors.getN("org.nlogo.prim._report.mustImmediatelyBeUsedInToReport", "REPORT"),
+          statement)
+      case _ if (statement.command.syntax.introducesContext) =>
         contextStack.push(BlockContext)
         super.visitStatement(statement)
         contextStack.pop()

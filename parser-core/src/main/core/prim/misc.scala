@@ -69,7 +69,8 @@ case class _carefully() extends Command {
   val let: Let = Let()
   override def syntax =
     Syntax.commandSyntax(
-      right = List(Syntax.CommandBlockType, Syntax.CommandBlockType))
+      right = List(Syntax.CommandBlockType, Syntax.CommandBlockType),
+      introducesContext = true)
 }
 case class _commandtask(minArgCount: Int = 0) extends Reporter {
   override def syntax =
