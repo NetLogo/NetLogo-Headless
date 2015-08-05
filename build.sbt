@@ -35,7 +35,10 @@ lazy val scalatestSettings = Seq(
   // show test failures again at end, after all tests complete.
   // T gives truncated stack traces; change to G if you need full.
   testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest, "-oT"),
-  libraryDependencies += "org.scalatest" %% "scalatest" % "2.2.1" % "test"
+  libraryDependencies ++= Seq(
+    "org.scalatest" %% "scalatest" % "2.2.1" % "test",
+    "org.scalacheck" %% "scalacheck" % "1.12.4" % "test"
+  )
 )
 
 lazy val testSettings = scalatestSettings ++ Seq(
@@ -43,7 +46,6 @@ lazy val testSettings = scalatestSettings ++ Seq(
     "org.jmock" % "jmock" % "2.8.1" % "test",
     "org.jmock" % "jmock-legacy" % "2.8.1" % "test",
     "org.jmock" % "jmock-junit4" % "2.8.1" % "test",
-    "org.scalacheck" %% "scalacheck" % "1.12.4" % "test",
     "org.reflections" % "reflections" % "0.9.10" % "test",
     "org.slf4j" % "slf4j-nop" % "1.7.12" % "test"
   )

@@ -94,7 +94,7 @@ trait Finder extends FunSuite with SlowTest {
             .mkString("\n").trim
 
         // you can't use declarations and opens in the same model
-        assert(t.entries.exists(_.isInstanceOf[Declaration]) && t.entries.exists(_.isInstanceOf[Open]))
+        assert(! (t.entries.exists(_.isInstanceOf[Declaration]) && t.entries.exists(_.isInstanceOf[Open])))
 
         if (! nonDecls.exists(e => e.isInstanceOf[Compile] || e.isInstanceOf[Open]))
           fixture.open(new Model(

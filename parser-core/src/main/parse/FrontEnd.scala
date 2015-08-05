@@ -68,9 +68,9 @@ trait FrontEndMain {
     topLevelDefs.foreach(verifier.visitProcedureDefinition)
 
     val cfVerifier = new ControlFlowVerifier
-    topLevelDefs.foreach(cfVerifier.visitProcedureDefinition)
+    val verifiedDefs = topLevelDefs.map(cfVerifier.visitProcedureDefinition)
 
-    (topLevelDefs, structureResults)
+    (verifiedDefs, structureResults)
   }
 
   private def transformers: Seq[AstTransformer] = {

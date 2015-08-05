@@ -71,8 +71,10 @@ class ProcedureDefinition(val procedure: FrontEndProcedure, val statements: Stat
   def end = throw new UnsupportedOperationException
   def file = throw new UnsupportedOperationException
 
-  def copy(procedure: FrontEndProcedure = procedure,
-            statements: Statements = statements): ProcedureDefinition = {
+  def nonLocalExit = statements.nonLocalExit
+
+  def copy(procedure:  FrontEndProcedure = procedure,
+           statements: Statements        = statements): ProcedureDefinition = {
     new ProcedureDefinition(procedure, statements)
   }
 }
@@ -82,13 +84,17 @@ class ProcedureDefinition(val procedure: FrontEndProcedure, val statements: Stat
  * not necessarily a "block" of statements, as block means something specific
  * (enclosed in [], in particular). This class is used to represent other
  * groups of statements as well, for instance procedure bodies.
+ * nonLocalExit identifies that the statements contain one or more commands
+ * (possibly nested) which may cause a non-local exit (like `stop` or `report`)
  */
-class Statements(val file: String) extends AstNode {
-  def this(file: String, stmts: Seq[Statement]) = {
-    this(file)
+class Statements(val file: String, val nonLocalExit: Boolean) extends AstNode {
+  def this(file: String, stmts: Seq[Statement], nonLocalExit: Boolean) = {
+    this(file, nonLocalExit)
     _stmts.appendAll(stmts)
     recomputeStartAndEnd()
   }
+
+  def this(file: String) = { this(file, Seq(), false) }
 
   var start: Int = _
   var end: Int = _
@@ -107,8 +113,8 @@ class Statements(val file: String) extends AstNode {
   }
   override def toString = stmts.mkString(" ")
 
-  def copy(file: String = file, stmts: Seq[Statement] = stmts): Statements = {
-    new Statements(file, stmts)
+  def copy(file: String = file, stmts: Seq[Statement] = stmts, nonLocalExit: Boolean = nonLocalExit): Statements = {
+    new Statements(file, stmts, nonLocalExit)
   }
 }
 
