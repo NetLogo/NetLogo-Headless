@@ -36,8 +36,9 @@ sealed trait AgentStamp
 
 case class TurtleStamp(
   x: Double, y: Double, size: Double, heading: Double,
-  color: AnyRef, shapeName: String) extends AgentStamp
+  color: AnyRef, shapeName: String, stampMode: String) extends AgentStamp
 
 case class LinkStamp(
   x1: Double, y1: Double, x2: Double, y2: Double, midpointX: Double, midpointY: Double,
-  heading: Double, color: AnyRef, shapeName: String, thickness: Double) extends AgentStamp
+  heading: Double, color: AnyRef, shapeName: String, thickness: Double,
+  isDirected: Boolean, size: Double, isHidden: Boolean, stampMode: String) extends AgentStamp

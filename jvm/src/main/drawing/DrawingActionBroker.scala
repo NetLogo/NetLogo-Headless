@@ -43,10 +43,14 @@ class DrawingActionBroker(
       agent match {
         case l: Link   =>
           import l._
-          LinkStamp(x1, y1, end2.xcor, end2.ycor, midpointX, midpointY, heading, color, shape, lineThickness)
+          LinkStamp(x1, y1, end2.xcor, end2.ycor,
+                    midpointX, midpointY, heading, color, shape,
+                    lineThickness, isDirectedLink, size, hidden,
+                    if (erase) "erase" else "normal")
         case t: Turtle =>
           import t._
-          TurtleStamp(xcor, ycor, size, heading, color, shape)
+          TurtleStamp(xcor, ycor, size, heading, color, shape,
+                      if (erase) "erase" else "normal")
       }
 
     val action =
