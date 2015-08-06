@@ -218,8 +218,9 @@ public strictfp class Turtle
         cachedSine = StrictMath.sin(headingRadians);
       }
     }
+    drawJumpLine(xcor, ycor, distance);
     xandycor(xcor + (distance * cachedSine),
-        ycor + (distance * cachedCosine));
+        ycor + (distance * cachedCosine), true);
   }
 
   public Patch getPatchAtHeadingAndDistance(double delta, double distance)
@@ -659,6 +660,23 @@ public strictfp class Turtle
     }
   }
 
+
+  void drawJumpLine(double x, double y, double dist) {
+    if (!penMode().equals(PEN_UP)) {
+      Object color = variables()[VAR_COLOR];
+      double size = penSize();
+      String mode = penMode();
+      double minPxcor = world().minPxcor() - 0.5;
+      double maxPxcor = world().maxPxcor() + 0.5;
+      double minPycor = world().minPycor() - 0.5;
+      double maxPycor = world().maxPycor() + 0.5;
+      Trail[] lines   = PenLineMaker.apply(x, y, heading, dist, minPxcor, maxPxcor, minPycor, maxPycor);
+      for (Trail line : lines) {
+        world().drawLine(line.x1(), line.y1(), line.x2(), line.y2(), color, size, mode);
+      }
+    }
+  }
+
   public void moveTo(Agent otherAgent)
       throws AgentException {
     double x, y;
@@ -856,9 +874,14 @@ public strictfp class Turtle
 
   public void xandycor(double xcor, double ycor)
       throws AgentException {
+    xandycor(xcor, ycor, false);
+  }
+
+  void xandycor(double xcor, double ycor, boolean isJumping)
+      throws AgentException {
     double oldX = this.xcor;
     double oldY = this.ycor;
-    xandycorHelper(xcor, ycor);
+    xandycorHelper(xcor, ycor, isJumping);
     if (world().tieManager.tieCount > 0) {
       world().tieManager.turtleMoved(this, xcor, ycor, oldX, oldY);
     }
@@ -870,20 +893,22 @@ public strictfp class Turtle
       throws AgentException {
     double oldX = this.xcor;
     double oldY = this.ycor;
-    xandycorHelper(xcor, ycor);
+    xandycorHelper(xcor, ycor, false);
     if (world().tieManager.tieCount > 0) {
       world().tieManager.turtleMoved(this, xcor, ycor, oldX, oldY, seenTurtles);
     }
   }
 
-  public void xandycorHelper(double xcor, double ycor)
+  public void xandycorHelper(double xcor, double ycor, boolean isJumping)
       throws AgentException {
     Patch originalPatch = getPatchHere();
 
     double newX = world().wrapX(xcor);
     double newY = world().wrapY(ycor);
 
-    drawLine(this.xcor, this.ycor, xcor, ycor);
+    if (!isJumping) {
+      drawLine(this.xcor, this.ycor, xcor, ycor);
+    }
 
     this.xcor = newX;
     this.ycor = newY;
