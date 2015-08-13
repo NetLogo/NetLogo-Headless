@@ -4,11 +4,11 @@ package org.nlogo.headless
 package misc
 
 import org.nlogo.api.Version
-import org.nlogo.util.SlowTest
+import org.nlogo.util.SlowTestTag
 import org.nlogo.workspace.Checksummer
 import org.scalatest.{ FunSuite, Args, Status, SucceededStatus }
 
-class TestChecksums extends FunSuite with SlowTest {
+class TestChecksums extends FunSuite  {
 
   // overriding this so we can pass in a model filter to run checksums against one
   // model, or a subset. example: `ts GenDrift`
@@ -31,7 +31,7 @@ class TestChecksums extends FunSuite with SlowTest {
   var versionMismatchCount = 0
 
   for(entry <- entries)
-    test(entry.path) {
+    test(entry.path, SlowTestTag) {
       val tester = new ChecksumTester(info(_), () => versionMismatchCount += 1)
       tester.testChecksum(entry.path, entry.worldSum, entry.graphicsSum, entry.revision)
       val failures = tester.failures.toString
@@ -39,7 +39,7 @@ class TestChecksums extends FunSuite with SlowTest {
         fail(failures)
     }
 
-  test("not too many version mismatches") {
+  test("not too many version mismatches", SlowTestTag) {
     assert(versionMismatchCount.toDouble / entries.size <= 0.02,
       s"${versionMismatchCount} models have version mismatches (more than 2%)")
   }

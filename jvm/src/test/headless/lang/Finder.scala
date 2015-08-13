@@ -12,7 +12,7 @@ import
   org.nlogo.{ api, core, util },
     api.FileIO.file2String,
     core.{ Model, Resource },
-    util.SlowTest
+    util.{ LanguageTestTag, SlowTestTag }
 
 trait Finder extends TestFinder {
   override def withFixture[T](name: String)(body: AbstractFixture => T): T =
@@ -22,7 +22,17 @@ trait Finder extends TestFinder {
     }
 }
 
-class TestCommands extends CommandTests with Finder
-class TestReporters extends ReporterTests with Finder
-class TestModels extends ModelTests with Finder
-class TestExtensions extends ExtensionTests with Finder
+trait TaggedLanguageTest extends Finder {
+  override def test(name: String, otherTags: Tag*)(testFun: => Unit) =
+    super.test(name, (LanguageTestTag +: otherTags):_*)(testFun)
+}
+
+trait TaggedSlowTest extends Finder {
+  override def test(name: String, otherTags: Tag*)(testFun: => Unit) =
+    super.test(name, (SlowTestTag +: otherTags):_*)(testFun)
+}
+
+class TestCommands extends CommandTests with TaggedLanguageTest
+class TestReporters extends ReporterTests with TaggedLanguageTest
+class TestModels extends ModelTests with TaggedSlowTest
+class TestExtensions extends ExtensionTests with TaggedSlowTest

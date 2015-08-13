@@ -37,7 +37,8 @@ lazy val scalatestSettings = Seq(
   testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest, "-oT"),
   libraryDependencies ++= Seq(
     "org.scalatest" %% "scalatest" % "2.2.1" % "test",
-    "org.scalacheck" %% "scalacheck" % "1.12.4" % "test"
+    // Using a 1.12.2 until fix is available for https://github.com/rickynils/scalacheck/issues/173
+    "org.scalacheck" %% "scalacheck" % "1.12.2" % "test"
   )
 )
 
@@ -145,7 +146,7 @@ lazy val parserJS  = parser.js
 
 lazy val jvmBuild = (project in file ("jvm")).
   dependsOn(parserJVM % "test-internal->test;compile-internal->compile").
-  configs(FastMediumSlow.configs: _*).
+  settings(FastMediumSlow.settings: _*).
   settings(commonSettings: _*).
   settings(jvmSettings: _*).
   settings(testSettings: _*).

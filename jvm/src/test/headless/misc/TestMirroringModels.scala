@@ -5,12 +5,12 @@ package misc
 
 import org.scalatest.FunSuite
 import org.nlogo.{ api, mirror }
-import org.nlogo.util.SlowTest
+import org.nlogo.util.SlowTestTag
 import mirror._, Mirroring._, Mirrorables._
 import org.nlogo.drawing.DrawingActionRunner
 import org.nlogo.workspace.Checksummer
 
-class TestMirroringModels extends FunSuite with SlowTest {
+class TestMirroringModels extends FunSuite  {
 
   def withWorkspace[T](body: (HeadlessWorkspace, () => Iterable[Mirrorable]) => T): T = {
     val ws = HeadlessWorkspace.newInstance
@@ -82,7 +82,7 @@ class TestMirroringModels extends FunSuite with SlowTest {
     path <- checksums.values.map(_.path)
     if !exclusions.exists(name => path.endsWith(name + ".nlogo"))
     if !moreExclusions.exists(name => path.containsSlice(name))
-  } test("Mirroring: " + path) {
+  } test("Mirroring: " + path, SlowTestTag) {
     modelRenderingTest(path)
   }
 

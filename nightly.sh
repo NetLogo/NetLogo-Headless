@@ -21,9 +21,9 @@ mkdir -p jvm/tmp
 if [ ${PIPESTATUS[0]} -ne 0 ] ; then echo "*** FAILED: test:compile"; exit 1; fi
 echo "*** done: test:compile"
 
-./sbt jvmBuild/fast:test 2>&1 | tee tmp/nightly/0-fast-test.txt
-if [ ${PIPESTATUS[0]} -ne 0 ] ; then echo "*** FAILED: fast:test"; exit 1; fi
-echo "*** done: fast:test"
+./sbt jvmBuild/test:fast 2>&1 | tee tmp/nightly/0-fast-test.txt
+if [ ${PIPESTATUS[0]} -ne 0 ] ; then echo "*** FAILED: test:fast"; exit 1; fi
+echo "*** done: test:fast"
 
 ./sbt parserJVM/test 2>&1 | tee tmp/nightly/0-parser-jvm-test.txt
 if [ ${PIPESTATUS[0]} -ne 0 ] ; then echo "*** FAILED: parserJVM/test"; exit 1; fi
@@ -33,9 +33,9 @@ echo "*** done: parserJVM/test"
 if [ ${PIPESTATUS[0]} -ne 0 ] ; then echo "*** FAILED: parserJS/test"; exit 1; fi
 echo "*** done: parserJS/test"
 
-./sbt jvmBuild/nogen jvmBuild/fast:test 2>&1 | tee tmp/nightly/1-nogen-fast-test.txt
-if [ ${PIPESTATUS[0]} -ne 0 ] ; then echo "*** FAILED: nogen fast:test"; exit 1; fi
-echo "*** done: nogen fast:test"
+./sbt jvmBuild/nogen jvmBuild/test:fast 2>&1 | tee tmp/nightly/1-nogen-fast-test.txt
+if [ ${PIPESTATUS[0]} -ne 0 ] ; then echo "*** FAILED: nogen test:fast"; exit 1; fi
+echo "*** done: nogen test:fast"
 
 ./sbt jvmBuild/all 2>&1 | tee tmp/nightly/2-sbt-all.txt
 if [ ${PIPESTATUS[0]} -ne 0 ] ; then echo "*** FAILED: sbt jvmBuild/all"; exit 1; fi
@@ -48,13 +48,13 @@ echo "*** done: sbt jvmBuild/all"
 # will take more than 50 minutes to run (the Travis limit)
 # - ST 8/29/13, 4/1/14
 
-./sbt 'set logBuffered in test := false' jvmBuild/slow:test 2>&1 | tee tmp/nightly/3-slow-test.txt
-if [ ${PIPESTATUS[0]} -ne 0 ] ; then echo "*** FAILED: slow:test"; exit 1; fi
-echo "*** done: slow:test"
+./sbt 'set logBuffered in test := false' jvmBuild/test:slow 2>&1 | tee tmp/nightly/3-slow-test.txt
+if [ ${PIPESTATUS[0]} -ne 0 ] ; then echo "*** FAILED: test:slow"; exit 1; fi
+echo "*** done: test:slow"
 
-./sbt 'set logBuffered in test := false' jvmBuild/nogen jvmBuild/slow:test 2>&1 | tee tmp/nightly/4-nogen-slow-test.txt
-if [ ${PIPESTATUS[0]} -ne 0 ] ; then echo "*** FAILED: nogen slow:test"; exit 1; fi
-echo "*** done: nogen slow:test"
+./sbt 'set logBuffered in test := false' jvmBuild/nogen jvmBuild/test:slow 2>&1 | tee tmp/nightly/4-nogen-slow-test.txt
+if [ ${PIPESTATUS[0]} -ne 0 ] ; then echo "*** FAILED: nogen test:slow"; exit 1; fi
+echo "*** done: nogen test:slow"
 
 ./sbt jvmBuild/depend 2>&1 | tee tmp/nightly/5-depend.txt
 if [ ${PIPESTATUS[0]} -ne 0 ] ; then echo "*** FAILED: depend"; exit 1; fi

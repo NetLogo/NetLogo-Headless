@@ -1,42 +1,27 @@
 import sbt._
 import Keys._
 
-// At the time we first made this, the state of sbt/ScalaTest integration was
-// more primitive and this was the best way we could figure out how to do it.
-// Now we could maybe instead use a Tag or something. But the marker trait
-// approach works, so, leaving it alone for now.  If it ever becomes difficult
-// to maintain, consider replacing it. - ST 12/5/13
-
 object FastMediumSlow {
+  lazy val fast   = taskKey[Unit]("fast tests")
+  lazy val medium = taskKey[Unit]("medium tests")
+  lazy val slow   = taskKey[Unit]("slow tests")
+  lazy val language = taskKey[Unit]("language tests")
+  lazy val crawl = taskKey[Unit]("extremely slow tests")
 
-  val configs =
-    Seq("fast", "medium", "slow")
-      .map(config(_).extend(Test))
-
-  private val filters =
-    Seq(fastFilter _, mediumFilter _, slowFilter _)
-
-  val settings =
-    (configs zip filters).flatMap{
-      case (config, filter) =>
-        inConfig(config)(Defaults.testTasks) :+
-        (testOptions in config :=
-          Seq(Tests.Filter(filter((fullClasspath in Test).value, _))))
-    }
-
-  private def fastFilter(path: Classpath, name: String): Boolean =
-    !slowFilter(path, name)
-
-  private def mediumFilter(path: Classpath, name: String): Boolean =
-    fastFilter(path, name) ||
-    name == "org.nlogo.headless.lang.TestReporters" ||
-    name == "org.nlogo.headless.lang.TestCommands"
-
-  private def slowFilter(path: Classpath, name: String): Boolean = {
-    val jars = path.files.map(_.asURL).toArray[java.net.URL]
-    val loader = new java.net.URLClassLoader(jars, getClass.getClassLoader)
-    def clazz(name: String) = Class.forName(name, false, loader)
-    clazz("org.nlogo.util.SlowTest").isAssignableFrom(clazz(name))
-  }
-
+  lazy val settings = Seq(
+    (fast in Test) := {
+      (testOnly in Test).toTask(" -- -l org.nlogo.util.SlowTestTag -l org.nlogo.util.LanguageTestTag").value
+    },
+    (medium in Test) := {
+      (testOnly in Test).toTask(" -- -l org.nlogo.util.SlowTestTag").value
+    },
+    (language in Test) := {
+      (testOnly in Test).toTask(" -- -n org.nlogo.util.LanguageTestTag").value
+    },
+    (crawl in Test) := {
+      (testOnly in Test).toTask(" -- -n org.nlogo.util.SlowTestTag").value
+    },
+    (slow in Test) := {
+      (testOnly in Test).toTask(" -- -n org.nlogo.util.LanguageTestTag -n org.nlogo.util.SlowTestTag").value
+    })
 }

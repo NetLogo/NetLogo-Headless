@@ -7,7 +7,7 @@ import org.nlogo.core.model.ModelReader
 import org.nlogo.api.{ FileIO, Version }
 import org.nlogo.workspace.ModelsLibrary
 import org.scalatest.FunSuite
-import org.nlogo.util.SlowTest
+import org.nlogo.util.SlowTestTag
 
 import
   scala.util.matching.Regex
@@ -55,21 +55,21 @@ object TestCompileAll {
   }
 }
 
-class TestCompileAll extends FunSuite with SlowTest {
+class TestCompileAll extends FunSuite  {
   for {
     path <- ModelsLibrary.getModelPaths.filterNot(TestCompileAll.badPath)
     text <- TestCompileAll.goodModel(FileIO.file2String(path))
   }  {
-      test("compile: " + path) {
+      test("compile: " + path, SlowTestTag) {
         compile(path, text)
       }
-      test("readWriteRead: " + path) {
+      test("readWriteRead: " + path, SlowTestTag) {
         readWriteRead(path, text)
       }
     }
 
   for(path <- ModelsLibrary.getModelPaths ++ ModelsLibrary.getModelPathsAtRoot("extensions"))
-    test("version: " + path) {
+    test("version: " + path, SlowTestTag) {
       val workspace = HeadlessWorkspace.newInstance
       val version = ModelReader.parseModel(FileIO.file2String(path), workspace.parser).version
       assert(Version.compatibleVersion(version))

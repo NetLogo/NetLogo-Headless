@@ -4,7 +4,7 @@ package org.nlogo.headless
 package misc
 
 import org.scalatest.FunSuite
-import org.nlogo.util.SlowTest
+import org.nlogo.util.SlowTestTag
 import org.nlogo.{ core, api, agent, nvm }
 
 object TestHalt {
@@ -21,7 +21,7 @@ object TestHalt {
   }
 }
 
-class TestHalt extends FunSuite with SlowTest {
+class TestHalt extends FunSuite  {
 
   // I've had weird Heisenbug-type problems with the workspace not getting GC'ed if
   // it's a local variable rather than a top-level class member - ST 1/8/13
@@ -40,18 +40,18 @@ class TestHalt extends FunSuite with SlowTest {
     assert(finalized)
   }
 
-  test("halt 0") {
+  test("halt 0", SlowTestTag) {
     withWorkspace { }
   }
 
-  test("halt 1") {
+  test("halt 1", SlowTestTag) {
     withWorkspace {
       // multiply possible memory leaks
       workspace.compileCommands("")
     }
   }
 
-  test("halt 2") {
+  test("halt 2", SlowTestTag) {
     var ex: api.LogoException = null
     val thread = new Thread("TestHalt.testHalt") {
       override def run() {

@@ -6,9 +6,9 @@ package misc
 
 import org.nlogo.api.Version
 import org.scalatest.FunSuite
-import org.nlogo.util.SlowTest
+import org.nlogo.util.SlowTestTag
 
-class TestCompileBenchmarks extends FixtureSuite with SlowTest {
+class TestCompileBenchmarks extends FixtureSuite  {
 
   val names = Seq(
     "Ants", "Bureaucrats", "BZ", "CA1D", "Erosion", "Fire", "FireBig", "Flocking", "GasLabCirc",
@@ -17,13 +17,13 @@ class TestCompileBenchmarks extends FixtureSuite with SlowTest {
 
   // this is here to help us remember that when the list of benchmarks changes, this file and the
   // contents of test/benchdumps both need updating too - ST 2/11/09
-  test("names") { _ =>
+  test("names", SlowTestTag) { _ =>
     assert(names.mkString("\n") === ChecksumsAndPreviews.allBenchmarks.mkString("\n"))
   }
 
   if(Version.useGenerator)
     for(name <- names)
-      test(name) { fixture =>
+      test(name, SlowTestTag) { fixture =>
         import fixture.workspace.{ open, report }
         open("models/test/benchmarks/" + name + " Benchmark.nlogo")
         val expected =
