@@ -10,7 +10,7 @@ lazy val commonSettings = Seq(
     "-deprecation -unchecked -feature -Xcheckinit -encoding us-ascii -target:jvm-1.7 -Xlint -Xfatal-warnings"
       .split(" ").toSeq,
   scalaSource in Compile := baseDirectory.value / "src" / "main",
-  scalaSource in Test := baseDirectory.value / "src" / "test",
+  scalaSource in Test    := baseDirectory.value / "src" / "test",
   ivyLoggingLevel := UpdateLogging.Quiet,
   logBuffered in testOnly in Test := false,
   onLoadMessage := "",
@@ -88,8 +88,7 @@ lazy val docOptions = Seq(
 lazy val parserSettings: Seq[Setting[_]] = Seq(
   isSnapshot := true,
   name := "parser",
-  version := "0.0.1",
-  unmanagedSourceDirectories in Compile += file(".").getAbsoluteFile / "parser-core" / "src" / "main"
+  version := "0.0.1"
 )
 
 lazy val root = project.in(file("."))
@@ -113,7 +112,7 @@ lazy val parser = CrossProject("parser", file("."),
     override def projectDir(crossBase: File, projectType: String): File =
       crossBase / s"parser-$projectType"
     override def sharedSrcDir(projectBase: File, conf: String): Option[File] =
-      Some(projectBase / "parser-core" / "src" / conf)
+      Some(projectBase.getParentFile / "parser-core" / "src" / conf)
   }).
   settings(commonSettings: _*).
   settings(parserSettings: _*).
