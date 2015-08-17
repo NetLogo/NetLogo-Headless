@@ -38,7 +38,8 @@ class TokenizerTests extends FunSuite {
     case LexerTestCases.LexFailure(text, start, end, error) =>
       test(s"""Tokenize as error: '$text'""") {
         val tokens = tokenizeRobustly(text)
-        val badToken = firstBadToken(tokens).get
+        val badToken = firstBadToken(tokens).getOrElse(
+          fail(s"Expected bad token, got ${tokens.mkString}"))
         assertResult(start)(badToken.start)
         assertResult(end)(badToken.end)
         assertResult(error)(badToken.value)

@@ -8,20 +8,20 @@ import org.nlogo.core.{ Token, TokenType }
 object TokenizerTests extends TestSuite {
   def tests = TestSuite{
 
-    def tokenize(s: String) = {
+    def tokenize(s: String): Seq[Token] = {
       val result = Tokenizer.tokenizeString(s, "").toSeq
       assert(TokenType.Eof == result.last.tpe)
       result.dropRight(1)
     }
 
-    def tokenizeSkippingWhitespace(s: String) = {
+    def tokenizeSkippingWhitespace(s: String): Seq[(Token, Int)] = {
       val result = Tokenizer.tokenizeSkippingTrailingWhitespace(
         new java.io.StringReader(s), "").toSeq
       assert(TokenType.Eof == result.last._1.tpe)
       result.dropRight(1)
     }
 
-    def tokenizeRobustly(s: String) = {
+    def tokenizeRobustly(s: String): Seq[Token] = {
       val result = Tokenizer.tokenizeString(s, "").toList
       assert(TokenType.Eof == result.last.tpe)
       result.dropRight(1)
@@ -42,7 +42,8 @@ object TokenizerTests extends TestSuite {
       LexerTestCases.FailureCases foreach {
         case LexerTestCases.LexFailure(text, start, end, error) =>
           val tokens = tokenizeRobustly(text)
-          val badToken = firstBadToken(tokens).get
+          val badToken = firstBadToken(tokens).getOrElse(
+            throw new Exception(s"Expected bad token, got ${tokens.mkString}"))
           assert(start == badToken.start)
           assert(end   == badToken.end)
           assert(error == badToken.value)
