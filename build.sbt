@@ -138,7 +138,7 @@ lazy val parser = CrossProject("parser", file("."),
   jvmSettings(
       mappings in (Compile, packageBin) ++= mappings.in(sharedResources, Compile, packageBin).value,
       mappings in (Compile, packageSrc) ++= mappings.in(sharedResources, Compile, packageSrc).value,
-      libraryDependencies += "org.scala-lang.modules" %% "scala-parser-combinators" % "1.0.3"
+      libraryDependencies += "org.scala-lang.modules" %% "scala-parser-combinators" % "1.0.4"
     )
 
 lazy val parserJVM = parser.jvm
