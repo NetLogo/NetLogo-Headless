@@ -37,8 +37,7 @@ lazy val scalatestSettings = Seq(
   testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest, "-oT"),
   libraryDependencies ++= Seq(
     "org.scalatest" %% "scalatest" % "2.2.1" % "test",
-    // Using a 1.12.2 until fix is available for https://github.com/rickynils/scalacheck/issues/173
-    "org.scalacheck" %% "scalacheck" % "1.12.2" % "test"
+    "org.scalacheck" %% "scalacheck" % "1.12.5" % "test"
   )
 )
 
