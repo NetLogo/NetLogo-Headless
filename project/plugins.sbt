@@ -15,7 +15,11 @@ libraryDependencies +=
   "classycle" % "classycle" % "1.4.1" from
     "http://ccl.northwestern.edu/devel/classycle-1.4.1.jar"
 
-addSbtPlugin("org.scalastyle" %% "scalastyle-sbt-plugin" % "0.6.0")
+// this little dance is necessary until ScalaStyle 0.7.1 is released;
+// see https://github.com/scalastyle/scalastyle/issues/156
+addSbtPlugin("org.scalastyle" %% "scalastyle-sbt-plugin" % "0.7.0" excludeAll(
+  ExclusionRule(organization = "com.danieltrinh")))
+libraryDependencies += "org.scalariform" %% "scalariform" % "0.1.7"
 
 addSbtPlugin("org.ensime" % "ensime-sbt" % "0.2.0")
 
