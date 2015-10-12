@@ -2,6 +2,9 @@
 
 package org.nlogo.api
 
+import
+  java.lang.{ Double => JDouble }
+
 import java.text.DecimalFormat
 import java.awt.{ Color => JColor }
 
@@ -9,6 +12,11 @@ import org.nlogo.core.{ Color => CColor, ColorConstants, LogoList, I18N },
   ColorConstants._
 
 object Color extends CColor {
+
+  private val MaxHue        = 255.0f
+  private val MaxSaturation = 255.0f
+  private val MaxBrightness = 255.0f
+
   private val AWT_Cache =
     for(i <- (0 until MaxColor * 10).toArray)
     yield new JColor(
@@ -34,20 +42,9 @@ object Color extends CColor {
   }
 
   def hsbToRGBList(h: Double, s: Double, b: Double): LogoList = {
-
-    val clampedH = (StrictMath.max(0, StrictMath.min(255, h)) / 255.0).toFloat
-    val clampedS = (StrictMath.max(0, StrictMath.min(255, s)) / 255.0).toFloat
-    val clampedB = (StrictMath.max(0, StrictMath.min(255, b)) / 255.0).toFloat
-
-    val argb = JColor.HSBtoRGB(clampedH, clampedS, clampedB)
-
-    val rgbList = new LogoListBuilder
-    rgbList.add(Double.box((argb >> 16) & 0xff))
-    rgbList.add(Double.box((argb >> 8) & 0xff))
-    rgbList.add(Double.box(argb & 0xff))
-
-    rgbList.toLogoList
-
+    val argb  = hsbToARGBNumber(h.toFloat, s.toFloat, b.toFloat)
+    val (_, red, green, blue) = argbNumToTuple(argb)
+    LogoList.fromVector(Vector(red, green, blue).map(x => Double.box(x)))
   }
 
   // given a color in ARGB, function returns a string in the "range" of
@@ -79,69 +76,32 @@ object Color extends CColor {
   // inputs: clamped to [0.0-1.0]
   // output: [0.0-139.9]
   def getClosestColorNumberByHSB(h: Float, s: Float, b: Float) = {
-    // restrict to 0-255 range
-    val hh = 0f max h min 255f
-    val ss = 0f max s min 255f
-    val bb = 0f max b min 255f
-    // convert to RGB
-    val argb = JColor.HSBtoRGB(hh / 255, ss / 255, bb / 255)
-    rgbMap.get(argb).getOrElse(
-      // try the new search mechanism
-      estimateClosestColorNumberByRGB(argb))
+    getClosestColorNumberByARGB(hsbToARGBNumber(h, s, b))
   }
 
   ///
 
-  def getRGBListByARGB(argb: Int): LogoList = {
-    val result = new LogoListBuilder
-    // 3 is just enough digits of precision so that passing the resulting values through the rgb
-    // prim will reconstruct the original number (or rather the floor of the original number to the
-    // nearest 0.1) - ST 10/25/05
-    result.add(org.nlogo.api.Approximate.approximate(((argb >> 16) & 0xff), 3): java.lang.Double)
-    result.add(org.nlogo.api.Approximate.approximate(((argb >> 8) & 0xff), 3): java.lang.Double)
-    result.add(org.nlogo.api.Approximate.approximate(((argb) & 0xff), 3): java.lang.Double)
-    result.toLogoList
-  }
+  def getRGBListByARGB(argb: Int): LogoList =
+    getRGBAListByARGB(argb).butLast
 
   def getRGBAListByARGB(argb: Int): LogoList = {
-    val result = new LogoListBuilder
-    // 3 is just enough digits of precision so that passing the resulting values through the rgb
-    // prim will reconstruct the original number (or rather the floor of the original number to the
-    // nearest 0.1) - ST 10/25/05
-    result.add(
-      Double.box(
-        org.nlogo.api.Approximate.approximate(((argb >> 16) & 0xff), 3)))
-    result.add(
-      Double.box(
-        org.nlogo.api.Approximate.approximate(((argb >> 8) & 0xff), 3)))
-    result.add(Double.box(
-      org.nlogo.api.Approximate.approximate(((argb) & 0xff), 3)))
-    result.add(Double.box(
-      org.nlogo.api.Approximate.approximate(((argb >> 24) & 0xff), 3)))
-    result.toLogoList
+    val (a, r, g, b) = argbNumToTuple(argb)
+    LogoList.fromVector(Vector(r, g, b, a).map(x => approximate(x.toFloat)))
   }
 
   def getHSBListByARGB(argb: Int): LogoList = {
+
+    val (_, red, green, blue) = argbNumToTuple(argb)
+
     val hsb = new Array[Float](3)
-    JColor.RGBtoHSB(
-      (argb >> 16) & 0xff,
-      (argb >> 8) & 0xff,
-      (argb) & 0xff,
-      hsb)
-    val result = new LogoListBuilder
-    // 3 is just enough digits of precision so that passing the resulting values through the hsb
-    // prim will reconstruct the original number (or rather the floor of the original number to the
-    // nearest 0.1) - ST 10/25/05
-    result.add(Double.box
-        (org.nlogo.api.Approximate.approximate
-            (hsb(0) * 255, 3)))
-    result.add(Double.box
-        (org.nlogo.api.Approximate.approximate
-            (hsb(1) * 255, 3)))
-    result.add(Double.box
-        (org.nlogo.api.Approximate.approximate
-            (hsb(2) * 255, 3)))
-    result.toLogoList
+    JColor.RGBtoHSB(red, green, blue, hsb)
+
+    val h = approximate(hsb(0) * MaxHue)
+    val s = approximate(hsb(1) * MaxSaturation)
+    val b = approximate(hsb(2) * MaxBrightness)
+
+    LogoList(h, s, b)
+
   }
 
   def getComplement(color: JColor): JColor = {
@@ -176,6 +136,25 @@ object Color extends CColor {
       (if (allowAlpha) "rgbListSizeError.3or4"
        else "rgbListSizeError.3")
     throw new AgentException(I18N.errors.get(key))
+  }
+
+  private def hsbToARGBNumber(h: Float, s: Float, b: Float): Int = {
+    val attenuate = (x: Float, maxValue: Float) => (0f max x min maxValue) / maxValue
+    JColor.HSBtoRGB(attenuate(h, MaxHue), attenuate(s, MaxSaturation), attenuate(b, MaxBrightness))
+  }
+
+  // 3 is just enough digits of precision so that passing the resulting values through the hsb
+  // prim will reconstruct the original number (or rather the floor of the original number to the
+  // nearest 0.1) - ST 10/25/05
+  private def approximate(x: Float): JDouble =
+    Double.box(Approximate.approximate(x, 3))
+
+  private def argbNumToTuple(argb: Int): (Int, Int, Int, Int) = {
+    val a = (argb >> 24) & 0xff
+    val r = (argb >> 16) & 0xff
+    val g = (argb >>  8) & 0xff
+    val b =  argb        & 0xff
+    (a, r, g, b)
   }
 
 }
