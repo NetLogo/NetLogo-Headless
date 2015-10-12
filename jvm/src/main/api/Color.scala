@@ -33,6 +33,23 @@ object Color extends CColor {
     }
   }
 
+  def hsbToRGBList(h: Double, s: Double, b: Double): LogoList = {
+
+    val clampedH = (StrictMath.max(0, StrictMath.min(255, h)) / 255.0).toFloat
+    val clampedS = (StrictMath.max(0, StrictMath.min(255, s)) / 255.0).toFloat
+    val clampedB = (StrictMath.max(0, StrictMath.min(255, b)) / 255.0).toFloat
+
+    val argb = JColor.HSBtoRGB(clampedH, clampedS, clampedB)
+
+    val rgbList = new LogoListBuilder
+    rgbList.add(Double.box((argb >> 16) & 0xff))
+    rgbList.add(Double.box((argb >> 8) & 0xff))
+    rgbList.add(Double.box(argb & 0xff))
+
+    rgbList.toLogoList
+
+  }
+
   // given a color in ARGB, function returns a string in the "range" of
   // "red - 5" to "magenta + 5" representing the color in NetLogo's color scheme
   // input: ARGB
