@@ -13,9 +13,9 @@ import org.nlogo.core.{ Color => CColor, ColorConstants, LogoList, I18N },
 
 object Color extends CColor {
 
-  private val MaxHue        = 255.0f
-  private val MaxSaturation = 255.0f
-  private val MaxBrightness = 255.0f
+  private val MaxHue        = 360.0f
+  private val MaxSaturation = 100.0f
+  private val MaxBrightness = 100.0f
 
   private val AWT_Cache =
     for(i <- (0 until MaxColor * 10).toArray)
