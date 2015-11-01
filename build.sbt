@@ -36,7 +36,7 @@ lazy val scalatestSettings = Seq(
   // T gives truncated stack traces; change to G if you need full.
   testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest, "-oT"),
   libraryDependencies ++= Seq(
-    "org.scalatest" %% "scalatest" % "2.2.1" % "test",
+    "org.scalatest" %% "scalatest" % "2.2.4" % "test",
     "org.scalacheck" %% "scalacheck" % "1.12.5" % "test"
   )
 )
