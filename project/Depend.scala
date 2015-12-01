@@ -22,7 +22,7 @@ object Depend {
       lock.synchronized {
         val classes = (classDirectory in Compile).value.toString
         val testClasses = (classDirectory in Test).value.toString
-        s.log.info("begin depend: " + thisProject.value.id)
+        s.log.info(s"begin depend: ${thisProject.value.id}")
         IO.write(file(".") / "target" / "depend.ddf", ddfContents)
         import classycle.dependency.DependencyChecker
         def main() = TrapExit(
@@ -33,20 +33,20 @@ object Depend {
           DependencyChecker.main(Array("-dependencies=@target/depend.ddf",
                                        testClasses)),
           s.log)
-        s.log.info("depend: " + classes)
+        s.log.info(s"depend: $classes")
         main() match {
           case 0 =>
-            s.log.info("depend: " + testClasses)
+            s.log.info(s"depend: $testClasses")
             test() match {
               case 0 =>
               case fail =>
-                s.log.info("depend failed: " + testClasses)
+                s.log.info("depend failed: $testClasses")
                 sys.error(fail.toString) }
           case fail =>
-            s.log.info("depend failed: " + classes)
+            s.log.info("depend failed: $classes")
             sys.error(fail.toString)
         }
-        s.log.info("end depend: " + thisProject.value.id)
+        s.log.info("end depend: ${thisProject.value.id}")
       }
     }
 
@@ -99,9 +99,9 @@ object Depend {
       p.depends = allPackages.filter(p2 => packageDefs(p.dir).contains(p2.dir))
     def generate(p: Package) {
       val name = p.dir.replaceAll("/", ".")
-      println("[" + name + "] = org.nlogo." + name + ".* excluding org.nlogo." + name + ".*.*")
-      println("[" + name + "+] = [" + name + "]" + p.depends.map(p2 => "[" + p2.dir.replaceAll("/", ".") + "+]").mkString(" ", " ", "") + " [libs]")
-      println("check [" + name + "] dependentOnlyOn [" + name + "+]")
+      println(s"[$name] = org.nlogo.$name.* excluding org.nlogo.$name.*.*")
+      println(s"[$name+] = [$name]" + p.depends.map(p2 => "[" + p2.dir.replaceAll("/", ".") + "+]").mkString(" ", " ", "") + " [libs]")
+      println(s"check [$name] dependentOnlyOn [$name+]")
       println("")
     }
     def generateHeader() {
