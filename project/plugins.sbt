@@ -12,8 +12,8 @@ libraryDependencies +=
   "de.jflex" % "jflex" % "1.4.3"
 
 libraryDependencies +=
-  "classycle" % "classycle" % "1.4.1" from
-    "http://ccl.northwestern.edu/devel/classycle-1.4.1.jar"
+  "classycle" % "classycle" % "1.4.2" from
+    "http://ccl-artifacts.s3-website-us-east-1.amazonaws.com/classycle-1.4.2.jar"
 
 // this little dance is necessary until ScalaStyle 0.7.1 is released;
 // see https://github.com/scalastyle/scalastyle/issues/156
