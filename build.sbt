@@ -47,7 +47,7 @@ lazy val testSettings = scalatestSettings ++ Seq(
     "org.jmock" % "jmock-legacy" % "2.8.1" % "test",
     "org.jmock" % "jmock-junit4" % "2.8.1" % "test",
     "org.reflections" % "reflections" % "0.9.10" % "test",
-    "org.slf4j" % "slf4j-nop" % "1.7.12" % "test"
+    "org.slf4j" % "slf4j-nop" % "1.7.13" % "test"
   )
 )
 
