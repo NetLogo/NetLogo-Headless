@@ -1,6 +1,9 @@
 BehaviorSpaceRunNumber
   behaviorspace-run-number => 0
 
+Nanotime
+  is-number? __nano-time => true
+
 Shapes
   shapes => ["default" "airplane" "arrow" "box" "bug" "butterfly" "car" "circle" "circle 2" "cow" "cylinder" "dot" "face happy" "face neutral" "face sad" "fish" "flag" "flower" "house" "leaf" "line" "line half" "pentagon" "person" "plant" "sheep" "square" "square 2" "star" "target" "tree" "triangle" "triangle 2" "truck" "turtle" "wheel" "wolf" "x"]
 
