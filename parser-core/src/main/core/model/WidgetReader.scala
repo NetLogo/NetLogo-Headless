@@ -445,16 +445,16 @@ class InputBoxReader extends BaseWidgetReader {
                         IntLine(),  // bottom
                         StringLine(),   // varname
                         StringLine(),   // value
-                        BooleanLine(),  // multiline
                         ReservedLine(),
+                        BooleanLine(),  // multiline
                         StringLine()    // inputboxtype
                       )
   def asList(inputbox: InputBox[U]) = List((), inputbox.left, inputbox.top, inputbox.right, inputbox.bottom, inputbox.varName,
-    inputbox.value.toString, inputbox.multiline, (), inputbox.boxtype.name)
+    inputbox.value.toString, (), inputbox.multiline, inputbox.boxtype.name)
   def asWidget(vals: List[Any]): InputBox[U] = {
 
     val List((), left: Int, top: Int, right: Int, bottom: Int, varName: String, value: String,
-      multiline: Boolean, _, inputBoxTypeStr: String) = vals
+      _, multiline: Boolean, inputBoxTypeStr: String) = vals
     val (inputBoxType: InputBoxType, widgetline: WidgetLine[U]) = inputBoxTypes.find(_._1.name == inputBoxTypeStr) match {
       case Some(t) => t.asInstanceOf[(InputBoxType, WidgetLine[U])]
       case None =>

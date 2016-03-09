@@ -479,9 +479,9 @@ class WidgetTest extends FunSuite {
                       |Color""".stripMargin.split("\n").toList
     val ibr = new InputBoxReader()
     assert(ibr.validate(inputBox))
-    assert(InputBox(119, 309, 274, 369, "fgcolor", 123, true, Col) == ibr.parse(inputBox))
+    assert(InputBox(119, 309, 274, 369, "fgcolor", 123, false, Col) == ibr.parse(inputBox))
     assert(ibr.validate(ibr.format(ibr.parse(inputBox)).split("\n").toList))
-    assert(InputBox(119, 309, 274, 369, "fgcolor", 123, true, Col) ==
+    assert(InputBox(119, 309, 274, 369, "fgcolor", 123, false, Col) ==
       ibr.parse(ibr.format(ibr.parse(inputBox)).split("\n").toList))
   }
 
@@ -499,9 +499,9 @@ class WidgetTest extends FunSuite {
 
     val ibr = new InputBoxReader()
     assert(ibr.validate(inputBox))
-    assert(InputBox(31, 301, 112, 361, "step-size", 1.0, true, Num) == ibr.parse(inputBox))
+    assert(InputBox(31, 301, 112, 361, "step-size", 1.0, false, Num) == ibr.parse(inputBox))
     assert(ibr.validate(ibr.format(ibr.parse(inputBox)).split("\n").toList))
-    assert(InputBox(31, 301, 112, 361, "step-size", 1.0, true, Num) ==
+    assert(InputBox(31, 301, 112, 361, "step-size", 1.0, false, Num) ==
       ibr.parse(ibr.format(ibr.parse(inputBox)).split("\n").toList))
   }
 
@@ -519,9 +519,29 @@ class WidgetTest extends FunSuite {
 
     val ibr = new InputBoxReader()
     assert(ibr.validate(inputBox))
-    assert(InputBox(5, 330, 255, 390, "user-created-code", "AAAAA", true, Str) == ibr.parse(inputBox))
+    assert(InputBox(5, 330, 255, 390, "user-created-code", "AAAAA", false, Str) == ibr.parse(inputBox))
     assert(ibr.validate(ibr.format(ibr.parse(inputBox)).split("\n").toList))
-    assert(InputBox(5, 330, 255, 390, "user-created-code", "AAAAA", true, Str) ==
+    assert(InputBox(5, 330, 255, 390, "user-created-code", "AAAAA", false, Str) ==
+      ibr.parse(ibr.format(ibr.parse(inputBox)).split("\n").toList))
+  }
+
+  test("inputbox multiline str") {
+    val inputBox = """|INPUTBOX
+                      |5
+                      |330
+                      |255
+                      |390
+                      |multiline-input
+                      |AAAAA\\nBBB\\nC
+                      |1
+                      |1
+                      |String""".stripMargin.split("\n").toList
+
+    val ibr = new InputBoxReader()
+    assert(ibr.validate(inputBox))
+    assert(InputBox(5, 330, 255, 390, "multiline-input", "AAAAA\\\\nBBB\\\\nC", true, Str) == ibr.parse(inputBox))
+    assert(ibr.validate(ibr.format(ibr.parse(inputBox)).split("\n").toList))
+    assert(InputBox(5, 330, 255, 390, "multiline-input", "AAAAA\\\\nBBB\\\\nC", true, Str) ==
       ibr.parse(ibr.format(ibr.parse(inputBox)).split("\n").toList))
   }
 
@@ -539,9 +559,9 @@ class WidgetTest extends FunSuite {
 
     val ibr = new InputBoxReader()
     assert(ibr.validate(inputBox))
-    assert(InputBox(245, 134, 470, 214, "my-equation", "0", true, StrReporter) == ibr.parse(inputBox))
+    assert(InputBox(245, 134, 470, 214, "my-equation", "0", false, StrReporter) == ibr.parse(inputBox))
     assert(ibr.validate(ibr.format(ibr.parse(inputBox)).split("\n").toList))
-    assert(InputBox(245, 134, 470, 214, "my-equation", "0", true, StrReporter) ==
+    assert(InputBox(245, 134, 470, 214, "my-equation", "0", false, StrReporter) ==
       ibr.parse(ibr.format(ibr.parse(inputBox)).split("\n").toList))
   }
 }
