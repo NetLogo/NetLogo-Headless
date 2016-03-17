@@ -539,9 +539,9 @@ class WidgetTest extends FunSuite {
 
     val ibr = new InputBoxReader()
     assert(ibr.validate(inputBox))
-    assert(InputBox(5, 330, 255, 390, "multiline-input", "AAAAA\\\\nBBB\\\\nC", true, Str) == ibr.parse(inputBox))
+    assert(InputBox(5, 330, 255, 390, "multiline-input", "AAAAA\\nBBB\\nC", true, Str) == ibr.parse(inputBox))
     assert(ibr.validate(ibr.format(ibr.parse(inputBox)).split("\n").toList))
-    assert(InputBox(5, 330, 255, 390, "multiline-input", "AAAAA\\\\nBBB\\\\nC", true, Str) ==
+    assert(InputBox(5, 330, 255, 390, "multiline-input", "AAAAA\\nBBB\\nC", true, Str) ==
       ibr.parse(ibr.format(ibr.parse(inputBox)).split("\n").toList))
   }
 

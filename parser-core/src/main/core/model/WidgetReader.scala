@@ -58,6 +58,11 @@ case class EscapedStringLine(override val default: Option[String] = None) extend
   def format(v: String): String = escapeString(v)
   def valid(v: String): Boolean = true
 }
+case class OptionalStringLine(override val default: Option[String] = None) extends WidgetLine[String] {
+  def parse(line: String): String = if (line == "NIL") "" else line
+  def format(v: String): String = if (v == "") "NIL" else v
+  def valid(v: String): Boolean = true
+}
 case class SpecifiedLine(str: String) extends WidgetLine[Unit] {
   def parse(line: String): Unit = {}
   def format(x: Unit): String = str
@@ -436,7 +441,7 @@ class InputBoxReader extends BaseWidgetReader {
   type T = InputBox[U]
 
   val inputBoxTypes =
-    List((Num, DoubleLine()), (Col, IntLine()), (Str, StringLine()), (StrCommand, StringLine()), (StrReporter, StringLine()))
+    List((Num, DoubleLine()), (Col, IntLine()), (Str, OptionalStringLine()), (StrCommand, OptionalStringLine()), (StrReporter, OptionalStringLine()))
 
   def definition = List(new SpecifiedLine("INPUTBOX"),
                         IntLine(),  // left
@@ -444,7 +449,7 @@ class InputBoxReader extends BaseWidgetReader {
                         IntLine(),  // right
                         IntLine(),  // bottom
                         StringLine(),   // varname
-                        StringLine(),   // value
+                        EscapedStringLine(),   // value
                         ReservedLine(),
                         BooleanLine(),  // multiline
                         StringLine()    // inputboxtype
