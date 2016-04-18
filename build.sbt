@@ -14,7 +14,7 @@ lazy val commonSettings = Seq(
   ivyLoggingLevel := UpdateLogging.Quiet,
   logBuffered in testOnly in Test := false,
   onLoadMessage := "",
-  scalaVersion := "2.11.7",
+  scalaVersion := "2.11.8",
   // don't cross-build for different Scala versions
   crossPaths := false,
   scalastyleTarget in Compile := {
