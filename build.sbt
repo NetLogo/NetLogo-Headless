@@ -47,7 +47,7 @@ lazy val testSettings = scalatestSettings ++ Seq(
     "org.jmock" % "jmock-legacy" % "2.8.2" % "test",
     "org.jmock" % "jmock-junit4" % "2.8.2" % "test",
     "org.reflections" % "reflections" % "0.9.10" % "test",
-    "org.slf4j" % "slf4j-nop" % "1.7.14" % "test"
+    "org.slf4j" % "slf4j-nop" % "1.7.21" % "test"
   )
 )
 
@@ -155,7 +155,7 @@ lazy val jvmBuild = (project in file ("jvm")).
   settings(
     version := "5.2.0",
     isSnapshot := true,
-    libraryDependencies += "org.ow2.asm" % "asm-all" % "5.0.4",
+    libraryDependencies += "org.ow2.asm" % "asm-all" % "5.1",
     (fullClasspath in Runtime) ++= (fullClasspath in Runtime in parserJVM).value,
     mainClass in Compile := Some("org.nlogo.headless.Main"),
     onLoadMessage := "",
