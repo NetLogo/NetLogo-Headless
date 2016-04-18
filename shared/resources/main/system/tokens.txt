@@ -5,6 +5,7 @@ C __experimentstepend etc._experimentstepend
 C __export-drawing etc._exportdrawing
 C __foreverbuttonend etc._foreverbuttonend
 C __ignore etc._ignore
+C __javascript-eval etc._jseval
 C __let _let
 C __linkcode etc._linkcode
 C __make-preview etc._makepreview

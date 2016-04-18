@@ -499,6 +499,12 @@ case class _isundirectedlink() extends Reporter with Pure {
       right = List(Syntax.WildcardType),
       ret = Syntax.BooleanType)
 }
+case class _jseval() extends Command {
+  override def syntax =
+    Syntax.commandSyntax(
+      right = List(Syntax.StringType),
+      agentClassString = "O---")
+}
 case class _left() extends Command {
   override def syntax =
     Syntax.commandSyntax(
