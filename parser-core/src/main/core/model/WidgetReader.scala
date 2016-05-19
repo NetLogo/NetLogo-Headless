@@ -53,6 +53,11 @@ case class StringLine(override val default: Option[String] = None) extends Widge
   def format(v: String): String = v
   def valid(v: String): Boolean = true
 }
+case class OptionalEscapedStringLine(override val default: Option[String] = None) extends WidgetLine[String] {
+  def parse(line: String): String = if (line == "NIL") "" else unescapeString(line)
+  def format(v: String): String = if (v.isEmpty) "NIL" else escapeString(v)
+  def valid(v: String): Boolean = !v.isEmpty
+}
 case class EscapedStringLine(override val default: Option[String] = None) extends WidgetLine[String] {
   def parse(line: String): String = unescapeString(line)
   def format(v: String): String = escapeString(v)
@@ -61,7 +66,7 @@ case class EscapedStringLine(override val default: Option[String] = None) extend
 case class OptionalStringLine(override val default: Option[String] = None) extends WidgetLine[String] {
   def parse(line: String): String = if (line == "NIL") "" else line
   def format(v: String): String = if (v == "") "NIL" else v
-  def valid(v: String): Boolean = true
+  def valid(v: String): Boolean = !v.isEmpty
 }
 case class SpecifiedLine(str: String) extends WidgetLine[Unit] {
   def parse(line: String): Unit = {}
@@ -449,7 +454,7 @@ class InputBoxReader extends BaseWidgetReader {
                         IntLine(),  // right
                         IntLine(),  // bottom
                         StringLine(),   // varname
-                        EscapedStringLine(),   // value
+                        OptionalEscapedStringLine(),   // value
                         ReservedLine(),
                         BooleanLine(),  // multiline
                         StringLine()    // inputboxtype

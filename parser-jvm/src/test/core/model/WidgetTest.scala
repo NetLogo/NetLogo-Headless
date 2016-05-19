@@ -525,6 +525,26 @@ class WidgetTest extends FunSuite {
       ibr.parse(ibr.format(ibr.parse(inputBox)).split("\n").toList))
   }
 
+  test("inputbox empty str") {
+    val inputBox = """|INPUTBOX
+                      |5
+                      |330
+                      |255
+                      |390
+                      |user-created-code
+                      |NIL
+                      |1
+                      |0
+                      |String""".stripMargin.split("\n").toList
+
+    val ibr = new InputBoxReader()
+    assert(ibr.validate(inputBox))
+    assert(InputBox(5, 330, 255, 390, "user-created-code", "", false, Str) == ibr.parse(inputBox))
+    assert(ibr.validate(ibr.format(ibr.parse(inputBox)).split("\n").toList))
+    assert(InputBox(5, 330, 255, 390, "user-created-code", "", false, Str) ==
+      ibr.parse(ibr.format(ibr.parse(inputBox)).split("\n").toList))
+  }
+
   test("inputbox multiline str") {
     val inputBox = """|INPUTBOX
                       |5
