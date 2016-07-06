@@ -52,10 +52,9 @@ lazy val testSettings = scalatestSettings ++ Seq(
 )
 
 lazy val publicationSettings =
-  bintrayPublishSettings ++
   Seq(
-    bintray.Keys.repository in bintray.Keys.bintray := "NetLogoHeadless",
-    bintray.Keys.bintrayOrganization in bintray.Keys.bintray := Some("netlogo")
+    bintrayRepository := "NetLogoHeadless",
+    bintrayOrganization := Some("netlogo")
   )
 
 lazy val docOptions = Seq(

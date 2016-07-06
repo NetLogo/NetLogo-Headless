@@ -19,7 +19,7 @@ def flex(log: String => Unit, base: File, dir: File, kind: String): File = {
   val project = base / "project" / "flex"
   val result = dir / (kind + ".java")
   log("generating " + result)
-  JFlex.Main.main(Array("--quiet", (project / (kind + ".flex")).asFile.toString))
+  jflex.Main.main(Array("--quiet", (project / (kind + ".flex")).asFile.toString))
   IO.write(result,
     IO.read(project / "warning.txt") +
     IO.read(project / (kind + ".java")))
