@@ -308,11 +308,22 @@ class _setplotpenmode extends PlotActionCommand(Syntax.NumberType) {
   }
 }
 
-class _setplotpencolor extends PlotActionCommand(Syntax.NumberType) {
+class _setplotpencolor extends PlotActionCommand(Syntax.NumberType | Syntax.ListType) {
   override def action(context: Context) = {
     val color =
-      api.Color.getARGBbyPremodulatedColorNumber(
-        api.Color.modulateDouble(argEvalDoubleValue(context, 0)))
+      args(0).report(context) match {
+        case rgbList: core.LogoList =>
+          try api.Color.getARGBIntByRGBAList(rgbList)
+          catch {
+            case e: ClassCastException =>
+              val msg = s"$displayName an rgb list must contain only numbers"
+              throw new org.nlogo.nvm.EngineException(context, this, msg)
+          }
+        case c: java.lang.Double =>
+          api.Color.getARGBbyPremodulatedColorNumber(api.Color.modulateDouble(c))
+        case x =>
+          throw new org.nlogo.nvm.ArgumentTypeException(context, this, 0, Syntax.ListType | Syntax.NumberType, x)
+      }
     val plotName = currentPlot(context).name
     val penName = currentPen(context).name
     PlotAction.SetPenColor(plotName, penName, color)
