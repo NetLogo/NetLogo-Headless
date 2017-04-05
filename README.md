@@ -1,5 +1,7 @@
 ## NetLogo-Headless
 
+**This project is no longer under development.**  Instead, see the `netlogo-headless` directory in the NetLogo/NetLogo repository.
+
 The NetLogo Headless project is broken into a number of modules, explained in the sections below.
 The end result of these modules is two artifacts `NetLogoHeadless.jar` and `netlogo-parser_sjs.jar`.
 `NetLogoHeadless.jar` bundles all the code for NetLogoHeadless.
